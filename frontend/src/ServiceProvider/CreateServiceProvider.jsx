@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from '../components/Header';
-import Footer from '../components/Footer';
+// import Footer from '../components/Footer';
 import SideBar from '../components/SideBar';
 import { Box, Button, Container, Grid, TextField, Typography, InputAdornment } from '@mui/material';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
@@ -97,9 +97,7 @@ const CreateServiceProvider  = () => {
             </Box>
           </Box>
         </Container>
-
         {/* Footer */}
-        {/* Uncomment if you want to include the footer */}
         {/* <Footer /> */}
       </Box>
     </Box>

@@ -1,26 +1,26 @@
 import React from 'react';
 import { List, ListItem, ListItemIcon, ListItemText, Box, Drawer, Typography } from '@mui/material';
-import HomeIcon from '@mui/icons-material/Home';
-import PersonIcon from '@mui/icons-material/Person';
-import GroupIcon from '@mui/icons-material/Group';
-import AssignmentIcon from '@mui/icons-material/Assignment';
-import ListAltIcon from '@mui/icons-material/ListAlt';
-import BuildIcon from '@mui/icons-material/Build';
-import SchoolIcon from '@mui/icons-material/School';
-import WorkIcon from '@mui/icons-material/Work';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { Link, useLocation } from 'react-router-dom'; 
+import AssignmentOutlinedIcon from '@mui/icons-material/AssignmentOutlined';
+import GroupIconOutlined from '@mui/icons-material/Group';
+import PeopleAltOutlinedIcon from '@mui/icons-material/PeopleAltOutlined';
+import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined';
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import BuildOutlinedIcon from '@mui/icons-material/BuildOutlined';
+import ListAltOutlinedIcon from '@mui/icons-material/ListAltOutlined';
+import WorkOutlineIcon from '@mui/icons-material/WorkOutline';
+import SchoolOutlinedIcon from '@mui/icons-material/SchoolOutlined';
+import { Link, useLocation } from 'react-router-dom';
 
 const menuItems = [
-  { name: 'Roles', icon: <AssignmentIcon />, path: '/rolesList' }, // Changed to AssignmentIcon
-  { name: 'Users', icon: <GroupIcon />, path: '/userList' }, // Changed to GroupIcon
-  { name: 'Users to Roles', icon: <PersonIcon />, path: '/usersToRoles' }, 
-  { name: 'Product', icon: <ShoppingCartIcon />, path: '/productList' }, // Changed to ShoppingCartIcon
-  { name: 'Service', icon: <BuildIcon />, path: '/serviceList' }, // Changed to BuildIcon
-  { name: 'Service Provider', icon: <PersonIcon />, path: '/serviceProviderList' }, 
-  { name: 'Material', icon: <ListAltIcon />, path: '/materialList' }, // Changed to ListAltIcon
-  { name: 'Jobs', icon: <WorkIcon />, path: '/jobsList' }, // Changed to WorkIcon
-  { name: 'Courses', icon: <SchoolIcon />, path: '/courseList' }, // Changed to SchoolIcon
+  { name: 'Roles', icon: <AssignmentOutlinedIcon />, paths: ['/rolesList', '/addRoles'] }, 
+  { name: 'Users', icon: <PeopleAltOutlinedIcon />, paths: ['/userList', '/createUser '] }, 
+  { name: 'Users to Roles', icon: <PersonOutlinedIcon />, paths: ['/usersToRoles'] }, 
+  { name: 'Product', icon: <ShoppingCartOutlinedIcon />, paths: ['/productList', '/createProduct'] }, 
+  { name: 'Service', icon: <BuildOutlinedIcon />, paths: ['/serviceList', '/createService'] }, 
+  { name: 'Service Provider', icon: <PersonOutlinedIcon />, paths: ['/serviceProviderList', '/createServiceProvider'] }, 
+  { name: 'Material', icon: <ListAltOutlinedIcon />, paths: ['/materialList', '/createMaterial'] }, 
+  { name: 'Jobs', icon: <WorkOutlineIcon />, paths: ['/jobsList', '/createJobs'] }, 
+  { name: 'Courses', icon: <SchoolOutlinedIcon />, paths: ['/courseList', '/createCourse'] }, 
 ];
 
 const SideBar = () => {
@@ -32,33 +32,54 @@ const SideBar = () => {
       sx={{
         width: 240,
         flexShrink: 0,
-        [`& .MuiDrawer-paper`]: { width: 240, boxSizing: 'border-box', backgroundColor: '#1976d2', color: '#fff' },
+        '& .MuiDrawer-paper': { 
+          width: 240, 
+          boxSizing: 'border-box', 
+          backgroundColor: '#439BFF', 
+          color: '#fff', 
+          borderRadius: '0px 15px 15px 0px' // Rounded corners on the right
+        },
       }}
     >
       <Box sx={{ padding: 2 }}>
-        <Typography variant="h6" align="center">
+        <Typography variant="h6" align="center" sx={{ color: '#fff', fontWeight: 'bold' }}>
           DENTIIFY
         </Typography>
       </Box>
       <List>
-        {menuItems.map((item, index) => (
-          <ListItem 
-            button 
-            key={index} 
-            component={Link} 
-            to={item.path} 
-            sx={{ 
-              color: '#fff', 
-              backgroundColor: location.pathname === item.path ? '#1565c0' : 'transparent',
-              '&:hover': {
-                backgroundColor: '#0d47a1',
-              }
-            }}
-          >
-            <ListItemIcon sx={{ color: '#fff' }}>{item.icon}</ListItemIcon>
-            <ListItemText primary={item.name} />
-          </ListItem>
-        ))}
+        {menuItems.map((item, index) => {
+          const isSelected = item.paths.includes(location.pathname);
+
+          return (
+            <ListItem 
+              button 
+              key={index} 
+              component={Link} 
+              to={item.paths[0]} 
+              aria-current={isSelected ? 'page' : undefined} 
+              sx={{ 
+                color: isSelected ? '#1976d2' : '#fff',  
+                backgroundColor: isSelected ? '#fff' : 'transparent',  
+                '&:hover': {
+                  backgroundColor: isSelected ? '#fff' : '#0d47a1', 
+                },
+                borderRadius: '14px',  
+                margin: '3px 0px',  
+                padding: '8px 16px',  
+                boxShadow: isSelected ? '0px 4px 10px rgba(0, 0, 0, 0.2)' : 'none', 
+              }}
+            >
+              <ListItemIcon sx={{ color: isSelected ? '#1976d2' : '#fff', minWidth: '40px', fontSize: '1.5rem' }}>  
+                {item.icon}
+              </ListItemIcon>
+              <ListItemText 
+                primary={item.name} 
+                primaryTypographyProps={{ fontWeight:'normal' }}  
+                // primaryTypographyProps={{ fontWeight: isSelected ? 'normal' : 'normal' }}  
+              />
+            </ListItem>
+          );
+        })}
       </List>
     </Drawer>
   );

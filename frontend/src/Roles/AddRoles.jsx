@@ -1,11 +1,12 @@
 import React from 'react';
 import Header from '../components/Header';
-import Footer from '../components/Footer';
+// import Footer from '../components/Footer';
 import SideBar from '../components/SideBar';
 import { Box, Button, Container, Grid, MenuItem, TextField, Typography, InputAdornment } from '@mui/material';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import { Flag } from 'react-world-flags'; 
+import { Link } from 'react-router-dom';
 
 const AddRoles = () => {
   return (
@@ -22,7 +23,7 @@ const AddRoles = () => {
         <Container>
           {/* Back Button and Title */}
           <Box display="flex" alignItems="center" mb={2}>
-            <ArrowBackIosNewIcon sx={{ cursor: 'pointer', mr: 1 }} />
+            <Link to={"/rolesList"}><ArrowBackIosNewIcon sx={{ cursor: 'pointer', mr: 1 }}  /></Link>
             <Typography variant="h6">Add Role</Typography>
           </Box>
 

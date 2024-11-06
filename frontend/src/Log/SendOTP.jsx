@@ -1,7 +1,11 @@
 import React from 'react';
 import { Box, TextField, Button, Typography, Paper } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 const SendOTP = () => {
+  const navigate=useNavigate();
+
+
   return (
     <Box
       sx={{
@@ -52,9 +56,9 @@ const SendOTP = () => {
             OTP Verification
           </Typography>
           <Typography variant="body2" color="textSecondary" mb={4}>
-            Please enter the 6-digit OTP sent to your *****sk@gmail.com
+            Please enter the 6-digit OTP sent to your ***sk@gmail.com
           </Typography>
-          <form noValidate autoComplete="off">
+          <form noValidate autoComplete="off" >
             <TextField
               label="OTP"
               variant="outlined"
@@ -66,6 +70,7 @@ const SendOTP = () => {
               color="primary"
               fullWidth
               sx={{ mt: 3, padding: '10px' }}
+              
             >
               Verify
             </Button>

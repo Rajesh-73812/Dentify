@@ -1,20 +1,19 @@
 import React from 'react';
 import Header from '../components/Header';
-import Footer from '../components/Footer';
 import SideBar from '../components/SideBar';
-import { Box, Button, Container, Grid, TextField, Typography, RadioGroup, FormControlLabel, Radio, Select, MenuItem, InputLabel, FormControl } from '@mui/material';
+import { Box, Button, Container, Grid, TextField, Typography, RadioGroup, FormControlLabel, Radio, Select, MenuItem, InputLabel, FormControl, InputAdornment } from '@mui/material';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
-const CreateCourse  = () => {
+const CreateCourse = () => {
   const [courseCharges, setCourseCharges] = React.useState('free'); 
   const [courseType, setCourseType] = React.useState('online');
-  const [source, setSource] = React.useState(''); 
+  const [source, setSource] = React.useState('');
 
   return (
     <Box sx={{ display: 'flex' }}>
       {/* Sidebar */}
       <SideBar />
-      
+
       {/* Main Content */}
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         {/* Header */}
@@ -36,6 +35,7 @@ const CreateCourse  = () => {
           {/* Form Fields */}
           <Box component="form" noValidate autoComplete="off" sx={{ mt: 2 }}>
             <Grid container spacing={2}>
+              {/* Course Name */}
               <Grid item xs={12} sm={6} md={3}>
                 <TextField
                   label="Course name"
@@ -45,6 +45,7 @@ const CreateCourse  = () => {
                 />
               </Grid>
 
+              {/* Course Start Date */}
               <Grid item xs={12} sm={6} md={3}>
                 <TextField
                   label="Course Start Date"
@@ -54,6 +55,8 @@ const CreateCourse  = () => {
                   variant="outlined"
                 />
               </Grid>
+
+              {/* Course End Date */}
               <Grid item xs={12} sm={6} md={3}>
                 <TextField
                   label="Course End Date"
@@ -64,7 +67,7 @@ const CreateCourse  = () => {
                 />
               </Grid>
 
-              {/* Course Type Radio Buttons */}
+              {/* Course Type */}
               <Grid item xs={12} sm={6} md={3}>
                 <Typography variant="subtitle1">Course Type</Typography>
                 <RadioGroup
@@ -77,8 +80,6 @@ const CreateCourse  = () => {
                 </RadioGroup>
               </Grid>
 
-              
-
               {/* Source Dropdown */}
               <Grid item xs={12} sm={6} md={3}>
                 <FormControl fullWidth variant="outlined">
@@ -87,13 +88,6 @@ const CreateCourse  = () => {
                     value={source}
                     onChange={(e) => setSource(e.target.value)}
                     label="Source"
-                    sx={{
-                      bgcolor: '#f5f5f5',
-                      '& .MuiSelect-outlined': {
-                        paddingTop: '10px',
-                        paddingBottom: '10px',
-                      },
-                    }}
                   >
                     <MenuItem value="website">Website</MenuItem>
                     <MenuItem value="referral">Referral</MenuItem>
@@ -103,6 +97,7 @@ const CreateCourse  = () => {
                 </FormControl>
               </Grid>
 
+              {/* City Name */}
               <Grid item xs={12} sm={6} md={3}>
                 <TextField
                   label="City Name"
@@ -111,6 +106,7 @@ const CreateCourse  = () => {
                 />
               </Grid>
 
+              {/* State */}
               <Grid item xs={12} sm={6} md={3}>
                 <TextField
                   label="State"
@@ -118,6 +114,8 @@ const CreateCourse  = () => {
                   variant="outlined"
                 />
               </Grid>
+
+              {/* Course Address */}
               <Grid item xs={12} sm={6} md={3}>
                 <TextField
                   label="Course Address"
@@ -125,6 +123,19 @@ const CreateCourse  = () => {
                   variant="outlined"
                 />
               </Grid>
+              <Grid item xs={12} sm={6} md={3}>
+                <Typography variant="subtitle1">Course Charges</Typography>
+                <RadioGroup
+                  row
+                  value={courseCharges}
+                  onChange={(e) => setCourseCharges(e.target.value)}
+                  sx={{ display: 'flex', alignItems: 'center' }} // Align radio buttons and input field
+                >
+                  <FormControlLabel value="paid" control={<Radio />} label="Paid" />
+                  <FormControlLabel value="free" control={<Radio />} label="Free" />
+
+                </RadioGroup>
+              </Grid>
               {/* Course Charges Radio Buttons */}
               <Grid item xs={12} sm={6} md={3}>
                 <Typography variant="subtitle1">Course Charges</Typography>
@@ -132,25 +143,28 @@ const CreateCourse  = () => {
                   row
                   value={courseCharges}
                   onChange={(e) => setCourseCharges(e.target.value)}
+                  sx={{ display: 'flex', alignItems: 'center' }} // Align radio buttons and input field
                 >
-                  <FormControlLabel value="free" control={<Radio />} label="Free" />
                   <FormControlLabel value="paid" control={<Radio />} label="Paid" />
+                  <FormControlLabel value="free" control={<Radio />} label="Free" />
+
+                  {/* Show Input Field if "Paid" is Selected */}
+                  
+                    <TextField
+                      variant="outlined"
+                      type="number"
+                      size="small"
+                      placeholder=" 2000"
+                      sx={{ ml: 2, width: '99px' }}
+                      InputProps={{
+                        startAdornment: <InputAdornment position="start">₹</InputAdornment>,
+                      }}
+                    />
+                  
                 </RadioGroup>
               </Grid>
-              
-              {/* Course Charges Radio Buttons */}
-              <Grid item xs={12} sm={6} md={3}>
-                <Typography variant="subtitle1">Course Charges</Typography>
-                <RadioGroup
-                  row
-                  value={courseCharges}
-                  onChange={(e) => setCourseCharges(e.target.value)}
-                >
-                  <FormControlLabel value="free" control={<Radio />} label="Free" />
-                  <FormControlLabel value="paid" control={<Radio />} label="Paid" />
-                </RadioGroup>
-              </Grid>
-              
+
+              {/* Amount */}
               <Grid item xs={12} sm={6} md={3}>
                 <TextField
                   label="Amount"
@@ -159,6 +173,7 @@ const CreateCourse  = () => {
                 />
               </Grid>
 
+              {/* Description */}
               <Grid item xs={12} sm={6} md={3}>
                 <TextField
                   label="Description"
@@ -180,8 +195,8 @@ const CreateCourse  = () => {
           </Box>
         </Container>
 
-        {/* Footer */}
-        <Footer />
+        {/* Footer    <Footer />*/}
+        
       </Box>
     </Box>
   );

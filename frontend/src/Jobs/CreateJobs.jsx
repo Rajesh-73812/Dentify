@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from '../components/Header';
-import Footer from '../components/Footer';
+// import Footer from '../components/Footer';
 import SideBar from '../components/SideBar';
 import { Box, Button, Container, Grid, TextField, Typography, InputAdornment } from '@mui/material';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
@@ -134,7 +134,7 @@ const CreateJobs  = () => {
         </Container>
 
         {/* Footer */}
-        <Footer />
+        {/* <Footer /> */}
       </Box>
     </Box>
   );
