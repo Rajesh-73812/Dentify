@@ -7,7 +7,7 @@ const OtpVerification = () => {
       sx={{
         display: 'flex',
         minHeight: '100vh',
-        backgroundColor: '#f5f5f5',
+        // backgroundColor: '#f5f5f5',
         flexDirection: { xs: 'column', md: 'row' },
       }}
     >
@@ -18,8 +18,9 @@ const OtpVerification = () => {
           display: { xs: 'none', md: 'flex' },
           alignItems: 'center',
           justifyContent: 'center',
-          background: 'linear-gradient(45deg, #3A2D8F, #6A5ACD)',
+          background: 'linear-gradient(141.69deg, #25064C 0%, rgba(32, 40, 59, 0.6) 100%)',
           color: '#ffffff',
+          opacity:0.9,
         }}
       >
         <Typography variant="h2" component="div" fontWeight="bold" letterSpacing={3}>
@@ -37,6 +38,7 @@ const OtpVerification = () => {
           justifyContent: 'center',
           padding: { xs: '20px', sm: '40px' },
           position: 'relative',
+          gap:0,
         }}
       >
         <Paper

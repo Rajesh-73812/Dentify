@@ -10,7 +10,8 @@ const CreateCourse = () => {
   const [source, setSource] = React.useState('');
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <div>
+      <Box sx={{ display: 'flex' }}>
       {/* Sidebar */}
       <SideBar />
 
@@ -26,11 +27,6 @@ const CreateCourse = () => {
             <ArrowBackIosNewIcon sx={{ cursor: 'pointer', mr: 1 }} />
             <Typography variant="h6">Create Course</Typography>
           </Box>
-
-          {/* Form Title */}
-          <Typography variant="h5" gutterBottom>
-            Add Course
-          </Typography>
 
           {/* Form Fields */}
           <Box component="form" noValidate autoComplete="off" sx={{ mt: 2 }}>
@@ -198,7 +194,8 @@ const CreateCourse = () => {
         {/* Footer    <Footer />*/}
         
       </Box>
-    </Box>
+      </Box>
+    </div>
   );
 };
 

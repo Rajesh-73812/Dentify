@@ -24,11 +24,6 @@ const CreateMaterial  = () => {
             <Typography variant="h6">Create Material</Typography>
           </Box>
 
-          {/* Form Title */}
-          <Typography variant="h5" gutterBottom>
-            Add Jobs
-          </Typography>
-
           {/* Form Fields */}
           <Box component="form" noValidate autoComplete="off" sx={{ mt: 2 }}>
             <Grid container spacing={2}>

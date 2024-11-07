@@ -52,16 +52,16 @@ const ServiceList = () => {
         <Header />
         <Container>
           {/* Search and Filters Row */}
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2, flexWrap: 'wrap',marginBottom:'24px'}}>
+          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mt: 5, mb: 2,marginBottom:'24px' }}>
           <Typography variant="h6" gutterBottom>
                 Service List
             </Typography>
-            <Box  sx={{ display: 'flex', gap: 2, mt: { xs: 1, sm: 0 } }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
             <TextField
               label="Search"
               variant="outlined"
               size="small"
-              sx={{ width: '200px' }}
+              sx={{ width: '150px' }}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
@@ -84,25 +84,25 @@ const ServiceList = () => {
                 <Table>
                   <TableHead>
                     <TableRow>
-                      <TableCell sx={{fontWeight: 'bold'}}>Sr.</TableCell>
-                      <TableCell sx={{fontWeight: 'bold'}}>Service Name</TableCell>
-                      <TableCell sx={{fontWeight: 'bold'}}>Service Category</TableCell>
-                      <TableCell sx={{fontWeight: 'bold'}}>Mobile No</TableCell>
-                      <TableCell sx={{fontWeight: 'bold'}}>Service Provider</TableCell>
-                      <TableCell sx={{fontWeight: 'bold'}}>Action</TableCell>
-                      <TableCell sx={{fontWeight: 'bold'}}>View</TableCell>
+                      <TableCell sx={{color:'#131313'}}>Sr.</TableCell>
+                      <TableCell sx={{color:'#131313'}}>Service Name</TableCell>
+                      <TableCell sx={{color:'#131313'}}>Service Category</TableCell>
+                      <TableCell sx={{color:'#131313'}}>Mobile No</TableCell>
+                      <TableCell sx={{color:'#131313'}}>Service Provider</TableCell>
+                      <TableCell sx={{color:'#131313'}}>Action</TableCell>
+                      <TableCell sx={{color:'#131313'}}>View</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
                     {initialRows.map((row) => (
                       <TableRow key={row.id}>
-                        <TableCell>{row .id}</TableCell>
-                        <TableCell>{row.serviceName}</TableCell>
-                        <TableCell>{row.category}</TableCell>
-                        <TableCell>{row.mobileNo}</TableCell>
-                        <TableCell>{row.provider}</TableCell>
-                        <TableCell>
-                            <IconButton size="small" color="primary">
+                        <TableCell sx={{color:'#4D5D6B'}}>{row .id}</TableCell>
+                        <TableCell sx={{color:'#4D5D6B'}}>{row.serviceName}</TableCell>
+                        <TableCell sx={{color:'#4D5D6B'}}>{row.category}</TableCell>
+                        <TableCell sx={{color:'#4D5D6B'}}>{row.mobileNo}</TableCell>
+                        <TableCell sx={{color:'#4D5D6B'}}>{row.provider}</TableCell>
+                        <TableCell sx={{color:'#4D5D6B'}} style={{width: '180px',height: '40px',padding: '10px 1px',gap: '10px',}}>
+                        <IconButton size="small" color="primary">
                               <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M21.3916 27.8206H28.0343" stroke="#131313" strokeWidth="1.875" strokeLinecap="round" strokeLinejoin="round"/>
                                 <path fillRule="evenodd" clipRule="evenodd" d="M24.2278 12.5609V12.5609C22.8278 11.5109 20.8424 11.7942 19.7924 13.1932C19.7924 13.1932 14.5705 20.1494 12.759 22.563C10.9476 24.9776 12.6611 27.9692 12.6611 27.9692C12.6611 27.9692 16.0403 28.7463 17.8257 26.3661C19.6121 23.9869 24.859 16.9963 24.859 16.9963C25.909 15.5973 25.6267 13.6109 24.2278 12.5609Z" stroke="#131313" strokeWidth="1.875" strokeLinecap="round" strokeLinejoin="round"/>

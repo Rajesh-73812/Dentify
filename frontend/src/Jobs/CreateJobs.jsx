@@ -22,13 +22,8 @@ const CreateJobs  = () => {
           {/* Back Button and Title */}
           <Box display="flex" alignItems="center" mb={2}>
             <ArrowBackIosNewIcon sx={{ cursor: 'pointer', mr: 1 }} />
-            <Typography variant="h6">Create Jobs</Typography>
+            <Typography variant="h6">Create Job</Typography>
           </Box>
-
-          {/* Form Title */}
-          <Typography variant="h5" gutterBottom>
-            Add Jobs
-          </Typography>
 
           {/* Form Fields */}
           <Box component="form" noValidate autoComplete="off" sx={{ mt: 2 }}>

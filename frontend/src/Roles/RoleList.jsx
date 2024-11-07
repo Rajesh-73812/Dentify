@@ -3,9 +3,6 @@ import Header from '../components/Header';
 // import Footer from '../components/Footer';
 import SideBar from '../components/SideBar';
 import { Box, Container, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton, Pagination, TextField, MenuItem, Button, Card, CardContent,InputAdornment } from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
-import VisibilityIcon from '@mui/icons-material/Visibility';
 import SearchIcon from '@mui/icons-material/Search'; 
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
@@ -62,7 +59,7 @@ const RoleList = () => {
           <Header />
           <Container>
             {/* Search and Filters Row */}
-            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mt: -1, mb: 2,marginBottom:'24px' }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mt: 5, mb: 2,marginBottom:'24px' }}>
               <Typography variant="h6" gutterBottom>
                 Roles
               </Typography>
@@ -130,36 +127,36 @@ const RoleList = () => {
                   <Table>
                     <TableHead>
                       <TableRow>
-                        <TableCell sx={{fontWeight: 'bold'}}>Sr.</TableCell>
-                        <TableCell sx={{fontWeight: 'bold'}}>Role Name</TableCell>
-                        <TableCell sx={{fontWeight: 'bold'}}>From Date</TableCell>
-                        <TableCell sx={{fontWeight: 'bold'}}>To Date</TableCell>
-                        <TableCell sx={{fontWeight: 'bold'}}>Action</TableCell>
-                        <TableCell sx={{fontWeight: 'bold'}}>View</TableCell>
+                        <TableCell sx={{color:'#131313'}}>Sr.</TableCell>
+                        <TableCell sx={{color:'#131313'}}>Role Name</TableCell>
+                        <TableCell sx={{color:'#131313'}}>From Date</TableCell>
+                        <TableCell sx={{color:'#131313'}}>To Date</TableCell>
+                        <TableCell sx={{color:'#131313'}}>Action</TableCell>
+                        <TableCell sx={{color:'#131313'}}>View</TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
                       {currentRows.map((row) => (
                         <TableRow key={row.id} hover>
-                          <TableCell>{row.id}</TableCell>
-                          <TableCell>{row.name}</TableCell>
-                          <TableCell>{row.fromDate}</TableCell>
-                          <TableCell>{row.toDate}</TableCell>
-                          <TableCell>
-                            <IconButton size="small" color="primary">
+                          <TableCell sx={{color:'#4D5D6B'}}>{row.id}</TableCell>
+                          <TableCell sx={{color:'#4D5D6B'}}>{row.name}</TableCell>
+                          <TableCell sx={{color:'#4D5D6B'}}>{row.fromDate}</TableCell>
+                          <TableCell sx={{color:'#4D5D6B'}}>{row.toDate}</TableCell>
+                          <TableCell sx={{color:'#4D5D6B'}} style={{width: '180px',height: '40px',padding: '10px 1px',gap: '10px',}}>
+                              <IconButton size="small" color="primary">
+                                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                  <path d="M21.3916 27.8206H28.0343" stroke="#131313" strokeWidth="1.875" strokeLinecap="round" strokeLinejoin="round"/>
+                                  <path fillRule="evenodd" clipRule="evenodd" d="M24.2278 12.5609V12.5609C22.8278 11.5109 20.8424 11.7942 19.7924 13.1932C19.7924 13.1932 14.5705 20.1494 12.759 22.563C10.9476 24.9776 12.6611 27.9692 12.6611 27.9692C12.6611 27.9692 16.0403 28.7463 17.8257 26.3661C19.6121 23.9869 24.859 16.9963 24.859 16.9963C25.909 15.5973 25.6267 13.6109 24.2278 12.5609Z" stroke="#131313" strokeWidth="1.875" strokeLinecap="round" strokeLinejoin="round"/>
+                                  <path d="M18.4424 15.0117L23.509 18.8148" stroke="#131313" strokeWidth="1.875" strokeLinecap="round" strokeLinejoin="round"/>
+                                </svg>
+                              </IconButton>
+                              <IconButton size="small" color="error" onClick={() => handleDelete(row.id)}>
                               <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M21.3916 27.8206H28.0343" stroke="#131313" strokeWidth="1.875" strokeLinecap="round" strokeLinejoin="round"/>
-                                <path fillRule="evenodd" clipRule="evenodd" d="M24.2278 12.5609V12.5609C22.8278 11.5109 20.8424 11.7942 19.7924 13.1932C19.7924 13.1932 14.5705 20.1494 12.759 22.563C10.9476 24.9776 12.6611 27.9692 12.6611 27.9692C12.6611 27.9692 16.0403 28.7463 17.8257 26.3661C19.6121 23.9869 24.859 16.9963 24.859 16.9963C25.909 15.5973 25.6267 13.6109 24.2278 12.5609Z" stroke="#131313" strokeWidth="1.875" strokeLinecap="round" strokeLinejoin="round"/>
-                                <path d="M18.4424 15.0117L23.509 18.8148" stroke="#131313" strokeWidth="1.875" strokeLinecap="round" strokeLinejoin="round"/>
+                                <path d="M27.1768 17.4521C27.1768 25.8053 28.3792 29.5811 20.2919 29.5811C12.2036 29.5811 13.4308 25.8053 13.4308 17.4521" stroke="#131313" stroke-width="1.875" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M28.714 14.2499H11.8906" stroke="#131313" stroke-width="1.875" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M23.8694 14.2498C23.8694 14.2498 24.42 10.3271 20.301 10.3271C16.1829 10.3271 16.7335 14.2498 16.7335 14.2498" stroke="#131313" stroke-width="1.875" stroke-linecap="round" stroke-linejoin="round"/>
                               </svg>
-                            </IconButton>
-                            <IconButton size="small" color="error" onClick={() => handleDelete(row.id)}>
-                            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                              <path d="M27.1768 17.4521C27.1768 25.8053 28.3792 29.5811 20.2919 29.5811C12.2036 29.5811 13.4308 25.8053 13.4308 17.4521" stroke="#131313" stroke-width="1.875" stroke-linecap="round" stroke-linejoin="round"/>
-                              <path d="M28.714 14.2499H11.8906" stroke="#131313" stroke-width="1.875" stroke-linecap="round" stroke-linejoin="round"/>
-                              <path d="M23.8694 14.2498C23.8694 14.2498 24.42 10.3271 20.301 10.3271C16.1829 10.3271 16.7335 14.2498 16.7335 14.2498" stroke="#131313" stroke-width="1.875" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                            </IconButton>
+                              </IconButton>
                           </TableCell>
                           <TableCell>
                             <IconButton size="small" color="primary">

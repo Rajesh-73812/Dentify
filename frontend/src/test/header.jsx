@@ -33,19 +33,19 @@ const Header = () => {
       case '/createUser ':
         return 'Users';
       default:
-        return 'Dashboard';
+        return '';
     }
   };
 
   return (
-    <AppBar position="static" color="transparent" elevation={0} sx={{ padding: '0 32px', left: '32px',position:'fixed',background: '#FFFFFF'  }}>
+    <AppBar position="static" color="transparent" elevation={0} sx={{ padding: '0 32px', left: '32px' }}>
       <Toolbar sx={{ justifyContent: 'space-between', padding: '0' }}>
         <Box display="flex" alignItems="center" sx={{ marginTop: '17px', marginBottom: '16.61px' }}>
-          <Box component="img" src="/image/logo frame.svg" alt="Logo" sx={{ height: '24px', marginRight: '8px' }} />
-          <Typography variant="h6" style={{ fontWeight: 'bold', color: '#25064C' }}>
+          <Box component="img" src="/path-to-your-logo.svg" alt="Logo" sx={{ height: '24px', marginRight: '8px' }} />
+          <Typography variant="h6" style={{ fontWeight: 'bold', color: '#333' }}>
             DENTIIFY
           </Typography>
-          <Typography variant="h6" style={{ color: '#333', fontWeight: 700,fontSize: '24px',lineHeight: '38.4px', textAlign: 'left', fontFamily: 'Montserrat',   marginLeft: '94px' }}>
+          <Typography variant="h6" style={{ color: '#333', fontWeight: 'bold', marginLeft: '24px' }}>
             {getTitle()}
           </Typography>
         </Box>

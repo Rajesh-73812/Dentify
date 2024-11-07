@@ -23,7 +23,7 @@ const CreateProduct = () => {
           {/* Back Button and Title */}
           <Box display="flex" alignItems="center" mb={2}>
             <ArrowBackIosNewIcon sx={{ cursor: 'pointer', mr: 1 }} />
-            <Typography variant="h6">Add Product</Typography>
+            <Typography variant="h6">Create Product</Typography>
           </Box>
 
    

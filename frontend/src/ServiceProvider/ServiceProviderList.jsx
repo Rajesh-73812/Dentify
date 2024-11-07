@@ -51,16 +51,16 @@ const DashBoard = () => {
         <Header />
         <Container>
           {/* Search and Filters Row */}
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2, flexWrap: 'wrap',marginBottom:'24px'}}>
+          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mt: 5, mb: 2,marginBottom:'24px' }}>
           <Typography variant="h6" gutterBottom>
                 Service Provider List
             </Typography>
-           <Box  sx={{ display: 'flex', gap: 2, mt: { xs: 1, sm: 0 } }}>
-           <TextField
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+            <TextField
               label="Search"
               variant="outlined"
               size="small"
-              sx={{ width: '200px' }}
+              sx={{ width: '150px' }}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
@@ -83,26 +83,26 @@ const DashBoard = () => {
                   <Table>
                     <TableHead>
                       <TableRow>
-                        <TableCell sx={{fontWeight: 'bold'}}>Sr.</TableCell>
-                        <TableCell sx={{fontWeight: 'bold'}}>Service Provider Name</TableCell>
-                        <TableCell sx={{fontWeight: 'bold'}}>Email</TableCell>
-                        <TableCell sx={{fontWeight: 'bold'}} >Mobile No</TableCell>
-                        <TableCell sx={{fontWeight: 'bold'}}>From Date</TableCell>
-                        <TableCell sx={{fontWeight: 'bold'}}>To Date</TableCell>
-                        <TableCell sx={{fontWeight: 'bold'}}>Action</TableCell>
-                        <TableCell sx={{fontWeight: 'bold'}}>View</TableCell>
+                        <TableCell sx={{color:'#131313'}}>Sr.</TableCell>
+                        <TableCell sx={{color:'#131313'}}>Service Provider Name</TableCell>
+                        <TableCell sx={{color:'#131313'}}>Email</TableCell>
+                        <TableCell sx={{color:'#131313'}} >Mobile No</TableCell>
+                        <TableCell sx={{color:'#131313'}}>From Date</TableCell>
+                        <TableCell sx={{color:'#131313'}}>To Date</TableCell>
+                        <TableCell sx={{color:'#131313'}}>Action</TableCell>
+                        <TableCell sx={{color:'#131313'}}>View</TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
                       {rows.map((row) => (
                         <TableRow key={row.id}>
-                          <TableCell>{row.id}</TableCell>
-                          <TableCell>{row.name}</TableCell>
-                          <TableCell>{row.email}</TableCell>
-                          <TableCell>{row.mobileNo}</TableCell>
-                          <TableCell>{row.fromDate}</TableCell>
-                          <TableCell>{row.toDate}</TableCell>
-                          <TableCell>
+                          <TableCell sx={{color:'#4D5D6B'}}>{row.id}</TableCell>
+                          <TableCell sx={{color:'#4D5D6B'}}>{row.name}</TableCell>
+                          <TableCell sx={{color:'#4D5D6B'}}>{row.email}</TableCell>
+                          <TableCell sx={{color:'#4D5D6B'}}>{row.mobileNo}</TableCell>
+                          <TableCell sx={{color:'#4D5D6B'}}>{row.fromDate}</TableCell>
+                          <TableCell sx={{color:'#4D5D6B'}}>{row.toDate}</TableCell>
+                          <TableCell sx={{color:'#4D5D6B'}} style={{width: '180px',height: '40px',padding: '10px 1px',gap: '10px',}}>
                             <IconButton size="small" color="primary">
                               <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M21.3916 27.8206H28.0343" stroke="#131313" strokeWidth="1.875" strokeLinecap="round" strokeLinejoin="round"/>

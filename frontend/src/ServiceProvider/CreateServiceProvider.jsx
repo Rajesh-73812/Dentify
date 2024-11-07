@@ -21,7 +21,7 @@ const CreateServiceProvider  = () => {
           {/* Back Button and Title */}
           <Box display="flex" alignItems="center" mb={2}>
             <ArrowBackIosNewIcon sx={{ cursor: 'pointer', mr: 1 }} />
-            <Typography variant="h6">Add Role</Typography>
+            <Typography variant="h6">Create Service Provider</Typography>
           </Box>
 
           {/* Form Fields */}
