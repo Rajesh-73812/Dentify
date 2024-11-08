@@ -22,6 +22,8 @@ import CreateServiceProvider from './ServiceProvider/CreateServiceProvider.jsx'
 import UserList from './Users/UserList.jsx'
 import CreateUser from './Users/CreateUser.jsx'
 import RoleList from './Roles/RoleList.jsx';
+import DashBoard2 from './Dashboard2.jsx';
+import Login2 from './Log/Login2.jsx';
 
 
 function App() {
@@ -36,7 +38,7 @@ function App() {
           <Route path='/otpVerfication' element={<OtpVerfication />}></Route>
           <Route path='/setNewPassword' element={<SetNewPassword />}></Route>
 
-          <Route path='/dashBoard' element={<DashBoard />}></Route>
+          {/* <Route path='/dashBoard' element={<DashBoard />}></Route> */}
           <Route path='/courseList' element={<CourseList />}></Route>
           <Route path='/createCourse' element={<CreateCourse />}></Route>
           <Route path='/jobsList' element={<JobsList />}></Route>
@@ -56,6 +58,13 @@ function App() {
 
           <Route path='/userList' element={<UserList />}></Route>
           <Route path='/createUser' element={<CreateUser />}></Route>
+
+
+
+          {/* new */}
+          <Route path='/dashBoard2' element={<DashBoard2 />}></Route>
+          <Route path='/login2' element={<Login2 />}></Route>
+
           
         </Routes>
       </BrowserRouter>
