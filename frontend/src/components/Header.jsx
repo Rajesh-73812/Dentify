@@ -1,77 +1,64 @@
-import React from 'react';
-import { AppBar, Toolbar, Typography, IconButton, Box } from '@mui/material';
-import { useLocation } from 'react-router-dom';
-import { NotificationIcon, ProfileIcon } from './Icons';
+import React from "react";
+import { useLocation } from "react-router-dom";
+import { NotificationIcon, ProfileIcon } from "./Icons";
 
 const Header = () => {
   const location = useLocation();
-
+  
+  // Function to get the title based on the current pathname
   const getTitle = () => {
     switch (location.pathname) {
-      case '/rolesList':
-      case '/addRoles':
-        return 'Roles';
-      case '/serviceProviderList':
-      case '/createServiceProvider':
-        return 'Service Providers';
-      case '/productList':
-      case '/createProduct':
-        return 'Products';
-      case '/jobsList':
-      case '/createJobs':
-        return 'Jobs';
-      case '/courseList':
-      case '/createCourse':
-        return 'Courses';
-      case '/materialList':
-      case '/createMaterial':
-        return 'Materials';
-      case '/serviceList':
-      case '/createService':
-        return 'Services';
-      case '/userList':
-      case '/createUser ':
+      case '/user-list':
+      case '/create-user':
         return 'Users';
+
+      case '/service-list':
+      case '/create-service':
+        return 'Services';
+
+      case '/service-provider-list':
+      case '/create-service-rovider':
+        return 'Service Provider';
+
+      case '/role-list':
+      case '/create-role':
+        return 'Roles';
+
+      case '/product-list':
+      case '/create-product':
+        return 'Products';
+
+      case '/job-list':
+      case '/create-job':
+        return 'Jobs';
+
+      case '/course-list':
+      case '/create-course':
+        return 'Courses';
+
+      case '/material-list':
+      case '/create-material':
+        return 'Materials';
+
       default:
-        return 'Dashboard';
+        return 'Dashboard'; 
     }
   };
 
   return (
-    <AppBar position="static" color="transparent" elevation={0} sx={{ padding: '0 32px', left: '32px',position:'fixed',background: '#FFFFFF'  }}>
-      <Toolbar sx={{ justifyContent: 'space-between', padding: '0' }}>
-        <Box display="flex" alignItems="center" sx={{ marginTop: '17px', marginBottom: '16.61px' }}>
-          <Box component="img" src="/image/logo frame.svg" alt="Logo" sx={{ height: '24px', marginRight: '8px' }} />
-          <Typography variant="h6" style={{ fontWeight: 'bold', color: '#25064C' }}>
-            DENTIIFY
-          </Typography>
-          <Typography variant="h6" style={{ color: '#333', fontWeight: 700,fontSize: '24px',lineHeight: '38.4px', textAlign: 'left', fontFamily: 'Montserrat',   marginLeft: '94px' }}>
-            {getTitle()}
-          </Typography>
-        </Box>
-        <Box display="flex" alignItems="center">
-          <IconButton
-            edge="end"
-            color="inherit"
-            sx={{
-              marginRight: '8px',
-              padding: '10px',
-            }}
-          >
-            <NotificationIcon style={{ color: '#333' }} />
-          </IconButton>
-          <IconButton
-            edge="end"
-            color="inherit"
-            sx={{
-              padding: '10px',
-            }}
-          >
-            <ProfileIcon style={{ color: '#333' }} />
-          </IconButton>
-        </Box>
-      </Toolbar>
-    </AppBar>
+    <div className="bg-white h-[65px] sm:h-[80px] px-6 flex items-center justify-between ">
+      <div className="flex items-center gap-2.5">
+        <span className="text-2xl font-bold">{getTitle()}</span>
+      </div>
+      <div className="flex items-center gap-5">
+        <div className="bg-[#f7fbff] rounded-full size-8 sm:size-11 flex items-center justify-center">
+          <NotificationIcon />
+        </div>
+        <div className="bg-[#f7fbff] rounded-full size-8 sm:size-11 flex items-center justify-center">
+          <ProfileIcon />
+        </div>
+      </div>
+    </div>
   );
 };
 

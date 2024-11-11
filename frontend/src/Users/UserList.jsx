@@ -1,170 +1,192 @@
 import React, { useState } from 'react';
-import Header from '../components/Header';
-// import Footer from '../components/Footer';
-import SideBar from '../components/SideBar';
-import { Box,MenuItem, Container, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton, Pagination, TextField, Button, Card, CardContent, InputAdornment } from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import SearchIcon from '@mui/icons-material/Search'; 
-import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import Sidebar from '../components/SideBar';
+import Header from '../components/Header';
+import { useNavigate } from 'react-router-dom';
 
-const initialRows = [
-  { id: 1, name: 'Role name 1', fromDate: '30-09-2024', toDate: '30-09-2024' },
-  { id: 2, name: 'Role name 2', fromDate: '30-09-2024', toDate: '30-09-2024' },
-  { id: 3, name: 'Role name 3', fromDate: '30-09-2024', toDate: '30-09-2024' },
-  { id: 4, name: 'Role name 4', fromDate: '30-09-2024', toDate: '30-09-2024' },
-  { id: 5, name: 'Role name 5', fromDate: '30-09-2024', toDate: '30-09-2024' },
-  { id: 6, name: 'Role name 6', fromDate: '30-09-2024', toDate: '30-09-2024' },
+const roleData = [
+  { id: 1, roleName: 'Admin', fromDate: '01-01-2023', toDate: '31-12-2023' },
+  { id: 2, roleName: 'Editor', fromDate: '01-01-2023', toDate: '31-12-2023' },
+  { id: 3, roleName: 'Viewer', fromDate: '01-01-2023', toDate: '31-12-2023' },
+  { id: 4, roleName: 'Contributor', fromDate: '01-01-2023', toDate: '31-12-2023' },
+  { id: 5, roleName: 'Moderator', fromDate: '01-01-2023', toDate: '31-12-2023' },
+  { id: 6, roleName: 'Super Admin', fromDate: '01-01-2023', toDate: '31-12-2023' },
 ];
 
 const UserList = () => {
   const navigate=useNavigate();
-  const [rows, setRows] = useState(initialRows);
+    const [isOpen, setIsOpen] = useState(false);
 
-  const createNewUser=()=>{
-    navigate("/createUser")
-  }
 
-  const handleDelete = (id) => {
-    Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#d33',
-      cancelButtonColor: '#3085d6',
-      confirmButtonText: 'Yes, delete it!',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        setRows(rows.filter(row => row.id !== id));
-        Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
-      }
-    });
-  };
+    const [selectedStatus, setSelectedStatus] = useState('Status');
 
-  return (
-    <div>
-      <Box sx={{ display: 'flex' }}>
-      <SideBar />
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-        <Header />
-        <Container>
-         
-          {/* Search and Filters Row */}
-          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mt: 5, mb: 2,marginBottom:'24px' }}>
-          <Typography variant="h6" gutterBottom>
-                User List
-            </Typography>
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-            {/* Search and Filter Fields */}
-              <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
-                <TextField
-                  label="Type"
-                  variant="outlined"
-                  size="small"
-                  select
-                  defaultValue="All"
-                  sx={{ width: { xs: '100%', sm: '150px',width:'150px' } }}
-                >
-                  <MenuItem value="All">Select Roles</MenuItem>
-                  <MenuItem value="Admin">Admin</MenuItem>
-                  <MenuItem value="User">User</MenuItem>
-                </TextField>
-                
-                <Button variant="contained" color="primary">
-                  Assign
-                </Button>
 
-                <TextField
-                  label="Search"
-                  variant="outlined"
-                  size="small"
-                  sx={{ width: { xs: '100%', sm: '200px' } }}
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <SearchIcon />
-                      </InputAdornment>
-                    ),
-                  }}
-                />
-                <Button variant="contained" color="primary" onClick={createNewUser}>
-                  + Create User
-                </Button>
-              </Box>
+    const handleDelete = (id) => {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete it!',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Implement the delete functionality here
+                Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
+            }
+        });
+    }
 
-            </Box>           
-          </Box>
+    const toggleDropdown = () => {
+        setIsOpen(!isOpen);
+    };
 
-          {/* Table */}
-          <Card elevation={3} sx={{borderRadius:4}}>
-            <CardContent>
-              <TableContainer component={Paper}>
-                <Table>
-                  <TableHead>
-                    <TableRow>
-                      <TableCell sx={{color:'#131313'}}>Sr.</TableCell>
-                      <TableCell sx={{color:'#131313'}}>Role Name</TableCell>
-                      <TableCell sx={{color:'#131313'}}>From Date</TableCell>
-                      <TableCell sx={{color:'#131313'}}>To Date</TableCell>
-                      <TableCell sx={{color:'#131313'}}>Action</TableCell>
-                      <TableCell sx={{color:'#131313'}}>View</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {rows.map((row) => (
-                      <TableRow key={row.id}>
-                        <TableCell sx={{color:'#4D5D6B'}}>{row.id}</TableCell>
-                        <TableCell sx={{color:'#4D5D6B'}}>{row.name}</TableCell>
-                        <TableCell sx={{color:'#4D5D6B'}}>{row.fromDate}</TableCell>
-                        <TableCell sx={{color:'#4D5D6B'}}>{row.toDate}</TableCell>
-                        <TableCell sx={{color:'#4D5D6B'}} style={{width: '180px',height: '40px',padding: '10px 1px',gap: '10px',}}>
-                        <IconButton size="small" color="primary">
-                              <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M21.3916 27.8206H28.0343" stroke="#131313" strokeWidth="1.875" strokeLinecap="round" strokeLinejoin="round"/>
-                                <path fillRule="evenodd" clipRule="evenodd" d="M24.2278 12.5609V12.5609C22.8278 11.5109 20.8424 11.7942 19.7924 13.1932C19.7924 13.1932 14.5705 20.1494 12.759 22.563C10.9476 24.9776 12.6611 27.9692 12.6611 27.9692C12.6611 27.9692 16.0403 28.7463 17.8257 26.3661C19.6121 23.9869 24.859 16.9963 24.859 16.9963C25.909 15.5973 25.6267 13.6109 24.2278 12.5609Z" stroke="#131313" strokeWidth="1.875" strokeLinecap="round" strokeLinejoin="round"/>
-                                <path d="M18.4424 15.0117L23.509 18.8148" stroke="#131313" strokeWidth="1.875" strokeLinecap="round" strokeLinejoin="round"/>
-                              </svg>
-                            </IconButton>
-                            <IconButton size="small" color="error" onClick={() => handleDelete(row.id)}>
-                            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                              <path d="M27.1768 17.4521C27.1768 25.8053 28.3792 29.5811 20.2919 29.5811C12.2036 29.5811 13.4308 25.8053 13.4308 17.4521" stroke="#131313" stroke-width="1.875" stroke-linecap="round" stroke-linejoin="round"/>
-                              <path d="M28.714 14.2499H11.8906" stroke="#131313" stroke-width="1.875" stroke-linecap="round" stroke-linejoin="round"/>
-                              <path d="M23.8694 14.2498C23.8694 14.2498 24.42 10.3271 20.301 10.3271C16.1829 10.3271 16.7335 14.2498 16.7335 14.2498" stroke="#131313" stroke-width="1.875" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                            </IconButton>
-                          </TableCell>
-                          <TableCell>
-                            <IconButton size="small" color="primary">
-                            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                              <path d="M11.5863 21.7788C13.3657 23.5478 16.469 25.9999 19.9997 25.9999C23.5303 25.9999 26.6331 23.5478 28.4125 21.7788C28.8818 21.3123 29.1172 21.0782 29.2667 20.6201C29.3733 20.2933 29.3733 19.7067 29.2667 19.3799C29.1172 18.9218 28.8818 18.6877 28.4125 18.2211C26.633 16.4521 23.5303 14 19.9997 14C16.469 14 13.3657 16.4521 11.5863 18.2211C11.1166 18.688 10.8818 18.9216 10.7323 19.3799C10.6257 19.7067 10.6257 20.2933 10.7323 20.6201C10.8818 21.0784 11.1166 21.3119 11.5863 21.7788Z" stroke="#131313" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                              <path d="M17.9995 20C17.9995 21.1046 18.8949 22 19.9995 22C21.1041 22 21.9995 21.1046 21.9995 20C21.9995 18.8954 21.1041 18 19.9995 18C18.8949 18 17.9995 18.8954 17.9995 20Z" stroke="#131313" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
+    const handleStatusSelect = (status) => {
+        setSelectedStatus(status);
+        setIsOpen(false);
+    };
+    
 
-                            </IconButton>
-                          </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-            </CardContent>
-          </Card>
+    // navigation to add new role 
+    const navigateToAddRole=()=>{
+      // alert(1)
+      navigate('/create-user')
+    }
+    return (
+        <div className='h-screen flex'>
+        {/* sidebar */}
+            <Sidebar />
+            
+            <div className="flex flex-1 flex-col">
+            {/* header */}
+                <Header />
+                {/* searching sorting  and main content area*/}
+                <div className=" px-6 py-3 flex items-center justify-between">
+                    <span className="text-xl sm:text-2xl w-16 h-9" style={{color:'#131313',fontFamily: 'Montserrat',fontSize:'24px',lineHeight:'38px',left:'24px'}}>Roles</span>
+                    <div className="flex items-center gap-4">
+                       
+                        <div className="relative inline-block text-left">
+                            <div className="flex items-center border rounded-lg bg-white shadow-sm cursor-pointer" style={{ width: '103px', height: '48px', borderRadius: '8px', border: '1px solid #EAE5FF' }} onClick={toggleDropdown}>
+                                <input type="text" readOnly value={selectedStatus} className="outline-none text-sm placeholder-gray-500 px-3 py-2 rounded-l-lg" style={{ fontFamily: 'Montserrat', width: '100%' }} />
+                                <img src="/image/action/Down Arrow.svg" alt="Dropdown" className="w-6 h-6" style={{ marginLeft: '-8px' }} />
+                            </div>
 
-          {/* Pagination */}
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
-            <Typography variant="body2">Showing 06 of 06</Typography>
-            <Pagination count={1} color="primary" />
-          </Box>
-        </Container>
-        {/* Footer  */}
-        {/* <Footer /> */}
-      </Box>
-    </Box>
-    </div>
-  );
-};
+                            {isOpen && (
+                                <div className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" tabIndex="-1">
+                                    <div className="py-1" role="none">
+                                        <a href="#" onClick={() => handleStatusSelect('Active')} className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1">Active</a>
+                                        <div className="border-t border-gray-200"></div> {/* Divider */}
+                                        <a href="#" onClick={() => handleStatusSelect('Inactive')} className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1">Inactive</a>
+                                        <div className="border-t border-gray-200"></div> {/* Divider */}
+                                        <a href="#" onClick={() => handleStatusSelect('Pending')} className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1">Pending</a>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                        <div className="bg-[#115CC9] flex items-center justify-center text-white  px-2.5 py-1 sm:px-4 sm:py-2  rounded-lg shadow-sm cursor-pointer">
+                            <button style={{ fontFamily: 'Montserrat' }} className="flex items-center gap-2" onClick={()=>{navigateToAddRole()}}>
+                                {/* <span className="text-xl font-bold ">+</span>  */}
+                                <span className='hidden sm:inline'>Assign</span>
+                            </button>
+                        </div>
+                         {/* Search Input */}
+                         <div className="hidden sm:flex  items-center border rounded-lg bg-white shadow-sm" style={{ top:'104px', height: '48px', opacity: 1, border: '1px solid #EAE5FF', boxShadow: '0px 0px 4px 1px #00000033' }}>
+                            <input type="search" placeholder="Search" className="outline-none text-sm placeholder-gray-500 px-3 py-2 rounded-l-lg"  style={{ fontFamily: 'Montserrat', padding: '10px 12px', height: '100%', borderRadius: '8px 0 0 8px' }}  />
+                            <img src="/image/action/search-normal.svg" alt="Search" className="w-9 h-5 " style={{color:'#131313'}} />
+                        </div>
+                        <div className="bg-[#115CC9] flex items-center justify-center text-white  px-2.5 py-1 sm:px-4 sm:py-2  rounded-lg shadow-sm cursor-pointer">
+                            <button style={{ fontFamily: 'Montserrat' }} className="flex items-center gap-2" onClick={()=>{navigateToAddRole()}}>
+                                <span className="text-xl font-bold ">+</span> 
+                                <span className='hidden sm:inline'>Create User</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                {/* card */}
+                <div className="bg-[#f7fbff] h-full py-6 px-6">
+                    <div className="bg-white w-full rounded-xl border border-[#EAE5FF] py-4 px-3">
+                        <div className="relative overflow-x-auto sm:rounded-lg">
+                            <table className="min-w-full text-sm text-left rtl:text-right text-gray-500 divide-y divide-gray-200">
+                                <thead className="text-xs text-gray-700 uppercase bg-gray-50">
+                                    <tr>
+                                        <th scope="col" className="w-[64px] h-[40px] px-4 py-2 border-b border-[#EAE5FF] text-left text-xs  font-medium tracking-wider" style={{ fontFamily: 'Montserrat', color: '#090713' }}>Sr.</th>
+                                        <th scope="col" className="w-[410px] h-[40px] px-4 py-2 border-b border-[#EAE5FF] text-left text-xs font-medium tracking-wider" style={{ fontFamily: 'Montserrat', color: '#090713' }}>Role Name</th>
+                                        <th scope="col" className="w-[410px] h-[40px] px-4 py-2 border-b border-[#EAE5FF] text-left text-xs font-medium tracking-wider" style={{ fontFamily: 'Montserrat', color: '#090713' }}>From Date</th>
+                                        <th scope="col" className="w-[410px] h-[40px] px-4 py-2 border-b border-[#EAE5FF] text-left text-xs font-medium tracking-wider" style={{ fontFamily: 'Montserrat', color: '#090713' }}>To Date</th>
+                                        <th scope="col" className="w-[180px] h-[40px] px-4 py-2 border-b border-[#EAE5FF] text-left text-xs font-medium tracking-wider" style={{ fontFamily: 'Montserrat', color: '#090713' }}>Action</th>
+                                        <th scope="col" className="w-[100px] h-[40px] px-4 py-2 border-b border-[#EAE5FF] text-left text-xs font-medium tracking-wider" style={{ fontFamily: 'Montserrat', color: '#090713' }}>View</th>
+                                    </tr>
+                                </thead>
+                                <tbody className='divide-y divide-gray-200'>
+                                    {roleData.map((role, index) => (
+                                        <tr key={role.id} className="bg-white hover:bg-gray-50">
+                                            <td className="px-4 py-2 border-b border-[#EAE5FF] whitespace-nowrap">{index + 1}</td>
+                                            <td className="px-4 py-2 border-b border-[#EAE5FF] whitespace-nowrap">{role.roleName}</td>
+                                            <td className="px-4 py-2 border-b border-[#EAE5FF] whitespace-nowrap">{role.fromDate}</td>
+                                            <td className="px-4 py-2 border-b border-[#EAE5FF] whitespace-nowrap">{role.toDate}</td>
+                                            <td className="px-4 py-2 border-b border-[#EAE5FF] whitespace-nowrap ">
+                                                <div className='flex gap-2  '>
+                                                    <div className="relative group">
+                                                        <div className="flex items-center justify-center w-[40px] h-[40px] bg-[#F7FBFF] rounded-[10px] cursor-pointer ">
+                                                            <img src="/image/action/Frame 33573.svg" alt="Edit" className='size-6' />
+                                                        </div>
+                                                        <span className="absolute left-1/2 transform -translate-x-1/2 bottom-full mb-1 w-max bg-gray-700 text-white text-xs rounded py-1 px-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">Edit</span>
+                                                    </div>
+                                                    <div className="relative group">
+                                                        <div className="flex items-center justify-center w-[40px] h-[40px] bg-[#F7FBFF] rounded-[10px] cursor-pointer">
+                                                            <img src="/image/action/Frame 33572 (2).svg" alt="Delete" className='size-6' onClick={() => handleDelete(role.id)} />
+                                                        </div>
+                                                        <span className="absolute left-1/2 transform -translate-x-1/2 bottom-full mb-1 w-max bg-gray-700 text-white text-xs rounded py-1 px-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">Delete</span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td className="px-4 py-2 border-b border-[#EAE5FF]">
+                                                <div className='flex gap-2'>
+                                                    <div className="relative group">
+                                                        <div className="flex items-center justify-center w-[40px] h-[40px] bg-[#F7FBFF] rounded-[10px] cursor-pointer">
+                                                            <img src="/image/action/Frame 33574 (2).svg" alt="View" className='size-6' />
+                                                        </div>
+                                                        <span className="absolute left-1/2 transform -translate-x-1/2 bottom-full mb-1 w-max bg-gray-700 text-white text-xs rounded py-1 px-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">View</span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                            <div className="mt-6">
+                                <nav className="pt-4" aria-label="Table navigation">
+                                    <div className="flex justify-between">
+                                        <span className="text-sm font-normal text-gray-500 mb-4 md:mb-0 block w-[104px] h-[18px] ">
+                                            Showing <span className="font-semibold text-gray-900">01</span> of <span className="font-semibold text-gray-900">{roleData.length}</span>
+                                        </span>
+                                        <ul className="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8 w-[276px]">
+                                            <li>
+                                                <a href="#" className="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white rounded-s-lg hover:bg-gray-100 hover:text-gray-700">
+                                                    <img src="/image/action/Left Arrow.svg" alt="Left" /> Previous
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#" className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white hover:bg-gray-100 hover:text-gray-700" style={{ font: 'Poppins', color: '#090713', fontWeight: '400', fontSize: '12px', lineHeight: '18px' }}>
+                                                    Page 01 of 01
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#" className="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700" style={{ borderRadius: '6px', gap: '8px', background: '#115CC9', color: '#ffffff' }}>
+                                                    Next <img src="/image/action/Right Arrow (1).svg" alt="Right" />
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+}
 
 export default UserList;

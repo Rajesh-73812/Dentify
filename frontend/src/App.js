@@ -38,26 +38,26 @@ function App() {
           <Route path='/otpVerfication' element={<OtpVerfication />}></Route>
           <Route path='/setNewPassword' element={<SetNewPassword />}></Route>
 
-          {/* <Route path='/dashBoard' element={<DashBoard />}></Route> */}
-          <Route path='/courseList' element={<CourseList />}></Route>
-          <Route path='/createCourse' element={<CreateCourse />}></Route>
-          <Route path='/jobsList' element={<JobsList />}></Route>
-          <Route path='/createJobs' element={<CreateJobs />}></Route>
+          <Route path='/dashBoard' element={<DashBoard />}></Route>
+          <Route path='/course-list' element={<CourseList />}></Route>
+          <Route path='/create-course' element={<CreateCourse />}></Route>
+          <Route path='/job-list' element={<JobsList />}></Route>
+          <Route path='/create-job' element={<CreateJobs />}></Route>
 
-          <Route path='/materialList' element={<MaterialList />}></Route>
-          <Route path='/createMaterial' element={<CreateMaterial />}></Route>
-          <Route path='/productList' element={<ProductList />}></Route>
-          <Route path='/createProduct' element={<CreateProduct />}></Route>
-          <Route path='/addRoles' element={<AddRoles />}></Route>
-          <Route path='/rolesList' element={<RoleList />}></Route>
+          <Route path='/material-list' element={<MaterialList />}></Route>
+          <Route path='/create-material' element={<CreateMaterial />}></Route>
+          <Route path='/product-list' element={<ProductList />}></Route>
+          <Route path='/create-product' element={<CreateProduct />}></Route>
+          <Route path='/create-role' element={<AddRoles />}></Route>
+          <Route path='/role-list' element={<RoleList />}></Route>
 
-          <Route path='/serviceList' element={<ServiceList />}></Route>
-          <Route path='/createService' element={<CreateService />}></Route>
-          <Route path='/serviceProviderList' element={<ServiceProviderList />}></Route>
-          <Route path='/createServiceProvider' element={<CreateServiceProvider />}></Route>
+          <Route path='/service-list' element={<ServiceList />}></Route>
+          <Route path='/create-service' element={<CreateService />}></Route>
+          <Route path='/service-provider-list' element={<ServiceProviderList />}></Route>
+          <Route path='/create-service-rovider' element={<CreateServiceProvider />}></Route>
 
-          <Route path='/userList' element={<UserList />}></Route>
-          <Route path='/createUser' element={<CreateUser />}></Route>
+          <Route path='/user-list' element={<UserList />}></Route>
+          <Route path='/create-user' element={<CreateUser />}></Route>
 
 
 

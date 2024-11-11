@@ -1,89 +1,196 @@
-import React from 'react';
-import { List, ListItem, ListItemIcon, ListItemText, Box, Drawer } from '@mui/material';
-import { Link, useLocation } from 'react-router-dom';
-import { CourseIcon, JobIcon, MaterialIcon, ProductIcon, RolesIcon, ServiceIcon, ServiceProviderIcon, UsersIcon } from './Icons';
+import React from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
-const menuItems = [
-  { name: 'Roles', icon: <RolesIcon />, paths: ['/rolesList', '/addRoles'] },
-  { name: 'Users', icon: <UsersIcon />, paths: ['/userList', '/createUser '] },
-  { name: 'Product', icon: <ProductIcon />, paths: ['/productList', '/createProduct'] },
-  { name: 'Service', icon: <ServiceIcon />, paths: ['/serviceList', '/createService'] },
-  { name: 'Service Provider', icon: <ServiceProviderIcon />, paths: ['/serviceProviderList', '/createServiceProvider'] },
-  { name: 'Material', icon: <MaterialIcon />, paths: ['/materialList', '/createMaterial'] },
-  { name: 'Jobs', icon: <JobIcon />, paths: ['/jobsList', '/createJobs'] },
-  { name: 'Courses', icon: <CourseIcon />, paths: ['/courseList', '/createCourse'] },
-];
-
-const SideBar = () => {
+const Sidebar = () => {
   const location = useLocation();
+  const pathName = location.pathname;
+  const navigate = useNavigate();
 
   return (
-    <Drawer
-      variant="permanent"
-      sx={{
-        width: 250,
-        flexShrink: 0,
-        '& .MuiDrawer-paper': {
-          width: 250,
-          boxSizing: 'border-box',
-          backgroundColor: '#439BFF',
-          color: '#fff',
-          borderRadius: '0px 15px 15px 0px',
-          top: '80px',
-        },
-      }}
-    >
-      <Box
-        component="nav"
-        sx={{
-          width: '240px',
-          position: 'fixed',
-          top: '104px',
-          left: '16px',
-          right: '16px',
-          height: 'auto',
-        }}
-      >
-        <List sx={{ padding: '16px 0' }}>
-          {menuItems.map((item, index) => {
-            const isSelected = item.paths.includes(location.pathname);
+    <div className="bg-[#439bff] hidden sm:block w-[250px] h-screen">
+      <div className="h-[80px] bg-white flex justify-center items-center gap-2">
+        <img src="/image/logo frame.svg" alt="Logo" className="h-[46px] w-[46px]" />
+        <span className="text-2xl font-normal">DENTIIFY</span>
+      </div>
+      <div className="px-5 py-7 flex flex-col gap-4">
+        {/* Role Item */}
+        <div
+          onClick={() => navigate("/role-list")}
+          className={`h-8 rounded-lg flex items-center gap-3 px-3 cursor-pointer ${
+            pathName === "/create-role" || pathName === "/role-list" ? "bg-white" : ""
+          }`}
+        >
+          <img
+            src={
+              pathName === "/create-role" || pathName === "/role-list"
+                ? "/image/sidebar/roles/roles icon (1).svg"
+                : "/image/sidebar/roles/roles icon (2).svg"
+            }
+            alt="Role Icon"
+            className="h-[24px] w-[24px]"
+          />
+          <span
+            className={`text-xs font-medium ${
+              pathName === "/create-role" || pathName === "/role-list"
+                ? "text-[#439bff]"
+                : "text-white"
+            }`}
+          >
+            Roles
+          </span>
+        </div>
 
-            return (
-              <ListItem
-                button
-                key={index}
-                component={Link}
-                to={item.paths[0]}
-                aria-current={isSelected ? 'page' : undefined}
-                sx={{
-                  color: isSelected ? '#1976d2' : '#fff',
-                  backgroundColor: isSelected ? '#fff' : 'transparent',
-                  '&:hover': {
-                    backgroundColor: isSelected ? '#fff' : '#0d47a1',
-                  },
-                  borderRadius: '14px',
-                  margin: '3px 0px',
-                  padding: '10px 16px',
-                  paddingLeft: '20px',
-                  paddingRight: '20px',
-                  boxShadow: isSelected ? '0px 4px 10px rgba(0, 0, 0, 0.2)' : 'none',
-                  width: 'calc(100% - 32px)',
-                }}
-              >
-                <ListItemIcon sx={{ color: isSelected ? '#1976d2' : '#fff', minWidth: '40px', fontSize: '1.5rem' }}>
-                  {item.icon}
-                </ListItemIcon>
-                <ListItemText
-                  primary={item.name}
-                  primaryTypographyProps={{ fontWeight: 'normal' }}
-                />
-              </ListItem>
-            );
-          })}
-        </List>
-      </Box>
-    </Drawer>
+        {/* Users Item */}
+        <div
+          onClick={() => navigate("/user-list")}
+          className={`h-8 rounded-lg flex items-center gap-3 px-3 cursor-pointer ${
+            pathName === "/user-list" || pathName === "/create-user"  ? "bg-white" : ""
+          }`}
+        >
+          <img
+            src={pathName === "/user-list" || pathName === "/create-user" ? "/image/sidebar/users/Users icon (1).svg" : "/image/sidebar/users/Users icon (2).svg"}
+            alt="Users Icon"
+            className="h-[24px] w-[24px]"
+          />
+          <span
+            className={`text-xs font-medium ${pathName === "/user-list" || pathName === "/create-user" ? "text-[#439bff]" : "text-white"}`}
+          >
+            Users
+          </span>
+        </div>
+
+        {/* Products Item */}
+        <div
+          onClick={() => navigate("/product-list")}
+          className={`h-8 rounded-lg flex items-center gap-3 px-3 cursor-pointer ${
+            pathName === "/create-product" || pathName === "/product-list" ? "bg-white" : ""
+          }`}
+        >
+          <img
+            src={
+              pathName === "/create-product" || pathName === "/product-list"
+                ? "/image/sidebar/products/fluent-mdl2_product-variant (1).svg"
+                : "/image/sidebar/products/fluent-mdl2_product-variant (2).svg"
+            }
+            alt="Products Icon"
+            className="h-[24px] w-[24px]"
+          />
+          <span
+            className={`text-xs font-medium ${pathName === "/create-product" || pathName === "/product-list" ? "text-[#439bff]" : "text-white"}`}
+          >
+            Products
+          </span>
+        </div>
+
+        {/* Service Item */}
+        <div
+          onClick={() => navigate("/service-list")}
+          className={`h-8 rounded-lg flex items-center gap-3 px-3 cursor-pointer ${
+            pathName === "/create-service" || pathName === "/service-list" ? "bg-white" : ""
+          }`}
+        >
+          <img
+            src={pathName === "/create-service" || pathName === "/service-list" ? "/image/sidebar/service/services (1).svg" : "/image/sidebar/service/services (2).svg"}
+            alt="Service Icon"
+            className="h-[24px] w-[24px]"
+          />
+          <span
+            className={`text-xs font-medium ${pathName === "/create-service" || pathName === "/service-list" ? "text-[#439bff]" : "text-white"}`}
+          >
+            Service
+          </span>
+        </div>
+
+        {/* Service Provider Item */}
+        <div
+          onClick={() => navigate("/service-provider-list")}
+          className={`h-8 rounded-lg flex items-center gap-3 px-3 cursor-pointer ${
+            pathName === "/service-provider-list" || pathName === "/create-service-provider" ? "bg-white" : ""
+          }`}
+        >
+          <img
+            src={
+              pathName === "/service-provider-list" || pathName === "/create-service-provider"
+                ? "/image/sidebar/serviceProvider/Vector (1).svg"
+                : "/image/sidebar/serviceProvider/service icon (1).svg"
+            }
+            alt="Service Provider Icon"
+            className="h-[24px] w-[24px]"
+          />
+          <span
+            className={`text-xs font-medium ${pathName === "/service-provider-list" || pathName === "/create-service-provider" ? "text-[#439bff]" : "text-white"}`}
+          >
+            Service Provider
+          </span>
+        </div>
+
+        {/* Materials Item */}
+        <div
+          onClick={() => navigate("/material-list")}
+          className={`h-8 rounded-lg flex items-center gap-3 px-3 cursor-pointer ${
+            pathName === "/create-material" || pathName === "/material-list" ? "bg-white" : ""
+          }`}
+        >
+          <img
+            src={
+              pathName === "/create-material" || pathName === "/material-list"
+                ? "/image/sidebar/materials/flowbite_draw-square-outline (1).svg"
+                : "/image/sidebar/materials/flowbite_draw-square-outline (2).svg"
+            }
+            alt="Materials Icon"
+            className="h-[24px] w-[24px]"
+          />
+          <span
+            className={`text-xs font-medium ${pathName === "/create-material" || pathName === "/material-list" ? "text-[#439bff]" : "text-white"}`}
+          >
+            Materials
+          </span>
+        </div>
+
+        {/* Jobs Item */}
+        <div
+          onClick={() => navigate("/job-list")}
+          className={`h-8 rounded-lg flex items-center gap-3 px-3 cursor-pointer ${
+            pathName === "/create-job" || pathName === "/job-list" ? "bg-white" : ""
+          }`}
+        >
+          <img
+            src={pathName === "/create-job" || pathName === "/job-list" ? "/image/sidebar/jobs/jobs (1).svg" : "/image/sidebar/jobs/jobs (2).svg"}
+            alt="Jobs Icon"
+            className="h-[24px] w-[24px]"
+          />
+          <span
+            className={`text-xs font-medium ${pathName === "/create-job" || pathName === "/job-list" ? "text-[#439bff]" : "text-white"}`}
+          >
+            Jobs
+          </span>
+        </div>
+
+        {/* Courses Item */}
+        <div
+          onClick={() => navigate("/course-list")}
+          className={`h-8 rounded-lg flex items-center gap-3 px-3 cursor-pointer ${
+            pathName === "/create-course" || pathName === "/course-list" ? "bg-white" : ""
+          }`}
+        >
+          <img
+            src={
+              pathName === "/create-course" || pathName === "/course-list"
+                ? "/image/sidebar/courses/tdesign_education (1).svg"
+                : "/image/sidebar/courses/tdesign_education (2).svg"
+            }
+            alt="Courses Icon"
+            className="h-[24px] w-[24px]"
+          />
+          <span
+            className={`text-xs font-medium ${pathName === "/create-course" || pathName === "/course-list" ? "text-[#439bff]" : "text-white"}`}
+          >
+            Courses
+          </span>
+        </div>
+      </div>
+    </div>
   );
 };
 
-export default SideBar;
+export default Sidebar;

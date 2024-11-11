@@ -2,94 +2,118 @@ import React from 'react';
 import Header from '../components/Header';
 // import Footer from '../components/Footer';
 import SideBar from '../components/SideBar';
-import { Box, Button, Container, Grid, MenuItem, TextField, Typography, InputAdornment } from '@mui/material';
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-import WhatsAppIcon from '@mui/icons-material/WhatsApp';
-import { Flag } from 'react-world-flags'; 
 import { Link } from 'react-router-dom';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 const AddRoles = () => {
   return (
-    <Box sx={{ display: 'flex' }}>
+    <div className="flex">
       {/* Sidebar */}
       <SideBar />
       
       {/* Main Content */}
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+      <main className="flex-grow">
         {/* Header */}
         <Header />
 
         {/* Form Container */}
-        <Container>
+        <div className="container mx-auto">
           {/* Back Button and Title */}
-          <Box display="flex" alignItems="center" mb={2}>
-            <Link to={"/rolesList"}><ArrowBackIosNewIcon sx={{ cursor: 'pointer', mr: 1 }}  /></Link>
-            <Typography variant="h6">Add Role</Typography>
-          </Box>
-
-   
+          <div className="flex items-center mt-6  mb-4">
+            <Link to="/rolesList" className="cursor-pointer ml-6">
+              <ArrowBackIosNewIcon />
+            </Link>
+            <h2 className="text-lg font-semibold ml-4 " style={{color:'#000000',fontSize:'24px',fontFamily:'Montserrat'}}>Add Role</h2>
+          </div>
 
           {/* Form Fields */}
-          <Box component="form" noValidate autoComplete="off" sx={{ mt: 2 }}>
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={6} md={3}>
-                <TextField
-                  label="Prefix"
-                  select
-                  required
-                  fullWidth
-                  defaultValue=""
-                >
-                  <MenuItem value="Mr.">Mr.</MenuItem>
-                  <MenuItem value="Ms.">Ms.</MenuItem>
-                  <MenuItem value="Dr.">Dr.</MenuItem>
-                </TextField>
-              </Grid>
-              <Grid item xs={12} sm={6} md={3}>
-                <TextField
-                  label="Type of user"
-                  select
-                  required
-                  fullWidth
-                  defaultValue=""
-                >
-                  <MenuItem value="Admin">Admin</MenuItem>
-                  <MenuItem value="Doctor">Doctor</MenuItem>
-                  <MenuItem value="Patient">Patient</MenuItem>
-                </TextField>
-              </Grid>
-              <Grid item xs={12} sm={6} md={3}>
-                <TextField
-                  label="First name"
-                  required
-                  fullWidth
-                />
-              </Grid>
-              <Grid item xs={12} sm={6} md={3}>
-                <TextField
-                  label="Last name"
-                  required
-                  fullWidth
-                />
-              </Grid>
-            </Grid>
+          <div className="bg-[#f7fbff] h-full py-6 px-6">
+                    <div className="bg-white w-full rounded-xl border border-[#EAE5FF] py-4 px-6">
+                      <p className='text-left font-bold' style={{fontFamily:'Montserrat'}}>Add role</p>
+                        <form className="mt-4">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {/* Prefix */}
+                        <div className="flex flex-col">
+                          <label htmlFor="prefix" className="text-sm font-medium text-start">Role Name</label>
+                          <input
+                            id="first-name"
+                            name="first-name"
+                            type="text"
+                            required
+                            className="border rounded-lg p-2 mt-1 text-sm"
+                          />
+                        </div>
 
-            {/* Action Buttons */}
-            <Box display="flex" justifyContent="flex-end" mt={3}>
-              <Button variant="outlined" color="primary" sx={{ mr: 2 }}>
-                Cancel
-              </Button>
-              <Button variant="contained" color="primary">
-                Save
-              </Button>
-            </Box>
-          </Box>
-        </Container>
+                        {/* Type of user */}
+                        <div className="flex flex-col">
+                          <label htmlFor="user-type" className="text-sm font-medium text-start">Start Date</label>
+                          <input
+                            id="first-name"
+                            name="first-name"
+                            type="date"
+                            required
+                            className="border rounded-lg p-2 mt-1 text-sm"
+                          />
+                        </div>
+
+                        {/* First Name */}
+                        <div className="flex flex-col">
+                          <label htmlFor="first-name" className="text-sm font-medium text-start">End Date</label>
+                          <input
+                            id="first-name"
+                            name="first-name"
+                            type="date"
+                            required
+                            className="border rounded-lg p-2 mt-1 text-sm"
+                          />
+                        </div>
+
+                      </div>
+
+                      {/* Action Buttons */}
+                      <div className="flex justify-end mt-6 gap-3">
+                        <button
+                          type="button"
+                          className="mr-4 text-gray-700 hover:text-gray-800 flex items-center justify-center"
+                          style={{
+                            width: "150px",
+                            height: "48px",
+                            padding: "0px 16px",
+                            gap: "12px",
+                            borderRadius: "8px",
+                            border: "1px solid #71717A",
+                            color: "#71717A",
+                            fontFamily:'Montserrat'
+                          }}
+                        >
+                          <img src="/image/action/Big Arrow _ Left.svg" alt="Arrow Left" />
+                          Cancel
+                        </button>
+
+                        <button
+                          type="submit"
+                          className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+                          style={{
+                            width: "150px",
+                            height: "48px",
+                            borderRadius: "8px",
+                            fontFamily:'Montserrat'
+                          }}
+                        >
+                          Save
+                        </button>
+                      </div>
+
+                        </form>
+                    </div>
+                </div>
+          
+        </div>
 
         {/* Footer */}
         {/* <Footer /> */}
-      </Box>
-    </Box>
+      </main>
+    </div>
   );
 };
 
