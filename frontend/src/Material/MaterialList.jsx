@@ -12,6 +12,8 @@ const initialRows = [
   { id: 4, name: 'Material 4', category: 'Category D', supplierName: 'Supplier D', manufacturerName: 'Manufacturer D', costPrice: 250, fromDate: '30-09-2024', toDate: '30-09-2024' },
   { id: 5, name: 'Material 5', category: 'Category E', supplierName: 'Supplier E', manufacturerName: 'Manufacturer E', costPrice: 300, fromDate: '30-09-2024', toDate: '30-09-2024' },
   { id: 6, name: 'Material 6', category: 'Category F', supplierName: 'Supplier F', manufacturerName: 'Manufacturer F', costPrice: 350, fromDate: '30-09-2024', toDate: '30-09-2024' },
+  { id: 7, name: 'Material 6', category: 'Category F', supplierName: 'Supplier F', manufacturerName: 'Manufacturer F', costPrice: 350, fromDate: '30-09-2024', toDate: '30-09-2024' },
+  { id: 8, name: 'Material 6', category: 'Category F', supplierName: 'Supplier F', manufacturerName: 'Manufacturer F', costPrice: 350, fromDate: '30-09-2024', toDate: '30-09-2024' },
 ];
 
 const MaterialList = () => {
@@ -65,11 +67,11 @@ const MaterialList = () => {
                     </div>
                 </div>
                 {/* card */}
-                <div className="bg-[#f7fbff] h-full py-6 px-6">
-                    <div className="bg-white w-full rounded-xl border border-[#EAE5FF] py-4 px-3">
-                        <div className="relative overflow-x-auto sm:rounded-lg">
-                            <table className="min-w-full text-sm text-left rtl:text-right text-gray-500 divide-y divide-gray-200">
-                                <thead className="text-xs text-gray-700 uppercase bg-gray-50">
+                <div className="bg-[#f7fbff] h-full py-6 px-6" style={{width:'1000px',overflow:'scroll',scrollbarWidth:'none'}}>
+                    <div className="bg-white w-full rounded-xl border border-[#EAE5FF] py-4 px-3 " style={{overflowX:'scroll'}} >
+                        <div className="relative  sm:rounded-lg" >
+                            <table className="min-w-full text-sm text-left rtl:text-right text-gray-500 divide-y divide-gray-200" >
+                                <thead className="text-xs text-gray-700  bg-gray-50">
                                     <tr>
                                         <th scope="col" className="w-[64px] h-[40px] px-4 py-2 border-b border-[#EAE5FF] text-left text-xs  font-medium tracking-wider" style={{ fontFamily: 'Montserrat', color: '#090713' }}>Sr.</th>
                                         <th scope="col" className="w-[410px] h-[40px] px-4 py-2 border-b border-[#EAE5FF] text-left text-xs font-medium tracking-wider" style={{ fontFamily: 'Montserrat', color: '#090713' }}>Material Name</th>
@@ -94,7 +96,7 @@ const MaterialList = () => {
                                             <td className="px-4 py-2 border-b border-[#EAE5FF] whitespace-nowrap">{role.costPrice}</td>
                                             <td className="px-4 py-2 border-b border-[#EAE5FF] whitespace-nowrap">{role.fromDate}</td>
                                             <td className="px-4 py-2 border-b border-[#EAE5FF] whitespace-nowrap">{role.toDate}</td>
-                                            <td className="px-4 py-2 border-b border-[#EAE5FF] whitespace-nowrap ">
+                                            <td className="px-4 py-2 border-b border-[#EAE5FF] whitespace-nowrap" style={{position:'sticky'}}>
                                                 <div className='flex gap-2  '>
                                                     <div className="relative group">
                                                         <div className="flex items-center justify-center w-[40px] h-[40px] bg-[#F7FBFF] rounded-[10px] cursor-pointer ">

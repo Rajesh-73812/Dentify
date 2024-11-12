@@ -59,14 +59,14 @@ const JobsList = () => {
                         <div className="bg-[#115CC9] flex items-center justify-center text-white  px-2.5 py-1 sm:px-4 sm:py-2  rounded-lg shadow-sm cursor-pointer">
                             <button style={{ fontFamily: 'Montserrat' }} className="flex items-center gap-2" onClick={()=>{navigateToCreateUser()}}>
                                 <span className="text-xl font-bold ">+</span> 
-                                <span className='hidden sm:inline'>Create Course</span>
+                                <span className='hidden sm:inline'>Create Jobs</span>
                             </button>
                         </div>
                     </div>
                 </div>
                 {/* card */}
-                <div className="bg-[#f7fbff] h-full py-6 px-6">
-                    <div className="bg-white w-full rounded-xl border border-[#EAE5FF] py-4 px-3">
+                <div className="bg-[#f7fbff] h-full py-6 px-6 " style={{width:'1000px',overflow:'scroll'}}>
+                    <div className="bg-white w-full rounded-xl border border-[#EAE5FF] py-4 px-3 " style={{overflowX:'scroll'}}>
                         <div className="relative overflow-x-auto sm:rounded-lg">
                             <table className="min-w-full text-sm text-left rtl:text-right text-gray-500 divide-y divide-gray-200">
                                 <thead className="text-xs text-gray-700 uppercase bg-gray-50">
@@ -92,8 +92,32 @@ const JobsList = () => {
                                             <td className="px-4 py-2 border-b border-[#EAE5FF] whitespace-nowrap">{role.mobileNo}</td>
                                             <td className="px-4 py-2 border-b border-[#EAE5FF] whitespace-nowrap">{role.qualification}</td>
                                             <td className="px-4 py-2 border-b border-[#EAE5FF] whitespace-nowrap">{role.toDate}</td>
-                                            <td className="px-4 py-2 border-b border-[#EAE5FF] whitespace-nowrap">{index + 1}</td>
-                                            <td className="px-4 py-2 border-b border-[#EAE5FF] whitespace-nowrap">{index + 1}</td>
+                                            <td className="px-4 py-2 border-b border-[#EAE5FF] whitespace-nowrap" style={{position:'sticky'}}>
+                                                <div className='flex gap-2  '>
+                                                    <div className="relative group">
+                                                        <div className="flex items-center justify-center w-[40px] h-[40px] bg-[#F7FBFF] rounded-[10px] cursor-pointer ">
+                                                            <img src="/image/action/Frame 33573.svg" alt="Edit" className='size-6' />
+                                                        </div>
+                                                        <span className="absolute left-1/2 transform -translate-x-1/2 bottom-full mb-1 w-max bg-gray-700 text-white text-xs rounded py-1 px-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">Edit</span>
+                                                    </div>
+                                                    <div className="relative group">
+                                                        <div className="flex items-center justify-center w-[40px] h-[40px] bg-[#F7FBFF] rounded-[10px] cursor-pointer">
+                                                            <img src="/image/action/Frame 33572 (2).svg" alt="Delete" className='size-6' onClick={() => handleDelete(role.id)} />
+                                                        </div>
+                                                        <span className="absolute left-1/2 transform -translate-x-1/2 bottom-full mb-1 w-max bg-gray-700 text-white text-xs rounded py-1 px-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">Delete</span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td className="px-4 py-2 border-b border-[#EAE5FF]">
+                                                <div className='flex gap-2'>
+                                                    <div className="relative group">
+                                                        <div className="flex items-center justify-center w-[40px] h-[40px] bg-[#F7FBFF] rounded-[10px] cursor-pointer">
+                                                            <img src="/image/action/Frame 33574 (2).svg" alt="View" className='size-6' />
+                                                        </div>
+                                                        <span className="absolute left-1/2 transform -translate-x-1/2 bottom-full mb-1 w-max bg-gray-700 text-white text-xs rounded py-1 px-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">View</span>
+                                                    </div>
+                                                </div>
+                                            </td>
                                         </tr>
                                     ))}
                                 </tbody>

@@ -49,7 +49,7 @@ const CourseList = () => {
                 <Header />
                 {/* searching sorting  and main content area*/}
                 <div className=" px-6 py-3 flex items-center justify-between">
-                    <span className="text-xl sm:text-2xl w-16 h-9" style={{color:'#131313',fontFamily: 'Montserrat',fontSize:'24px',lineHeight:'38px',left:'24px'}}>Roles</span>
+                    <span className="text-xl sm:text-2xl w-16 h-9" style={{color:'#131313',fontFamily: 'Montserrat',fontSize:'24px',lineHeight:'38px',left:'24px'}}>Courses </span>
                     <div className="flex items-center gap-4">
                          {/* Search Input */}
                          <div className="hidden sm:flex  items-center border rounded-lg bg-white shadow-sm" style={{ top:'104px', height: '48px', opacity: 1, border: '1px solid #EAE5FF', boxShadow: '0px 0px 4px 1px #00000033' }}>

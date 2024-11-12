@@ -36,3 +36,24 @@
     transform: rotate(360deg);
   }
 }
+
+/* this for all input */
+input:focus-visible {
+  outline: 2px solid #439BFF;
+
+}
+
+/* to remove default date icon  */
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator {
+    display: none;
+    -webkit-appearance: none;
+}
+
+/* all placeholder color */
+input::placeholder{
+  color: #757575;
+  width: auto;
+  height: 27px;
+  ;
+}
