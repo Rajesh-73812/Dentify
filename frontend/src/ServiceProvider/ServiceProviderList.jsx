@@ -37,7 +37,7 @@ const ServiceProviderList = () => {
     // navigation to add new role 
     const navigateToCreateUser=()=>{
       // alert(1)
-      navigate('/create-service-rovider')
+      navigate('/create-service-provider')
     }
     return (
         <div className='h-screen flex'>

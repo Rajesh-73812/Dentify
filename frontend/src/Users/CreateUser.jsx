@@ -15,7 +15,6 @@ const AddRoles = () => {
   const [whatsAppFocused, setWhatsAppFocused] = useState(false);
   const [focusState,setFocusState]=useState({});
 
-
   const handleFocus=(field)=>{
     setFocusState((prevstate)=>({
       ...prevstate,
@@ -49,14 +48,14 @@ const AddRoles = () => {
             <h2 className="text-lg font-semibold ml-4 " style={{color:'#000000',fontSize:'24px',fontFamily:'Montserrat'}}>Create User</h2>
           </div>
           {/* Form Container */}
-          <div className="h-full py-6 px-6 max-w-5xl" style={{width:'1000px'}}> 
+          <div className="h-full py-6 px-6 max-w-5xl" style={{width:'1000px',overflow:'scroll',scrollbarWidth:'none'}}> 
             <div className="bg-white w-full rounded-xl border border-[#EAE5FF] py-4 px-6" style={{overflowX:'scroll'}}>
               <p className='text-left font-bold' style={{fontFamily:'Montserrat'}}>Add role</p>
               <form className="mt-4">
                 <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
                   {/* prefix */}
                   <div className="flex flex-col">
-                    <label htmlFor="prefix" className="text-sm font-medium text-start text-[13px]  " style={{fontFamily:'Montserrat'}}>
+                    <label htmlFor="prefix" className="text-sm font-medium text-start text-[12px]  " style={{fontFamily:'Montserrat'}}>
                       Prefix <span>*</span>
                     </label>
                     <div className="relative">
@@ -81,7 +80,7 @@ const AddRoles = () => {
 
                   {/* type_of_user */}
                   <div className="flex flex-col">
-                    <label htmlFor="type_of_user" className="text-sm font-medium text-start text-[13px] " style={{fontFamily:'Montserrat'}}>
+                    <label htmlFor="type_of_user" className="text-sm font-medium text-start text-[12px] " style={{fontFamily:'Montserrat'}}>
                       Type of user <span>*</span>
                     </label>
                     <input
@@ -103,7 +102,7 @@ const AddRoles = () => {
 
                   {/* first name */}
                   <div className="flex flex-col">
-                    <label htmlFor="first_name" className="text-sm font-medium text-start text-[13px]  " style={{fontFamily:'Montserrat'}}>
+                    <label htmlFor="first_name" className="text-sm font-medium text-start text-[12px]  " style={{fontFamily:'Montserrat'}}>
                       First name
                     </label>
                     <input
@@ -124,7 +123,7 @@ const AddRoles = () => {
 
                   {/* last name */}
                   <div className="flex flex-col">
-                    <label htmlFor="last_name" className="text-sm font-medium text-start text-[13px] " style={{fontFamily:'Montserrat'}}>
+                    <label htmlFor="last_name" className="text-sm font-medium text-start text-[12px] " style={{fontFamily:'Montserrat'}}>
                       Last name
                     </label>
                     <input
@@ -145,28 +144,47 @@ const AddRoles = () => {
                 </div>
 
                 <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mt-6">
-                  {/* date_of_birth */}
-                  <div className="flex flex-col">
-                    <label htmlFor="start-date" className="text-sm font-medium text-start text-[13px] " style={{fontFamily:'Montserrat'}}>Date of Birth</label>
-                    <input
-                      id="date_of_birth"
-                      name="date_of_birth"
-                      type="date"
-                      required
-                      onFocus={() => handleFocus('date_of_birth')}
-                      onBlur={() => handleBlur('date_of_birth')}
-                      className="border rounded-lg p-3 mt-1 w-full h-14"
-                      style={{
-                        borderRadius: '8px',
-                        border: `1px solid ${startDateIsFocused ? '#439BFF' : '#EAEAFF'}`,
-                      }}
-                      placeholder='dd/mm/yyyy'
-                    />
+                  {/* Date of Birth */}
+                  <div className="flex flex-col relative">
+                    <label
+                      htmlFor="start-date"
+                      className="text-sm font-medium text-start text-[12px]"
+                      style={{ fontFamily: 'Montserrat' }}
+                    >
+                      Date of Birth
+                    </label>
+                    <div className="relative mt-1">
+                      <input
+                        id="date_of_birth"
+                        name="date_of_birth"
+                        type="date"
+                        required
+                        onFocus={() => handleFocus('date_of_birth')}
+                        onBlur={() => handleBlur('date_of_birth')}
+                        className="border rounded-lg p-3 w-full h-14"
+                        style={{
+                          borderRadius: '8px',
+                          border: `1px solid ${startDateIsFocused ? '#439BFF' : '#EAEAFF'}`,
+                        }}
+                        placeholder="dd/mm/yyyy"
+                      />
+                      <img
+                        src="/image/action/uil_calender.svg"
+                        alt="Calendar icon"
+                        className="absolute right-4 top-1/2 transform -translate-y-1/2 w-6 h-6 pointer-events-none"
+                      />
+                    </div>
                   </div>
 
-                  {/* email */}
+                  {/* Email */}
                   <div className="flex flex-col">
-                    <label htmlFor="role_name" className="text-sm font-medium text-start text-[13px] " style={{fontFamily:'Montserrat'}}>Email</label>
+                    <label
+                      htmlFor="role_name"
+                      className="text-sm font-medium text-start text-[12px]"
+                      style={{ fontFamily: 'Montserrat' }}
+                    >
+                      Email
+                    </label>
                     <input
                       id="email"
                       name="email"
@@ -179,12 +197,17 @@ const AddRoles = () => {
                         borderRadius: '8px',
                         border: `1px solid ${isFocused ? '#439BFF' : '#EAEAFF'}`,
                       }}
-                      placeholder='Enter Email'
+                      placeholder="Enter Email"
                     />
                   </div>
-                  {/* mobile number */}
+
+                  {/* Mobile Number */}
                   <div className="flex flex-col relative">
-                    <label htmlFor="mobile_number"  className="text-sm font-medium text-start text-[13px]"  style={{ fontFamily: 'Montserrat' }}>
+                    <label
+                      htmlFor="mobile_number"
+                      className="text-sm font-medium text-start text-[12px]"
+                      style={{ fontFamily: 'Montserrat' }}
+                    >
                       Mobile number
                     </label>
                     <div className="relative mt-1">
@@ -193,8 +216,8 @@ const AddRoles = () => {
                         placeholder="Enter Mobile number"
                         value={value}
                         onChange={setValue}
-                        defaultCountry="IN"  
-                        className="border rounded-lg   w-full h-14"
+                        defaultCountry="IN"
+                        className="border rounded-lg w-full h-14"
                         style={{
                           borderRadius: '8px',
                           borderColor: '#EAEAFF',
@@ -204,37 +227,37 @@ const AddRoles = () => {
                     </div>
                   </div>
 
-                  {/* whtsApp number */}
-                  {/* WhatsApp Number Field */}
-              <div className="flex flex-col relative ">
-                <label htmlFor="whatsapp_number" className="text-sm font-medium text-start text-[13px]" style={{ fontFamily: 'Montserrat' }}>
-                  WhatsApp number
-                </label>
-                <div className="relative mt-1">
-                  {/* WhatsApp Icon */}
-                  <FaWhatsapp className="absolute left-4 top-1/2 transform -translate-y-1/2 text-green-500 w-6 h-6 pointer-events-none" />
+                  {/* WhatsApp Number */}
+                  <div className="flex flex-col relative">
+                    <label
+                      htmlFor="whatsapp_number"
+                      className="text-sm font-medium text-start text-[12px]"
+                      style={{ fontFamily: 'Montserrat' }}
+                    >
+                      WhatsApp number
+                    </label>
+                    <div className="relative mt-1">
+                      <FaWhatsapp className="absolute left-2 top-1/2 transform -translate-y-1/2 text-green-500 w-6 h-6 pointer-events-none" />
+                      <input
+                        id="whatsapp_number"
+                        placeholder="Enter WhatsApp number"
+                        className={`border rounded-lg pl-[36px] w-full h-14 ${
+                          whatsAppFocused ? 'border-[#439BFF]' : 'border-[#EAEAFF]'
+                        }`}
+                        onFocus={() => handleFocus('whatsapp_number')}
+                        onBlur={() => handleBlur('whatsapp_number')}
+                        style={{
+                          borderRadius: '8px',
+                        }}
+                      />
+                    </div>
+                  </div>
+                </div>
 
-                  <input
-                    id="whatsapp_number"
-                    placeholder="Enter WhatsApp number"
-                    
-                    className={`border rounded-lg pl-[56px] pr-[48px] w-full h-14 ${
-                      whatsAppFocused ? 'border-[#439BFF]' : 'border-[#EAEAFF]'
-                    }`}
-                    inputClass="h-full w-full outline-none"
-                    onFocus={() => handleFocus('whatsapp_number')}
-                    onBlur={() => handleBlur('whatsapp_number')}
-                    style={{
-                      borderRadius: '8px',
-                    }}
-                  />
-                </div>
-                </div>
-                </div>
                 <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mt-6">
                   {/* hospital Name */}
                   <div className="flex flex-col">
-                    <label htmlFor="role_name" className="text-sm font-medium text-start text-[13px] "style={{fontFamily:'Montserrat'}} >Hospital Name</label>
+                    <label htmlFor="role_name" className="text-sm font-medium text-start text-[12px] "style={{fontFamily:'Montserrat'}} >Hospital Name</label>
                     <input
                       id="hospital_name"
                       name="hospital_name"
@@ -253,7 +276,7 @@ const AddRoles = () => {
                   
                   {/* dental lab name*/}
                   <div className="flex flex-col">
-                    <label htmlFor="start-date" className="text-sm font-medium text-start text-[13px] " style={{fontFamily:'Montserrat'}}>Dental lab name</label>
+                    <label htmlFor="start-date" className="text-sm font-medium text-start text-[12px] " style={{fontFamily:'Montserrat'}}>Dental lab name</label>
                     <input
                       id="dental_lab_name"
                       name="dental_lab_name"
@@ -272,7 +295,7 @@ const AddRoles = () => {
                   
                   {/* Radiology center */}
                   <div className="flex flex-col">
-                    <label htmlFor="end-date" className="text-sm font-medium text-start text-[13px] " style={{fontFamily:'Montserrat'}}>Radiology Center</label>
+                    <label htmlFor="end-date" className="text-sm font-medium text-start text-[12px] " style={{fontFamily:'Montserrat'}}>Radiology Center</label>
                     <input
                       id="radiology_center"
                       name="radiology_center"
@@ -290,7 +313,7 @@ const AddRoles = () => {
                   </div>
                   {/* material supplier name  */}
                   <div className="flex flex-col">
-                    <label htmlFor="end-date" className="text-sm font-medium text-start text-[13px] " style={{fontFamily:'Montserrat'}}>Material Supplier Name</label>
+                    <label htmlFor="end-date" className="text-sm font-medium text-start text-[12px] " style={{fontFamily:'Montserrat'}}>Material Supplier Name</label>
                     <input
                       id="material_supplier_name1"
                       name="material_supplier_name1"
@@ -310,7 +333,7 @@ const AddRoles = () => {
                 <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mt-6">
                   {/* Registration ID */}
                   <div className="flex flex-col">
-                    <label htmlFor="role_name" className="text-sm font-medium text-start text-[13px]  " style={{fontFamily:'Montserrat'}}>Registaration ID (Role is dentist)</label>
+                    <label htmlFor="role_name" className="text-sm font-medium text-start text-[12px]  " style={{fontFamily:'Montserrat'}}>Registaration ID (Role is dentist)</label>
                     <input
                       id="registration_id"
                       name="registration_id"
@@ -329,7 +352,7 @@ const AddRoles = () => {
                   
                   {/* GST number */}
                   <div className="flex flex-col">
-                    <label htmlFor="start-date" className="text-sm font-medium text-start text-[13px] " style={{fontFamily:'Montserrat'}}>GST Number</label>
+                    <label htmlFor="start-date" className="text-sm font-medium text-start text-[12px] " style={{fontFamily:'Montserrat'}}>GST Number</label>
                     <input
                       id="GST_number"
                       name="GST_number"
@@ -348,7 +371,7 @@ const AddRoles = () => {
                   
                   {/* Enter Designation */}
                   <div className="flex flex-col">
-                    <label htmlFor="end-date" className="text-sm font-medium text-start text-[13px] " style={{fontFamily:'Montserrat'}}>Designation</label>
+                    <label htmlFor="end-date" className="text-sm font-medium text-start text-[12px] " style={{fontFamily:'Montserrat'}}>Designation</label>
                     <input
                       id="designation"
                       name="designation"
@@ -366,7 +389,7 @@ const AddRoles = () => {
                   </div>
                   {/* material supplier name2 */}
                   <div className="flex flex-col">
-                    <label htmlFor="end-date" className="text-sm font-medium text-start text-[13px]  " style={{fontFamily:'Montserrat'}}>Material Supplier Name</label>
+                    <label htmlFor="end-date" className="text-sm font-medium text-start text-[12px]  " style={{fontFamily:'Montserrat'}}>Material Supplier Name</label>
                     <input
                       id="material_supplier_name2"
                       name="material_supplier_name2"
@@ -387,7 +410,7 @@ const AddRoles = () => {
                 <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mt-6">
                   {/* Assign role */}
                   <div className="flex flex-col">
-                    <label htmlFor="assign_role" className="text-sm font-medium text-start text-[13px] " style={{fontFamily:'Montserrat'}}>Assign Role</label>
+                    <label htmlFor="assign_role" className="text-sm font-medium text-start text-[12px] " style={{fontFamily:'Montserrat'}}>Assign Role</label>
                     <input
                       id="assign_role"
                       name="assign_role"

@@ -54,7 +54,7 @@ function App() {
           <Route path='/service-list' element={<ServiceList />}></Route>
           <Route path='/create-service' element={<CreateService />}></Route>
           <Route path='/service-provider-list' element={<ServiceProviderList />}></Route>
-          <Route path='/create-service-rovider' element={<CreateServiceProvider />}></Route>
+          <Route path='/create-service-provider' element={<CreateServiceProvider />}></Route>
 
           <Route path='/user-list' element={<UserList />}></Route>
           <Route path='/create-user' element={<CreateUser />}></Route>

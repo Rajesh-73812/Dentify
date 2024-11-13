@@ -57,3 +57,8 @@ input::placeholder{
   height: 27px;
   ;
 }
+
+/* all input type date placeholder color  */
+input[type=date]:invalid::-webkit-datetime-edit {
+  color: #757575;
+}
