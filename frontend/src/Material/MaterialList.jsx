@@ -72,18 +72,18 @@ const MaterialList = () => {
                         <div className="relative  sm:rounded-lg" >
                             <table className="min-w-full text-sm text-left rtl:text-right text-gray-500 divide-y divide-gray-200" >
                                 <thead className="text-xs text-gray-700  bg-gray-50">
-                                    <tr>
-                                        <th scope="col" className="w-[64px] h-[40px] px-4 py-2 border-b border-[#EAE5FF] text-left text-xs  font-medium tracking-wider" style={{ fontFamily: 'Montserrat', color: '#090713' }}>Sr.</th>
-                                        <th scope="col" className="w-[410px] h-[40px] px-4 py-2 border-b border-[#EAE5FF] text-left text-xs font-medium tracking-wider" style={{ fontFamily: 'Montserrat', color: '#090713' }}>Material Name</th>
-                                        <th scope="col" className="w-[410px] h-[40px] px-4 py-2 border-b border-[#EAE5FF] text-left text-xs font-medium tracking-wider" style={{ fontFamily: 'Montserrat', color: '#090713' }}>Material Category</th>
-                                        <th scope="col" className="w-[410px] h-[40px] px-4 py-2 border-b border-[#EAE5FF] text-left text-xs font-medium tracking-wider" style={{ fontFamily: 'Montserrat', color: '#090713' }}>Supplier Name</th>
-                                        <th scope="col" className="w-[410px] h-[40px] px-4 py-2 border-b border-[#EAE5FF] text-left text-xs font-medium tracking-wider" style={{ fontFamily: 'Montserrat', color: '#090713' }}>Manufacturer Name</th>
-                                        <th scope="col" className="w-[410px] h-[40px] px-4 py-2 border-b border-[#EAE5FF] text-left text-xs font-medium tracking-wider" style={{ fontFamily: 'Montserrat', color: '#090713' }}>Material Cost Price</th>
-                                        <th scope="col" className="w-[180px] h-[40px] px-4 py-2 border-b border-[#EAE5FF] text-left text-xs font-medium tracking-wider" style={{ fontFamily: 'Montserrat', color: '#090713' }}>Form Date </th>
-                                        <th scope="col" className="w-[180px] h-[40px] px-4 py-2 border-b border-[#EAE5FF] text-left text-xs font-medium tracking-wider" style={{ fontFamily: 'Montserrat', color: '#090713' }}>To Date </th>
-                                        <th scope="col" className="w-[180px] h-[40px] px-4 py-2 border-b border-[#EAE5FF] text-left text-xs font-medium tracking-wider" style={{ fontFamily: 'Montserrat', color: '#090713' }}>Action</th>
-                                        <th scope="col" className="w-[100px] h-[40px] px-4 py-2 border-b border-[#EAE5FF] text-left text-xs font-medium tracking-wider" style={{ fontFamily: 'Montserrat', color: '#090713' }}>View</th>
-                                    </tr>
+                                <tr>
+                                    <th className="min-w-[64px] h-10 px-4 py-2 border-b">Sr.</th>
+                                    <th className="min-w-[200px] h-10 px-4 py-2 border-b">Material Name</th>
+                                    <th className="min-w-[200px] h-10 px-4 py-2 border-b">Material Category</th>
+                                    <th className="min-w-[200px] h-10 px-4 py-2 border-b">Supplier Name</th>
+                                    <th className="min-w-[200px] h-10 px-4 py-2 border-b">Manufacturer Name</th>
+                                    <th className="min-w-[200px] h-10 px-4 py-2 border-b">Material Cost Price</th>
+                                    <th className="min-w-[180px] h-10 px-4 py-2 border-b">From Date</th>
+                                    <th className="min-w-[180px] h-10 px-4 py-2 border-b">To Date</th>
+                                    <th className="min-w-[120px] h-10 px-4 py-2 border-b">Action</th>
+                                    <th className="min-w-[100px] h-10 px-4 py-2 border-b">View</th>
+                                </tr>
                                 </thead>
                                 <tbody className='divide-y divide-gray-200'>
                                     {initialRows.map((role, index) => (

@@ -76,7 +76,7 @@ const RoleList = () => {
             {/* header */}
                 <Header />
                 {/* searching sorting  and main content area*/}
-                <div className=" px-6 py-3 flex items-center justify-between">
+                <div className=" p-6 flex items-center justify-between">
                     <span className="text-xl sm:text-2xl w-16 h-9" style={{color:'#131313',fontFamily: 'Montserrat',fontSize:'24px',lineHeight:'38px',left:'24px'}}>Roles</span>
                     <div className="flex items-center gap-4">
                         {/* Search Input */}
