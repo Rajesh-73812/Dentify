@@ -31,7 +31,7 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Login />} />
+          <Route path="/login" element={<Login />} />
           <Route path='/forgotPassword' element={<ForgotPassword />}></Route>
           <Route path='/sendOTP' element={<SendOTP />}></Route>
           <Route path='/sendOTP' element={<SendOTP />}></Route>
@@ -49,7 +49,7 @@ function App() {
           <Route path='/product-list' element={<ProductList />}></Route>
           <Route path='/create-product' element={<CreateProduct />}></Route>
           <Route path='/create-role' element={<AddRoles />}></Route>
-          <Route path='/role-list' element={<RoleList />}></Route>
+          <Route path='/' element={<RoleList />}></Route>
 
           <Route path='/service-list' element={<ServiceList />}></Route>
           <Route path='/create-service' element={<CreateService />}></Route>
