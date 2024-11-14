@@ -25,27 +25,27 @@ const CreateMaterial = () => {
   }
 
   return (
-    <div className="flex bg-[#f7fbff]">
+    <div className="flex bg-[#f7fbff] h-screen">
       {/* Sidebar */}
       <SideBar />
       
       {/* Main Content */}
-      <main className="flex-grow">
+      <main className="flex-grow flex flex-col">
         {/* Header */}
         <Header />
 
         {/* Form Container */}
-        <div className="container mx-auto">
+        <div className="container mx-auto flex-grow overflow-y-auto " style={{scrollbarWidth:'none'}}>
           {/* Back Button and Title */}
           <div className="flex items-center mt-6  mb-4">
             <Link to="/rolesList" className="cursor-pointer ml-6">
               <ArrowBackIosNewIcon />
             </Link>
-            <h2 className="text-lg font-semibold ml-4 " style={{color:'#000000',fontSize:'24px',fontFamily:'Montserrat'}}>Create Course</h2>
+            <h2 className="text-lg font-semibold ml-4 text-[#000000]" style={{fontSize:'24px',fontFamily:'Montserrat'}}>Create Course</h2>
           </div>
 
           {/* Form Container */}
-          <div className="h-full py-6 px-6 max-w-5xl"> 
+          <div className="  py-6 px-6 max-w-5xl mx-auto overflow-y-auto h-[80vh]" style={{scrollbarWidth:'none'}}> 
             <div className="bg-white w-full rounded-xl border border-[#EAE5FF] py-4 px-6">
               <p className='text-left font-bold' style={{fontFamily:'Montserrat'}}>Create Course</p>
               <form className="mt-4">

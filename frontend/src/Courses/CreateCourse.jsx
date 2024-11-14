@@ -20,7 +20,6 @@ const CreateJobs = () => {
     }))
   }
 
-  // for geting calender
  
   return (
     <div className="flex bg-[#f7fbff]">
@@ -36,7 +35,7 @@ const CreateJobs = () => {
         <div className="container mx-auto">
           {/* Back Button and Title */}
           <div className="flex items-center mt-6  mb-4">
-            <Link to="/rolesList" className="cursor-pointer ml-6">
+            <Link to="/course-list" className="cursor-pointer ml-6">
               <ArrowBackIosNewIcon />
             </Link>
             <h2 className="text-lg font-semibold ml-4 " style={{color:'#000000',fontSize:'24px',fontFamily:'Montserrat'}}>Create Course</h2>

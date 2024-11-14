@@ -7,7 +7,7 @@ import 'react-phone-number-input/style.css'
 import PhoneInput from 'react-phone-number-input'
 import { FaWhatsapp } from 'react-icons/fa';
 
-const AddRoles = () => {
+const CreateUser = () => {
   const [value, setValue] = useState();
   const [isFocused, setIsFocused] = useState(false); 
   const [startDateIsFocused, setStartDateIsFocused] = useState(false); 
@@ -29,28 +29,27 @@ const AddRoles = () => {
   }
 
   return (
-    <div className="flex bg-[#f7fbff]">
+    <div className="flex bg-[#f7fbff] h-screen">
       {/* Sidebar */}
       <SideBar />
       
       {/* Main Content */}
-      <main className="flex-grow">
+      <main className="flex-grow flex flex-col">
         {/* Header */}
         <Header />
 
-        {/* Form Container */}
-        <div className="container mx-auto">
+        <div className="container mx-auto flex-grow overflow-y-auto p-6" style={{scrollbarWidth:'none'}}>
           {/* Back Button and Title */}
           <div className="flex items-center mt-6  mb-4">
-            <Link to="/rolesList" className="cursor-pointer ml-6">
+            <Link to="/create-user" className="cursor-pointer ml-6">
               <ArrowBackIosNewIcon />
             </Link>
-            <h2 className="text-lg font-semibold ml-4 " style={{color:'#000000',fontSize:'24px',fontFamily:'Montserrat'}}>Create User</h2>
+            <h2 className="text-lg font-semibold ml-4 text-[#000000]" style={{fontSize:'24px',fontFamily:'Montserrat'}}>Create User</h2>
           </div>
           {/* Form Container */}
-          <div className="h-full py-6 px-6 max-w-5xl" style={{width:'1000px',overflow:'scroll',scrollbarWidth:'none'}}> 
-            <div className="bg-white w-full rounded-xl border border-[#EAE5FF] py-4 px-6" style={{overflowX:'scroll'}}>
-              <p className='text-left font-bold' style={{fontFamily:'Montserrat'}}>Add role</p>
+          <div className=" py-6 px-6 max-w-5xl mx-auto overflow-y-auto h-[80vh]" style={{scrollbarWidth:'none'}}> 
+            <div className="bg-white w-full rounded-xl border border-[#EAE5FF] py-4 px-6" >
+              <p className='text-left font-bold' style={{fontFamily:'Montserrat'}}>Create User</p>
               <form className="mt-4">
                 <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
                   {/* prefix */}
@@ -59,64 +58,40 @@ const AddRoles = () => {
                       Prefix <span>*</span>
                     </label>
                     <div className="relative">
-                      <input
-                        id="prefix"
-                        name="prefix"
-                        type="text"
-                        required
+                      <input id="prefix" name="prefix" type="text" required className="border rounded-lg p-3 mt-1 w-full h-14 pr-10" style={{ border: `1px solid '#EAEAFF'`,}}
                         onFocus={() => handleFocus('prefix')}
                         onBlur={() => handleBlur('prefix')}
-                        className="border rounded-lg p-3 mt-1 w-full h-14 pr-10"
-                        style={{
-                          borderRadius: '8px',
-                          border: `1px solid ${isFocused ? '#439BFF' : '#EAEAFF'}`,
-                        }}
                         placeholder='Prefix'
                       />
                       {/* Down arrow icon */}
                       <img src="/image/action/Down Arrow.svg"  alt="Dropdown"  className="absolute right-3 top-1/2 transform -translate-y-1/2 w-6 h-6 pointer-events-none" />
                     </div>
                   </div>
-
-                  {/* type_of_user */}
+                  {/* type of user */}
                   <div className="flex flex-col">
-                    <label htmlFor="type_of_user" className="text-sm font-medium text-start text-[12px] " style={{fontFamily:'Montserrat'}}>
-                      Type of user <span>*</span>
+                    <label htmlFor="type_of_user" className="text-sm font-medium text-start text-[12px]  " style={{fontFamily:'Montserrat'}}>
+                      Type Of User <span>*</span>
                     </label>
-                    <input
-                      id="type_of_user"
-                      name="type_of_user"
-                      type="text"
-                      required
-                      onFocus={() => handleFocus('type_of_user')}
-                      onBlur={() => handleBlur('type_of_user')}
-                      className="border rounded-lg p-3 mt-1 w-full h-14 pr-10"
-                      style={{
-                        borderRadius: '8px',
-                        border: `1px solid ${startDateIsFocused ? '#439BFF' : '#EAEAFF'}`,
-                      }}
-                      placeholder='Type'
-                    />
-                    <img src="/image/action/Down Arrow.svg"  alt="Dropdown"  className="absolute  top-[48%] transform -translate-y-1/2 w-[390px] h-6 pointer-events-none" />
+                    <div className="relative">
+                      <input id="type_of_user" name="type_of_user" type="text" required className="border rounded-lg p-3 mt-1 w-full h-14 pr-10" style={{ border: `1px solid '#EAEAFF'`,}}
+                        onFocus={() => handleFocus('type_of_user')}
+                        onBlur={() => handleBlur('type_of_user')}
+                        placeholder='type of user'
+                      />
+                      {/* Down arrow icon */}
+                      <img src="/image/action/Down Arrow.svg"  alt="Dropdown"  className="absolute right-3 top-1/2 transform -translate-y-1/2 w-6 h-6 pointer-events-none" />
+                    </div>
                   </div>
+
 
                   {/* first name */}
                   <div className="flex flex-col">
                     <label htmlFor="first_name" className="text-sm font-medium text-start text-[12px]  " style={{fontFamily:'Montserrat'}}>
                       First name
                     </label>
-                    <input
-                      id="first_name"
-                      name="first_name"
-                      type="text"
-                      required
+                    <input  id="first_name"  name="first_name"  type="text"  required className="border rounded-lg p-3 mt-1 w-full h-14" style={{border: `1px solid ${endDateIsFocused ? '#439BFF' : '#EAEAFF'}`, }}
                       onFocus={() => handleFocus('first_name')}
                       onBlur={() => handleBlur('first_name')}
-                      className="border rounded-lg p-3 mt-1 w-full h-14"
-                      style={{
-                        borderRadius: '8px',
-                        border: `1px solid ${endDateIsFocused ? '#439BFF' : '#EAEAFF'}`,
-                      }}
                       placeholder="Enter First name"
                     />
                   </div>
@@ -126,18 +101,9 @@ const AddRoles = () => {
                     <label htmlFor="last_name" className="text-sm font-medium text-start text-[12px] " style={{fontFamily:'Montserrat'}}>
                       Last name
                     </label>
-                    <input
-                      id="last_name"
-                      name="last_name"
-                      type="text"
-                      required
+                    <input  id="last_name"  name="last_name"  type="text"  required className="border rounded-lg p-3 mt-1 w-full h-14"  style={{border: `1px solid ${endDateIsFocused ? '#439BFF' : '#EAEAFF'}`,}}
                       onFocus={() => handleFocus('last_name')}
                       onBlur={() => handleBlur('last_name')}
-                      className="border rounded-lg p-3 mt-1 w-full h-14"
-                      style={{
-                        borderRadius: '8px',
-                        border: `1px solid ${endDateIsFocused ? '#439BFF' : '#EAEAFF'}`,
-                      }}
                       placeholder="Enter Last name"
                     />
                   </div>
@@ -470,4 +436,4 @@ const AddRoles = () => {
   );
 };
 
-export default AddRoles;
+export default CreateUser;

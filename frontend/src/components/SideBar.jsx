@@ -15,14 +15,14 @@ const Sidebar = () => {
       <div className="px-5 py-7 flex flex-col gap-4">
         {/* Role Item */}
         <div
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/dashboard")}
           className={`h-8 rounded-lg flex items-center gap-3 px-3 cursor-pointer ${
-            pathName === "/create-role" || pathName === "/role-list" ? "bg-white" : ""
+            pathName === "/create-role" || pathName === "/dashboard" ? "bg-white" : ""
           }`}
         >
           <img
             src={
-              pathName === "/create-role" || pathName === "/role-list"
+              pathName === "/create-role" || pathName === "/dashboard"
                 ? "/image/sidebar/roles/roles icon (1).svg"
                 : "/image/sidebar/roles/roles icon (2).svg"
             }
@@ -31,7 +31,7 @@ const Sidebar = () => {
           />
           <span
             className={`text-xs font-medium ${
-              pathName === "/create-role" || pathName === "/role-list"
+              pathName === "/create-role" || pathName === "/dashboard"
                 ? "text-[#439bff]"
                 : "text-white"
             }`}
