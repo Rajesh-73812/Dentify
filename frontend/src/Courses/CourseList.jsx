@@ -35,11 +35,6 @@ const CourseList = () => {
         });
     }
 
-    // navigation to add new role 
-    const navigateToCreateUser=()=>{
-      // alert(1)
-      navigate('/create-course')
-    }
     return (
         <div className='h-screen flex'>
         {/* sidebar */}
@@ -54,19 +49,19 @@ const CourseList = () => {
                     {/* card */}
                     <div className="bg-[#f7fbff] h-full py-6 px-6 w-[1000px]" style={{overflow:'scroll',scrollbarWidth:'none'}}>
                         <div className="bg-white w-[102.5%] rounded-xl border border-[#EAE5FF] py-4 px-3" style={{overflowX:'scroll',scrollbarWidth:'none'}}>
-                            <div className="relative overflow-x-auto sm:rounded-lg">
+                            <div className="relative  sm:rounded-lg">
                                 <table className="min-w-full text-sm text-left rtl:text-right text-gray-500 divide-y divide-gray-200">
                                     <thead className="text-xs text-gray-700 uppercase bg-gray-50">
                                         <tr>
-                                            <th scope="col" className="w-[64px] h-[40px] px-4 py-2 border-b border-[#EAE5FF] text-left text-xs  font-medium tracking-wider" style={{ fontFamily: 'Montserrat', color: '#090713' }}>Sr.</th>
-                                            <th scope="col" className="w-[410px] h-[40px] px-4 py-2 border-b border-[#EAE5FF] text-left text-xs font-medium tracking-wider" style={{ fontFamily: 'Montserrat', color: '#090713' }}>Course Name</th>
-                                            <th scope="col" className="w-[410px] h-[40px] px-4 py-2 border-b border-[#EAE5FF] text-left text-xs font-medium tracking-wider" style={{ fontFamily: 'Montserrat', color: '#090713' }}>Course Type</th>
-                                            <th scope="col" className="w-[410px] h-[40px] px-4 py-2 border-b border-[#EAE5FF] text-left text-xs font-medium tracking-wider" style={{ fontFamily: 'Montserrat', color: '#090713' }}>Course Source</th>
-                                            <th scope="col" className="w-[410px] h-[40px] px-4 py-2 border-b border-[#EAE5FF] text-left text-xs font-medium tracking-wider" style={{ fontFamily: 'Montserrat', color: '#090713' }}>Course Changes</th>
-                                            <th scope="col" className="w-[180px] h-[40px] px-4 py-2 border-b border-[#EAE5FF] text-left text-xs font-medium tracking-wider" style={{ fontFamily: 'Montserrat', color: '#090713' }}>Form Date </th>
-                                            <th scope="col" className="w-[180px] h-[40px] px-4 py-2 border-b border-[#EAE5FF] text-left text-xs font-medium tracking-wider" style={{ fontFamily: 'Montserrat', color: '#090713' }}>To Date </th>
-                                            <th scope="col" className="w-[180px] h-[40px] px-4 py-2 border-b border-[#EAE5FF] text-left text-xs font-medium tracking-wider" style={{ fontFamily: 'Montserrat', color: '#090713' }}>Action</th>
-                                            <th scope="col" className="w-[100px] h-[40px] px-4 py-2 border-b border-[#EAE5FF] text-left text-xs font-medium tracking-wider" style={{ fontFamily: 'Montserrat', color: '#090713' }}>View</th>
+                                            <th scope="col" className="min-w-16      h-10 px-4 py-2 border-b border-[#EAE5FF] text-left text-xs  font-medium tracking-wider text-[#090713]" style={{ fontFamily: 'Montserrat'}}>Sr.</th>
+                                            <th scope="col" className="min-w-[205px] h-10 px-4 py-2 border-b border-[#EAE5FF] text-left text-xs font-medium tracking-wider text-[#090713]" style={{ fontFamily: 'Montserrat' }}>Course Name</th>
+                                            <th scope="col" className="min-w-[205px] h-10 px-4 py-2 border-b border-[#EAE5FF] text-left text-xs font-medium tracking-wider text-[#090713]" style={{ fontFamily: 'Montserrat' }}>Course Type</th>
+                                            <th scope="col" className="min-w-[205px] h-10 px-4 py-2 border-b border-[#EAE5FF] text-left text-xs font-medium tracking-wider text-[#090713]" style={{ fontFamily: 'Montserrat' }}>Course Source</th>
+                                            <th scope="col" className="min-w-[205px] h-10 px-4 py-2 border-b border-[#EAE5FF] text-left text-xs font-medium tracking-wider text-[#090713]" style={{ fontFamily: 'Montserrat' }}>Course Changes</th>
+                                            <th scope="col" className="min-w-[205px] h-10 px-4 py-2 border-b border-[#EAE5FF] text-left text-xs font-medium tracking-wider text-[#090713]" style={{ fontFamily: 'Montserrat' }}>Form Date </th>
+                                            <th scope="col" className="min-w-[205px] h-10 px-4 py-2 border-b border-[#EAE5FF] text-left text-xs font-medium tracking-wider text-[#090713]" style={{ fontFamily: 'Montserrat' }}>To Date </th>
+                                            <th scope="col" className="min-w-[180px] h-10 px-4 py-2 border-b border-[#EAE5FF] text-left text-xs font-medium tracking-wider text-[#090713]" style={{ fontFamily: 'Montserrat' }}>Action</th>
+                                            <th scope="col" className="min-w-[100px] h-10 px-4 py-2 border-b border-[#EAE5FF] text-left text-xs font-medium tracking-wider text-[#090713]" style={{ fontFamily: 'Montserrat' }}>View</th>
                                         </tr>
                                     </thead>
                                     <tbody className='divide-y divide-gray-200'>
@@ -82,15 +77,16 @@ const CourseList = () => {
                                                 <td className="px-4 py-2 border-b border-[#EAE5FF] whitespace-nowrap ">
                                                     <div className='flex gap-2  '>
                                                         <div className="relative group">
-                                                            <div className="flex items-center justify-center w-[40px] h-[40px] bg-[#F7FBFF] rounded-[10px] cursor-pointer ">
+                                                            <div className="flex items-center  w-10 h-10 bg-[#F7FBFF] rounded-[10px] cursor-pointer ">
                                                                 <img src="/image/action/Frame 33573.svg" alt="Edit" className='size-6' />
                                                             </div>
                                                             <span className="tooltip-text">
                                                                 Edit
                                                                 <span className="tooltip-arrow"></span>
-                                                            </span>                                                     </div>
+                                                            </span>                                                     
+                                                        </div>
                                                         <div className="relative group">
-                                                            <div className="flex items-center justify-center w-[40px] h-[40px] bg-[#F7FBFF] rounded-[10px] cursor-pointer">
+                                                            <div className="flex items-center  w-10 h-10 bg-[#F7FBFF] rounded-[10px] cursor-pointer">
                                                                 <img src="/image/action/Frame 33572 (2).svg" alt="Delete" className='size-6' onClick={() => handleDelete(role.id)} />
                                                             </div>
                                                             <span className="tooltip-text">
@@ -103,7 +99,7 @@ const CourseList = () => {
                                                 <td className="px-4 py-2 border-b border-[#EAE5FF]">
                                                     <div className='flex gap-2'>
                                                         <div className="relative group">
-                                                            <div className="flex items-center justify-center w-[40px] h-[40px] bg-[#F7FBFF] rounded-[10px] cursor-pointer">
+                                                            <div className="flex items-center  w-10 h-10 bg-[#F7FBFF] rounded-[10px] cursor-pointer">
                                                                 <img src="/image/action/Frame 33574 (2).svg" alt="View" className='size-6' />
                                                             </div>
                                                             <span className="tooltip-text">
@@ -130,7 +126,7 @@ const CourseList = () => {
                                                     </a>
                                                 </li>
                                                 <li>
-                                                    <a href="#" className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white hover:bg-gray-100 hover:text-gray-700" style={{ font: 'Poppins', color: '#090713', fontWeight: '400', fontSize: '12px', lineHeight: '18px' }}>
+                                                    <a href="#" className="flex items-center justify-center px-3 h-8 leading-tight  bg-white hover:bg-gray-100 hover:text-gray-700 text-[#090713]" style={{ font: 'Poppins', fontWeight: '400', fontSize: '12px', lineHeight: '18px' }}>
                                                         Page 01 of 01
                                                     </a>
                                                 </li>
