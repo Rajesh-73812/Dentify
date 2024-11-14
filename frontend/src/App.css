@@ -63,6 +63,7 @@ input[type=date]:invalid::-webkit-datetime-edit {
   color: #757575;
 }
 
+
 /* all action and view button color  and pophover*/
 .tooltip-text {
   position: absolute;
@@ -95,4 +96,7 @@ input[type=date]:invalid::-webkit-datetime-edit {
   opacity: 1; /* Show the tooltip on hover */
   visibility: visible; /* Make it visible */
   transform: translateX(-50%) translateY(-5px); /* Slight upward movement */
+.border-input{
+  border: 1px solid #EAE5FF !important ;
+
 }
