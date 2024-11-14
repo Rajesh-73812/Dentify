@@ -1,98 +1,50 @@
 import React from 'react';
-import { Box, TextField, Button, Typography, Paper } from '@mui/material';
-import { Link } from 'react-router-dom';
 
 const Login = () => {
   return (
-    <div>
-      <Box
-        sx={{
-          display: 'flex',
-          minHeight: '100vh',
-          // backgroundColor: '#f5f5f5',
-          flexDirection: { xs: 'column', md: 'row' },
-        }}
-      >
-        {/* Left Side (Logo and Branding) */}
-        <Box
-          sx={{
-            flex: 1,
-            display: { xs: 'none', md: 'flex' },
-            alignItems: 'center',
-            justifyContent: 'center',
-            background: 'linear-gradient(141.69deg, #25064C 0%, rgba(32, 40, 59, 0.6) 100%)',
-            color: '#ffffff',
-            // width: '960px',
-            // height: '1080px',
-            opacity: 0.9,
-          }}
-        >
-          <Typography variant="h2" component="div" fontWeight="bold" letterSpacing={3}>
-            DENTIIFY
-          </Typography>
-        </Box>
+    <div className="h-screen grid grid-cols-2"> 
+        {/* Left Side */}
+        <div className="h-full flex flex-col items-center justify-center" style={{ background: 'linear-gradient(141.69deg, #25064C 0%, rgba(32, 40, 59, 0.6) 100%)' }}>
+            <div>
+                <img src="/image/logo frame.svg" alt="" className='w-[337px] h-[291px]' />
+            </div>
+            <div className='text-center gap-5'>
+                <span className="font-normal text-[32px] sm:text-[48px] md:text-[64px] leading-[48px] sm:leading-[76px] md:leading-[102px] text-[#FFFFFF]" style={{ fontFamily: 'Arial', letterSpacing: '0.1rem' }}>
+                    DENTIIFY
+                </span>
+            </div>
+        </div>
 
-        {/* Right Side (Login Form) */}
-        <Box
-          sx={{
-            flex: 1,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            padding: { xs: '20px', sm: '40px' },
-            position: 'relative',
-            gap:0,
-          }}
-        >
-          <Paper
-            elevation={3}
-            sx={{
-              padding: { xs: '30px', sm: '40px' },
-              width: { xs: '90%', sm: '70%', md: '60%', lg: '50%' },
-              maxWidth: '400px',
-              textAlign: 'center',
-            }}
-          >
-            <Typography variant="h4" component="h1" fontWeight="bold" mb={2}>
-              Welcome Back
-            </Typography>
-            <Typography variant="body2" color="textSecondary" mb={4}>
-              Please login to your account
-            </Typography>
-            <form noValidate autoComplete="off">
-              <TextField label="Email" variant="outlined" fullWidth margin="normal" />
-              <TextField label="Password" variant="outlined" type="password" fullWidth margin="normal" />
-              <Link to="/forgotPassword">
-                <Typography
-                  variant="body2"
-                  color="primary"
-                  sx={{ cursor: 'pointer', mt: 1, textAlign: 'right' }}
-                >
-                  Forgot Password?
-                </Typography>
-              </Link>
-              <Button
-                variant="contained"
-                color="primary"
-                fullWidth
-                sx={{ mt: 3, padding: '10px' }}
-              >
-                Login
-              </Button>
-            </form>
-          </Paper>
-          
-          {/* Copyright Text */}
-          <Typography
-            variant="body2"
-            color="textSecondary"
-            sx={{ mt: 2, textAlign: 'center', position: 'absolute', bottom: 16 }}
-          >
-            &copy; Copyright 2024 Dentiiify Admin Portal
-          </Typography>
-        </Box>
-      </Box>
+        {/* Right Side */}
+        <div className="flex items-center justify-center bg-white p-6"> 
+            <div className="w-full max-w-md bg-white rounded-xl p-8"
+                style={{ boxShadow: ` 0px 2px 5px 0px #0000001A,    0px 10px 10px 0px #00000017,    0px 22px 13px 0px #0000000D,    0px 39px 15px 0px #00000003,    0px 60px 17px 0px #00000000`  }} >
+                <h2 className='font-bold text-[24px] leading-[36px] sm:text-[28px] sm:leading-[44px] md:text-[36px] md:leading-[56px] lg:text-[40px] lg-leading[64px] float-left' style={{ fontFamily: 'poppins', }}>Welcome Back</h2>
+                <p className='text-[#439BFF] float-left' >please login to your account</p>
+                
+                <form className="space-y-4">
+                    <div>
+                        <input type="email" id="email" className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"     placeholder=" email"/>
+                    </div>
+                    
+                    <div>
+                        <input type="password" id="password" className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"     placeholder=" password"/>
+                    </div>
+                    
+                    <div className="flex items-center justify-between">
+                        <div className="flex items-center"> </div>
+                        
+                        <div>
+                            <a href="#" className="text-sm text-[#131313]">Forgot password?</a>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <button  type="submit"  className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#439BFF] " >Login</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
   );
 }

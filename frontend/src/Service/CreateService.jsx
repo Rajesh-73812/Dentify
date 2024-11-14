@@ -7,9 +7,6 @@ import PhoneInput from 'react-phone-number-input'
 
 const CreateService = () => {
   const [value, setValue] = useState();
-  const [isFocused, setIsFocused] = useState(false); 
-  const [startDateIsFocused, setStartDateIsFocused] = useState(false); 
-  const [endDateIsFocused, setEndDateIsFocused] = useState(false); 
   const [focusState,setFocusState]=useState({});
 
   const handleFocus=(field)=>{
@@ -18,6 +15,7 @@ const CreateService = () => {
       [field]:true
     }))
   }
+  
   const handleBlur=(field)=>{
     setFocusState((prevstate)=>({
       ...prevstate,
@@ -55,7 +53,7 @@ const CreateService = () => {
                   {/* Service name */}
                   <div className="flex flex-col">
                       <label  htmlFor="service_name"  className="text-sm font-medium text-start text-[12px]"  style={{ fontFamily: 'Montserrat' }}> Service name </label>
-                      <input id="service_name" name="service_name" type="text" required className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px',  border: `1px solid ${isFocused ? '#439BFF' : '#EAEAFF'}`,}}
+                      <input id="service_name" name="service_name" type="text" required className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}}
                         onFocus={() => handleFocus('service_name')}
                         onBlur={() => handleBlur('service_name')}
                         placeholder="Enter service name"
@@ -65,7 +63,7 @@ const CreateService = () => {
                     <div className="flex flex-col">
                       <label htmlFor="prefix" className="text-sm font-medium text-start text-[12px]  " style={{fontFamily:'Montserrat'}}> Service Category </label>
                       <div className="relative">
-                        <input id="service_category" name="service_category" type="text" required className="border rounded-lg p-3 mt-1 w-full h-14 pr-10" style={{  borderRadius: '8px',  border: `1px solid ${isFocused ? '#439BFF' : '#EAEAFF'}`,}}
+                        <input id="service_category" name="service_category" type="text" required className="border rounded-lg p-3 mt-1 w-full h-14 pr-10" style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}}
                           onFocus={() => handleFocus('service_category')}
                           onBlur={() => handleBlur('service_category')}
                           placeholder='Select'
@@ -78,7 +76,7 @@ const CreateService = () => {
                     {/* digital marketing service  */}
                     <div className="flex flex-col">
                       <label   htmlFor="digital_marketing_service"   className="text-sm font-medium text-start text-[12px]"   style={{ fontFamily: 'Montserrat' }} >   Product Desription </label>
-                      <input   id="digital_marketing_service"   name="digital_marketing_service"   type="text"   required   className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px',  border: `1px solid ${isFocused ? '#439BFF' : '#EAEAFF'}`,}}
+                      <input   id="digital_marketing_service"   name="digital_marketing_service"   type="text"   required   className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}}
                         onFocus={() => handleFocus('digital_marketing_service')}
                         onBlur={() => handleBlur('digital_marketing_service')}
                         placeholder="Enter Digital Marketing Service"
@@ -88,7 +86,7 @@ const CreateService = () => {
                     <div className="flex flex-col">
                       <label htmlFor="service_provider" className="text-sm font-medium text-start text-[12px]  " style={{fontFamily:'Montserrat'}}>  Select  </label>
                       <div className="relative">
-                        <input  id="service_provider"  name="service_provider"  type="text"  required  className="border rounded-lg p-3 mt-1 w-full h-14 pr-10" style={{  borderRadius: '8px',  border: `1px solid ${isFocused ? '#439BFF' : '#EAEAFF'}`,}}
+                        <input  id="service_provider"  name="service_provider"  type="text"  required  className="border rounded-lg p-3 mt-1 w-full h-14 pr-10" style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}}
                           onFocus={() => handleFocus('service_provider')}
                           onBlur={() => handleBlur('service_provider')}
                           placeholder='Select'
@@ -103,7 +101,7 @@ const CreateService = () => {
                     {/* address*/}
                     <div className="flex flex-col">
                       <label  htmlFor="address"  className="text-sm font-medium text-start text-[12px]"  style={{ fontFamily: 'Montserrat' }}>  Product Source</label>
-                      <input  id="address"  name="address"  type="text"  required  className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px',  border: `1px solid ${isFocused ? '#439BFF' : '#EAEAFF'}`,}}
+                      <input  id="address"  name="address"  type="text"  required  className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px', border: '1px solid #EAEAFF'}}
                         onFocus={() => handleFocus('address')}
                         onBlur={() => handleBlur('address')}
                         placeholder="Enter Address"
@@ -120,10 +118,9 @@ const CreateService = () => {
                     {/* product source*/}
                     <div className="flex flex-col">
                       <label   htmlFor="service_price"   className="text-sm font-medium text-start text-[12px]"   style={{ fontFamily: 'Montserrat' }} > Product Source </label>
-                      <input   id="service_price"   name="service_price"   type="text"   required className="border rounded-lg p-3 mt-1 w-full h-14"
+                      <input   id="service_price"   name="service_price"   type="text"   required className="border rounded-lg p-3 mt-1 w-full h-14" style={{ borderRadius: '8px',border: '1px solid #EAEAFF'}}
                         onFocus={() => handleFocus('service_price')}
                         onBlur={() => handleBlur('service_price')}
-                        style={{ borderRadius: '8px', border: `1px solid ${isFocused ? '#439BFF' : '#EAEAFF'}`,}}
                         placeholder="Enter service price"
                       />
                     </div>

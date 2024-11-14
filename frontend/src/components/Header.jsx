@@ -47,7 +47,9 @@ const Header = () => {
 
   return (
     <div className="bg-white h-[65px] sm:h-[80px] p-6 flex items-center justify-between ">
+
       <div className="flex items-center gap-2.5">
+
         <span className="text-2xl font-bold">{getTitle()}</span>
       </div>
       <div className="flex items-center gap-5">
