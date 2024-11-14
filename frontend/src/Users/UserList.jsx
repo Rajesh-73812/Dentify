@@ -3,6 +3,7 @@ import Swal from 'sweetalert2';
 import Sidebar from '../components/SideBar';
 import Header from '../components/Header';
 import { useNavigate } from 'react-router-dom';
+import UserHeader from './UserHeader';
 
 const roleData = [
   { id: 1, roleName: 'Admin', fromDate: '01-01-2023', toDate: '31-12-2023' },
@@ -38,21 +39,6 @@ const UserList = () => {
         });
     }
 
-    const toggleDropdown = () => {
-        setIsOpen(!isOpen);
-    };
-
-    const handleStatusSelect = (status) => {
-        setSelectedStatus(status);
-        setIsOpen(false);
-    };
-    
-
-    // navigation to add new role 
-    const navigateToAddRole=()=>{
-      // alert(1)
-      navigate('/create-user')
-    }
     return (
         <div className='h-screen flex'>
         {/* sidebar */}
@@ -61,61 +47,22 @@ const UserList = () => {
             <div className="flex flex-1 flex-col">
             {/* header */}
                 <Header />
-                {/* searching sorting  and main content area*/}
-                <div className=" px-6 py-3 flex items-center justify-between">
-                    <span className="text-xl sm:text-2xl w-16 h-9" style={{color:'#131313',fontFamily: 'Montserrat',fontSize:'24px',lineHeight:'38px',left:'24px'}}>Roles</span>
-                    <div className="flex items-center gap-4">
-                       
-                        <div className="relative inline-block text-left">
-                            <div className="flex items-center border rounded-lg bg-white shadow-sm cursor-pointer" style={{ width: '103px', height: '48px', borderRadius: '8px', border: '1px solid #EAE5FF' }} onClick={toggleDropdown}>
-                                <input type="text" readOnly value={selectedStatus} className="outline-none text-sm placeholder-gray-500 px-3 py-2 rounded-l-lg" style={{ fontFamily: 'Montserrat', width: '100%' }} />
-                                <img src="/image/action/Down Arrow.svg" alt="Dropdown" className="w-6 h-6" style={{ marginLeft: '-8px' }} />
-                            </div>
-
-                            {isOpen && (
-                                <div className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" tabIndex="-1">
-                                    <div className="py-1" role="none">
-                                        <a href="#" onClick={() => handleStatusSelect('Active')} className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1">Active</a>
-                                        <div className="border-t border-gray-200"></div> {/* Divider */}
-                                        <a href="#" onClick={() => handleStatusSelect('Inactive')} className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1">Inactive</a>
-                                        <div className="border-t border-gray-200"></div> {/* Divider */}
-                                        <a href="#" onClick={() => handleStatusSelect('Pending')} className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1">Pending</a>
-                                    </div>
-                                </div>
-                            )}
-                        </div>
-                        <div className="bg-[#115CC9] flex items-center justify-center text-white  px-2.5 py-1 sm:px-4 sm:py-2  rounded-lg shadow-sm cursor-pointer">
-                            <button style={{ fontFamily: 'Montserrat' }} className="flex items-center gap-2" onClick={()=>{navigateToAddRole()}}>
-                                {/* <span className="text-xl font-bold ">+</span>  */}
-                                <span className='hidden sm:inline'>Assign</span>
-                            </button>
-                        </div>
-                         {/* Search Input */}
-                         <div className="hidden sm:flex  items-center border rounded-lg bg-white shadow-sm" style={{ top:'104px', height: '48px', opacity: 1, border: '1px solid #EAE5FF', boxShadow: '0px 0px 4px 1px #00000033' }}>
-                            <input type="search" placeholder="Search" className="outline-none text-sm placeholder-gray-500 px-3 py-2 rounded-l-lg"  style={{ fontFamily: 'Montserrat', padding: '10px 12px', height: '100%', borderRadius: '8px 0 0 8px' }}  />
-                            <img src="/image/action/search-normal.svg" alt="Search" className="w-9 h-5 " style={{color:'#131313'}} />
-                        </div>
-                        <div className="bg-[#115CC9] flex items-center justify-center text-white  px-2.5 py-1 sm:px-4 sm:py-2  rounded-lg shadow-sm cursor-pointer">
-                            <button style={{ fontFamily: 'Montserrat' }} className="flex items-center gap-2" onClick={()=>{navigateToAddRole()}}>
-                                <span className="text-xl font-bold ">+</span> 
-                                <span className='hidden sm:inline'>Create User</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
+                {/* <div className='h-screen overflow-y-auto' style={{scrollbarWidth:'none'}}> */}
+                    {/* searching sorting  and main content area*/}
+                <UserHeader />
                 {/* card */}
-                <div className="bg-[#f7fbff] h-full py-6 px-6">
-                    <div className="bg-white w-full rounded-xl border border-[#EAE5FF] py-4 px-3">
-                        <div className="relative overflow-x-auto sm:rounded-lg">
+                <div className="bg-[#f7fbff] h-full py-6 px-6 w-[1000px]" style={{overflow:'scroll',scrollbarWidth:'none'}}>
+                    <div className="bg-white w-[102.5%] rounded-xl border border-[#EAE5FF] py-4 px-3" style={{overflowX:'scroll',scrollbarWidth:'none'}}>
+                        <div className="relative  sm:rounded-lg">
                             <table className="min-w-full text-sm text-left rtl:text-right text-gray-500 divide-y divide-gray-200">
                                 <thead className="text-xs text-gray-700 uppercase bg-gray-50">
                                     <tr>
-                                        <th scope="col" className="w-[64px] h-[40px] px-4 py-2 border-b border-[#EAE5FF] text-left text-xs  font-medium tracking-wider" style={{ fontFamily: 'Montserrat', color: '#090713' }}>Sr.</th>
-                                        <th scope="col" className="w-[410px] h-[40px] px-4 py-2 border-b border-[#EAE5FF] text-left text-xs font-medium tracking-wider" style={{ fontFamily: 'Montserrat', color: '#090713' }}>Role Name</th>
-                                        <th scope="col" className="w-[410px] h-[40px] px-4 py-2 border-b border-[#EAE5FF] text-left text-xs font-medium tracking-wider" style={{ fontFamily: 'Montserrat', color: '#090713' }}>From Date</th>
-                                        <th scope="col" className="w-[410px] h-[40px] px-4 py-2 border-b border-[#EAE5FF] text-left text-xs font-medium tracking-wider" style={{ fontFamily: 'Montserrat', color: '#090713' }}>To Date</th>
-                                        <th scope="col" className="w-[180px] h-[40px] px-4 py-2 border-b border-[#EAE5FF] text-left text-xs font-medium tracking-wider" style={{ fontFamily: 'Montserrat', color: '#090713' }}>Action</th>
-                                        <th scope="col" className="w-[100px] h-[40px] px-4 py-2 border-b border-[#EAE5FF] text-left text-xs font-medium tracking-wider" style={{ fontFamily: 'Montserrat', color: '#090713' }}>View</th>
+                                        <th scope="col" className="min-w-[64px] h-10 px-4 py-2 border-b border-[#EAE5FF] text-left text-xs  font-medium tracking-wider" style={{ fontFamily: 'Montserrat', color: '#090713' }}>Sr.</th>
+                                        <th scope="col" className="min-w-[200px] h-10 px-4 py-2 border-b border-[#EAE5FF] text-left text-xs font-medium tracking-wider" style={{ fontFamily: 'Montserrat', color: '#090713' }}>Role Name</th>
+                                        <th scope="col" className="min-w-[200px] h-10 px-4 py-2 border-b border-[#EAE5FF] text-left text-xs font-medium tracking-wider" style={{ fontFamily: 'Montserrat', color: '#090713' }}>From Date</th>
+                                        <th scope="col" className="min-w-[200px] h-10 px-4 py-2 border-b border-[#EAE5FF] text-left text-xs font-medium tracking-wider" style={{ fontFamily: 'Montserrat', color: '#090713' }}>To Date</th>
+                                        <th scope="col" className="min-w-[180px] h-10 px-4 py-2 border-b border-[#EAE5FF] text-left text-xs font-medium tracking-wider" style={{ fontFamily: 'Montserrat', color: '#090713' }}>Action</th>
+                                        <th scope="col" className="min-w-[100px] h-10 px-4 py-2 border-b border-[#EAE5FF] text-left text-xs font-medium tracking-wider" style={{ fontFamily: 'Montserrat', color: '#090713' }}>View</th>
                                     </tr>
                                 </thead>
                                 <tbody className='divide-y divide-gray-200'>
@@ -128,26 +75,35 @@ const UserList = () => {
                                             <td className="px-4 py-2 border-b border-[#EAE5FF] whitespace-nowrap ">
                                                 <div className='flex gap-2  '>
                                                     <div className="relative group">
-                                                        <div className="flex items-center justify-center w-[40px] h-[40px] bg-[#F7FBFF] rounded-[10px] cursor-pointer ">
+                                                        <div className="flex items-center  w-10 h-10  rounded-[10px] cursor-pointer ">
                                                             <img src="/image/action/Frame 33573.svg" alt="Edit" className='size-6' />
                                                         </div>
-                                                        <span className="absolute left-1/2 transform -translate-x-1/2 bottom-full mb-1 w-max bg-gray-700 text-white text-xs rounded py-1 px-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">Edit</span>
+                                                        <span className="tooltip-text">
+                                                            Edit
+                                                            <span className="tooltip-arrow"></span>
+                                                        </span> 
                                                     </div>
                                                     <div className="relative group">
-                                                        <div className="flex items-center justify-center w-[40px] h-[40px] bg-[#F7FBFF] rounded-[10px] cursor-pointer">
+                                                        <div className="flex items-center  w-10 h-10  rounded-[10px] cursor-pointer">
                                                             <img src="/image/action/Frame 33572 (2).svg" alt="Delete" className='size-6' onClick={() => handleDelete(role.id)} />
                                                         </div>
-                                                        <span className="absolute left-1/2 transform -translate-x-1/2 bottom-full mb-1 w-max bg-gray-700 text-white text-xs rounded py-1 px-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">Delete</span>
+                                                        <span className="tooltip-text">
+                                                            Delete
+                                                            <span className="tooltip-arrow"></span>
+                                                        </span>    
                                                     </div>
                                                 </div>
                                             </td>
                                             <td className="px-4 py-2 border-b border-[#EAE5FF]">
                                                 <div className='flex gap-2'>
                                                     <div className="relative group">
-                                                        <div className="flex items-center justify-center w-[40px] h-[40px] bg-[#F7FBFF] rounded-[10px] cursor-pointer">
+                                                        <div className="flex items-center  w-10 h-10  rounded-[10px] cursor-pointer">
                                                             <img src="/image/action/Frame 33574 (2).svg" alt="View" className='size-6' />
                                                         </div>
-                                                        <span className="absolute left-1/2 transform -translate-x-1/2 bottom-full mb-1 w-max bg-gray-700 text-white text-xs rounded py-1 px-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">View</span>
+                                                        <span className="tooltip-text">
+                                                            View
+                                                            <span className="tooltip-arrow"></span>
+                                                        </span>  
                                                     </div>
                                                 </div>
                                             </td>
@@ -155,35 +111,33 @@ const UserList = () => {
                                     ))}
                                 </tbody>
                             </table>
-                            <div className="mt-6">
-                                <nav className="pt-4" aria-label="Table navigation">
-                                    <div className="flex justify-between">
-                                        <span className="text-sm font-normal text-gray-500 mb-4 md:mb-0 block w-[104px] h-[18px] ">
-                                            Showing <span className="font-semibold text-gray-900">01</span> of <span className="font-semibold text-gray-900">{roleData.length}</span>
-                                        </span>
-                                        <ul className="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8 w-[276px]">
-                                            <li>
-                                                <a href="#" className="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white rounded-s-lg hover:bg-gray-100 hover:text-gray-700">
-                                                    <img src="/image/action/Left Arrow.svg" alt="Left" /> Previous
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#" className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white hover:bg-gray-100 hover:text-gray-700" style={{ font: 'Poppins', color: '#090713', fontWeight: '400', fontSize: '12px', lineHeight: '18px' }}>
-                                                    Page 01 of 01
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#" className="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700" style={{ borderRadius: '6px', gap: '8px', background: '#115CC9', color: '#ffffff' }}>
-                                                    Next <img src="/image/action/Right Arrow (1).svg" alt="Right" />
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </nav>
-                            </div>
+                            
                         </div>
                     </div>
+                    <div className=" bottom-0 left-0 w-full bg-[#f7fbff] py-4 flex justify-between items-center">
+                        <span className="text-sm font-normal text-gray-500">
+                            Showing <span className="font-semibold text-gray-900">01</span> of <span className="font-semibold text-gray-900">{roleData.length}</span>
+                        </span>
+                        <ul className="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">
+                            <li>
+                                <a href="#" className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white rounded-md hover:bg-gray-100 hover:text-gray-700" >
+                                    <img src="/image/action/Left Arrow.svg" alt="Left" /> Previous
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" className="flex items-center justify-center px-3 h-8 leading-4 text-[#090713] font-normal   bg-white" style={{fontFamily: 'Poppins', fontSize: '12px',}}  >
+                                    Page 01 of 01
+                                </a>
+                            </li>
+                            <li>
+                                <a  href="#"  className="flex items-center justify-center px-3 h-8 leading-tight text-white bg-[#115CC9] rounded-md hover:bg-blue-600 hover:text-white">
+                                    Next <img src="/image/action/Right Arrow (1).svg" alt="Right" />
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
+                {/* </div> */}
             </div>
         </div>
     );
