@@ -15,7 +15,7 @@ const Sidebar = () => {
       <div className="px-5 py-7 flex flex-col gap-4">
         {/* Role Item */}
         <div
-          onClick={() => navigate("/role-list")}
+          onClick={() => navigate("/")}
           className={`h-8 rounded-lg flex items-center gap-3 px-3 cursor-pointer ${
             pathName === "/create-role" || pathName === "/role-list" ? "bg-white" : ""
           }`}

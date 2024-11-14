@@ -62,3 +62,7 @@ input::placeholder{
 input[type=date]:invalid::-webkit-datetime-edit {
   color: #757575;
 }
+
+.border-input{
+  border: 1px solid #EAE5FF !important ;
+}
