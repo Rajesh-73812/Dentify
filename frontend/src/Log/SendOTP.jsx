@@ -1,102 +1,126 @@
-import React from 'react';
-import { Box, TextField, Button, Typography, Paper } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useRef } from "react";
+import { Box, Button, Typography, TextField } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const SendOTP = () => {
-  const navigate=useNavigate();
+  const navigate = useNavigate();
+  const [otp, setOtp] = useState(new Array(6).fill(""));
+  const inputRefs = useRef([]);
 
+  const handleChange = (element, index) => {
+    const value = element.value;
+    if (/^[0-9]$/.test(value)) {
+      let newOtp = [...otp];
+      newOtp[index] = value;
+      setOtp(newOtp);
+      // Move focus to the next input if the current is filled
+      if (index < 5) inputRefs.current[index + 1].focus();
+    }
+  };
+
+  const handleKeyDown = (e, index) => {
+    if (e.key === "Backspace" && !otp[index] && index > 0) {
+      inputRefs.current[index - 1].focus();
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const otpValue = otp.join("");
+    // Perform OTP verification
+    console.log("Entered OTP:", otpValue);
+    // navigate to the next page if needed
+  };
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        minHeight: '100vh',
-        // backgroundColor: '#f5f5f5',
-        flexDirection: { xs: 'column', md: 'row' },
-      }}
-    >
-      {/* Left Side (Logo and Branding) */}
-      <Box
-        sx={{
-          flex: 1,
-          display: { xs: 'none', md: 'flex' },
-          alignItems: 'center',
-          justifyContent: 'center',
-          background: 'linear-gradient(141.69deg, #25064C 0%, rgba(32, 40, 59, 0.6) 100%)',
-          color: '#ffffff',
-          opacity:0.9,
+    <div className="h-screen grid grid-cols-2">
+      {/* Left Side */}
+      <div
+        className="h-full flex flex-col items-center justify-center"
+        style={{
+          background:
+            "linear-gradient(141.69deg, #25064C 0%, rgba(32, 40, 59, 0.6) 100%)",
         }}
       >
-        <Typography variant="h2" component="div" fontWeight="bold" letterSpacing={3}>
-          DENTIIFY
-        </Typography>
-      </Box>
+        <div>
+          <img
+            src="/image/logo frame.svg"
+            alt=""
+            className="w-[337px] h-[291px]"
+          />
+        </div>
+        <div className="text-center gap-5">
+          <span
+            className="font-normal text-[32px] sm:text-[48px] md:text-[64px] leading-[48px] sm:leading-[76px] md:leading-[102px] text-[#FFFFFF]"
+            style={{ fontFamily: "Arial", letterSpacing: "0.1rem" }}
+          >
+            DENTIIFY
+          </span>
+        </div>
+      </div>
 
-      {/* Right Side (OTP Form) */}
-      <Box
-        sx={{
-          flex: 1,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          padding: { xs: '20px', sm: '40px' },
-          position: 'relative',
-          gap:0,
-        }}
-      >
-        <Paper
-          elevation={3}
-          sx={{
-            padding: { xs: '30px', sm: '40px' },
-            width: { xs: '90%', sm: '70%', md: '60%', lg: '50%' },
-            maxWidth: '400px',
-            textAlign: 'center',
+      {/* Right Side */}
+      <div className="flex items-center justify-center bg-white p-6">
+        <div
+          className="w-full max-w-md bg-white rounded-xl p-8"
+          style={{
+            boxShadow: `0px 2px 5px 0px #0000001A, 0px 10px 10px 0px #00000017, 0px 22px 13px 0px #0000000D, 0px 39px 15px 0px #00000003, 0px 60px 17px 0px #00000000`,
           }}
         >
-          <Typography variant="h4" component="h1" fontWeight="bold" mb={2}>
+          <h2
+            className="font-bold text-[22px] leading-[36px] sm:text-[28px] sm:leading-[44px] md:text-[36px] md:leading-[56px] lg:text-[40px] lg-leading[64px]"
+            style={{ fontFamily: "poppins",float:"left" }}
+          >
             OTP Verification
-          </Typography>
-          <Typography variant="body2" color="textSecondary" mb={4}>
-            Please enter the 6-digit OTP sent to your ***sk@gmail.com
-          </Typography>
-          <form noValidate autoComplete="off" >
-            <TextField
-              label="OTP"
-              variant="outlined"
-              fullWidth
-              margin="normal"
-            />
-            <Button
-              variant="contained"
-              color="primary"
-              fullWidth
-              sx={{ mt: 3, padding: '10px' }}
+          </h2>
+          <p
+            className="text-[#439BFF] font-[poppins] text-[13px] float-left"
+            style={{
+              lineHeight: "25.6px",
+              marginBottom: "30px",
+              marginTop: "5px",
+              
+            }}
+          >
+            Please enter 6-digits OTP sent to your ****sk.galfar.com
+          </p>
+
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div
+              className="mb-2"
               
             >
-              Verify
-            </Button>
-          </form>
+              {otp.map((data, index) => (
+               
+                <input
+                  type="text"
+                  maxLength={1}
+                  key={index}
+                  onChange={(e) => handleChange(e.target, index)}
+                  onKeyDown={(e) => handleKeyDown(e, index)}
+                  ref={(el) => (inputRefs.current[index] = el)}
+                  id="email"
+                  required
+                  className="w-[45px] me-3  px-3 py-2 border border-[#0F2047] rounded-md focus:outline-none focus:ring-2 focus:ring-[#439BFF] placeholder:font-[poppins] placeholder:text-[14px] placeholder:text-[#25064C]"
+                  placeholder=" _"
+                />
+              ))}
+            </div>
 
-          {/* Static Timer Text and Resend OTP Link */}
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
-            <Typography variant="body2" color="textSecondary">
-              Didn't get OTP? 
-              <Typography 
-                variant="body2" 
-                color="primary" 
-                sx={{ cursor: 'pointer', textDecoration: 'underline', display: 'inline' }}
-              >
-                Re-send
-              </Typography>
-            </Typography>
-            <Typography variant="body2" color="textSecondary">
-              00:30
-            </Typography>
-          </Box>
-        </Paper>
-      </Box>
-    </Box>
+            <div>
+                        <button  type="submit"  className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#439BFF] mt-12 font-[poppins]" >Verify</button>
+                    </div>
+            <div className="font-[poppins] text-[#439BFF]">
+              Didn't Get OTP?{" "}
+              <span className="font-medium text-[#0F2047] mx-2"> Re-Send</span>{" "}
+              <span className="font-medium text-[12px] text-[#808080]">
+                00:30
+              </span>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
   );
 };
 
