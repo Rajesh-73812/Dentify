@@ -20,7 +20,7 @@ const Header = () => {
       case '/create-service-rovider':
         return 'Service Provider';
 
-      case '/role-list':
+      case '/dashboard':
       case '/create-role':
         return 'Roles';
 

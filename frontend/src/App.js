@@ -5,7 +5,6 @@ import ForgotPassword from './Log/ForgotPassword.jsx';
 import SetNewPassword from './Log/SetNewPassword.jsx';
 import SendOTP from './Log/SendOTP.jsx';
 import OtpVerfication from './Log/OtpVerfication.jsx';
-import DashBoard from './DashBoard.jsx';
 import CourseList from './Courses/CourseList.jsx';
 import CreateCourse from './Courses/CreateCourse.jsx';
 import JobsList from './Jobs/JobsList.jsx'
@@ -22,7 +21,7 @@ import CreateServiceProvider from './ServiceProvider/CreateServiceProvider.jsx'
 import UserList from './Users/UserList.jsx'
 import CreateUser from './Users/CreateUser.jsx'
 import RoleList from './Roles/RoleList.jsx';
-import DashBoard2 from './Dashboard2.jsx';
+
 import Login2 from './Log/Login2.jsx';
 
 
@@ -38,7 +37,7 @@ function App() {
           <Route path='/otpVerfication' element={<OtpVerfication />}></Route>
           <Route path='/setNewPassword' element={<SetNewPassword />}></Route>
 
-          <Route path='/dashBoard' element={<DashBoard />}></Route>
+          {/* <Route path='/dashBoard' element={<DashBoard />}></Route> */}
           <Route path='/course-list' element={<CourseList />}></Route>
           <Route path='/create-course' element={<CreateCourse />}></Route>
           <Route path='/job-list' element={<JobsList />}></Route>
@@ -49,7 +48,7 @@ function App() {
           <Route path='/product-list' element={<ProductList />}></Route>
           <Route path='/create-product' element={<CreateProduct />}></Route>
           <Route path='/create-role' element={<AddRoles />}></Route>
-          <Route path='/' element={<RoleList />}></Route>
+          <Route path='/dashboard' element={<RoleList />}></Route>
 
           <Route path='/service-list' element={<ServiceList />}></Route>
           <Route path='/create-service' element={<CreateService />}></Route>
@@ -62,7 +61,6 @@ function App() {
 
 
           {/* new */}
-          <Route path='/dashBoard2' element={<DashBoard2 />}></Route>
           <Route path='/login2' element={<Login2 />}></Route>
 
           

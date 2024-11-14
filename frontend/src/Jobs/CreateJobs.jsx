@@ -30,26 +30,25 @@ const CreateJobs = () => {
   }
 
   return (
-    <div className="flex bg-[#f7fbff]">
+    <div className="flex bg-[#f7fbff] h-screen">
       {/* Sidebar */}
       <SideBar />
       
       {/* Main Content */}
-      <main className="flex-grow">
+      <main className="flex-grow flex flex-col">
         {/* Header */}
         <Header />
 
         {/* Form Container */}
-        <div className="container mx-auto">
+        <div className="container mx-auto" style={{overflowY:'scroll',scrollbarWidth:'none'}}>
           {/* Back Button and Title */}
           <div className="flex items-center mt-6  mb-4">
-            <Link to="/rolesList" className="cursor-pointer ml-6">
+            <Link to="/create-job" className="cursor-pointer ml-6">
               <ArrowBackIosNewIcon />
             </Link>
-            <h2 className="text-lg font-semibold ml-4 " style={{color:'#000000',fontSize:'24px',fontFamily:'Montserrat'}}>Create Job</h2>
+            <h2 className="text-lg font-semibold ml-4 text-[#000000]" style={{fontSize:'24px',fontFamily:'Montserrat'}}>Create Job</h2>
           </div>
 
-          {/* Form Container */}
           <div className="h-full py-6 px-6 max-w-5xl"> 
             <div className="bg-white w-full rounded-xl border border-[#EAE5FF] py-4 px-6">
               <p className='text-left font-bold' style={{fontFamily:'Montserrat'}}>Create Job</p>
