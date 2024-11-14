@@ -95,8 +95,14 @@ input[type=date]:invalid::-webkit-datetime-edit {
 .group:hover .tooltip-text {
   opacity: 1; /* Show the tooltip on hover */
   visibility: visible; /* Make it visible */
+
+  transform: translateX(-50%) translateY(-5px); }/* Slight upward movement */
+
+  
+
   transform: translateX(-50%) translateY(-5px); /* Slight upward movement */
 }
+
 .border-input{
   border: 1px solid #EAE5FF !important ;
 
