@@ -176,13 +176,19 @@ const RoleList = () => {
                                                         <div className="flex items-center justify-center w-[40px] h-[40px] bg-[#F7FBFF] rounded-[10px] cursor-pointer ">
                                                             <img src="/image/action/Frame 33573.svg" alt="Edit" className='size-6' />
                                                         </div>
-                                                        <span className="absolute left-1/2 transform -translate-x-1/2 bottom-full mb-1 w-max bg-gray-700 text-white text-xs rounded py-1 px-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">Edit</span>
+                                                        <span className="tooltip-text">
+                                                            Edit
+                                                            <span className="tooltip-arrow"></span>
+                                                       </span>  
                                                     </div>
                                                     <div className="relative group">
                                                         <div className="flex items-center justify-center w-[40px] h-[40px] bg-[#F7FBFF] rounded-[10px] cursor-pointer">
                                                             <img src="/image/action/Frame 33572 (2).svg" alt="Delete" className='size-6' onClick={() => handleDelete(role.id)} />
                                                         </div>
-                                                        <span className="absolute left-1/2 transform -translate-x-1/2 bottom-full mb-1 w-max bg-gray-700 text-white text-xs rounded py-1 px-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">Delete</span>
+                                                        <span className="tooltip-text">
+                                                            Delete
+                                                            <span className="tooltip-arrow"></span>
+                                                       </span>  
                                                     </div>
                                                 </div>
                                             </td>
@@ -192,7 +198,10 @@ const RoleList = () => {
                                                         <div className="flex items-center justify-center w-[40px] h-[40px] bg-[#F7FBFF] rounded-[10px] cursor-pointer">
                                                             <img src="/image/action/Frame 33574 (2).svg" alt="View" className='size-6' />
                                                         </div>
-                                                        <span className="absolute left-1/2 transform -translate-x-1/2 bottom-full mb-1 w-max bg-gray-700 text-white text-xs rounded py-1 px-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">View</span>
+                                                        <span className="tooltip-text">
+                                                            View
+                                                            <span className="tooltip-arrow"></span>
+                                                       </span>       
                                                     </div>
                                                 </div>
                                             </td>

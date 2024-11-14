@@ -62,3 +62,37 @@ input::placeholder{
 input[type=date]:invalid::-webkit-datetime-edit {
   color: #757575;
 }
+
+/* all action and view button color  and pophover*/
+.tooltip-text {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 100%; /* Position it above the icon */
+  margin-bottom: 8px; /* Space between the tooltip and the icon */
+  background: linear-gradient(to right, #0f0202, #0f0202); /* Gradient background */
+  color: white;
+  font-size: 0.875rem; /* Text size */
+  border-radius: 0.375rem; /* Rounded corners */
+  padding: 0.5rem 0.75rem; /* Padding */
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out; /* Smooth transition */
+  visibility: hidden; /* Initially hidden */
+  z-index: 10; /* Ensure it appears above other elements */
+}
+
+.tooltip-arrow {
+  position: absolute;
+  top: 100%; /* Position it below the tooltip */
+  left: 50%;
+  margin-left: -5px; /* Center it */
+  border-width: 5px;
+  border-style: solid;
+  border-color: #0f0202 transparent transparent transparent; /* Color of the arrow */
+}
+
+.group:hover .tooltip-text {
+  opacity: 1; /* Show the tooltip on hover */
+  visibility: visible; /* Make it visible */
+  transform: translateX(-50%) translateY(-5px); /* Slight upward movement */
+}
