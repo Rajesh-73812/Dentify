@@ -12,15 +12,15 @@ const RoleHeader = () => {
     }
 
     return (
-        <div className="bg-[#f7fbff] p-6">
-            <div className=" flex items-center justify-between" style={{ height: "36px" }}>
-                <div className=" text-xl sm:text-2xl w-16 h-9 whitespace-nowrap" style={{ color: '#131313', fontFamily: 'Montserrat', fontSize: '20px', lineHeight: '38px', fontWeight: "600" }}>
+        <div className="bg-[#f7fbff] p-6 w-[1000px]">
+            <div className=" flex items-center justify-between h-9 " >
+                <div className=" text-xl sm:text-2xl w-16 h-9 whitespace-nowrap text-[#131313]" style={{  fontFamily: 'Montserrat', fontSize: '20px', lineHeight: '38px', fontWeight: "600" }}>
                     Roles List
                 </div>
                 <div className=' flex items-center gap-3'>
                     <div className="hidden sm:flex  items-center border border-input rounded-lg bg-white shadow-sm" style={{ top: '104px', height: '36px', opacity: 1, border: '1px solid #EAE5FF', boxShadow: '0px 0px 1px 1px #00000033' }}>
                         <input type="search" placeholder="Search" className="outline-none text-sm placeholder-gray-600 px-3 py-2 rounded-l-lg" style={{ fontFamily: 'Montserrat', height: '36px', width: "300px", borderRadius: '8px 0 0 8px' }} />
-                        <img src="/image/action/search-normal.svg" alt="Search" className="w-9 h-5 " style={{ color: '#131313' }} />
+                        <img src="/image/action/search-normal.svg" alt="Search" className="w-9 h-5 text-[#131313]" />
                     </div>
                     <div className=" text-left flex gap-3">
 

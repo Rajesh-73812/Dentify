@@ -44,15 +44,15 @@ const ServiceList = () => {
         {/* sidebar */}
             <Sidebar />
             
-            <div className="flex flex-1 flex-col">
+            <div className="flex flex-1 flex-col bg-[#f7fbff]">
             {/* header */}
                 <Header />
                 {/* searching sorting  and main content area*/}
                 {/* <div className='h-screen overflow-y-auto' style={{scrollbarWidth:'none'}}> */}
                     <ServiceHeader />
                     {/* card */}
-                    <div className="bg-[#f7fbff]  py-6 px-6 h-full w-[1000px] overflow-scroll " style={{scrollbarWidth:'none'}}>
-                        <div className="bg-white w-[102.5%] rounded-xl border border-[#EAE5FF] py-4 px-3 " style={{overflowX:'scroll',scrollbarWidth:'none'}}>
+                    <div className=" py-6 px-6 h-full w-[1000px] overflow-scroll " style={{scrollbarWidth:'none'}}>
+                        <div className="bg-white w-[100%] rounded-xl border border-[#EAE5FF] py-4 px-3 " style={{overflowX:'scroll',scrollbarWidth:'none'}}>
                             <div className="relative sm:rounded-lg" >
                                 <table className="min-w-full text-sm text-left rtl:text-right text-gray-500 divide-y divide-gray-200">
                                     <thead className="text-xs text-gray-700  bg-gray-50">

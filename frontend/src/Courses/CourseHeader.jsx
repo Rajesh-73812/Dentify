@@ -10,7 +10,7 @@ const CourseHeader = () => {
         navigate('/create-course')
     }
     return (
-        <div className="bg-[#f7fbff] p-6">
+        <div className="bg-[#f7fbff] p-6 w-[1000px]">
             <div className=" flex items-center justify-between h-9" >
                 <div className=" text-xl sm:text-2xl w-16 h-9 text-[#131313]  leading-9 font-semibold whitespace-nowrap" style={{  fontFamily: 'Montserrat'}}>
                     Course List
