@@ -108,3 +108,23 @@ input[type="search"]::-webkit-search-cancel-button {
   -webkit-appearance: none;
   appearance: none;
 }
+
+/* for login */
+@media (max-width:600px){
+  .fg{
+    margin-left: '20px';
+    font-size: 9px;
+  }
+}
+
+@media (max-width: 600px) {
+  input[type="email"]::placeholder,
+  input[type="password"]::placeholder {
+      font-size: 8px; 
+
+  }
+  .visibilityIcon{
+    font-size: 8px;
+    
+  }
+}

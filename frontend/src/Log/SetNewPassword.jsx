@@ -1,101 +1,44 @@
-import React from 'react'
-import { Box, TextField, Button, Typography, Paper } from '@mui/material';
+import React from 'react';
+import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
 
 const SetNewPassword = () => {
   return (
-    <div>
-      <Box
-        sx={{
-        display: 'flex',
-        minHeight: '100vh',
-        // backgroundColor: '#f5f5f5',
-        flexDirection: { xs: 'column', md: 'row' }, // Stack vertically on small screens
-        }}
-     >
-    {/* Left Side (Logo and Branding) */}
-    <Box
-      sx={{
-        flex: 1,
-        display: { xs: 'none', md: 'flex' }, // Hide on extra small screens
-        alignItems: 'center',
-        justifyContent: 'center',
-        background: 'linear-gradient(141.69deg, #25064C 0%, rgba(32, 40, 59, 0.6) 100%)',
-        color: '#ffffff',
-        opacity:0.9,
-      }}
-    >
-      <Typography variant="h2" component="div" fontWeight="bold" letterSpacing={3}>
-        DENTIIFY
-      </Typography>
-    </Box>
+    <div className="h-screen grid grid-cols-2"> 
+        {/* Left Side */}
+        <div className="h-full flex flex-col items-center justify-center" style={{ background: 'linear-gradient(141.69deg, #25064C 0%, rgba(32, 40, 59, 0.6) 100%)' }}>
+            <div>
+                <img src="/image/logo frame.svg" alt="" className='w-[337px] h-[291px]' />
+            </div>
+            <div className='text-center gap-5'>
+                <span className="font-normal text-[32px] sm:text-[48px] md:text-[64px] leading-[48px] sm:leading-[76px] md:leading-[102px] text-[#FFFFFF] font-[Arial] " style={{  letterSpacing: '0.1rem' }}>
+                    DENTIIFY
+                </span>
+            </div>
+        </div>
 
-    {/* Right Side (Login Form) */}
-    <Box
-      sx={{
-        flex: 1,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: { xs: '20px', sm: '40px' }, // More padding on smaller screens
-        position: 'relative', // For centering the copyright text
-        gap:0,
-      }}
-    >
-      <Paper
-        elevation={3}
-        sx={{
-          padding: { xs: '30px', sm: '40px' },
-          width: { xs: '90%', sm: '70%', md: '60%', lg: '50%' },
-          maxWidth: '400px',
-          textAlign: 'center',
-        }}
-      >
-        <Typography variant="h4" component="h1" fontWeight="bold" mb={2}>
-          Create New Password
-        </Typography>
-        <Typography variant="body2" color="textSecondary" mb={4}>
-          set your new password here
-        </Typography>
-        <form noValidate autoComplete="off">
-          <TextField
-            label="Email"
-            variant="outlined"
-            fullWidth
-            margin="normal"
-            placeholder='create password'
-          />
-          <TextField
-            label="Email"
-            variant="outlined"
-            fullWidth
-            margin="normal"
-            placeholder='Re-enter password'
-          />
-
-          <Button
-            variant="contained"
-            color="primary"
-            fullWidth
-            sx={{ mt: 3, padding: '10px' }}
-          >
-            Submit
-          </Button>
-        </form>
-      </Paper>
-      
-      {/* Copyright Text */}
-      <Typography
-        variant="body2"
-        color="textSecondary"
-        sx={{ mt: 2, textAlign: 'center', position: 'absolute', bottom: 16 }}
-      >
-        &copy; Copyright 2024 Dentiiify Admin Portal
-      </Typography>
-    </Box>
-      </Box>
+        {/* Right Side */}
+        <div className="flex items-center justify-center bg-white p-6"> 
+            <div className="w-full max-w-md bg-white rounded-xl p-8"
+                style={{ boxShadow: ` 0px 2px 5px 0px #0000001A,    0px 10px 10px 0px #00000017,    0px 22px 13px 0px #0000000D,    0px 39px 15px 0px #00000003,    0px 60px 17px 0px #00000000`  }} >
+                <h2 className='font-bold text-[24px] leading-[36px] sm:text-[28px] sm:leading-[44px] md:text-[36px] md:leading-[56px] lg:text-[34px] lg-leading[64px] float-left font-[poppins] whitespace-nowrap ' >Create New Password</h2>
+                <p className='text-[#439BFF] float-left mb-[38px] ml-[5px] mt-[10px] leading-[26px]' >set your new password here</p>
+                
+                <form className="space-y-4">
+                    <div>
+                        <input type="password" id="create_pass" className="w-full px-3 py-2 border border-[#B0B0B0] rounded-md focus:outline-none focus:ring-2 focus:ring-[#439BFF] placeholder:font-[poppins] placeholder:text-[14px] placeholder:text-[#25064C]"  placeholder="Create Password"/> 
+                    </div>
+                    
+                    <div className='flex relative'>
+                        <input type="password" id="password" className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#439BFF] placeholder:font-[poppins] placeholder:text-[14px] placeholder:text-[#25064C]"  placeholder="Re-enter Password"/> <span className='mt-2 cursor-pointer visibilityIcon' style={{position:"absolute",right:"16px"}} ><VisibilityOffOutlinedIcon fontSize='30px' /></span> 
+                    </div>
+                    <div>
+                        <button  type="submit"  className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#439BFF] mt-14 font-[poppins]" >Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-  )
+  );
 }
 
-export default SetNewPassword
+export default SetNewPassword;
