@@ -127,10 +127,13 @@ input[type="search"]::-webkit-search-cancel-button {
   input[type="email"]::placeholder,
   input[type="password"]::placeholder {
       font-size: 8px; 
-
   }
   .visibilityIcon{
     font-size: 8px;
-    
   }
+}
+
+/* scrollbar-none */
+.scrollbar-none::-webkit-scrollbar{
+  display: none;
 }

@@ -55,37 +55,37 @@ const JobsList = () => {
                 {/* <div className='h-screen overflow-x-auto' style={{scrollbarWidth:'none'}}> */}
                  <JobHeader />
                     {/* card */}
-                    <div className=" h-full py-6 px-6 w-[1000px]" style={{overflow:'scroll',scrollbarWidth:'none'}} >
-                        <div className="bg-white w-[100%] rounded-xl border border-[#EAE5FF] py-4 px-3 " style={{overflowX:'scroll',scrollbarWidth:'none'}} >
+                    <div className=" h-full py-6 px-6 w-[1000px] overflow-auto scrollbar-none">
+                        <div className="bg-white w-[100%] rounded-xl border border-[#EAE5FF] py-4 px-3 overflow-x-auto scrollbar-none" >
                             <div className="relative  sm:rounded-lg">
-                                <table className="min-w-full text-sm text-left rtl:text-right text-gray-500 divide-y divide-gray-200">
+                                <table className="table table-divided">
                                     <thead className="text-xs text-gray-700  bg-gray-50">
                                         <tr>
-                                            <th scope="col" className="min-w-16  h-10 px-4 py-2 border-b border-[#EAE5FF] text-left text-xs  font-medium tracking-wider" style={{ fontFamily: 'Montserrat', color: '#090713' }}>Sr.</th>
-                                            <th scope="col" className="min-w-[205px] h-10 px-4 py-2 border-b border-[#EAE5FF] text-left text-xs font-medium tracking-wider" style={{ fontFamily: 'Montserrat', color: '#090713' }}>Opportunity</th>
-                                            <th scope="col" className="min-w-[205px] h-10 px-4 py-2 border-b border-[#EAE5FF] text-left text-xs font-medium tracking-wider" style={{ fontFamily: 'Montserrat', color: '#090713' }}>Hospital Name</th>
-                                            <th scope="col" className="min-w-[205px] h-10 px-4 py-2 border-b border-[#EAE5FF] text-left text-xs font-medium tracking-wider" style={{ fontFamily: 'Montserrat', color: '#090713' }}>Email</th>
-                                            <th scope="col" className="min-w-[205px] h-10 px-4 py-2 border-b border-[#EAE5FF] text-left text-xs font-medium tracking-wider" style={{ fontFamily: 'Montserrat', color: '#090713' }}>Mobile No</th>
-                                            <th scope="col" className="min-w-[205px] h-10 px-4 py-2 border-b border-[#EAE5FF] text-left text-xs font-medium tracking-wider" style={{ fontFamily: 'Montserrat', color: '#090713' }}>Qualification</th>
-                                            <th scope="col" className="min-w-[205px] h-10 px-4 py-2 border-b border-[#EAE5FF] text-left text-xs font-medium tracking-wider" style={{ fontFamily: 'Montserrat', color: '#090713' }}>To Date </th>
-                                            <th scope="col" className="min-w-[180px] h-10 px-4 py-2 border-b border-[#EAE5FF] text-left text-xs font-medium tracking-wider" style={{ fontFamily: 'Montserrat', color: '#090713' }}>Action</th>
-                                            <th scope="col" className="min-w-[100px] h-10 px-4 py-2 border-b border-[#EAE5FF] text-left text-xs font-medium tracking-wider" style={{ fontFamily: 'Montserrat', color: '#090713' }}>View</th>
+                                            <th scope="col" className="min-w-16   table-header" >Sr.</th>
+                                            <th scope="col" className="min-w-[205px] table-header" >Opportunity</th>
+                                            <th scope="col" className="min-w-[205px] table-header" >Hospital Name</th>
+                                            <th scope="col" className="min-w-[205px] table-header" >Email</th>
+                                            <th scope="col" className="min-w-[205px] table-header" >Mobile No</th>
+                                            <th scope="col" className="min-w-[205px] table-header" >Qualification</th>
+                                            <th scope="col" className="min-w-[205px] table-header" >To Date </th>
+                                            <th scope="col" className="min-w-[180px] table-header" >Action</th>
+                                            <th scope="col" className="min-w-[100px] table-header" >View</th>
                                         </tr>
                                     </thead>
                                     <tbody className='divide-y divide-gray-200'>
                                         {initialRows.map((role,index)=>(
                                             <tr key={index}>
-                                                <td className="px-4 py-2 border-b border-[#EAE5FF] whitespace-nowrap">{index + 1}</td>
-                                                <td className="px-4 py-2 border-b border-[#EAE5FF] whitespace-nowrap">{role.name}</td>
-                                                <td className="px-4 py-2 border-b border-[#EAE5FF] whitespace-nowrap">{role.hospitalName}</td>
-                                                <td className="px-4 py-2 border-b border-[#EAE5FF] whitespace-nowrap">{role.email}</td>
-                                                <td className="px-4 py-2 border-b border-[#EAE5FF] whitespace-nowrap">{role.mobileNo}</td>
-                                                <td className="px-4 py-2 border-b border-[#EAE5FF] whitespace-nowrap">{role.qualification}</td>
-                                                <td className="px-4 py-2 border-b border-[#EAE5FF] whitespace-nowrap">{role.toDate}</td>
-                                                <td className="px-4 py-2 border-b border-[#EAE5FF] whitespace-nowrap" style={{position:'sticky'}}>
+                                                <td className="table-data">{index + 1}</td>
+                                                <td className="table-data">{role.name}</td>
+                                                <td className="table-data">{role.hospitalName}</td>
+                                                <td className="table-data">{role.email}</td>
+                                                <td className="table-data">{role.mobileNo}</td>
+                                                <td className="table-data">{role.qualification}</td>
+                                                <td className="table-data">{role.toDate}</td>
+                                                <td className="table-data sticky">
                                                     <div className='flex gap-2  '>
                                                         <div className="relative group">
-                                                            <div className="flex items-center  w-10 h-10 bg-[#F7FBFF] rounded-[10px] cursor-pointer ">
+                                                            <div className="action-button ">
                                                                 <img src="/image/action/Frame 33573.svg" alt="Edit" className='size-6' />
                                                             </div>
                                                             <span className="tooltip-text">
@@ -94,7 +94,7 @@ const JobsList = () => {
                                                             </span>  
                                                         </div>
                                                         <div className="relative group">
-                                                            <div className="flex items-center  w-10 h-10 bg-[#F7FBFF] rounded-[10px] cursor-pointer">
+                                                            <div className="action-button">
                                                                 <img src="/image/action/Frame 33572 (2).svg" alt="Delete" className='size-6' onClick={() => handleDelete(role.id)} />
                                                             </div>
                                                             <span className="tooltip-text">
@@ -107,7 +107,7 @@ const JobsList = () => {
                                                 <td className="px-4 py-2 border-b border-[#EAE5FF]">
                                                     <div className='flex gap-2'>
                                                         <div className="relative group">
-                                                            <div className="flex items-center  w-10 h-10 bg-[#F7FBFF] rounded-[10px] cursor-pointer">
+                                                            <div className="action-button">
                                                                 <img src="/image/action/Frame 33574 (2).svg" alt="View" className='size-6' />
                                                             </div>
                                                             <span className="tooltip-text">
@@ -129,17 +129,17 @@ const JobsList = () => {
                             </span>
                             <ul className="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">
                                 <li>
-                                    <a href="#" className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white rounded-md hover:bg-gray-100 hover:text-gray-700" >
+                                    <a href="#" className="previous-button" >
                                         <img src="/image/action/Left Arrow.svg" alt="Left" /> Previous
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#" className="flex items-center justify-center px-3 h-8 leading-4 text-[#090713] font-normal   bg-white" style={{fontFamily: 'Poppins', fontSize: '12px',}}  >
+                                    <a href="#" className="current-page ">
                                         Page 01 of 01
                                     </a>
                                 </li>
                                 <li>
-                                    <a  href="#"  className="flex items-center justify-center px-3 h-8 leading-tight text-white bg-[#115CC9] rounded-md hover:bg-blue-600 hover:text-white">
+                                    <a  href="#"  className="next-button">
                                         Next <img src="/image/action/Right Arrow (1).svg" alt="Right" />
                                     </a>
                                 </li>

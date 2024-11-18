@@ -46,13 +46,13 @@ const CreateService = () => {
           {/* Form Container */}
           <div className="h-full py-6 px-6 max-w-5xl"> 
             <div className="bg-white w-full rounded-xl border border-[#EAE5FF] py-4 px-6">
-              <p className='text-left font-bold' style={{fontFamily:'Montserrat'}}>Create Service</p>
+              <p className='text-left font-bold font-[Montserrat]' >Create Service</p>
               <form className="mt-4">
 
                 <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mt-6">
                   {/* Service name */}
                   <div className="flex flex-col">
-                      <label  htmlFor="service_name"  className="text-sm font-medium text-start text-[12px]"  style={{ fontFamily: 'Montserrat' }}> Service name </label>
+                      <label  htmlFor="service_name"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> Service name </label>
                       <input id="service_name" name="service_name" type="text" required className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}}
                         onFocus={() => handleFocus('service_name')}
                         onBlur={() => handleBlur('service_name')}
@@ -61,7 +61,7 @@ const CreateService = () => {
                     </div>
                     {/* service actegory */}
                     <div className="flex flex-col">
-                      <label htmlFor="prefix" className="text-sm font-medium text-start text-[12px]  " style={{fontFamily:'Montserrat'}}> Service Category </label>
+                      <label htmlFor="prefix" className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> Service Category </label>
                       <div className="relative">
                         <input id="service_category" name="service_category" type="text" required className="border rounded-lg p-3 mt-1 w-full h-14 pr-10" style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}}
                           onFocus={() => handleFocus('service_category')}
@@ -75,7 +75,7 @@ const CreateService = () => {
 
                     {/* digital marketing service  */}
                     <div className="flex flex-col">
-                      <label   htmlFor="digital_marketing_service"   className="text-sm font-medium text-start text-[12px]"   style={{ fontFamily: 'Montserrat' }} >   Product Desription </label>
+                      <label   htmlFor="digital_marketing_service"   className="text-sm font-medium text-start text-[12px] font-[Montserrat]">   Product Desription </label>
                       <input   id="digital_marketing_service"   name="digital_marketing_service"   type="text"   required   className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}}
                         onFocus={() => handleFocus('digital_marketing_service')}
                         onBlur={() => handleBlur('digital_marketing_service')}
@@ -84,7 +84,7 @@ const CreateService = () => {
                     </div>
                     {/* service provider */}
                     <div className="flex flex-col">
-                      <label htmlFor="service_provider" className="text-sm font-medium text-start text-[12px]  " style={{fontFamily:'Montserrat'}}>  Select  </label>
+                      <label htmlFor="service_provider" className="text-sm font-medium text-start text-[12px]  font-[Montserrat]" >  Select  </label>
                       <div className="relative">
                         <input  id="service_provider"  name="service_provider"  type="text"  required  className="border rounded-lg p-3 mt-1 w-full h-14 pr-10" style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}}
                           onFocus={() => handleFocus('service_provider')}
@@ -100,7 +100,7 @@ const CreateService = () => {
                 <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mt-6">
                     {/* address*/}
                     <div className="flex flex-col">
-                      <label  htmlFor="address"  className="text-sm font-medium text-start text-[12px]"  style={{ fontFamily: 'Montserrat' }}>  Product Source</label>
+                      <label  htmlFor="address"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]">  Product Source</label>
                       <input  id="address"  name="address"  type="text"  required  className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px', border: '1px solid #EAEAFF'}}
                         onFocus={() => handleFocus('address')}
                         onBlur={() => handleBlur('address')}
@@ -110,14 +110,14 @@ const CreateService = () => {
 
                     {/* Mobile Number */}
                     <div className="flex flex-col relative">
-                      <label  htmlFor="mobile_number"  className="text-sm font-medium text-start text-[12px]"  style={{ fontFamily: 'Montserrat' }}>  Mobile number</label>
+                      <label  htmlFor="mobile_number"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]">  Mobile number</label>
                       <div className="relative mt-1">
-                        <PhoneInput id="mobile_number" placeholder="Enter Mobile number" value={value} onChange={setValue} defaultCountry="IN" className="border rounded-lg w-full h-14" style={{   borderRadius: '8px',   borderColor: '#EAEAFF',   paddingLeft: '6px', }} />
+                        <PhoneInput id="mobile_number" placeholder="Enter Mobile number" value={value} onChange={setValue} defaultCountry="IN" className="border rounded-lg w-full h-14 pl-[6px]" style={{   borderRadius: '8px',   borderColor: '#EAEAFF',}} />
                       </div>
                     </div>
                     {/* product source*/}
                     <div className="flex flex-col">
-                      <label   htmlFor="service_price"   className="text-sm font-medium text-start text-[12px]"   style={{ fontFamily: 'Montserrat' }} > Product Source </label>
+                      <label   htmlFor="service_price"   className="text-sm font-medium text-start text-[12px] font-[Montserrat]" > Product Source </label>
                       <input   id="service_price"   name="service_price"   type="text"   required className="border rounded-lg p-3 mt-1 w-full h-14" style={{ borderRadius: '8px',border: '1px solid #EAEAFF'}}
                         onFocus={() => handleFocus('service_price')}
                         onBlur={() => handleBlur('service_price')}
@@ -127,32 +127,14 @@ const CreateService = () => {
                 </div>
                 {/* Action Buttons */}
                 <div className="flex justify-end mt-6 gap-3">
-                  <button
-                    type="button"
-                    className="text-gray-700 hover:text-gray-800 flex items-center justify-center"
-                    style={{
-                      width: "150px",
-                      height: "48px",
-                      borderRadius: "8px",
-                      border: "1px solid #71717A",
-                      color: "#71717A",
-                      fontFamily: 'Montserrat',
-                    }}
-                  >
+                  <button  type="button"  className="flex items-center justify-center w-[150px] h-12 text-[#71717A] font-[Montserrat]"  style={{ borderRadius: "8px", border: "1px solid #71717A", }} >
                     <img src="/image/action/Big Arrow _ Left.svg" alt="Arrow Left" />
                     Cancel
                   </button>
 
                   <button
                     type="submit"
-                    className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
-                    style={{
-                      width: "150px",
-                      height: "48px",
-                      borderRadius: "8px",
-                      fontFamily: 'Montserrat',
-                    }}
-                  >
+                    className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 w-[150px] h-12 font-[Montserrat]" style={{ borderRadius: "8px", }} >
                     Save
                   </button>
                 </div>

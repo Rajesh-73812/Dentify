@@ -34,17 +34,17 @@ const CreateMaterial = () => {
         <Header />
 
         {/* Form Container */}
-        <div className="container mx-auto flex-grow overflow-y-auto " style={{scrollbarWidth:'none'}}>
+        <div className="container mx-auto flex-grow overflow-y-auto scrollbar-none">
           {/* Back Button and Title */}
           <div className="flex items-center mt-6  mb-4">
             <Link to="/rolesList" className="cursor-pointer ml-6">
               <ArrowBackIosNewIcon />
             </Link>
-            <h2 className="text-lg font-semibold ml-4 text-[#000000] font-[Montserrat]" style={{fontSize:'24px'}}>Create Course</h2>
+            <h2 className="text-2xl font-semibold ml-4 text-[#000000] font-[Montserrat]">Create Course</h2>
           </div>
 
           {/* Form Container */}
-          <div className="  py-6 px-6 max-w-5xl mx-auto overflow-y-auto h-[80vh]" style={{scrollbarWidth:'none'}}> 
+          <div className="  py-6 px-6 max-w-5xl mx-auto overflow-y-auto h-[80vh] scrollbar-none" > 
             <div className="bg-white w-full rounded-xl border border-[#EAE5FF] py-4 px-6">
               <p className='text-left font-bold font-[Montserrat]'>Create Course</p>
               <form className="mt-4">
@@ -72,7 +72,7 @@ const CreateMaterial = () => {
                   </div>  
                     {/* supplier name */}
                   <div className="flex flex-col relative">
-                    <label   htmlFor="supplier_name"   className="text-sm font-medium text-start text-[12px] font-[Montserrat]">Supplier Nme  </label>
+                    <label htmlFor="supplier_name" className="text-sm font-medium text-start text-[12px] font-[Montserrat]">Supplier Nme  </label>
                       <div className="relative mt-1">
                       <input  id="supplier_name"  name="supplier_name"  type="text"  required  className="border rounded-lg p-3 w-full h-14" style={{   borderRadius: '8px',   border: `1px solid #EAEAFF`, }}
                         onFocus={() => handleFocus('supplier_name')}
@@ -83,9 +83,9 @@ const CreateMaterial = () => {
                   </div> 
                   {/* supplier Address   */}
                   <div className="flex flex-col relative">
-                    <label   htmlFor="supplier_address"   className="text-sm font-medium text-start text-[12px] font-[Montserrat]" >Supplier Address</label>
+                    <label  htmlFor="supplier_address" className="text-sm font-medium text-start text-[12px] font-[Montserrat]" >Supplier Address</label>
                       <div className="relative mt-1">
-                      <input  id="supplier_address"  name="supplier_address"  type="text"  required  className="border rounded-lg p-3 w-full h-14" style={{   borderRadius: '8px',   border: `1px solid #EAEAFF`, }}
+                      <input  id="supplier_address"  name="supplier_address"  type="text"  required  className="border rounded-lg p-3 w-full h-14" style={{borderRadius: '8px', border: `1px solid #EAEAFF`, }}
                         onFocus={() => handleFocus('supplier_address')}
                         onBlur={() => handleBlur('supplier_address')}
                         placeholder="Enter supplier address"
@@ -99,7 +99,7 @@ const CreateMaterial = () => {
                   <div className="flex flex-col relative">
                     <label  htmlFor="mobile_number"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]">Supplier Contact Number</label>
                     <div className="relative mt-1">
-                      <PhoneInput  id="mobile_number"  placeholder="Enter Mobile number"  value={value}  onChange={setValue}  defaultCountry="IN"  className="border rounded-lg w-full h-14"  style={{    borderRadius: '8px',    borderColor: '#EAEAFF',    paddingLeft: '6px',  }}/>
+                      <PhoneInput  id="mobile_number"  placeholder="Enter Mobile number"  value={value}  onChange={setValue}  defaultCountry="IN"  className="border rounded-lg w-full h-14 pl-[6px]"  style={{borderRadius: '8px', borderColor: '#EAEAFF',}}/>
                     </div>
                   </div>
                   {/* supplier email */}
@@ -183,7 +183,7 @@ const CreateMaterial = () => {
                 </div>
                 {/* Action Buttons */}
                 <div className="flex justify-end mt-6 gap-3">
-                  <button  type="button"  className="text-gray-700 hover:text-gray-800 flex items-center justify-center font-[Montserrat] w-[150px] h-12"  style={{ borderRadius:"8px", border:"1px solid #71717A", color:"#71717A"}}>
+                  <button  type="button"  className="flex items-center justify-center font-[Montserrat] w-[150px] h-12 text-[#71717A]"  style={{ borderRadius:"8px", border:"1px solid #71717A"}}>
                     <img src="/image/action/Big Arrow _ Left.svg" alt="Arrow Left" />
                     Cancel
                   </button>
