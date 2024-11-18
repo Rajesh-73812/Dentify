@@ -125,7 +125,7 @@ const MaterialList = () => {
                                 
                             </div>
                         </div>
-                        <div className="action-button">
+                        <div className=" bottom-0 left-0 w-full bg-[#f7fbff] py-4 flex justify-between items-center">
                             <span className="text-sm font-normal text-gray-500">
                                 Showing <span className="font-semibold text-gray-900">01</span> of <span className="font-semibold text-gray-900">{initialRows.length}</span>
                             </span>
@@ -136,7 +136,7 @@ const MaterialList = () => {
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#" className="current-page">
+                                    <a href="#" className="current-page ">
                                         Page 01 of 01
                                     </a>
                                 </li>
