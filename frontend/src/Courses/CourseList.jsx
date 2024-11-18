@@ -40,15 +40,15 @@ const CourseList = () => {
         {/* sidebar */}
             <Sidebar />
             
-            <div className="flex flex-1 flex-col">
+            <div className="flex flex-1 flex-col bg-[#f7fbff]">
             {/* header */}
                 <Header />
                 {/* searching sorting  and main content area*/}
                 {/* <div className='h-screen overflow-y-auto' style={{scrollbarWidth:'none'}}> */}
                     <CourseHeader />
                     {/* card */}
-                    <div className="bg-[#f7fbff] h-full py-6 px-6 w-[1000px]" style={{overflow:'scroll',scrollbarWidth:'none'}}>
-                        <div className="bg-white w-[102.5%] rounded-xl border border-[#EAE5FF] py-4 px-3" style={{overflowX:'scroll',scrollbarWidth:'none'}}>
+                    <div className=" h-full py-6 px-6 w-[1000px]" style={{overflow:'scroll',scrollbarWidth:'none'}}>
+                        <div className="bg-white w-[100%] rounded-xl border border-[#EAE5FF] py-4 px-3" style={{overflowX:'scroll',scrollbarWidth:'none'}}>
                             <div className="relative  sm:rounded-lg">
                                 <table className="min-w-full text-sm text-left rtl:text-right text-gray-500 divide-y divide-gray-200">
                                     <thead className="text-xs text-gray-700 uppercase bg-gray-50">
@@ -113,33 +113,29 @@ const CourseList = () => {
                                         ))}
                                     </tbody>
                                 </table>
-                                <div className="mt-6">
-                                    <nav className="pt-4" aria-label="Table navigation">
-                                        <div className="flex justify-between">
-                                            <span className="text-sm font-normal text-gray-500 mb-4 md:mb-0 block w-[104px] h-[18px] ">
-                                                Showing <span className="font-semibold text-gray-900">01</span> of <span className="font-semibold text-gray-900">{initialRows.length}</span>
-                                            </span>
-                                            <ul className="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8 w-[276px]">
-                                                <li>
-                                                    <a href="#" className="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white rounded-s-lg hover:bg-gray-100 hover:text-gray-700">
-                                                        <img src="/image/action/Left Arrow.svg" alt="Left" /> Previous
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="#" className="flex items-center justify-center px-3 h-8 leading-tight  bg-white hover:bg-gray-100 hover:text-gray-700 text-[#090713]" style={{ font: 'Poppins', fontWeight: '400', fontSize: '12px', lineHeight: '18px' }}>
-                                                        Page 01 of 01
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="#" className="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700" style={{ borderRadius: '6px', gap: '8px', background: '#115CC9', color: '#ffffff' }}>
-                                                        Next <img src="/image/action/Right Arrow (1).svg" alt="Right" />
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </nav>
-                                </div>
                             </div>
+                        </div>
+                        <div className=" bottom-0 left-0 w-full bg-[#f7fbff] py-4 flex justify-between items-center">
+                                <span className="text-sm font-normal text-gray-500">
+                                    Showing <span className="font-semibold text-gray-900">01</span> of <span className="font-semibold text-gray-900">{initialRows.length}</span>
+                                </span>
+                                <ul className="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">
+                                    <li>
+                                        <a href="#" className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white rounded-md hover:bg-gray-100 hover:text-gray-700" >
+                                            <img src="/image/action/Left Arrow.svg" alt="Left" /> Previous
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" className="flex items-center justify-center px-3 h-8 leading-4 text-[#090713] font-normal   bg-white" style={{fontFamily: 'Poppins', fontSize: '12px',}}  >
+                                            Page 01 of 01
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a  href="#"  className="flex items-center justify-center px-3 h-8 leading-tight text-white bg-[#115CC9] rounded-md hover:bg-blue-600 hover:text-white">
+                                            Next <img src="/image/action/Right Arrow (1).svg" alt="Right" />
+                                        </a>
+                                    </li>
+                                </ul>
                         </div>
                     </div>
                 {/* </div> */}

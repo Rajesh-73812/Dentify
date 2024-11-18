@@ -1,6 +1,0 @@
-
-/* in dashboard2 to remove default cancel or clear icon */
-input[type="search"]::-webkit-search-cancel-button {
-    -webkit-appearance: none;
-    appearance: none;
-  }

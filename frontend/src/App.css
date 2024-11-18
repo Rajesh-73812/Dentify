@@ -96,14 +96,41 @@ input[type=date]:invalid::-webkit-datetime-edit {
   opacity: 1; /* Show the tooltip on hover */
   visibility: visible; /* Make it visible */
 
+
   transform: translateX(-50%) translateY(-5px); /* Slight upward movement */
 
   
 
-  transform: translateX(-50%) translateY(-5px); /* Slight upward movement */
+
 }
 
 .border-input{
   border: 1px solid #EAE5FF !important ;
 
+}
+
+/* in dashboard2 to remove default cancel or clear icon */
+input[type="search"]::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* for login */
+@media (max-width:600px){
+  .fg{
+    margin-left: '20px';
+    font-size: 9px;
+  }
+}
+
+@media (max-width: 600px) {
+  input[type="email"]::placeholder,
+  input[type="password"]::placeholder {
+      font-size: 8px; 
+
+  }
+  .visibilityIcon{
+    font-size: 8px;
+    
+  }
 }

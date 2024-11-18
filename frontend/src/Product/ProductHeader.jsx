@@ -13,7 +13,7 @@ const ProductHeader = () => {
         navigate('/create-product')
     }
     return (
-        <div className="bg-[#f7fbff] p-6">
+        <div className="bg-[#f7fbff] p-6  w-[1000px]">
             <div className=" flex items-center justify-between" style={{ height: "36px" }}>
                 <div className=" text-xl sm:text-2xl w-16 h-9 whitespace-nowrap" style={{ color: '#131313', fontFamily: 'Montserrat', fontSize: '20px', lineHeight: '38px', fontWeight: "600" }}>
                     Product List
