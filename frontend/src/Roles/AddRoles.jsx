@@ -26,29 +26,21 @@ const AddRoles = () => {
             <Link to="/dashboard" className="cursor-pointer ml-6">
               <ArrowBackIosNewIcon />
             </Link>
-            <h2 className="text-lg font-semibold ml-4 " style={{color:'#000000',fontSize:'24px',fontFamily:'Montserrat'}}>Add Role</h2>
+            <h2 className=" font-semibold ml-4 text-[#000000] text-2xl font-[Montserrat]" >Add Role</h2>
           </div>
           {/* Form Container */}
           <div className="h-full py-6 px-6 max-w-5xl"> 
             <div className="bg-white w-full rounded-xl border border-[#EAE5FF] py-4 px-6">
-              <p className='text-left font-bold' style={{fontFamily:'Montserrat'}}>Add role</p>
+              <p className='text-left font-bold font-[Montserrat]'>Add role</p>
               <form className="mt-4">
                 <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
                   {/* Role Name */}
                   <div className="flex flex-col">
-                    <label htmlFor="role_name" className="text-sm font-medium text-start" style={{fontFamily:'Montserrat', fontWeight:'500px', fontSize:'14px'}}>Role Name <span>*</span></label>
-                    <input
-                      id="role_name"
-                      name="role_name"
-                      type="text"
+                    <label htmlFor="role_name" className="text-sm font-medium text-start font-[Montserrat]">Role Name <span>*</span></label>
+                    <input id="role_name" name="role_name" type="text" className="border rounded-lg p-3 mt-1 w-full h-14" style={{ borderRadius: '8px', border: `1px solid EAEAFF`}}
                       required
                       onFocus={() => setIsFocused(true)}
                       onBlur={() => setIsFocused(false)}
-                      className="border rounded-lg p-3 mt-1 w-full h-14"
-                      style={{
-                        borderRadius: '8px',
-                        border: `1px solid ${isFocused ? '#439BFF' : '#EAEAFF'}`,
-                      }}
                       placeholder='Enter Role'
                     />
                   </div>
@@ -56,18 +48,9 @@ const AddRoles = () => {
                   {/* Start Date */}
                   <div className="flex flex-col">
                     <label htmlFor="start-date" className="text-sm font-medium text-start" style={{fontFamily:'Montserrat', fontWeight:'500px', fontSize:'14px'}}>Start Date</label>
-                    <input
-                      id="start-date"
-                      name="start-date"
-                      type="date"
-                      required
+                    <input id="start-date" name="start-date" type="date" required className="border rounded-lg p-3 mt-1 w-full h-14" style={{ borderRadius: '8px', border: `1px solid #EAEAFF` }}
                       onFocus={() => setStartDateIsFocused(true)}
                       onBlur={() => setStartDateIsFocused(false)}
-                      className="border rounded-lg p-3 mt-1 w-full h-14"
-                      style={{
-                        borderRadius: '8px',
-                        border: `1px solid ${startDateIsFocused ? '#439BFF' : '#EAEAFF'}`,
-                      }}
                       placeholder='dd/mm/yyyy'
                     />
                   </div>
@@ -75,50 +58,21 @@ const AddRoles = () => {
                   {/* End Date */}
                   <div className="flex flex-col">
                     <label htmlFor="end-date" className="text-sm font-medium text-start" style={{fontFamily:'Montserrat', fontWeight:'500px', fontSize:'14px'}}>End Date</label>
-                    <input
-                      id="end-date"
-                      name="end-date"
-                      type="date"
-                      required
+                    <input id="end-date" name="end-date" type="date" required className="border rounded-lg p-3 mt-1 w-full h-14" style={{borderRadius: '8px', border: `1px solid #EAEAFF`}}
                       onFocus={() => setEndDateIsFocused(true)}
                       onBlur={() => setEndDateIsFocused(false)}
-                      className="border rounded-lg p-3 mt-1 w-full h-14"
-                      style={{
-                        borderRadius: '8px',
-                        border: `1px solid ${endDateIsFocused ? '#439BFF' : '#EAEAFF'}`,
-                      }}
                     />
                   </div>
                 </div>
 
                 {/* Action Buttons */}
                 <div className="flex justify-end mt-6 gap-3">
-                  <button
-                    type="button"
-                    className="text-gray-700 hover:text-gray-800 flex items-center justify-center"
-                    style={{
-                      width: "150px",
-                      height: "48px",
-                      borderRadius: "8px",
-                      border: "1px solid #71717A",
-                      color: "#71717A",
-                      fontFamily: 'Montserrat',
-                    }}
-                  >
+                  <button type="button" className=" flex items-center justify-center w-[150px] h-12 text-[#71717A] font-[Montserrat]" style={{ borderRadius: "8px", border: "1px solid #71717A"}} >
                     <img src="/image/action/Big Arrow _ Left.svg" alt="Arrow Left" />
                     Cancel
                   </button>
 
-                  <button
-                    type="submit"
-                    className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
-                    style={{
-                      width: "150px",
-                      height: "48px",
-                      borderRadius: "8px",
-                      fontFamily: 'Montserrat',
-                    }}
-                  >
+                  <button  type="submit"  className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 w-[150px] h-12 font-[Montserrat]"  style={{  borderRadius: "8px",}} >
                     Save
                   </button>
                 </div>
