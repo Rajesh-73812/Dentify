@@ -1,70 +1,328 @@
 import React from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Sidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
+import { useNavigate, useLocation } from "react-router-dom";
+import { RiHome6Line } from "react-icons/ri";
+import { FaUser, FaLayerGroup } from "react-icons/fa";
+import { MdOutlineBluetooth, MdQuestionMark, MdOutlineCalendarToday, MdOutlineCameraAlt,MdOutlinePayment } from "react-icons/md";
+import { FaMinus } from "react-icons/fa";
+import { IoLocationOutline } from "react-icons/io5";
+import { RxHamburgerMenu } from "react-icons/rx";
+import { IoMdHome } from "react-icons/io";
+import { FiBook } from "react-icons/fi";
+import { FaGift } from "react-icons/fa6";
+import { BsCurrencyDollar } from "react-icons/bs";
+import { PiUsersBold } from "react-icons/pi";
+import { FaRegFolder } from "react-icons/fa";
+import { LuCheckSquare } from "react-icons/lu";
+import { BsCheck2Circle } from "react-icons/bs";
+import { IoEyeOutline } from "react-icons/io5";
+import { TiUserOutline } from "react-icons/ti";
+import { LuSettings2 } from "react-icons/lu";
+import { CiLogout } from "react-icons/ci";
+import { CiWallet } from "react-icons/ci";
+import { TbSquareRoundedPercentage } from "react-icons/tb";
+import { CiImageOn } from "react-icons/ci";
+import { CgCalendarDates } from "react-icons/cg";
+import { BsFileEarmarkPlus } from "react-icons/bs";
+import { IoCheckboxOutline } from "react-icons/io5";
 
-const Sidebar = () => {
-  const location = useLocation();
-  const pathName = location.pathname;
+const SidebarMenu = () => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   return (
-    <div className="bg-[#439bff] hidden sm:block w-[250px] h-screen">
+    <Sidebar  breakPoint="sm"  width="250px"  style={{overflowY:'auto',height:'100vh'}}>
       <div className="h-[80px] bg-white flex justify-center items-center gap-2">
         <img src="/image/logo frame.svg" alt="Logo" className="h-[46px] w-[46px]" />
         <span className="text-2xl font-normal">DENTIIFY</span>
       </div>
-      <div className="px-5 py-7 flex flex-col gap-4">
 
-        {/* Role Item */}
-        <div onClick={() => navigate("/dashboard")} className={`h-8 rounded-lg flex items-center gap-3 px-3 cursor-pointer ${  pathName === "/create-role" || pathName === "/dashboard" ? "bg-white" : ""}`} >
-          <img src={  pathName === "/create-role" || pathName === "/dashboard"    ? "/image/sidebar/roles/roles icon (1).svg"    : "/image/sidebar/roles/roles icon (2).svg"} alt="Role Icon"  className="h-6 w-6"  />
-          <span className={`text-xs font-medium ${ pathName === "/create-role" || pathName === "/dashboard"  ? "text-[#439bff]" : "text-white"  }`}>Roles</span>
-        </div>
+      <Menu iconShape="circle">
+        {/* dashBoard */}
+          <MenuItem icon={<RiHome6Line />}
+            active={location.pathname === "/dashboard"}
+            onClick={() => navigate("/dashboard")}
+          >
+           Dashboard
+          </MenuItem>
+        {/* country */}
+        <SubMenu label="Country"  icon={<IoLocationOutline />}>
+          <MenuItem icon={<FaMinus />}
+            active={location.pathname === "/add-country"}
+            onClick={() => navigate("/add-country")}
+          >
+           Add Country
+          </MenuItem>
+          <MenuItem icon={<FaMinus />}
+            active={location.pathname === "/country-list"}
+            onClick={() => navigate("/country-list")}
+          >
+           List Country
+          </MenuItem>
+        </SubMenu>
 
-        {/* Users Item */}
-        <div  onClick={() => navigate("/user-list")}  className={`h-8 rounded-lg flex items-center gap-3 px-3 cursor-pointer ${pathName === "/user-list" || pathName === "/create-user"  ? "bg-white" : ""  }`}>
-          <img  src={pathName === "/user-list" || pathName === "/create-user" ? "/image/sidebar/users/Users icon (1).svg" : "/image/sidebar/users/Users icon (2).svg"} alt="Users Icon"  className="h-6 w-6"/>
-          <span  className={`text-xs font-medium ${pathName === "/user-list" || pathName === "/create-user" ? "text-[#439bff]" : "text-white"}`}  >Users</span>
-        </div>
+        {/* category */}
+        <SubMenu label="Category"  icon={<RxHamburgerMenu />}>
+          <MenuItem icon={<FaMinus />}
+            active={location.pathname === "/create-product"}
+            onClick={() => navigate("/create-product")}
+          >
+           Add Category
+          </MenuItem>
+          <MenuItem icon={<FaMinus />}
+            active={location.pathname === "/product-list"}
+            onClick={() => navigate("/product-list")}
+          >
+           List Category
+          </MenuItem>
+        </SubMenu>
 
-        {/* Products Item */}
-        <div onClick={() => navigate("/product-list")}  className={`h-8 rounded-lg flex items-center gap-3 px-3 cursor-pointer ${pathName === "/create-product" || pathName === "/product-list" ? "bg-white" : ""  }`}  >
-          <img src={pathName === "/create-product" || pathName === "/product-list"  ? "/image/sidebar/products/fluent-mdl2_product-variant (1).svg"  : "/image/sidebar/products/fluent-mdl2_product-variant (2).svg" } alt="Products Icon" className="h-6 w-6" />
-          <span className={`text-xs font-medium ${pathName === "/create-product" || pathName === "/product-list" ? "text-[#439bff]" : "text-white"}`} >Products</span>
-        </div>
+        {/* cuppon */}
+        <SubMenu label="Cuppon"  icon={<TbSquareRoundedPercentage />}>
+          <MenuItem icon={<FaMinus />}
+            active={location.pathname === "/create-product"}
+            onClick={() => navigate("/create-product")}
+          >
+           Add Cuppon
+          </MenuItem>
+          <MenuItem icon={<FaMinus />}
+            active={location.pathname === "/product-list"}
+            onClick={() => navigate("/product-list")}
+          >
+           List Cuppon
+          </MenuItem>
+        </SubMenu>
 
-        {/* Service Item */}
-        <div  onClick={() => navigate("/service-list")}  className={`h-8 rounded-lg flex items-center gap-3 px-3 cursor-pointer ${pathName === "/create-service" || pathName === "/service-list" ? "bg-white" : ""  }`}> 
-           <img  src={pathName === "/create-service" || pathName === "/service-list" ? "/image/sidebar/service/services (1).svg" : "/image/sidebar/service/services (2).svg"}  alt="Service Icon"  className="h-6 w-6"  /> 
-            <span    className={`text-xs font-medium ${pathName === "/create-service" || pathName === "/service-list" ? "text-[#439bff]" : "text-white"}`}  >Service</span>
-        </div>
+        {/* payment gateway */}
+          <MenuItem icon={<CiWallet />}
+            active={location.pathname === "/product-list"}
+            onClick={() => navigate("/product-list")}
+          >
+           Payment Gateway
+          </MenuItem>
+          
+        {/* enquiry list */}
+          <MenuItem icon={<PiUsersBold />}
+            active={location.pathname === "/product-list"}
+            onClick={() => navigate("/product-list")}
+          >
+           Enquiry List
+          </MenuItem>
 
-        {/* Service Provider Item */}
-        <div  onClick={() => navigate("/service-provider-list")}  className={`h-8 rounded-lg flex items-center gap-3 px-3 cursor-pointer ${ pathName === "/service-provider-list" || pathName === "/create-service-provider" ? "bg-white" : ""  }`}>  
-          <img  src={ pathName === "/service-provider-list" || pathName === "/create-service-provider"  ? "/image/sidebar/serviceProvider/Vector (1).svg"  : "/image/sidebar/serviceProvider/service icon (1).svg"    }    alt="Service Provider Icon" className="h-6 w-6"  /> 
-           <span className={`text-xs font-medium ${pathName === "/service-provider-list" || pathName === "/create-service-provider" ? "text-[#439bff]" : "text-white"}`}  > Service Provider  </span>
-        </div>
+        {/* Payout List */}
+          <MenuItem icon={<FaUser />}
+            active={location.pathname === "/product-list"}
+            onClick={() => navigate("/product-list")}
+          >
+           Payout List
+          </MenuItem>
 
-        {/* Materials Item */}
-        <div onClick={() => navigate("/material-list")} className={`h-8 rounded-lg flex items-center gap-3 px-3 cursor-pointer ${pathName === "/create-material" || pathName === "/material-list" ? "bg-white" : "" }`}
-        >
-          <img src={pathName === "/create-material" || pathName === "/material-list" ? "/image/sidebar/materials/flowbite_draw-square-outline (1).svg" : "/image/sidebar/materials/flowbite_draw-square-outline (2).svg"   } alt="Materials Icon"   className="h-6 w-6" />
-          <span   className={`text-xs font-medium ${pathName === "/create-material" || pathName === "/material-list" ? "text-[#439bff]" : "text-white"}`} >Materials </span>
-        </div>
+        {/* propoties */}
+        <SubMenu label="Propoties"  icon={<IoMdHome />}>
+          <MenuItem
+            active={location.pathname === "/create-product"}
+            onClick={() => navigate("/create-product")}
+          >
+            Add  Propoties
+          </MenuItem>
+          <MenuItem
+            active={location.pathname === "/product-list"}
+            onClick={() => navigate("/product-list")}
+          >
+            List Propoties
+          </MenuItem>
+        </SubMenu>
 
-        {/* Jobs Item */}
-        <div  onClick={() => navigate("/job-list")}  className={`h-8 rounded-lg flex items-center gap-3 px-3 cursor-pointer ${pathName === "/create-job" || pathName === "/job-list" ? "bg-white" : ""  }`}>
-          <img  src={pathName === "/create-job" || pathName === "/job-list" ? "/image/sidebar/jobs/jobs (1).svg" : "/image/sidebar/jobs/jobs (2).svg"}    alt="Jobs Icon" className="h-6 w-6"  />
-          <span className={`text-xs font-medium ${pathName === "/create-job" || pathName === "/job-list" ? "text-[#439bff]" : "text-white"}`}  >Jobs</span>
-        </div>
+        {/* Extra Images */}
+        <SubMenu label="Extra Images"  icon={<CiImageOn />}>
+          <MenuItem
+            active={location.pathname === "/create-product"}
+            onClick={() => navigate("/create-product")}
+          >
+            Add Extra Images
+          </MenuItem>
+          <MenuItem
+            active={location.pathname === "/product-list"}
+            onClick={() => navigate("/product-list")}
+          >
+            List Extra Images
+          </MenuItem>
+        </SubMenu>
 
-        {/* Courses Item */}
-        <div  onClick={() => navigate("/course-list")}  className={`h-8 rounded-lg flex items-center gap-3 px-3 cursor-pointer ${pathName === "/create-course" || pathName === "/course-list" ? "bg-white" : ""  }`}>
-          <img  src={pathName === "/create-course" || pathName === "/course-list" ? "/image/sidebar/courses/tdesign_education (1).svg" : "/image/sidebar/courses/tdesign_education (2).svg"  } alt="Courses Icon"  className="h-6 w-6"  />
-          <span className={`text-xs font-medium ${pathName === "/create-course" || pathName === "/course-list" ? "text-[#439bff]" : "text-white"}`} >Courses</span>
-        </div>
-      </div>
-    </div>
+        {/* Facility */}
+        <SubMenu label="Facility"  icon={<MdOutlineBluetooth />}>
+          <MenuItem
+            active={location.pathname === "/create-product"}
+            onClick={() => navigate("/create-product")}
+          >
+            Add Facility
+          </MenuItem>
+          <MenuItem
+            active={location.pathname === "/product-list"}
+            onClick={() => navigate("/product-list")}
+          >
+            List Facility
+          </MenuItem>
+        </SubMenu>
+
+        {/* Gallery Category */}
+        <SubMenu label="Gallery Category"  icon={<FaRegFolder />}>
+          <MenuItem
+            active={location.pathname === "/create-product"}
+            onClick={() => navigate("/create-product")}
+          >
+            Add Gallery Category 
+          </MenuItem>
+          <MenuItem
+            active={location.pathname === "/product-list"}
+            onClick={() => navigate("/product-list")}
+          >
+            List Gallery Category
+          </MenuItem>
+        </SubMenu>
+
+        {/* gallery */}
+        <SubMenu label="Gallery "  icon={<CiImageOn />}>
+          <MenuItem
+            active={location.pathname === "/create-product"}
+            onClick={() => navigate("/create-product")}
+          >
+            Add Gallery
+          </MenuItem>
+          <MenuItem
+            active={location.pathname === "/product-list"}
+            onClick={() => navigate("/product-list")}
+          >
+            List Gallery
+          </MenuItem>
+        </SubMenu>
+
+        {/* package */}
+        <SubMenu label="Package "  icon={<FaLayerGroup />}>
+          <MenuItem
+            active={location.pathname === "/create-product"}
+            onClick={() => navigate("/create-product")}
+          >
+            Add Package
+          </MenuItem>
+          <MenuItem
+            active={location.pathname === "/product-list"}
+            onClick={() => navigate("/product-list")}
+          >
+            List Package
+          </MenuItem>
+        </SubMenu>
+
+        {/* Booking */}
+        <SubMenu label="Booking "  icon={<CgCalendarDates />}>
+        {/* Pending Booking */}
+          <MenuItem
+            active={location.pathname === "/create-product"}
+            onClick={() => navigate("/create-product")}
+          >
+            Pending Booking
+          </MenuItem>
+
+          {/*  Approved Booking */}
+          <MenuItem
+            active={location.pathname === "/create-product"}
+            onClick={() => navigate("/create-product")}
+          >
+            Approved Booking
+          </MenuItem>
+
+          {/* Check In Booking */}
+          <MenuItem
+            active={location.pathname === "/create-product"}
+            onClick={() => navigate("/create-product")}
+          >
+            Check In Booking
+          </MenuItem>
+
+          {/* Completed Booking */}
+          <MenuItem
+            active={location.pathname === "/create-product"}
+            onClick={() => navigate("/create-product")}
+          >
+            Completed Booking
+          </MenuItem>
+
+          {/* Cancelled Booking */}
+          <MenuItem
+            active={location.pathname === "/create-product"}
+            onClick={() => navigate("/create-product")}
+          >
+            Cancelled Booking
+          </MenuItem>
+        </SubMenu>
+
+        {/* page */}
+        <SubMenu label="Page "  icon={<BsFileEarmarkPlus />}>
+          <MenuItem
+            active={location.pathname === "/create-product"}
+            onClick={() => navigate("/create-product")}
+          >
+            Add Page
+          </MenuItem>
+          <MenuItem
+            active={location.pathname === "/product-list"}
+            onClick={() => navigate("/product-list")}
+          >
+            List Page
+          </MenuItem>
+        </SubMenu>
+
+        {/* faq */}
+        <SubMenu label="Faq "  icon={<IoCheckboxOutline />}>
+          <MenuItem
+            active={location.pathname === "/create-product"}
+            onClick={() => navigate("/create-product")}
+          >
+            Add Faq
+          </MenuItem>
+          <MenuItem
+            active={location.pathname === "/product-list"}
+            onClick={() => navigate("/product-list")}
+          >
+            List Faq
+          </MenuItem>
+        </SubMenu>
+
+        {/* userlist */}
+        <MenuItem
+            active={location.pathname === "/create-product"} icon={<PiUsersBold />}
+            onClick={() => navigate("/create-product")}
+          >
+            User List
+        </MenuItem>
+
+        {/* account */}
+        <MenuItem
+            active={location.pathname === "/create-product"} icon={<TiUserOutline />}
+            onClick={() => navigate("/create-product")}
+          >
+            Account
+        </MenuItem>
+
+        {/* settings */}
+        <MenuItem
+            active={location.pathname === "/create-product"} icon={<LuSettings2 />}
+            onClick={() => navigate("/create-product")}
+          >
+            Setting
+        </MenuItem>
+
+        {/* settings */}
+        <MenuItem
+            active={location.pathname === "/create-product"} icon={<CiLogout />}
+            onClick={() => navigate("/create-product")}
+          >
+            Logout
+        </MenuItem>
+
+      </Menu>
+    </Sidebar>
   );
 };
 
-export default Sidebar;
+export default SidebarMenu;

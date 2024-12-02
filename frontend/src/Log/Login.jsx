@@ -3,7 +3,7 @@ import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined
 
 const Login = () => {
   return (
-    <div className="h-screen grid grid-cols-2"> 
+    <div className="h-screen grid grid-cols-1 md:grid-cols-2"> 
         {/* Left Side */}
         <div className="h-full flex flex-col items-center justify-center" style={{ background: 'linear-gradient(141.69deg, #25064C 0%, rgba(32, 40, 59, 0.6) 100%)' }}>
             <div>
