@@ -34,6 +34,11 @@ const CupponAdd = () => {
       cupponCode: result, 
     }));
   };
+
+  const handleSubmit=async(e)=>{
+    e.preventDefault();
+    console.log(formData)
+  }
   return (
     <div>
       <div className="flex bg-[#f7fbff]">

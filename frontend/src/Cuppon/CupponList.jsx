@@ -8,21 +8,21 @@ import CupponHeader from './CupponHeader';
 
 const CupponList = () => {
     const countries = [
-        { id: 1, title: 'United States', image: 'path/to/image1.jpg', totalProperties: 100, status: 'publish' },
-        { id: 2, title: 'Canada', image: 'path/to/image2.jpg', totalProperties: 80, status: 'publish' },
-        { id: 3, title: 'Australia', image: 'path/to/image3.jpg', totalProperties: 60, status: 'unpublish' },
-        { id: 4, title: 'Germany', image: 'path/to/image4.jpg', totalProperties: 90, status: 'publish' },
-        { id: 5, title: 'Japan', image: 'path/to/image5.jpg', totalProperties: 70, status: 'unpublish' },
-        { id: 6, title: 'United States', image: 'path/to/image1.jpg', totalProperties: 100, status: 'publish' },
-        { id: 7, title: 'Canada', image: 'path/to/image2.jpg', totalProperties: 80, status: 'publish' },
-        { id: 8, title: 'Australia', image: 'path/to/image3.jpg', totalProperties: 60, status: 'unpublish' },
-        { id: 9, title: 'Germany', image: 'path/to/image4.jpg', totalProperties: 90, status: 'publish' },
-        { id: 10, title: 'Japan', image: 'path/to/image5.jpg', totalProperties: 70, status: 'unpublish' },
-        { id: 11, title: 'United States', image: 'path/to/image1.jpg', totalProperties: 100, status: 'publish' },
-        { id: 12, title: 'Canada', image: 'path/to/image2.jpg', totalProperties: 80, status: 'publish' },
-        { id: 13, title: 'Australia', image: 'path/to/image3.jpg', totalProperties: 60, status: 'unpublish' },
-        { id: 14, title: 'Germany', image: 'path/to/image4.jpg', totalProperties: 90, status: 'publish' },
-        { id: 15, title: 'Japan', image: 'path/to/image5.jpg', totalProperties: 70, status: 'unpublish' },
+        { id: 1, title: 'HOLIDAY30',subtitle: 'Free for U',code:'9Q9VBCOZ',code:'9Q9VBCOZ', image: 'path/to/image1.jpg', expiredDate:'25-12-24',minAmount:'5000',discount:'2300', status: 'publish' },
+        { id: 2, title: 'FREESERVICE',subtitle: 'Free for U',code:'9Q9VBCOZ', image: 'path/to/image2.jpg',expiredDate:'25-12-24',minAmount:'5000',discount:'2300' , status: 'publish' },
+        { id: 3, title: 'LASTMINUTE25',subtitle: 'Free for U',code:'9Q9VBCOZ', image: 'path/to/image3.jpg',expiredDate:'25-12-24',minAmount:'5000',discount:'2300', status: 'unpublish' },
+        { id: 4, title: 'LONGTERM10',subtitle: 'enjoy holiday',code:'9Q9VBCOZ', image: 'path/to/image4.jpg',expiredDate:'25-12-24',minAmount:'5000',discount:'2300' , status: 'publish' },
+        { id: 5, title: 'WEEKENDGETAWAY',subtitle: 'enjoy your weekend',code:'9Q9VBCOZ', image: 'path/to/image5.jpg',expiredDate:'25-12-24',minAmount:'5000',discount:'2300', status: 'unpublish' },
+        { id: 6, title: 'HOLIDAY30',subtitle: 'enjoy holiday',code:'9Q9VBCOZ', image: 'path/to/image1.jpg',expiredDate:'25-12-24',minAmount:'5000',discount:'2300' , status: 'publish' },
+        { id: 7, title: 'FREESERVICE',subtitle: 'enjoy yourSelves',code:'9Q9VBCOZ', image: 'path/to/image2.jpg',expiredDate:'25-12-24',minAmount:'5000',discount:'2300' , status: 'publish' },
+        { id: 8, title: 'LASTMINUTE25',subtitle: 'enjoy your weekend',code:'9Q9VBCOZ', image: 'path/to/image3.jpg',expiredDate:'25-12-24',minAmount:'5000',discount:'2300' , status: 'unpublish' },
+        { id: 9, title: 'LONGTERM10',subtitle: 'enjoy your weekend',code:'9Q9VBCOZ', image: 'path/to/image4.jpg',expiredDate:'25-12-24',minAmount:'5000',discount:'2300' , status: 'publish' },
+        { id: 10, title: 'WEEKENDGETAWAY',subtitle: 'enjoy your weekend',code:'9Q9VBCOZ', image: 'path/to/image5.jpg',expiredDate:'25-12-24',minAmount:'5000',discount:'2300' , status: 'unpublish' },
+        { id: 11, title: 'HOLIDAY30',subtitle: 'enjoy bookFast',code:'9Q9VBCOZ', image: 'path/to/image1.jpg',expiredDate:'25-12-24',minAmount:'5000',discount:'2300' , status: 'publish' },
+        { id: 12, title: 'FREESERVICE',subtitle: 'enjoy your weekend',code:'9Q9VBCOZ', image: 'path/to/image2.jpg',expiredDate:'25-12-24',minAmount:'5000',discount:'2300' , status: 'publish' },
+        { id: 13, title: 'LASTMINUTE25',subtitle: 'enjoy your weekend',code:'9Q9VBCOZ', image: 'path/to/image3.jpg',expiredDate:'25-12-24',minAmount:'5000',discount:'2300' , status: 'unpublish' },
+        { id: 14, title: 'LONGTERM10',subtitle: 'bookFast',code:'9Q9VBCOZ', image: 'path/to/image4.jpg',expiredDate:'25-12-24',minAmount:'5000',discount:'2300' , status: 'publish' },
+        { id: 15, title: 'WEEKENDGETAWAY',subtitle: 'enjoy yourSelves',code:'9Q9VBCOZ', image: 'path/to/image5.jpg',expiredDate:'25-12-24',minAmount:'5000',discount:'2300' , status: 'unpublish' },
         
     ];
 
@@ -97,6 +97,13 @@ const CupponList = () => {
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[150px]">
+                                                Title
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('title')} />
+                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('title')} />
+                                                </div>
+                                            </th>
+                                            <th className="px-4 py-3 min-w-[150px]">
                                                  SubTitle
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('subtitle')} />
@@ -122,6 +129,13 @@ const CupponList = () => {
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('expiredDate')} />
                                                     <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('expiredDate')} />
+                                                </div>
+                                            </th>
+                                            <th className="px-4 py-3 min-w-[150px]">
+                                                 Min Amount
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('minAmount')} />
+                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('minAmount')} />
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[150px]">
@@ -151,7 +165,9 @@ const CupponList = () => {
                                         {currentCountries.map((country, index) => (
                                             <tr key={country.id}>
                                                 <td className="px-4 py-3">{index + 1 + indexOfFirstCountry}</td>
-                                                <td className="px-4 py-3">{country.name}</td>
+                                                <td className="px-4 py-3">{country.title}</td>
+                                                <td className="px-4 py-3">{country.subtitle}</td>
+                                                <td className="px-4 py-3">{country.code}</td>
                                                 <td className="px-4 py-3">
                                                     {country.image && country.image.trim() !== '' ? (
                                                         <img src={country.image} className="w-16 h-16 object-cover rounded-full" height={50} width={50} loading="lazy" alt="" onError={(e) => {
@@ -163,7 +179,9 @@ const CupponList = () => {
                                                         <img src={'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg'} height={50} width={50} loading="lazy" alt="" />
                                                     )}
                                                 </td>
-                                                <td className="px-4 py-3">{country.totalProperties}</td>
+                                                <td className="px-4 py-3">{country.expiredDate}</td>
+                                                <td className="px-4 py-3">{country.minAmount}</td>
+                                                <td className="px-4 py-3">{country.discount}</td>
                                                 <td className="px-4 py-3">
                                                     <span className={`px-3 py-1 text-sm rounded-full ${country.status === 'publish' ? 'bg-green-500 text-white' : 'bg-gray-400 text-white'}`}>
                                                         {country.status}

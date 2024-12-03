@@ -11,7 +11,7 @@ const CupponHeader =  ({ onSearch }) => {
                     <Link to="/dashboard" className="cursor-pointer ml-6">
                     <ArrowBackIosNewIcon />
                     </Link>
-                    <h2 className="text-lg font-semibold ml-4 " style={{color:'#000000',fontSize:'24px',fontFamily:'Montserrat'}}>Create Country</h2>
+                    <h2 className="text-lg font-semibold ml-4 " style={{color:'#000000',fontSize:'24px',fontFamily:'Montserrat'}}>Create Cuppon</h2>
                 </div>
                 <div className=' flex items-center gap-3'>
                     <div className="hidden sm:flex  items-center border border-input rounded-lg bg-white shadow-sm top-[104px] h-9 opacity-100 " style={{border: '1px solid #EAE5FF', boxShadow: '0px 0px 1px 1px #00000033' }}>
