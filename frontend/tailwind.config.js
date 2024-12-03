@@ -80,7 +80,7 @@ module.exports = {
           padding: '0.5rem 1rem', // 8px (top/bottom) and 16px (left/right)
           borderBottom: '1px solid #EAE5FF',
           whiteSpace: 'nowrap',
-          textAlign: 'left',
+          textAlign: 'center',
           fontSize: '0.875rem', // text-sm
         },
         '.next-button':{
