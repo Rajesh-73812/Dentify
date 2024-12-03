@@ -32,9 +32,9 @@ const SidebarMenu = () => {
 
   return (
     <Sidebar  breakPoint="sm"  width="250px"  style={{overflowY:'auto',height:'100vh'}}>
-      <div className="h-[80px] bg-white flex justify-center items-center gap-2">
+      <div className="h-[80px] bg-white flex justify-center items-center gap-2" >
         <img src="/image/logo frame.svg" alt="Logo" className="h-[46px] w-[46px]" />
-        <span className="text-2xl font-normal">DENTIIFY</span>
+        <span className="text-2xl font-normal">RENTAL</span>
       </div>
 
       <Menu iconShape="circle">
@@ -46,14 +46,14 @@ const SidebarMenu = () => {
            Dashboard
           </MenuItem>
         {/* country */}
-        <SubMenu label="Country"  icon={<IoLocationOutline />}>
-          <MenuItem icon={<FaMinus />}
+        <SubMenu  label="Country"  icon={<IoLocationOutline />}>
+          <MenuItem className="sub-menu-item"
             active={location.pathname === "/add-country"}
             onClick={() => navigate("/add-country")}
           >
            Add Country
           </MenuItem>
-          <MenuItem icon={<FaMinus />}
+          <MenuItem className="sub-menu-item"
             active={location.pathname === "/country-list"}
             onClick={() => navigate("/country-list")}
           >
@@ -63,13 +63,13 @@ const SidebarMenu = () => {
 
         {/* category */}
         <SubMenu label="Category"  icon={<RxHamburgerMenu />}>
-          <MenuItem icon={<FaMinus />}
+          <MenuItem className="sub-menu-item"
             active={location.pathname === "/create-product"}
             onClick={() => navigate("/create-product")}
           >
            Add Category
           </MenuItem>
-          <MenuItem icon={<FaMinus />}
+          <MenuItem className="sub-menu-item"
             active={location.pathname === "/product-list"}
             onClick={() => navigate("/product-list")}
           >
@@ -79,13 +79,13 @@ const SidebarMenu = () => {
 
         {/* cuppon */}
         <SubMenu label="Cuppon"  icon={<TbSquareRoundedPercentage />}>
-          <MenuItem icon={<FaMinus />}
+          <MenuItem className="sub-menu-item"
             active={location.pathname === "/create-product"}
             onClick={() => navigate("/create-product")}
           >
            Add Cuppon
           </MenuItem>
-          <MenuItem icon={<FaMinus />}
+          <MenuItem className="sub-menu-item"
             active={location.pathname === "/product-list"}
             onClick={() => navigate("/product-list")}
           >
@@ -119,13 +119,13 @@ const SidebarMenu = () => {
 
         {/* propoties */}
         <SubMenu label="Propoties"  icon={<IoMdHome />}>
-          <MenuItem
+          <MenuItem className="sub-menu-item"
             active={location.pathname === "/create-product"}
             onClick={() => navigate("/create-product")}
           >
             Add  Propoties
           </MenuItem>
-          <MenuItem
+          <MenuItem className="sub-menu-item"
             active={location.pathname === "/product-list"}
             onClick={() => navigate("/product-list")}
           >
@@ -135,13 +135,13 @@ const SidebarMenu = () => {
 
         {/* Extra Images */}
         <SubMenu label="Extra Images"  icon={<CiImageOn />}>
-          <MenuItem
+          <MenuItem className="sub-menu-item"
             active={location.pathname === "/create-product"}
             onClick={() => navigate("/create-product")}
           >
             Add Extra Images
           </MenuItem>
-          <MenuItem
+          <MenuItem className="sub-menu-item"
             active={location.pathname === "/product-list"}
             onClick={() => navigate("/product-list")}
           >
@@ -151,13 +151,13 @@ const SidebarMenu = () => {
 
         {/* Facility */}
         <SubMenu label="Facility"  icon={<MdOutlineBluetooth />}>
-          <MenuItem
+          <MenuItem className="sub-menu-item"
             active={location.pathname === "/create-product"}
             onClick={() => navigate("/create-product")}
           >
             Add Facility
           </MenuItem>
-          <MenuItem
+          <MenuItem className="sub-menu-item"
             active={location.pathname === "/product-list"}
             onClick={() => navigate("/product-list")}
           >
@@ -167,13 +167,13 @@ const SidebarMenu = () => {
 
         {/* Gallery Category */}
         <SubMenu label="Gallery Category"  icon={<FaRegFolder />}>
-          <MenuItem
+          <MenuItem className="sub-menu-item"
             active={location.pathname === "/create-product"}
             onClick={() => navigate("/create-product")}
           >
             Add Gallery Category 
           </MenuItem>
-          <MenuItem
+          <MenuItem className="sub-menu-item"
             active={location.pathname === "/product-list"}
             onClick={() => navigate("/product-list")}
           >
@@ -183,13 +183,13 @@ const SidebarMenu = () => {
 
         {/* gallery */}
         <SubMenu label="Gallery "  icon={<CiImageOn />}>
-          <MenuItem
+          <MenuItem className="sub-menu-item"
             active={location.pathname === "/create-product"}
             onClick={() => navigate("/create-product")}
           >
             Add Gallery
           </MenuItem>
-          <MenuItem
+          <MenuItem className="sub-menu-item"
             active={location.pathname === "/product-list"}
             onClick={() => navigate("/product-list")}
           >

@@ -42,7 +42,7 @@ const DashboardCard = () => {
         <div className="overflow-auto scrollbar-none ">
             <div className=" py-1 px-3 overflow-x-auto scrollbar-none ">
                 <div className="relative  sm:rounded-lg">
-                    <div className="p-4 ">
+                    <div className="px-4 ">
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                             {cards.map((card, index) => (
                                 <div  key={index} className="bg-white rounded-lg shadow-md p-4 flex items-center gap-4" >
@@ -54,9 +54,9 @@ const DashboardCard = () => {
                                         <p className="text-2xl font-bold text-[#6B6B6B] mt-2">
                                             {card.card_data_value}
                                         </p>
-                                        <h3 className="text-lg font-semibold text-[#25064C] leading-none">
+                                        <h4 className="text-[18px]  text-[#25064C] leading-none">
                                             {card.card_title}
-                                        </h3>
+                                        </h4>
                                         
                                     </div>
                                 </div>

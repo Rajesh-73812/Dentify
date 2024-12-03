@@ -29,7 +29,7 @@ const CountryAdd = () => {
           </div>
 
           {/* Form Container */}
-          <div className="h-full py-6 px-6 max-w-5xl"> 
+          <div className="h-full px-6 max-w-5xl" style={{paddingTop:'24px'}}> 
             <div className="bg-white w-full rounded-xl border border-[#EAE5FF] py-4 px-6">
               {/* <p className='text-left font-bold font-[Montserrat]' >Create Service</p> */}
               <form className="mt-4">
