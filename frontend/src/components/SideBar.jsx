@@ -3,19 +3,12 @@ import { Sidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
 import { useNavigate, useLocation } from "react-router-dom";
 import { RiHome6Line } from "react-icons/ri";
 import { FaUser, FaLayerGroup } from "react-icons/fa";
-import { MdOutlineBluetooth, MdQuestionMark, MdOutlineCalendarToday, MdOutlineCameraAlt,MdOutlinePayment } from "react-icons/md";
-import { FaMinus } from "react-icons/fa";
+import { MdOutlineBluetooth } from "react-icons/md";
 import { IoLocationOutline } from "react-icons/io5";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { IoMdHome } from "react-icons/io";
-import { FiBook } from "react-icons/fi";
-import { FaGift } from "react-icons/fa6";
-import { BsCurrencyDollar } from "react-icons/bs";
 import { PiUsersBold } from "react-icons/pi";
 import { FaRegFolder } from "react-icons/fa";
-import { LuCheckSquare } from "react-icons/lu";
-import { BsCheck2Circle } from "react-icons/bs";
-import { IoEyeOutline } from "react-icons/io5";
 import { TiUserOutline } from "react-icons/ti";
 import { LuSettings2 } from "react-icons/lu";
 import { CiLogout } from "react-icons/ci";
@@ -45,6 +38,7 @@ const SidebarMenu = () => {
           >
            Dashboard
           </MenuItem>
+
         {/* country */}
         <SubMenu  label="Country"  icon={<IoLocationOutline />}>
           <MenuItem className="sub-menu-item"
@@ -64,14 +58,14 @@ const SidebarMenu = () => {
         {/* category */}
         <SubMenu label="Category"  icon={<RxHamburgerMenu />}>
           <MenuItem className="sub-menu-item"
-            active={location.pathname === "/create-product"}
-            onClick={() => navigate("/create-product")}
+            active={location.pathname === "/add-category"}
+            onClick={() => navigate("/add-category")}
           >
            Add Category
           </MenuItem>
           <MenuItem className="sub-menu-item"
-            active={location.pathname === "/product-list"}
-            onClick={() => navigate("/product-list")}
+            active={location.pathname === "/category-list"}
+            onClick={() => navigate("/category-list")}
           >
            List Category
           </MenuItem>
@@ -80,14 +74,14 @@ const SidebarMenu = () => {
         {/* cuppon */}
         <SubMenu label="Cuppon"  icon={<TbSquareRoundedPercentage />}>
           <MenuItem className="sub-menu-item"
-            active={location.pathname === "/create-product"}
-            onClick={() => navigate("/create-product")}
+            active={location.pathname === "/add-cuppon"}
+            onClick={() => navigate("/add-cuppon")}
           >
            Add Cuppon
           </MenuItem>
           <MenuItem className="sub-menu-item"
-            active={location.pathname === "/product-list"}
-            onClick={() => navigate("/product-list")}
+            active={location.pathname === "/cuppon-list"}
+            onClick={() => navigate("/cuppon-list")}
           >
            List Cuppon
           </MenuItem>

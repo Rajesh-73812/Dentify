@@ -13,7 +13,17 @@ const CountryList = () => {
         { id: 3, name: 'Australia', image: 'path/to/image3.jpg', totalProperties: 60, status: 'unpublish' },
         { id: 4, name: 'Germany', image: 'path/to/image4.jpg', totalProperties: 90, status: 'publish' },
         { id: 5, name: 'Japan', image: 'path/to/image5.jpg', totalProperties: 70, status: 'unpublish' },
-        // ... (other countries)
+        { id: 6, name: 'United States', image: 'path/to/image1.jpg', totalProperties: 100, status: 'publish' },
+        { id: 7, name: 'Canada', image: 'path/to/image2.jpg', totalProperties: 80, status: 'publish' },
+        { id: 8, name: 'Australia', image: 'path/to/image3.jpg', totalProperties: 60, status: 'unpublish' },
+        { id: 9, name: 'Germany', image: 'path/to/image4.jpg', totalProperties: 90, status: 'publish' },
+        { id: 10, name: 'Japan', image: 'path/to/image5.jpg', totalProperties: 70, status: 'unpublish' },
+        { id: 11, name: 'United States', image: 'path/to/image1.jpg', totalProperties: 100, status: 'publish' },
+        { id: 12, name: 'Canada', image: 'path/to/image2.jpg', totalProperties: 80, status: 'publish' },
+        { id: 13, name: 'Australia', image: 'path/to/image3.jpg', totalProperties: 60, status: 'unpublish' },
+        { id: 14, name: 'Germany', image: 'path/to/image4.jpg', totalProperties: 90, status: 'publish' },
+        { id: 15, name: 'Japan', image: 'path/to/image5.jpg', totalProperties: 70, status: 'unpublish' },
+        
     ];
 
     const [filterData, setFilterData] = useState(countries);
@@ -22,12 +32,12 @@ const CountryList = () => {
     
     // Pagination state
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 5; // Adjust this value for more or fewer items per page
+    const itemsPerPage = 10; 
 
     // for searching
     const handleSearch = (event) => {
         searchFunction(event, countries, setFilteredCountries);
-        setCurrentPage(1); // Reset to first page on search
+        setCurrentPage(1); 
     };
 
     // for sorting
@@ -48,7 +58,7 @@ const CountryList = () => {
 
         setFilteredCountries(sortedData);
         setSortConfig({ key, direction });
-        setCurrentPage(1); // Reset to first page on sort
+        setCurrentPage(1);
     };
 
     // Calculate paginated countries
