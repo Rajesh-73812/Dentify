@@ -1,11 +1,19 @@
 import React, { useState } from 'react';
 import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
+
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 
 
 const Login = () => {
+const [passwordVisible, setPasswordVisible] = useState(false);
+  const [passwordType, setPasswordType] = useState('password');
 
+  const handlePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
+    setPasswordType(passwordVisible ? 'password' : 'text');
+  };
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
       username: "",
@@ -48,6 +56,7 @@ const Login = () => {
       }
     };
 
+
   return (
     <div className="h-screen grid grid-cols-1 md:grid-cols-2"> 
         {/* Left Side */}
@@ -75,7 +84,14 @@ const Login = () => {
                     </div>
                     
                     <div className='flex relative'>
+
                         <input onChange={handleChange} type="password" id="password" name='password' value={formData.password} className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#439BFF] placeholder:font-[poppins] placeholder:text-[14px] placeholder:text-[#25064C]"  placeholder="Password"/> <span className='mt-2 cursor-pointer absolute right-4 visibilityIcon'><VisibilityOffOutlinedIcon fontSize='30px' /></span> 
+
+                        <input type={passwordType} onChange={handleChange}  id="password" name='password' value={formData.password} className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#439BFF] placeholder:font-[poppins] placeholder:text-[14px] placeholder:text-[#25064C]"  placeholder="Password"/> 
+                        <span className='mt-2 cursor-pointer absolute right-4 visibilityIcon' onClick={handlePasswordVisibility}>
+                            {passwordVisible ? <VisibilityOutlinedIcon fontSize='30px' /> : <VisibilityOffOutlinedIcon fontSize='30px' />}
+                        </span> 
+
                     </div>
                     
                     <div className="flex items-center justify-between">
