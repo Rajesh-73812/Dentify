@@ -1,15 +1,61 @@
 import React, { useState } from 'react';
 import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
+
+import { useNavigate } from 'react-router-dom';
+import axios from "axios";
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 
+
 const Login = () => {
-  const [passwordVisible, setPasswordVisible] = useState(false);
+const [passwordVisible, setPasswordVisible] = useState(false);
   const [passwordType, setPasswordType] = useState('password');
 
   const handlePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
     setPasswordType(passwordVisible ? 'password' : 'text');
   };
+    const navigate = useNavigate();
+    const [formData, setFormData] = useState({
+      username: "",
+      password: "",
+    });
+  
+    const [error, setError] = useState("");
+    const [success, setSuccess] = useState("");
+  
+    const handleChange = (e) => {
+      setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+  
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+  
+      try {
+        const response = await axios.post("http://localhost:5000/admin/login", formData, {
+          withCredentials: true, 
+        });
+  
+        // const token = response.data.token;
+        // localStorage.setItem("authToken", token);
+  
+        
+        setSuccess(response.data.message);
+        setError("");
+        setFormData({
+          email: "",
+          password: "",
+        });
+  
+
+        alert("admin logged in successfully");
+        navigate("/dashBoard");
+        console.log(response.data.user);
+      } catch (err) {
+        setError(err.response?.data?.error || "Something went wrong");
+        setSuccess("");
+      }
+    };
+
 
   return (
     <div className="h-screen grid grid-cols-1 md:grid-cols-2"> 
@@ -20,7 +66,7 @@ const Login = () => {
             </div>
             <div className='text-center gap-5'>
                 <span className="dentify-logoName" style={{  letterSpacing: '0.1rem' }}>
-                    DENTIIFY
+                    RENTAL
                 </span>
             </div>
         </div>
@@ -32,16 +78,20 @@ const Login = () => {
                 <h2 className='auth-head' >Welcome Back</h2>
                 <p className='text-[#439BFF] float-left mb-[38px] ml-[5px] mt-[10px] leading-[26px]' >Please Login to your Account</p>
                 
-                <form className="space-y-4">
+                <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
-                        <input type="email" id="email" className="w-full px-3 py-2 border border-[#B0B0B0] rounded-md focus:outline-none focus:ring-2 focus:ring-[#439BFF] placeholder:font-[poppins] placeholder:text-[14px] placeholder:text-[#25064C]"  placeholder="Email"/> 
+                        <input onChange={handleChange} type="text" id="username" name='username' value={formData.username} className="w-full px-3 py-2 border border-[#B0B0B0] rounded-md focus:outline-none focus:ring-2 focus:ring-[#439BFF] placeholder:font-[poppins] placeholder:text-[14px] placeholder:text-[#25064C]"  placeholder="UserName"/> 
                     </div>
                     
                     <div className='flex relative'>
-                        <input type={passwordType} id="password" className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#439BFF] placeholder:font-[poppins] placeholder:text-[14px] placeholder:text-[#25064C]"  placeholder="Password"/> 
+
+                        <input onChange={handleChange} type="password" id="password" name='password' value={formData.password} className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#439BFF] placeholder:font-[poppins] placeholder:text-[14px] placeholder:text-[#25064C]"  placeholder="Password"/> <span className='mt-2 cursor-pointer absolute right-4 visibilityIcon'><VisibilityOffOutlinedIcon fontSize='30px' /></span> 
+
+                        <input type={passwordType} onChange={handleChange}  id="password" name='password' value={formData.password} className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#439BFF] placeholder:font-[poppins] placeholder:text-[14px] placeholder:text-[#25064C]"  placeholder="Password"/> 
                         <span className='mt-2 cursor-pointer absolute right-4 visibilityIcon' onClick={handlePasswordVisibility}>
                             {passwordVisible ? <VisibilityOutlinedIcon fontSize='30px' /> : <VisibilityOffOutlinedIcon fontSize='30px' />}
                         </span> 
+
                     </div>
                     
                     <div className="flex items-center justify-between">
