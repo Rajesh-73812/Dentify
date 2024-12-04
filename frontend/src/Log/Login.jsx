@@ -85,7 +85,7 @@ const [passwordVisible, setPasswordVisible] = useState(false);
                     
                     <div className='flex relative'>
 
-                        <input onChange={handleChange} type="password" id="password" name='password' value={formData.password} className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#439BFF] placeholder:font-[poppins] placeholder:text-[14px] placeholder:text-[#25064C]"  placeholder="Password"/> <span className='mt-2 cursor-pointer absolute right-4 visibilityIcon'><VisibilityOffOutlinedIcon fontSize='30px' /></span> 
+                        {/* <input onChange={handleChange} type="password" id="password" name='password' value={formData.password} className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#439BFF] placeholder:font-[poppins] placeholder:text-[14px] placeholder:text-[#25064C]"  placeholder="Password"/> <span className='mt-2 cursor-pointer absolute right-4 visibilityIcon'><VisibilityOffOutlinedIcon fontSize='30px' /></span>  */}
 
                         <input type={passwordType} onChange={handleChange}  id="password" name='password' value={formData.password} className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#439BFF] placeholder:font-[poppins] placeholder:text-[14px] placeholder:text-[#25064C]"  placeholder="Password"/> 
                         <span className='mt-2 cursor-pointer absolute right-4 visibilityIcon' onClick={handlePasswordVisibility}>

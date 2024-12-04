@@ -1,10 +1,36 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Header from '../components/Header'
 import { Link } from 'react-router-dom'
 import SidebarMenu from '../components/SideBar'
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import ImageUploader from '../common/ImageUploader';
+import axios from 'axios';
 
 const CategoryAdd = () => {
+
+  const [formData, setFormData] = useState({
+    title: '',
+    img: '',
+    status: 0,
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleImageUploadSuccess = (imageUrl) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      img: imageUrl,
+    }));
+    
+  };
+
+
 
   const handleFocus=()=>{
 
@@ -13,6 +39,29 @@ const CategoryAdd = () => {
   const handleBlur=()=>{
 
   }
+
+
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log("Form submitted:", formData);
+
+    try {
+      const response = await axios.post("http://localhost:5000/categories/upsert",
+         formData
+         ,
+         {
+          withCredentials: true, 
+        }
+        );
+      console.log("Category added successfully:", response.data);
+      alert("Category added successfully!");
+      // navigate("/dashboard");
+    } catch (error) {
+      console.error("Error adding Category:", error);
+      alert("An error occurred while adding the Category.");
+    }
+  };
   return (
     <div>
       <div className="flex bg-[#f7fbff]">
@@ -36,10 +85,11 @@ const CategoryAdd = () => {
                 <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-1  mt-6">
                   {/* category name */}
                   <div className="flex flex-col">
-                      <label  htmlFor="category_name"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> Country name </label>
-                      <input id="category_name" name="category_name" type="text" required className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}}
+                      <label  htmlFor="category_name"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> Category name </label>
+                      <input id="category_name" name="title" value={formData.title} type="text" required className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}}
                         onFocus={() => handleFocus('category_name')}
                         onBlur={() => handleBlur('category_name')}
+                        onChange={handleChange}
                         placeholder="Enter Category Title"
                       />
                     </div>
@@ -47,11 +97,9 @@ const CategoryAdd = () => {
                 <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-1 mt-6">
                     {/* category image*/}
                     <div className="flex flex-col">
-                      <label  htmlFor="category_image"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]">Country Image</label>
-                      <input  id="category_image"  name="category_image"  type="file"  required  className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px', border: '1px solid #EAEAFF'}}
-                        onFocus={() => handleFocus('category_image')}
-                        onBlur={() => handleBlur('category_image')}
-                      />
+                      <label  htmlFor="category_image"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]">Category Image</label>
+                    
+                      <ImageUploader onUploadSuccess={handleImageUploadSuccess}/>
                     </div>
                 </div>
 
@@ -59,10 +107,10 @@ const CategoryAdd = () => {
                   {/* category Status */}
                   <div className="flex flex-col">
                     <label  htmlFor="category_status"   className="text-sm font-medium text-start text-[12px] font-[Montserrat]" > Status </label>
-                    <select  name="category_status"  id="category_status"  className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm"  >
+                    <select onChange={handleChange}  name="status"  id="category_status"  className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm"  >
                       <option value="" disabled selected>Select Status</option>
-                      <option value="publish">Publish</option>
-                      <option value="unpublish">Unpublish</option>
+                      <option value={1}>Publish</option>
+                      <option value={0}>Unpublish</option>
                     </select>
                   </div>
                 </div>
