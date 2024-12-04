@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from '../components/Header'
 import { Link } from 'react-router-dom'
 import SidebarMenu from '../components/SideBar'
+import axios from 'axios'
 
 const Profile = () => {
-    const [formData,setFormData]=useState({username:'',password:''})
+   
 
   const handleFocus=()=>{
 
@@ -14,15 +15,66 @@ const Profile = () => {
 
   }
 
-  const handleChange=async(e)=>{
-    const {name,value}=e.target;
-    setFormData({...formData,[name]:value})
+  const [formData, setFormData] = useState({
+    id:0,
+    username:'',
+    email: '',
+    password: '',
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    
+  };
+
+    useEffect(()=>{
+
+
+ async function fetchData(){
+    try {
+        const response = await axios.get("http://localhost:5000/admin/userbytoken", {
+            withCredentials: true,  
+          });
+        
+          setFormData({
+            id: response.data.id,
+            username:response.data.username,
+            password:response.data.password
+          })
+
+        console.log(response, "from response");
+
+    } catch (error) {
+        console.log(error)
+    }
   }
 
-  const handleSubmit=async(e)=>{
+  fetchData();
+
+    },[])
+
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    // console.log(formData)
-  }
+    console.log('Form submitted:', formData);
+    try {
+        const response = await axios.put(
+            `http://localhost:5000/admin/update/${formData.id}`,
+            formData,
+            {
+              withCredentials: true, 
+            }
+          );
+
+        alert("updated data successfully");
+    } catch (error) {
+        console.log(error);
+    }
+  };
   return (
     <div>
       <div className="flex bg-[#f7fbff]">
@@ -44,7 +96,7 @@ const Profile = () => {
                   {/* country name */}
                   <div className="flex flex-col">
                       <label  htmlFor="username"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> Profile name </label>
-                      <input id="username" name="username" type="text" required className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}}
+                      <input id="username" name="username" type="text" value={formData.username} required className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}}
                         onFocus={() => handleFocus('username')}
                         onBlur={() => handleBlur('username')}
                         onChange={handleChange}
@@ -56,9 +108,9 @@ const Profile = () => {
                   {/* country name */}
                   <div className="flex flex-col">
                       <label  htmlFor="Password"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> Password </label>
-                      <input id="Password" name="Password" type="text" required className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}}
-                        onFocus={() => handleFocus('Password')}
-                        onBlur={() => handleBlur('Password')}
+                      <input id="Password" name="password" value={formData.password} type="text" required className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}}
+                        onFocus={() => handleFocus('password')}
+                        onBlur={() => handleBlur('password')}
                         onChange={handleChange}
                         placeholder="********************************"
                       />

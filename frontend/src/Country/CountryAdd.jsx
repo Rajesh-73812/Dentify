@@ -1,9 +1,70 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Header from '../components/Header'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import SidebarMenu from '../components/SideBar'
+import axios from 'axios'
 
 const CountryAdd = () => {
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    title: '',
+    img: '',
+    status: 0,
+  });
+
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0]; 
+    if (!file) return;
+
+    const imageFormData = new FormData();
+    imageFormData.append("file", file);
+    imageFormData.append("upload_preset", "infinitum-task");
+    imageFormData.append("cloud_name", "dhr4xnftl");
+
+    try {
+      const res = await axios.post(
+        "https://api.cloudinary.com/v1_1/dhr4xnftl/image/upload",
+        imageFormData
+      );
+      setFormData((prevData) => ({
+        ...prevData,
+        img: res.data.secure_url, 
+      }));
+      console.log("Image uploaded successfully:", res.data.secure_url);
+    } catch (error) {
+      console.error("Error uploading image to Cloudinary:", error);
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log("Form submitted:", formData);
+
+    try {
+      const response = await axios.post("http://localhost:5000/countries/upsert",
+         formData
+         ,
+         {
+          withCredentials: true, 
+        }
+        );
+      console.log("Country added successfully:", response.data);
+      alert("Country added successfully!");
+      navigate("/country-list");
+    } catch (error) {
+      console.error("Error adding country:", error);
+      alert("An error occurred while adding the country.");
+    }
+  };
 
   const handleFocus=()=>{
 
@@ -31,16 +92,16 @@ const CountryAdd = () => {
           {/* Form Container */}
           <div className="h-full px-6 max-w-5xl" style={{paddingTop:'24px'}}> 
             <div className="bg-white w-full rounded-xl border border-[#EAE5FF] py-4 px-6">
-              {/* <p className='text-left font-bold font-[Montserrat]' >Create Service</p> */}
-              <form className="mt-4">
+              
+              <form onSubmit={handleSubmit} className="mt-4">
 
                 <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-1  mt-6">
                   {/* country name */}
                   <div className="flex flex-col">
                       <label  htmlFor="country_name"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> Country name </label>
-                      <input id="country_name" name="country_name" type="text" required className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}}
-                        onFocus={() => handleFocus('country_name')}
-                        onBlur={() => handleBlur('country_name')}
+                      <input id="country_name" value={formData.title} onChange={handleChange} name="title" type="text" required className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}}
+                        onFocus={() => handleFocus('title')}
+                        onBlur={() => handleBlur('title')}
                         placeholder="Enter Country name"
                       />
                     </div>
@@ -49,9 +110,9 @@ const CountryAdd = () => {
                     {/* country image*/}
                     <div className="flex flex-col">
                       <label  htmlFor="country_image"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]">Country Image</label>
-                      <input  id="country_image"  name="country_image"  type="file"  required  className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px', border: '1px solid #EAEAFF'}}
-                        onFocus={() => handleFocus('country_image')}
-                        onBlur={() => handleBlur('country_image')}
+                      <input  id="country_image" onChange={handleImageUpload}  name="img"  type="file"  required  className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px', border: '1px solid #EAEAFF'}}
+                        onFocus={() => handleFocus('img')}
+                        onBlur={() => handleBlur('img')}
                       />
                     </div>
                 </div>
@@ -60,10 +121,10 @@ const CountryAdd = () => {
                   {/* Country Status */}
                   <div className="flex flex-col">
                     <label  htmlFor="country_status"   className="text-sm font-medium text-start text-[12px] font-[Montserrat]" > Status </label>
-                    <select  name="country_status"  id="country_status"  className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm"  >
+                    <select  name="status"  id="country_status" value={formData.status} onChange={handleChange} className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm"  >
                       <option value="" disabled selected>Select Status</option>
-                      <option value="publish">Publish</option>
-                      <option value="unpublish">Unpublish</option>
+                      <option value={1}>Publish</option>
+                      <option value={0}>Unpublish</option>
                     </select>
                   </div>
                 </div>
