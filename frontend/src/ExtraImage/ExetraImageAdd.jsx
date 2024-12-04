@@ -3,7 +3,7 @@ import Header from '../components/Header'
 import { Link } from 'react-router-dom'
 import SidebarMenu from '../components/SideBar'
 
-const GalleryCategoryAdd = () => {
+const ExtraImageAdd = () => {
 
   const handleFocus=()=>{
 
@@ -25,7 +25,7 @@ const GalleryCategoryAdd = () => {
             {/* <Link to="/rolesList" className="cursor-pointer ml-6">
               
             </Link> */}
-            <h2 className="text-lg font-semibold ml-4 " style={{color:'#000000',fontSize:'24px',fontFamily:'Montserrat'}}>Gallery Category Management</h2>
+            <h2 className="text-lg font-semibold ml-4 " style={{color:'#000000',fontSize:'24px',fontFamily:'Montserrat'}}>Extra Image Management</h2>
           </div>
 
           {/* Form Container */}
@@ -34,10 +34,10 @@ const GalleryCategoryAdd = () => {
               {/* <p className='text-left font-bold font-[Montserrat]' >Create Service</p> */}
               <form className="mt-4">
                 <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-1  mt-6">
-                  {/* select property */}
-                  <div className="flex flex-col">
-                    <label  htmlFor="pid"   className="text-sm font-medium text-start text-[12px] font-[Montserrat]" > Select Property </label>
-                    <select  name="pid"  id="pid"  className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm"  >
+                   {/* select property */}
+                   <div className="flex flex-col">
+                    <label  htmlFor="country_status"   className="text-sm font-medium text-start text-[12px] font-[Montserrat]" > Select Property </label>
+                    <select  name="country_status"  id="country_status"  className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm"  >
                       <option value="" disabled selected>Select Property</option>
                       <option value="1">Villa</option>
                       <option value="2">Villas</option>
@@ -66,22 +66,30 @@ const GalleryCategoryAdd = () => {
                  
                 </div>
                 <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-1 mt-6">
-                    {/* gallery category name*/}
+                    {/* property image*/}
                     <div className="flex flex-col">
-                      <label  htmlFor="title"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]">Gallery Category  Name</label>
-                      <input  id="title"  name="title"  type="text"  required  className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px', border: '1px solid #EAEAFF'}}
-                        onFocus={() => handleFocus('title')}
-                        onBlur={() => handleBlur('title')}
+                      <label  htmlFor="image"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]">Property Image</label>
+                      <input  id="image"  name="image"  type="file"  required  className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px', border: '1px solid #EAEAFF'}}
+                        onFocus={() => handleFocus('image')}
+                        onBlur={() => handleBlur('image')}
                       />
                     </div>
-                    
+                    {/* Yes/No image*/}
+                    <div className="flex flex-col">
+                    <label  htmlFor="image2"   className="text-sm font-medium text-start text-[12px] font-[Montserrat]" > Status </label>
+                    <select  name="image2"  id="image2"  className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm"  >
+                      <option value="" disabled selected>Select Status</option>
+                      <option value="yes">Yes</option>
+                      <option value="no">No</option>
+                    </select>
+                  </div>
                 </div>
 
                 <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-1 mt-6">
-                  {/* facility image Status */}
+                  {/* Property image Status */}
                   <div className="flex flex-col">
-                    <label  htmlFor="status"   className="text-sm font-medium text-start text-[12px] font-[Montserrat]" >Gallery Category Status </label>
-                    <select  name="status"  id="status"  className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm"  >
+                    <label  htmlFor="country_status"   className="text-sm font-medium text-start text-[12px] font-[Montserrat]" >Property Image Status </label>
+                    <select  name="country_status"  id="country_status"  className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm"  >
                       <option value="" disabled selected>Select Status</option>
                       <option value={1}>Publish</option>
                       <option value={0}>Unpublish</option>
@@ -91,7 +99,7 @@ const GalleryCategoryAdd = () => {
 
                 {/* Action Buttons */}
                 <div className="flex justify-start mt-6 gap-3">
-                  <button  type="submit" className=" py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 w-[250px] h-12 font-[Montserrat] font-bold" style={{ borderRadius: "8px", }} > Add Gallery Category  </button>
+                  <button  type="submit" className=" py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 w-[150px] h-12 font-[Montserrat] font-bold" style={{ borderRadius: "8px", }} > Add Extra Image </button>
                 </div>
               </form>
 
@@ -106,4 +114,4 @@ const GalleryCategoryAdd = () => {
   )
 }
 
-export default GalleryCategoryAdd
+export default ExtraImageAdd
