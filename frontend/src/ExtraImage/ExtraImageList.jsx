@@ -4,25 +4,25 @@ import SidebarMenu from '../components/SideBar';
 import { GoArrowDown, GoArrowUp } from 'react-icons/go';
 import { FaPen } from "react-icons/fa";
 import { searchFunction } from '../Entity/SearchEntity';
-import GalleryHeader from './GalleryHeader';
+import ExtraImageHeader from './ExtraImageHeader';
 
-const GalleryList = () => {
+const ExtraImageList = () => {
     const countries = [
-        { id: 1, title: 'luxury Bedrooms', image: 'path/to/image1.jpg',  status: 'publish' },
-        { id: 2, title: 'Swimming Pool and Gym', image: 'path/to/image2.jpg', status: 'publish' },
-        { id: 3, title: 'Air Conditioning', image: 'path/to/image3.jpg', status: 'unpublish' },
-        { id: 4, title: 'Balcony', image: 'path/to/image4.jpg', status: 'publish' },
-        { id: 5, title: 'Parking', image: 'path/to/image5.jpg', status: 'unpublish' },
-        { id: 6, title: 'luxury Bedrooms', image: 'path/to/image1.jpg',  status: 'publish' },
-        { id: 7, title: 'Swimming Pool and Gym', image: 'path/to/image2.jpg', status: 'publish' },
-        { id: 8, title: 'Air Conditioning', image: 'path/to/image3.jpg', status: 'unpublish' },
-        { id: 9, title: 'Balcony', image: 'path/to/image4.jpg', status: 'publish' },
-        { id: 10, title: 'Parking', image: 'path/to/image5.jpg', status: 'unpublish' },
-        { id: 11, title: 'luxury Bedrooms', image: 'path/to/image1.jpg',  status: 'publish' },
-        { id: 12, title: 'Swimming Pool and Gym', image: 'path/to/image2.jpg', status: 'publish' },
-        { id: 13, title: 'Air Conditioning', image: 'path/to/image3.jpg', status: 'unpublish' },
-        { id: 14, title: 'Balcony', image: 'path/to/image4.jpg', status: 'publish' },
-        { id: 15, title: 'Parking', image: 'path/to/image5.jpg', status: 'unpublish' },
+        { id: 1, name: 'United States', image: 'path/to/image1.jpg', totalProperties: 100, status: 'publish' },
+        { id: 2, name: 'Canada', image: 'path/to/image2.jpg', totalProperties: 80, status: 'publish' },
+        { id: 3, name: 'Australia', image: 'path/to/image3.jpg', totalProperties: 60, status: 'unpublish' },
+        { id: 4, name: 'Germany', image: 'path/to/image4.jpg', totalProperties: 90, status: 'publish' },
+        { id: 5, name: 'Japan', image: 'path/to/image5.jpg', totalProperties: 70, status: 'unpublish' },
+        { id: 6, name: 'United States', image: 'path/to/image1.jpg', totalProperties: 100, status: 'publish' },
+        { id: 7, name: 'Canada', image: 'path/to/image2.jpg', totalProperties: 80, status: 'publish' },
+        { id: 8, name: 'Australia', image: 'path/to/image3.jpg', totalProperties: 60, status: 'unpublish' },
+        { id: 9, name: 'Germany', image: 'path/to/image4.jpg', totalProperties: 90, status: 'publish' },
+        { id: 10, name: 'Japan', image: 'path/to/image5.jpg', totalProperties: 70, status: 'unpublish' },
+        { id: 11, name: 'United States', image: 'path/to/image1.jpg', totalProperties: 100, status: 'publish' },
+        { id: 12, name: 'Canada', image: 'path/to/image2.jpg', totalProperties: 80, status: 'publish' },
+        { id: 13, name: 'Australia', image: 'path/to/image3.jpg', totalProperties: 60, status: 'unpublish' },
+        { id: 14, name: 'Germany', image: 'path/to/image4.jpg', totalProperties: 90, status: 'publish' },
+        { id: 15, name: 'Japan', image: 'path/to/image5.jpg', totalProperties: 70, status: 'unpublish' },
         
     ];
 
@@ -81,7 +81,7 @@ const GalleryList = () => {
                     {/* Header */}
                     <Header />
                     {/* Searching, sorting, and main content area */}
-                    <GalleryHeader onSearch={handleSearch} />
+                    <ExtraImageHeader onSearch={handleSearch} />
                     {/* Card */}
                     <div className="py-6 px-6 h-full w-[1000px] overflow-scroll scrollbar-none">
                         <div className="bg-white w-full rounded-xl border border-[#EAE5FF] py-4 px-3 overflow-x-auto scrollbar-none">
@@ -97,22 +97,28 @@ const GalleryList = () => {
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[150px]">
-                                                Facility Title 
+                                                Country Title Name
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('name')} />
                                                     <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('name')} />
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[150px]">
-                                                Facility Image
+                                                Country Image
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('name')} />
                                                     <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('name')} />
                                                 </div>
                                             </th>
-                                            
                                             <th className="px-4 py-3 min-w-[100px]">
-                                                Facility Status
+                                                Total Properties
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('totalProperties')} />
+                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('totalProperties')} />
+                                                </div>
+                                            </th>
+                                            <th className="px-4 py-3 min-w-[100px]">
+                                                Country Status
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('status')} />
                                                     <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('status')} />
@@ -131,7 +137,7 @@ const GalleryList = () => {
                                         {currentCountries.map((country, index) => (
                                             <tr key={country.id}>
                                                 <td className="px-4 py-3">{index + 1 + indexOfFirstCountry}</td>
-                                                <td className="px-4 py-3">{country.title}</td>
+                                                <td className="px-4 py-3">{country.name}</td>
                                                 <td className="px-4 py-3">
                                                     {country.image && country.image.trim() !== '' ? (
                                                         <img src={country.image} className="w-16 h-16 object-cover rounded-full" height={50} width={50} loading="lazy" alt="" onError={(e) => {
@@ -143,7 +149,7 @@ const GalleryList = () => {
                                                         <img src={'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg'} height={50} width={50} loading="lazy" alt="" />
                                                     )}
                                                 </td>
-                                              
+                                                <td className="px-4 py-3">{country.totalProperties}</td>
                                                 <td className="px-4 py-3">
                                                     <span className={`px-3 py-1 text-sm rounded-full ${country.status === 'publish' ? 'bg-green-500 text-white' : 'bg-gray-400 text-white'}`}>
                                                         {country.status}
@@ -189,4 +195,4 @@ const GalleryList = () => {
     );
 };
 
-export default GalleryList;
+export default ExtraImageList;

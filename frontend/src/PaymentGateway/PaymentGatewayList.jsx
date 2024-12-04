@@ -4,25 +4,25 @@ import SidebarMenu from '../components/SideBar';
 import { GoArrowDown, GoArrowUp } from 'react-icons/go';
 import { FaPen } from "react-icons/fa";
 import { searchFunction } from '../Entity/SearchEntity';
-import GalleryHeader from './GalleryHeader';
+import PaymentGatewayHeader from './PaymentGatewayHeader';
 
-const GalleryList = () => {
+const PaymentGatewayList = () => {
     const countries = [
-        { id: 1, title: 'luxury Bedrooms', image: 'path/to/image1.jpg',  status: 'publish' },
-        { id: 2, title: 'Swimming Pool and Gym', image: 'path/to/image2.jpg', status: 'publish' },
-        { id: 3, title: 'Air Conditioning', image: 'path/to/image3.jpg', status: 'unpublish' },
-        { id: 4, title: 'Balcony', image: 'path/to/image4.jpg', status: 'publish' },
-        { id: 5, title: 'Parking', image: 'path/to/image5.jpg', status: 'unpublish' },
-        { id: 6, title: 'luxury Bedrooms', image: 'path/to/image1.jpg',  status: 'publish' },
-        { id: 7, title: 'Swimming Pool and Gym', image: 'path/to/image2.jpg', status: 'publish' },
-        { id: 8, title: 'Air Conditioning', image: 'path/to/image3.jpg', status: 'unpublish' },
-        { id: 9, title: 'Balcony', image: 'path/to/image4.jpg', status: 'publish' },
-        { id: 10, title: 'Parking', image: 'path/to/image5.jpg', status: 'unpublish' },
-        { id: 11, title: 'luxury Bedrooms', image: 'path/to/image1.jpg',  status: 'publish' },
-        { id: 12, title: 'Swimming Pool and Gym', image: 'path/to/image2.jpg', status: 'publish' },
-        { id: 13, title: 'Air Conditioning', image: 'path/to/image3.jpg', status: 'unpublish' },
-        { id: 14, title: 'Balcony', image: 'path/to/image4.jpg', status: 'publish' },
-        { id: 15, title: 'Parking', image: 'path/to/image5.jpg', status: 'unpublish' },
+        { id: 1, paymentGateWayName: 'Pay TO Owner',PaymentGatewaySubtitle: 'pay via cash',showOnWallet:'unpublish', image: 'path/to/image1.jpg',paymentGateWayStatus:'publish', showOnSubscribe:'unpublish',status: 'publish' },
+        { id: 2, paymentGateWayName: 'Paytm',PaymentGatewaySubtitle: 'Credit/Debit card,net banking,paytm wallet',showOnWallet:'publish', image: 'path/to/image2.jpg',paymentGateWayStatus:'publish',showOnSubscribe:'unpublish', status: 'publish' },
+        { id: 3, paymentGateWayName: 'Stripe',PaymentGatewaySubtitle: 'Accept all major debit and credit cards from customers in every country',showOnWallet:'unpublish', image: 'path/to/image3.jpg',paymentGateWayStatus:'publish',showOnSubscribe:'unpublish',status: 'unpublish' },
+        { id: 4, paymentGateWayName: 'PayStack',PaymentGatewaySubtitle: 'Credit/Debit card with Easier way to pay – online and on your mobile.',showOnWallet:'publish', image: 'path/to/image4.jpg',paymentGateWayStatus:'publish',showOnSubscribe:'publish', status: 'publish' },
+        { id: 5, paymentGateWayName: 'Razorpay',PaymentGatewaySubtitle: 'Pay Using RazorPay',showOnWallet:'publish', image: 'path/to/image5.jpg',paymentGateWayStatus:'publish',showOnSubscribe:'publish',status: 'unpublish' },
+        { id: 6, paymentGateWayName: 'Pay TO Owner',PaymentGatewaySubtitle: 'pay via cash',showOnWallet:'publish', image: 'path/to/image1.jpg',paymentGateWayStatus:'publish',showOnSubscribe:'publish', status: 'publish' },
+        { id: 7, paymentGateWayName: 'Paypal',PaymentGatewaySubtitle: 'Credit/Debit card with Easier way to pay – online and on your mobile.',paymentGateWayStatus:'publish',showOnWallet:'publish', image: 'path/to/image2.jpg',showOnSubscribe:'unpublish', status: 'publish' },
+        { id: 8, paymentGateWayName: 'Stripe',PaymentGatewaySubtitle: 'Accept all major debit and credit cards from customers in every country',paymentGateWayStatus:'publish',showOnWallet:'unpublish', image: 'path/to/image3.jpg',showOnSubscribe:'publish', status: 'unpublish' },
+        { id: 9, paymentGateWayName: 'PayStack',PaymentGatewaySubtitle: 'Credit/Debit card with Easier way to pay – online and on your mobile.',paymentGateWayStatus:'publish',showOnWallet:'publish', image: 'path/to/image4.jpg',showOnSubscribe:'unpublish', status: 'publish' },
+        { id: 10, paymentGateWayName: 'Paytm',PaymentGatewaySubtitle: 'Credit/Debit card,net banking,paytm wallet',showOnWallet:'publish', image: 'path/to/image5.jpg',paymentGateWayStatus:'publish',showOnSubscribe:'publish', status: 'unpublish' },
+        { id: 11, paymentGateWayName: 'Pay TO Owner',PaymentGatewaySubtitle: 'pay via cash',showOnWallet:'publish', image: 'path/to/image1.jpg',paymentGateWayStatus:'publish',showOnSubscribe:'publish', status: 'publish' },
+        { id: 12, paymentGateWayName: 'Paypal',PaymentGatewaySubtitle: 'Credit/Debit card with Easier way to pay – online and on your mobile.',showOnWallet:'unpublish', image: 'path/to/image2.jpg',paymentGateWayStatus:'publish',showOnSubscribe:'publish', status: 'publish' },
+        { id: 13, paymentGateWayName: 'Stripe',PaymentGatewaySubtitle: 'Accept all major debit and credit cards from customers in every country',showOnWallet:'publish', image: 'path/to/image3.jpg',paymentGateWayStatus:'publish',showOnSubscribe:'publish', status: 'unpublish' },
+        { id: 14, paymentGateWayName: 'PayStack',PaymentGatewaySubtitle: 'Credit/Debit card with Easier way to pay – online and on your mobile.',showOnWallet:'unpublish', image: 'path/to/image4.jpg',paymentGateWayStatus:'publish',showOnSubscribe:'publish', status: 'publish' },
+        { id: 15, paymentGateWayName: 'Razorpay',PaymentGatewaySubtitle: 'Pay Using RazorPay',showOnWallet:'publish', image: 'path/to/image5.jpg',paymentGateWayStatus:'publish',showOnSubscribe:'unpublish', status: 'unpublish' },
         
     ];
 
@@ -81,7 +81,7 @@ const GalleryList = () => {
                     {/* Header */}
                     <Header />
                     {/* Searching, sorting, and main content area */}
-                    <GalleryHeader onSearch={handleSearch} />
+                    <PaymentGatewayHeader onSearch={handleSearch} />
                     {/* Card */}
                     <div className="py-6 px-6 h-full w-[1000px] overflow-scroll scrollbar-none">
                         <div className="bg-white w-full rounded-xl border border-[#EAE5FF] py-4 px-3 overflow-x-auto scrollbar-none">
@@ -89,36 +89,64 @@ const GalleryList = () => {
                                 <table className="min-w-full text-sm text-left text-gray-700">
                                     <thead className="bg-gray-50 text-xs uppercase font-medium text-gray-500">
                                         <tr>
-                                            <th className="px-4 py-3 min-w-[100px]">
+                                            <th className="px-4 py-3 min-w-[150px]">
                                                 Sr. No
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('slno')} />
                                                     <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('slno')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[150px]">
-                                                Facility Title 
+                                            <th className="px-4 py-3 min-w-[250px]">
+                                                PaymentGateway Name
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('name')} />
-                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('name')} />
+                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('paymentGatewayName')} />
+                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('paymentGatewayName')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[150px]">
-                                                Facility Image
+                                            <th className="px-4 py-3 min-w-[250px]">
+                                                PaymentGateway SubTitle
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('name')} />
-                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('name')} />
+                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('paymentGatewaysubtitle')} />
+                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('paymentGatewaysubtitle')} />
                                                 </div>
                                             </th>
                                             
-                                            <th className="px-4 py-3 min-w-[100px]">
-                                                Facility Status
+                                            <th className="px-4 py-3 min-w-[250px]">
+                                                PaymentGateway Image
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('paymentGatewayimage')} />
+                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('paymentGatewayimage')} />
+                                                </div>
+                                            </th>
+                                            <th className="px-4 py-3 min-w-[250px]">
+                                                PaymentGateway Status
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('paymentGatewaystatus')} />
+                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('paymentGatewaystatus')} />
+                                                </div>
+                                            </th>
+                                            <th className="px-4 py-3 min-w-[250px]">
+                                                 Show On Wallet
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('showonwallet')} />
+                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('showonwallet')} />
+                                                </div>
+                                            </th>
+                                            <th className="px-4 py-3 min-w-[250px]">
+                                                Show On Subscribe
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('subscribe')} />
+                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('subscribe')} />
+                                                </div>
+                                            </th>
+                                            <th className="px-4 py-3 min-w-[150px]">
+                                                 Status
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('status')} />
                                                     <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('status')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[100px]">
+                                            <th className="px-4 py-3 min-w-[150px]">
                                                 Action
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('action')} />
@@ -131,7 +159,8 @@ const GalleryList = () => {
                                         {currentCountries.map((country, index) => (
                                             <tr key={country.id}>
                                                 <td className="px-4 py-3">{index + 1 + indexOfFirstCountry}</td>
-                                                <td className="px-4 py-3">{country.title}</td>
+                                                <td className="px-4 py-3">{country.paymentGateWayName}</td>
+                                                <td className="px-4 py-3">{country.PaymentGatewaySubtitle}</td>
                                                 <td className="px-4 py-3">
                                                     {country.image && country.image.trim() !== '' ? (
                                                         <img src={country.image} className="w-16 h-16 object-cover rounded-full" height={50} width={50} loading="lazy" alt="" onError={(e) => {
@@ -143,7 +172,9 @@ const GalleryList = () => {
                                                         <img src={'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg'} height={50} width={50} loading="lazy" alt="" />
                                                     )}
                                                 </td>
-                                              
+                                                <td className="px-4 py-3">{country.paymentGateWayStatus}</td>
+                                                <td className="px-4 py-3">{country.showOnWallet}</td>
+                                                <td className="px-4 py-3">{country.showOnSubscribe}</td>
                                                 <td className="px-4 py-3">
                                                     <span className={`px-3 py-1 text-sm rounded-full ${country.status === 'publish' ? 'bg-green-500 text-white' : 'bg-gray-400 text-white'}`}>
                                                         {country.status}
@@ -189,4 +220,4 @@ const GalleryList = () => {
     );
 };
 
-export default GalleryList;
+export default PaymentGatewayList;
