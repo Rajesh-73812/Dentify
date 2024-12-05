@@ -34,7 +34,7 @@ const [passwordVisible, setPasswordVisible] = useState(false);
         const response = await axios.post("http://localhost:5000/admin/login", formData, {
           withCredentials: true, 
         });
-  
+        console.log(response.data)
         // const token = response.data.token;
         // localStorage.setItem("authToken", token);
   
@@ -45,7 +45,7 @@ const [passwordVisible, setPasswordVisible] = useState(false);
           email: "",
           password: "",
         });
-  
+        
 
         alert("admin logged in successfully");
         navigate("/dashBoard");

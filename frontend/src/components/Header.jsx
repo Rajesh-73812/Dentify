@@ -39,7 +39,7 @@ const Header = () => {
     <div className="bg-white h-[65px] sm:h-[80px] p-6 flex items-center justify-between">
       {/* Title Section */}
       <div className="flex items-center gap-2.5">
-        <span className="text-2xl font-bold">Header Title</span>
+        <span className="text-2xl font-bold">Dashboard</span>
       </div>
 
       {/* Icons Section */}
