@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from '../components/Header'
 import { Link } from 'react-router-dom'
 import SidebarMenu from '../components/SideBar'
+import Cookie from 'js-cookie';
 
 const CupponAdd = () => {
   const [formData, setFormData] = useState({  cupponimage: '',  status: '',  cupponCode: '',  expiryDate: '',  cupponTitle: '',  cupponSubtitle: '',  minOrderAmount: '',  cupponValue: '',  cupponDescription: '',});
@@ -13,6 +14,27 @@ const CupponAdd = () => {
       [name]: value,
     }));
   }
+
+ 
+
+  useEffect(()=>{
+    const getCookie = (cookieName) => {
+      const cookies = document.cookie.split('; ');
+      for (let i = 0; i < cookies.length; i++) {
+          const [name, value] = cookies[i].split('=');
+          if (name === cookieName) {
+              return decodeURIComponent(value); 
+          }
+      }
+      return null; 
+  };
+  
+  // Example Usage
+  const myCookie = getCookie('myCookieName');
+  console.log('My Cookie:', myCookie);
+
+  },[])
+
 
   const handleFocus=()=>{
 
