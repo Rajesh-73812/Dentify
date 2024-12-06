@@ -116,7 +116,7 @@ const CupponAdd = () => {
                   {/* <label  htmlFor="cupponCode"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> cuppon Generate</label> */}
                    <button className='btn border rounded-lg ml-4 mt-8 w-full h-14'  style={{background:'#61eb34', height:'40px', width:'70px'}} onClick={(e)=>{e.preventDefault();makeEightDigitRand();}}><img src="/image/cuppon/update_8303700.png" alt="refresh" height={20} width={20} className='ml-6'  /></button>
                   </div>
-                </div>
+              </div>
                 <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-4  mt-6">
                   {/* cuppon title */}
                   <div className="flex flex-col">

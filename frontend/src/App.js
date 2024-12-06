@@ -25,7 +25,14 @@ import GalleryCategoryList from './GalleryCategory/GalleryCategoryList.jsx';
 import GalleryCategoryAdd from './GalleryCategory/GalleryCategoryAdd.jsx';
 import GalleryList from './Gallery/GalleryList.jsx';
 import GalleryAdd from './Gallery/GalleryAdd.jsx';
-
+import PackageList from './Package/PackageList.jsx';
+import PackageAdd from './Package/PackageAdd.jsx';
+import PendingBook from './Booking/PendingBook.jsx';
+import Settings from './Setting/Settings.jsx';
+import ApprovedBook from './Booking/ApprovedBook.jsx';
+import CheckInBook from './Booking/CheckInBook.jsx';
+import CompletedBook from './Booking/CompletedBook.jsx';
+import CancelledBook from './Booking/CancelledBook.jsx';
 
 function App() {
   return (
@@ -76,8 +83,20 @@ function App() {
           <Route path='/gallery-list' element={<GalleryList />}></Route>
           <Route path='/create-gallery' element={<GalleryAdd />}></Route>
 
+
+          <Route path='/package-list' element={<PackageList />}></Route>
+          <Route path='/create-package' element={<PackageAdd />}></Route>
+
+
+          <Route path='/pending-book-list' element={<PendingBook />}></Route>
+          <Route path='/approved-book-list' element={<ApprovedBook />}></Route>
+          <Route path='/check-in-list' element={<CheckInBook />}></Route>
+          <Route path='/completed-list' element={<CompletedBook />}></Route>
+          <Route path='/cancelled-list' element={<CancelledBook />}></Route>
+
           {/* for profile */}
           <Route path='/profile' element={<Profile />}></Route>
+          <Route path='/settings' element={<Settings />}></Route>
         </Routes>
       </BrowserRouter>
     </div>

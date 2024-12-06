@@ -6,8 +6,8 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const sequelize = require("./db")
 const PORT = process.env.PORT || 5000;
-
-
+const swaggerUi=require('swagger-ui-express')
+const swaggerFile=require('./Swagger/swagger_output.json')
 // Routes
 const adminRoutes = require('./routes/adminRoutes');
 
@@ -52,7 +52,7 @@ app.use(session({
 
 
 
-
+app.use('/api-docs',swaggerUi.serve,swaggerUi.setup(swaggerFile))
 app.use("/admin", adminRoutes);
 
 

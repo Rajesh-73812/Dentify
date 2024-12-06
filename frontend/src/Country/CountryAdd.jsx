@@ -3,7 +3,8 @@ import Header from '../components/Header'
 import { Link, useNavigate } from 'react-router-dom'
 import SidebarMenu from '../components/SideBar'
 import axios from 'axios'
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const CountryAdd = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -58,7 +59,10 @@ const CountryAdd = () => {
         }
         );
       console.log("Country added successfully:", response.data);
-      alert("Country added successfully!");
+      if(response.status === 201 ){
+        toast.success('Country added successfully!')
+      }
+      // alert("Country added successfully!");
       navigate("/country-list");
     } catch (error) {
       console.error("Error adding country:", error);
@@ -135,6 +139,7 @@ const CountryAdd = () => {
                 {/* Action Buttons */}
                 <div className="flex justify-start mt-6 gap-3">
                   <button  type="submit" className=" py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 w-[150px] h-12 font-[Montserrat] font-bold" style={{ borderRadius: "8px", }} > Add Country </button>
+                  <ToastContainer />
                 </div>
               </form>
 

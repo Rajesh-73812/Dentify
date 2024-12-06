@@ -22,7 +22,7 @@ import { IoCheckboxOutline } from "react-icons/io5";
 const SidebarMenu = () => {
   const navigate = useNavigate();
   const location = useLocation();
-
+  
   return (
     <Sidebar  breakPoint="sm"  width="250px"  style={{overflowY:'auto',height:'100vh'}}>
       <div className="h-[80px] bg-white flex justify-center items-center gap-2" >
@@ -30,6 +30,7 @@ const SidebarMenu = () => {
         <span className="text-2xl font-normal">RENTAL</span>
       </div>
 
+      <div style={{ overflowY: 'auto', height: 'calc(100vh - 80px)', scrollbarWidth:'none'}}>
       <Menu iconShape="circle">
         {/* dashBoard */}
           <MenuItem icon={<RiHome6Line />}
@@ -193,15 +194,15 @@ const SidebarMenu = () => {
 
         {/* package */}
         <SubMenu label="Package "  icon={<FaLayerGroup />}>
-          <MenuItem
-            active={location.pathname === "/create-product"}
-            onClick={() => navigate("/create-product")}
+          <MenuItem className="sub-menu-item"
+            active={location.pathname === "/create-package"}
+            onClick={() => navigate("/create-package")}
           >
             Add Package
           </MenuItem>
-          <MenuItem
-            active={location.pathname === "/product-list"}
-            onClick={() => navigate("/product-list")}
+          <MenuItem className="sub-menu-item"
+            active={location.pathname === "/package-list"}
+            onClick={() => navigate("/package-list")}
           >
             List Package
           </MenuItem>
@@ -210,41 +211,41 @@ const SidebarMenu = () => {
         {/* Booking */}
         <SubMenu label="Booking "  icon={<CgCalendarDates />}>
         {/* Pending Booking */}
-          <MenuItem
-            active={location.pathname === "/create-product"}
-            onClick={() => navigate("/create-product")}
+          <MenuItem className="sub-menu-item"
+            active={location.pathname === "/pending-book-list"}
+            onClick={() => navigate("/pending-book-list")}
           >
             Pending Booking
           </MenuItem>
 
           {/*  Approved Booking */}
-          <MenuItem
-            active={location.pathname === "/create-product"}
-            onClick={() => navigate("/create-product")}
+          <MenuItem className="sub-menu-item"
+            active={location.pathname === "/approved-book-list"}
+            onClick={() => navigate("/approved-book-list")}
           >
             Approved Booking
           </MenuItem>
 
           {/* Check In Booking */}
-          <MenuItem
-            active={location.pathname === "/create-product"}
-            onClick={() => navigate("/create-product")}
+          <MenuItem className="sub-menu-item"
+            active={location.pathname === "/check-in-list"}
+            onClick={() => navigate("/check-in-list")}
           >
             Check In Booking
           </MenuItem>
 
           {/* Completed Booking */}
-          <MenuItem
-            active={location.pathname === "/create-product"}
-            onClick={() => navigate("/create-product")}
+          <MenuItem className="sub-menu-item"
+            active={location.pathname === "/completed-list"}
+            onClick={() => navigate("/completed-list")}
           >
             Completed Booking
           </MenuItem>
 
           {/* Cancelled Booking */}
-          <MenuItem
-            active={location.pathname === "/create-product"}
-            onClick={() => navigate("/create-product")}
+          <MenuItem className="sub-menu-item"
+            active={location.pathname === "/cancelled-list"}
+            onClick={() => navigate("/cancelled-list")}
           >
             Cancelled Booking
           </MenuItem>
@@ -252,13 +253,13 @@ const SidebarMenu = () => {
 
         {/* page */}
         <SubMenu label="Page "  icon={<BsFileEarmarkPlus />}>
-          <MenuItem
+          <MenuItem className="sub-menu-item"
             active={location.pathname === "/create-product"}
             onClick={() => navigate("/create-product")}
           >
             Add Page
           </MenuItem>
-          <MenuItem
+          <MenuItem className="sub-menu-item"
             active={location.pathname === "/product-list"}
             onClick={() => navigate("/product-list")}
           >
@@ -268,13 +269,13 @@ const SidebarMenu = () => {
 
         {/* faq */}
         <SubMenu label="Faq "  icon={<IoCheckboxOutline />}>
-          <MenuItem
+          <MenuItem className="sub-menu-item"
             active={location.pathname === "/create-product"}
             onClick={() => navigate("/create-product")}
           >
             Add Faq
           </MenuItem>
-          <MenuItem
+          <MenuItem className="sub-menu-item"
             active={location.pathname === "/product-list"}
             onClick={() => navigate("/product-list")}
           >
@@ -283,7 +284,7 @@ const SidebarMenu = () => {
         </SubMenu>
 
         {/* userlist */}
-        <MenuItem
+        <MenuItem 
             active={location.pathname === "/create-product"} icon={<PiUsersBold />}
             onClick={() => navigate("/create-product")}
           >
@@ -291,7 +292,7 @@ const SidebarMenu = () => {
         </MenuItem>
 
         {/* account */}
-        <MenuItem
+        <MenuItem 
             active={location.pathname === "/profile"} icon={<TiUserOutline />}
             onClick={() => navigate("/profile")}
           >
@@ -299,15 +300,15 @@ const SidebarMenu = () => {
         </MenuItem>
 
         {/* settings */}
-        <MenuItem
-            active={location.pathname === "/create-product"} icon={<LuSettings2 />}
-            onClick={() => navigate("/create-product")}
+        <MenuItem 
+            active={location.pathname === "/settings"} icon={<LuSettings2 />}
+            onClick={() => navigate("/settings")}
           >
             Setting
         </MenuItem>
 
         {/* settings */}
-        <MenuItem
+        <MenuItem 
             active={location.pathname === "/create-product"} icon={<CiLogout />}
             onClick={() => navigate("/create-product")}
           >
@@ -315,6 +316,7 @@ const SidebarMenu = () => {
         </MenuItem>
 
       </Menu>
+      </div>
     </Sidebar>
   );
 };
