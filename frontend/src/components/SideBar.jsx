@@ -254,14 +254,14 @@ const SidebarMenu = () => {
         {/* page */}
         <SubMenu label="Page "  icon={<BsFileEarmarkPlus />}>
           <MenuItem className="sub-menu-item"
-            active={location.pathname === "/create-product"}
-            onClick={() => navigate("/create-product")}
+            active={location.pathname === "/create-page"}
+            onClick={() => navigate("/create-page")}
           >
             Add Page
           </MenuItem>
           <MenuItem className="sub-menu-item"
-            active={location.pathname === "/product-list"}
-            onClick={() => navigate("/product-list")}
+            active={location.pathname === "/page-list"}
+            onClick={() => navigate("/page-list")}
           >
             List Page
           </MenuItem>
@@ -270,14 +270,14 @@ const SidebarMenu = () => {
         {/* faq */}
         <SubMenu label="Faq "  icon={<IoCheckboxOutline />}>
           <MenuItem className="sub-menu-item"
-            active={location.pathname === "/create-product"}
-            onClick={() => navigate("/create-product")}
+            active={location.pathname === "/create-faq"}
+            onClick={() => navigate("/create-faq")}
           >
             Add Faq
           </MenuItem>
           <MenuItem className="sub-menu-item"
-            active={location.pathname === "/product-list"}
-            onClick={() => navigate("/product-list")}
+            active={location.pathname === "/faq-list"}
+            onClick={() => navigate("/faq-list")}
           >
             List Faq
           </MenuItem>
@@ -285,8 +285,8 @@ const SidebarMenu = () => {
 
         {/* userlist */}
         <MenuItem 
-            active={location.pathname === "/create-product"} icon={<PiUsersBold />}
-            onClick={() => navigate("/create-product")}
+            active={location.pathname === "/user-list"} icon={<PiUsersBold />}
+            onClick={() => navigate("/user-list")}
           >
             User List
         </MenuItem>
@@ -307,10 +307,10 @@ const SidebarMenu = () => {
             Setting
         </MenuItem>
 
-        {/* settings */}
+        {/* logout */}
         <MenuItem 
-            active={location.pathname === "/create-product"} icon={<CiLogout />}
-            onClick={() => navigate("/create-product")}
+            active={location.pathname === "/"} icon={<CiLogout />}
+            onClick={() => navigate("/")}
           >
             Logout
         </MenuItem>

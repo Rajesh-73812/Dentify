@@ -31,7 +31,7 @@ const [passwordVisible, setPasswordVisible] = useState(false);
       e.preventDefault();
   
       try {
-        const response = await axios.post("http://localhost:5000/admin/login", formData, {
+        const response = await axios.post("https://property-rental-backend-5.onrender.com/admin/login", formData, {
           withCredentials: true, 
         });
         console.log(response.data)
