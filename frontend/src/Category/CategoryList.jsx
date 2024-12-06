@@ -1,79 +1,72 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '../components/Header';
 import SidebarMenu from '../components/SideBar';
 import { GoArrowDown, GoArrowUp } from 'react-icons/go';
 import { FaPen } from "react-icons/fa";
 import { searchFunction } from '../Entity/SearchEntity';
 import CategoryHeader from './CategoryHeader';
+import axios from 'axios';
 
 const CategoryList = () => {
-    const countries = [
-        { id: 1, name: '2BHK House', image: 'path/to/image1.jpg',  status: 'publish' },
-        { id: 2, name: 'Villas', image: 'path/to/image2.jpg', status: 'publish' },
-        { id: 3, name: 'Apartments', image: 'path/to/image3.jpg', status: 'unpublish' },
-        { id: 4, name: 'Individual Houses', image: 'path/to/image4.jpg', status: 'publish' },
-        { id: 5, name: 'Condos', image: 'path/to/image5.jpg', status: 'unpublish' },
-        { id: 6, name: '2BHK House', image: 'path/to/image1.jpg',  status: 'publish' },
-        { id: 7, name: 'Villas', image: 'path/to/image2.jpg', status: 'publish' },
-        { id: 8, name: 'Condos', image: 'path/to/image3.jpg', status: 'unpublish' },
-        { id: 9, name: 'Individual Houses', image: 'path/to/image4.jpg', status: 'publish' },
-        { id: 10, name: 'Fields', image: 'path/to/image5.jpg', status: 'unpublish' },
-        { id: 11, name: '2BHK House', image: 'path/to/image1.jpg',  status: 'publish' },
-        { id: 12, name: 'Villas', image: 'path/to/image2.jpg', status: 'publish' },
-        { id: 13, name: 'Apartments', image: 'path/to/image3.jpg', status: 'unpublish' },
-        { id: 14, name: 'Individual Houses', image: 'path/to/image4.jpg', status: 'publish' },
-        { id: 15, name: 'Condos', image: 'path/to/image5.jpg', status: 'unpublish' },
-        { id: 16, name: 'Hotel', image: 'path/to/image5.jpg', status: 'unpublish' },
-        { id: 17, name: 'Cabin', image: 'path/to/image5.jpg', status: 'unpublish' },
-        { id: 18, name: 'Fields', image: 'path/to/image5.jpg', status: 'unpublish' },
-        { id: 19, name: 'Fields', image: 'path/to/image5.jpg', status: 'unpublish' },
-        
-    ];
-
-    const [filterData, setFilterData] = useState(countries);
-    const [filteredCountries, setFilteredCountries] = useState(countries);
+    const [categories, setCategories] = useState([]);
+    const [filteredcategories, setFilteredcategories] = useState([]);
     const [sortConfig, setSortConfig] = useState({ key: '', direction: '' });
-    
+
     // Pagination state
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 10; 
+    const itemsPerPage = 10;
 
-    // for searching
+    // Fetch categories from API
+    useEffect(() => {
+        async function fetchCategories() {
+            try {
+                const response = await axios.get("http://localhost:5000/categories/all", {
+                    withCredentials: true,
+                });
+                console.log("Fetched categories:", response.data);
+                setCategories(response.data);
+                setFilteredcategories(response.data);
+            } catch (error) {
+                console.error("Error fetching categories:", error);
+            }
+        }
+
+        fetchCategories();
+    }, []);
+
+    // Handle search
     const handleSearch = (event) => {
-        searchFunction(event, countries, setFilteredCountries);
-        setCurrentPage(1); 
+        searchFunction(event, categories, setFilteredcategories);
+        setCurrentPage(1);
     };
 
-    // for sorting
+    // Handle sorting
     const handleSort = (key) => {
         let direction = 'asc';
         if (sortConfig.key === key && sortConfig.direction === 'asc') {
             direction = 'desc';
         }
-        
-        const sortedData = [...filteredCountries].sort((a, b) => {
+
+        const sortedData = [...filteredcategories].sort((a, b) => {
             if (key === 'slno') {
                 return direction === 'asc' ? a.id - b.id : b.id - a.id;
-            } else if (key === 'totalProperties') {
-                return direction === 'asc' ? a.totalProperties - b.totalProperties : b.totalProperties - a.totalProperties;
             }
             return a[key] < b[key] ? (direction === 'asc' ? -1 : 1) : (direction === 'asc' ? 1 : -1);
         });
 
-        setFilteredCountries(sortedData);
+        setFilteredcategories(sortedData);
         setSortConfig({ key, direction });
         setCurrentPage(1);
     };
 
-    // Calculate paginated countries
-    const indexOfLastCountry = currentPage * itemsPerPage;
-    const indexOfFirstCountry = indexOfLastCountry - itemsPerPage;
-    const currentCountries = filteredCountries.slice(indexOfFirstCountry, indexOfLastCountry);
+    // Calculate paginated categories
+    const indexOfLastCategory = currentPage * itemsPerPage;
+    const indexOfFirstCategory = indexOfLastCategory - itemsPerPage;
+    const currentCategories = filteredcategories.slice(indexOfFirstCategory, indexOfLastCategory);
 
     // Change page
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
-    const totalPages = Math.ceil(filteredCountries.length / itemsPerPage);
+    const totalPages = Math.ceil(filteredcategories.length / itemsPerPage);
 
     return (
         <div>
@@ -101,20 +94,15 @@ const CategoryList = () => {
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[150px]">
-                                                Category Title 
+                                                Category Title
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('name')} />
-                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('name')} />
+                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('title')} />
+                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('title')} />
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[150px]">
                                                 Category Image
-                                                <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('name')} />
-                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('name')} />
-                                                </div>
                                             </th>
-                                            
                                             <th className="px-4 py-3 min-w-[100px]">
                                                 Category Status
                                                 <div className="inline-flex items-center ml-2">
@@ -122,34 +110,25 @@ const CategoryList = () => {
                                                     <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('status')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[100px]">
-                                                Action
-                                                <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('action')} />
-                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('action')} />
-                                                </div>
-                                            </th>
+                                            <th className="px-4 py-3 min-w-[100px]">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-gray-200">
-                                        {currentCountries.map((country, index) => (
-                                            <tr key={country.id}>
-                                                <td className="px-4 py-3">{index + 1 + indexOfFirstCountry}</td>
-                                                <td className="px-4 py-3">{country.name}</td>
+                                        {currentCategories.map((category, index) => (
+                                            <tr key={category.id}>
+                                                <td className="px-4 py-3">{index + 1 + indexOfFirstCategory}</td>
+                                                <td className="px-4 py-3">{category.title}</td>
                                                 <td className="px-4 py-3">
-                                                    {country.image && country.image.trim() !== '' ? (
-                                                        <img src={country.image} className="w-16 h-16 object-cover rounded-full" height={50} width={50} loading="lazy" alt="" onError={(e) => {
-                                                            if (e.target.src !== 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg') {
-                                                                e.target.src = 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg';
-                                                            }
-                                                        }} />
-                                                    ) : (
-                                                        <img src={'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg'} height={50} width={50} loading="lazy" alt="" />
-                                                    )}
+                                                    <img
+                                                        src={category.img || 'https://via.placeholder.com/50'}
+                                                        alt="Category"
+                                                        className="w-16 h-16 object-cover rounded-full"
+                                                        onError={(e) => (e.target.src = 'https://via.placeholder.com/50')}
+                                                    />
                                                 </td>
                                                 <td className="px-4 py-3">
-                                                    <span className={`px-3 py-1 text-sm rounded-full ${country.status === 'publish' ? 'bg-green-500 text-white' : 'bg-gray-400 text-white'}`}>
-                                                        {country.status}
+                                                    <span className={`px-3 py-1 text-sm rounded-full ${category.status === 1 ? 'bg-green-500 text-white' : 'bg-gray-400 text-white'}`}>
+                                                        {category.status == 1 ? "publish": "unpublish"}
                                                     </span>
                                                 </td>
                                                 <td className="px-4 py-3">
@@ -165,12 +144,18 @@ const CategoryList = () => {
                         </div>
                         <div className="bottom-0 left-0 w-full bg-[#f7fbff] py-4 flex justify-between items-center">
                             <span className="text-sm font-normal text-gray-500">
-                                Showing <span className="font-semibold text-gray-900">{indexOfFirstCountry + 1}</span> to <span className="font-semibold text-gray-900">{Math.min(indexOfLastCountry, filteredCountries.length)}</span> of <span className="font-semibold text-gray-900">{filteredCountries.length}</span>
+                                Showing <span className="font-semibold text-gray-900">{indexOfFirstCategory + 1}</span> to{' '}
+                                <span className="font-semibold text-gray-900">{Math.min(indexOfLastCategory, filteredcategories.length)}</span> of{' '}
+                                <span className="font-semibold text-gray-900">{filteredcategories.length}</span>
                             </span>
                             <ul className="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">
                                 <li>
-                                    <button onClick={() => paginate(currentPage > 1 ? currentPage - 1 : 1)} className="previous-button" disabled={currentPage === 1}>
-                                        <img src="/image/action/Left Arrow.svg" alt="Left" /> Previous
+                                    <button
+                                        onClick={() => paginate(currentPage > 1 ? currentPage - 1 : 1)}
+                                        disabled={currentPage === 1}
+                                        className="previous-button"
+                                    >
+                                        Previous
                                     </button>
                                 </li>
                                 <li>
@@ -179,8 +164,12 @@ const CategoryList = () => {
                                     </span>
                                 </li>
                                 <li>
-                                    <button onClick={() => paginate(currentPage < totalPages ? currentPage + 1 : totalPages)} className="next-button" disabled={currentPage === totalPages}>
-                                        Next <img src="/image/action/Right Arrow (1).svg" alt="Right" />
+                                    <button
+                                        onClick={() => paginate(currentPage < totalPages ? currentPage + 1 : totalPages)}
+                                        disabled={currentPage === totalPages}
+                                        className="next-button"
+                                    >
+                                        Next
                                     </button>
                                 </li>
                             </ul>

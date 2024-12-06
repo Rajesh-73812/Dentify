@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Header from '../components/Header'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import SidebarMenu from '../components/SideBar'
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ImageUploader from '../common/ImageUploader';
@@ -13,6 +13,8 @@ const CategoryAdd = () => {
     img: '',
     status: 0,
   });
+
+  const navigate = useNavigate()
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -56,7 +58,7 @@ const CategoryAdd = () => {
         );
       console.log("Category added successfully:", response.data);
       alert("Category added successfully!");
-      // navigate("/dashboard");
+      navigate("/category-list");
     } catch (error) {
       console.error("Error adding Category:", error);
       alert("An error occurred while adding the Category.");
@@ -81,7 +83,7 @@ const CategoryAdd = () => {
           {/* Form Container */}
           <div className="h-full px-6 max-w-5xl" style={{paddingTop:'24px'}}> 
             <div className="bg-white h-[70vh] w-full rounded-xl border border-[#EAE5FF] py-4 px-6">
-              <form className="mt-4">
+              <form onSubmit={handleSubmit} className="mt-4">
                 <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-1  mt-6">
                   {/* category name */}
                   <div className="flex flex-col">
