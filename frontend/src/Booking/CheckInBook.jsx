@@ -249,8 +249,8 @@ const CheckInBook = () => {
                                                 <td className="px-4 py-3">{country.price}</td>
                                                 <td className="px-4 py-3"> {country.day}</td>
                                                 <td className="px-4 py-3">
-                                                    <span className='px-3 py-1 text-sm rounded-full bg-green-400 cursor-pointer text-white' onClick={() => openModal(country)}>View Details</span>
-                                                    <span className=' px-3 py-1 text-sm rounded-full bg-cyan-400 cursor-pointer text-white' onClick={navigateComplted}>Checkout</span>
+                                                    <span className='px-3 py-1 text-sm rounded-full bg-green-400 cursor-pointer text-white mr-2' onClick={() => openModal(country)}>View Details</span>
+                                                    <span className=' px-3 py-1 text-sm rounded-full bg-cyan-400 cursor-pointer text-white mr-2' onClick={navigateComplted}>Checkout</span>
                                                 </td>
                                             </tr>
                                         ))}
