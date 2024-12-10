@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Sidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
 import { useNavigate, useLocation } from "react-router-dom";
 import { RiHome6Line } from "react-icons/ri";
@@ -18,10 +18,27 @@ import { CiImageOn } from "react-icons/ci";
 import { CgCalendarDates } from "react-icons/cg";
 import { BsFileEarmarkPlus } from "react-icons/bs";
 import { IoCheckboxOutline } from "react-icons/io5";
+import axios from "axios";
 
 const SidebarMenu = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const [loading,setloading]=useState(false)
+
+  const logout = async () => {
+    setloading(true)
+    try {
+      const response = await axios.post(`http://localhost:5000/admin/logout`,{},{ withCredentials: true });
+      // console.log(response.data);
+      setTimeout(() => {
+        navigate("/");
+      }, 2000);
+    } catch (error) {
+      console.error("Error during logout:", error.response?.data || error.message);
+    }finally{
+      setloading(false)
+    }
+  };
   
   return (
     <Sidebar  breakPoint="sm"  width="250px"  style={{overflowY:'auto',height:'100vh'}}>
@@ -254,14 +271,14 @@ const SidebarMenu = () => {
         {/* page */}
         <SubMenu label="Page "  icon={<BsFileEarmarkPlus />}>
           <MenuItem className="sub-menu-item"
-            active={location.pathname === "/create-product"}
-            onClick={() => navigate("/create-product")}
+            active={location.pathname === "/create-page"}
+            onClick={() => navigate("/create-page")}
           >
             Add Page
           </MenuItem>
           <MenuItem className="sub-menu-item"
-            active={location.pathname === "/product-list"}
-            onClick={() => navigate("/product-list")}
+            active={location.pathname === "/page-list"}
+            onClick={() => navigate("/page-list")}
           >
             List Page
           </MenuItem>
@@ -270,14 +287,14 @@ const SidebarMenu = () => {
         {/* faq */}
         <SubMenu label="Faq "  icon={<IoCheckboxOutline />}>
           <MenuItem className="sub-menu-item"
-            active={location.pathname === "/create-product"}
-            onClick={() => navigate("/create-product")}
+            active={location.pathname === "/create-faq"}
+            onClick={() => navigate("/create-faq")}
           >
             Add Faq
           </MenuItem>
           <MenuItem className="sub-menu-item"
-            active={location.pathname === "/product-list"}
-            onClick={() => navigate("/product-list")}
+            active={location.pathname === "/faq-list"}
+            onClick={() => navigate("/faq-list")}
           >
             List Faq
           </MenuItem>
@@ -285,8 +302,8 @@ const SidebarMenu = () => {
 
         {/* userlist */}
         <MenuItem 
-            active={location.pathname === "/create-product"} icon={<PiUsersBold />}
-            onClick={() => navigate("/create-product")}
+            active={location.pathname === "/user-list"} icon={<PiUsersBold />}
+            onClick={() => navigate("/user-list")}
           >
             User List
         </MenuItem>
@@ -307,10 +324,10 @@ const SidebarMenu = () => {
             Setting
         </MenuItem>
 
-        {/* settings */}
+        {/* logout */}
         <MenuItem 
-            active={location.pathname === "/create-product"} icon={<CiLogout />}
-            onClick={() => navigate("/create-product")}
+            active={location.pathname === "/"} icon={<CiLogout />}
+            onClick={logout}
           >
             Logout
         </MenuItem>

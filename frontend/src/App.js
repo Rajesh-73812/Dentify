@@ -33,8 +33,15 @@ import ApprovedBook from './Booking/ApprovedBook.jsx';
 import CheckInBook from './Booking/CheckInBook.jsx';
 import CompletedBook from './Booking/CompletedBook.jsx';
 import CancelledBook from './Booking/CancelledBook.jsx';
+import UserList from './UserList/UserList.jsx';
+import PageList from './Page/PageList.jsx';
+import PageAdd from './Page/PageAdd.jsx';
+import FaqList from './Faq/FaqList.jsx';
+import FaqAdd from './Faq/FaqAdd.jsx';
+import ProtectedRoute from './ProtectedRoute.js';
 
 function App() {
+
   return (
     <div className="App">
       <BrowserRouter>
@@ -88,6 +95,14 @@ function App() {
           <Route path='/create-package' element={<PackageAdd />}></Route>
 
 
+          <Route path='/page-list' element={<PageList />}></Route>
+          <Route path='/create-page' element={<PageAdd />}></Route>
+
+
+          <Route path='/faq-list' element={<FaqList />}></Route>
+          <Route path='/create-faq' element={<FaqAdd />}></Route>
+
+
           <Route path='/pending-book-list' element={<PendingBook />}></Route>
           <Route path='/approved-book-list' element={<ApprovedBook />}></Route>
           <Route path='/check-in-list' element={<CheckInBook />}></Route>
@@ -97,6 +112,7 @@ function App() {
           {/* for profile */}
           <Route path='/profile' element={<Profile />}></Route>
           <Route path='/settings' element={<Settings />}></Route>
+          <Route path='/user-list' element={<UserList />}></Route>
         </Routes>
       </BrowserRouter>
     </div>

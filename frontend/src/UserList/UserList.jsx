@@ -5,28 +5,28 @@ import { GoArrowDown, GoArrowUp } from 'react-icons/go';
 import { FaPen,FaTrash } from "react-icons/fa";
 import { searchFunction } from '../Entity/SearchEntity';
 import axios from 'axios';
-import PackageHeader from './PackageHeader';
+import UseListHeader from './UseListHeader';
 
-const PackageList = () => {
+const UserList = () => {
     const [countries, setCountries] = useState([]);
     const [filteredCountries, setFilteredCountries] = useState([]);
     const [sortConfig, setSortConfig] = useState({ key: '', direction: '' });
 
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
-
-    useEffect(() => {
-        const fetchCountries = async () => {
-            try {
-                const response = await axios.get("http://localhost:5000/countries/all");
-                setCountries(response.data);
-                setFilteredCountries(response.data); 
-            } catch (error) {
-                console.error("Error fetching countries:", error);
-            }
-        };
-        fetchCountries();
-    }, []);
+    
+    // useEffect(() => {
+    //     const userList = async () => {
+    //         try {
+    //             const response = await axios.get("http://localhost:5000/user/all");
+    //             setCountries(response.data);
+    //             setFilteredCountries(response.data); 
+    //         } catch (error) {
+    //             console.error("Error fetching userList:", error);
+    //         }
+    //     };
+    //     userList();
+    // }, []);
 
     const handleSearch = (event) => {
         searchFunction(event, countries, setFilteredCountries);
@@ -67,7 +67,7 @@ const PackageList = () => {
                 <SidebarMenu />
                 <div className="flex flex-1 flex-col bg-[#f7fbff]">
                     <Header />
-                    <PackageHeader onSearch={handleSearch} />
+                    <UseListHeader onSearch={handleSearch} />
                     <div className="py-6 px-6 h-full w-[1000px] overflow-scroll scrollbar-none">
                         <div className="bg-white w-full rounded-xl border border-[#EAE5FF] py-4 px-3 overflow-x-auto scrollbar-none">
                             <div className="relative sm:rounded-lg">
@@ -82,40 +82,96 @@ const PackageList = () => {
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[250px]">
-                                                Package Title 
+                                                Image
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp onClick={() => handleSort('title')} />
                                                     <GoArrowDown onClick={() => handleSort('title')} />
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[250px]">
-                                              Package Image
+                                              Name
                                               <div className="inline-flex items-center ml-2">
                                                   <GoArrowUp onClick={() => handleSort('image')} />
                                                   <GoArrowDown onClick={() => handleSort('image')} />
                                               </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[250px]">
-                                              Package Day
+                                              Email
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp onClick={() => handleSort('day')} />
                                                     <GoArrowDown onClick={() => handleSort('day')} />
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[250px]">
-                                              Package Price
+                                              Mobile
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp onClick={() => handleSort('price')} />
                                                     <GoArrowDown onClick={() => handleSort('price')} />
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[250px]">
-                                              Country Status
+                                              Join Date
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp onClick={() => handleSort('price')} />
+                                                    <GoArrowDown onClick={() => handleSort('price')} />
+                                                </div>
+                                            </th>
+                                            <th className="px-4 py-3 min-w-[250px]">
+                                               Status
                                               <div className="inline-flex items-center ml-2">
                                                   <GoArrowUp onClick={() => handleSort('status')} />
                                                   <GoArrowDown onClick={() => handleSort('status')} />
                                               </div>
-                                              </th>
+                                            </th>
+                                            <th className="px-4 py-3 min-w-[250px]">
+                                              Refer Code
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp onClick={() => handleSort('price')} />
+                                                    <GoArrowDown onClick={() => handleSort('price')} />
+                                                </div>
+                                            </th>
+                                            <th className="px-4 py-3 min-w-[250px]">
+                                              Parent Code
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp onClick={() => handleSort('price')} />
+                                                    <GoArrowDown onClick={() => handleSort('price')} />
+                                                </div>
+                                            </th>
+                                            <th className="px-4 py-3 min-w-[250px]">
+                                              Wallet
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp onClick={() => handleSort('price')} />
+                                                    <GoArrowDown onClick={() => handleSort('price')} />
+                                                </div>
+                                            </th>
+                                            <th className="px-4 py-3 min-w-[250px]">
+                                              IsSubscribe
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp onClick={() => handleSort('price')} />
+                                                    <GoArrowDown onClick={() => handleSort('price')} />
+                                                </div>
+                                            </th>
+                                            <th className="px-4 py-3 min-w-[250px]">
+                                              Package  Name
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp onClick={() => handleSort('price')} />
+                                                    <GoArrowDown onClick={() => handleSort('price')} />
+                                                </div>
+                                            </th>
+                                            <th className="px-4 py-3 min-w-[250px]">
+                                              Start Date
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp onClick={() => handleSort('price')} />
+                                                    <GoArrowDown onClick={() => handleSort('price')} />
+                                                </div>
+                                            </th>
+                                            <th className="px-4 py-3 min-w-[250px]">
+                                              Expired Date
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp onClick={() => handleSort('price')} />
+                                                    <GoArrowDown onClick={() => handleSort('price')} />
+                                                </div>
+                                            </th>
                                             <th className="px-4 py-3 min-w-[250px]">
                                               Action
                                               <div className="inline-flex items-center ml-2">
@@ -129,25 +185,28 @@ const PackageList = () => {
                                         {currentCountries.map((country, index) => (
                                             <tr key={country.id}>
                                                 <td className="px-4 py-3">{index + 1 + indexOfFirstCountry}</td>
-                                                <td className="px-4 py-3">{country?.title || "N/A"}</td>
                                                 <td className="px-4 py-3">
                                                     <img
-                                                        src={country.img || 'fallback-image.jpg'}
-                                                        alt={country.title || "N/A"}
+                                                        src={country.image || 'fallback-image.jpg'}
+                                                        alt={country.name || "N/A"}
                                                         className="w-16 h-16 object-cover rounded-full"
                                                         onError={(e) => (e.target.src = 'fallback-image.jpg')}
                                                     />
                                                 </td>
-                                                <td className="px-4 py-3">{country?.totalProperties || 0}</td>
+                                                <td className="px-4 py-3">{country.name || "N/A"}</td>
+                                                <td className="px-4 py-3">{country.email || "N/A"}</td>
+                                                <td className="px-4 py-3">{country.mobile || "N/A"}</td>
+                                                <td className="px-4 py-3">{country.joinDate || "N/A"}</td>
+                                                <td className="px-4 py-3">{country.status || "N/A"}</td>
+                                                <td className="px-4 py-3">{country.refercode || "N/A"}</td>
+                                                <td className="px-4 py-3">{country.parentCode || "N/A"}</td>
+                                                <td className="px-4 py-3">{country.wallet || "N/A"}</td>
+                                                <td className="px-4 py-3">{country.isSubscribe || "N/A"}</td>
+                                                <td className="px-4 py-3">{country.packageName || "N/A"}</td>
+                                                <td className="px-4 py-3">{country.startDate || "N/A"}</td>
+                                                <td className="px-4 py-3">{country.expiredDate || "N/A"}</td>
                                                 <td className="px-4 py-3">
-                                                    <span
-                                                        className={`px-3 py-1 text-sm rounded-full ${country.status === 1 ? 'bg-green-500 text-white' : 'bg-gray-400 text-white'}`}
-                                                    >
-                                                        {country.status === 1 ? "publish" : "unpublish"}
-                                                    </span>
-                                                </td>
-                                                <td className="px-4 py-3">
-                                                    <button className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition mr-2">
+                                                <   button className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition mr-2">
                                                         <FaPen />
                                                     </button>
                                                     <button className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition">
@@ -189,4 +248,4 @@ const PackageList = () => {
     );
 };
 
-export default PackageList;
+export default UserList;

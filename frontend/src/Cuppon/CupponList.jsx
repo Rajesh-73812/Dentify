@@ -2,7 +2,12 @@ import React, { useEffect, useState } from 'react';
 import Header from '../components/Header';
 import SidebarMenu from '../components/SideBar';
 import { GoArrowDown, GoArrowUp } from 'react-icons/go';
-import { FaPen } from "react-icons/fa";
+
+
+
+import { FaPen,FaTrash } from "react-icons/fa";
+import { searchFunction } from '../Entity/SearchEntity';
+
 import CupponHeader from './CupponHeader';
 import axios from 'axios';
 
@@ -104,6 +109,7 @@ const CupponList = () => {
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-gray-200">
+
                                         {currentCountries.length > 0 ? (
                                             currentCountries.map((country, index) => (
                                                 <tr key={country.id}>
@@ -146,6 +152,9 @@ const CupponList = () => {
                                                         <button className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition">
                                                             <FaPen />
                                                         </button>
+                                                        <button className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition">
+                                                        <FaTrash />
+                                                    </button>
                                                     </td>
                                                 </tr>
                                             ))
@@ -153,6 +162,7 @@ const CupponList = () => {
                                             <tr>
                                                 <td colSpan="10" className="text-center">
                                                     No data available
+
                                                 </td>
                                             </tr>
                                         )}

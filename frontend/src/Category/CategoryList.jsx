@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Header from '../components/Header';
 import SidebarMenu from '../components/SideBar';
 import { GoArrowDown, GoArrowUp } from 'react-icons/go';
-import { FaPen } from "react-icons/fa";
+import { FaPen,FaTrash } from "react-icons/fa";
 import { searchFunction } from '../Entity/SearchEntity';
 import CategoryHeader from './CategoryHeader';
 import axios from 'axios';
@@ -123,10 +123,37 @@ const CategoryList = () => {
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-gray-200">
+
                                         {currentCategories.length === 0 ? (
                                             <tr>
                                                 <td colSpan="5" className="text-center py-4 text-gray-500">
                                                     No categories found.
+
+                                        {currentCategories.map((category, index) => (
+                                            <tr key={category.id}>
+                                                <td className="px-4 py-3">{index + 1 + indexOfFirstCategory}</td>
+                                                <td className="px-4 py-3">{category.title}</td>
+                                                <td className="px-4 py-3">
+                                                    <img
+                                                        src={category.img || 'https://via.placeholder.com/50'}
+                                                        alt="Category"
+                                                        className="w-16 h-16 object-cover rounded-full"
+                                                        onError={(e) => (e.target.src = 'https://via.placeholder.com/50')}
+                                                    />
+                                                </td>
+                                                <td className="px-4 py-3">
+                                                    <span className={`px-3 py-1 text-sm rounded-full ${category.status === 1 ? 'bg-green-500 text-white' : 'bg-gray-400 text-white'}`}>
+                                                        {category.status == 1 ? "publish": "unpublish"}
+                                                    </span>
+                                                </td>
+                                                <td className="px-4 py-3">
+                                                    <button className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition mr-2">
+                                                        <FaPen />
+                                                    </button>
+                                                    <button className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition">
+                                                        <FaTrash />
+                                                    </button>
+
                                                 </td>
                                             </tr>
                                         ) : (

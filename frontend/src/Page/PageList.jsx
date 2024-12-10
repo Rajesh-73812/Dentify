@@ -5,9 +5,9 @@ import { GoArrowDown, GoArrowUp } from 'react-icons/go';
 import { FaPen,FaTrash } from "react-icons/fa";
 import { searchFunction } from '../Entity/SearchEntity';
 import axios from 'axios';
-import PackageHeader from './PackageHeader';
+import PageHeader from './PageHeader';
 
-const PackageList = () => {
+const PageList = () => {
     const [countries, setCountries] = useState([]);
     const [filteredCountries, setFilteredCountries] = useState([]);
     const [sortConfig, setSortConfig] = useState({ key: '', direction: '' });
@@ -67,7 +67,7 @@ const PackageList = () => {
                 <SidebarMenu />
                 <div className="flex flex-1 flex-col bg-[#f7fbff]">
                     <Header />
-                    <PackageHeader onSearch={handleSearch} />
+                    <PageHeader onSearch={handleSearch} />
                     <div className="py-6 px-6 h-full w-[1000px] overflow-scroll scrollbar-none">
                         <div className="bg-white w-full rounded-xl border border-[#EAE5FF] py-4 px-3 overflow-x-auto scrollbar-none">
                             <div className="relative sm:rounded-lg">
@@ -82,35 +82,16 @@ const PackageList = () => {
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[250px]">
-                                                Package Title 
+                                                Page Name 
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp onClick={() => handleSort('title')} />
                                                     <GoArrowDown onClick={() => handleSort('title')} />
                                                 </div>
                                             </th>
+                                            
+                                            
                                             <th className="px-4 py-3 min-w-[250px]">
-                                              Package Image
-                                              <div className="inline-flex items-center ml-2">
-                                                  <GoArrowUp onClick={() => handleSort('image')} />
-                                                  <GoArrowDown onClick={() => handleSort('image')} />
-                                              </div>
-                                            </th>
-                                            <th className="px-4 py-3 min-w-[250px]">
-                                              Package Day
-                                                <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp onClick={() => handleSort('day')} />
-                                                    <GoArrowDown onClick={() => handleSort('day')} />
-                                                </div>
-                                            </th>
-                                            <th className="px-4 py-3 min-w-[250px]">
-                                              Package Price
-                                                <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp onClick={() => handleSort('price')} />
-                                                    <GoArrowDown onClick={() => handleSort('price')} />
-                                                </div>
-                                            </th>
-                                            <th className="px-4 py-3 min-w-[250px]">
-                                              Country Status
+                                              Status
                                               <div className="inline-flex items-center ml-2">
                                                   <GoArrowUp onClick={() => handleSort('status')} />
                                                   <GoArrowDown onClick={() => handleSort('status')} />
@@ -189,4 +170,4 @@ const PackageList = () => {
     );
 };
 
-export default PackageList;
+export default PageList;
