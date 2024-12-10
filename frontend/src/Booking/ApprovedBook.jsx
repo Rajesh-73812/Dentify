@@ -13,7 +13,8 @@ import CameraAltOutlinedIcon from '@mui/icons-material/CameraAltOutlined';
 import html2canvas from 'html2canvas';
 import { useNavigate } from 'react-router-dom';
 import OrderPreviewModal from './OrderPreviewModal';
-
+import { NotificationContainer, NotificationManager } from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 
 const ApprovedBook = () => {
     const navigate = useNavigate();
@@ -111,12 +112,14 @@ const ApprovedBook = () => {
             );
     
             if (response.status === 200) {
-                alert('Status updated successfully!');
-                navigate('/approved-book-list');
+                NotificationManager.success('Status updated successfully!');
+                setTimeout(() => {
+                    navigate('/approved-book-list');
+                }, 4000);
             }
         } catch (error) {
             console.error('Error updating status:', error.response?.data || error.message);
-            alert(error.response?.data?.error || 'Failed to update status. Please try again.');
+            NotificationManager.error(error.response?.data?.error || 'Failed to update status. Please try again.');
         }
     };
     
@@ -194,6 +197,7 @@ const ApprovedBook = () => {
                                             <td className="px-4 py-3">{country.prop_price}</td>
                                             <td className="px-4 py-3">{country.total_day}</td>
                                             <td className="px-4 py-3">
+                                                <NotificationContainer />
                                                     <span className='px-3 py-1 text-sm rounded-full bg-green-400 cursor-pointer text-white mr-2' onClick={() => openModal(country)}>View Details</span>
                                                     <span className=' px-3 py-1 text-sm rounded-full bg-cyan-400 cursor-pointer text-white mr-2' onClick={()=>{navigateApprove(country.id,'Check_in')}}>Check In</span>
                                                     <span className='px-3 py-1 text-sm rounded-full bg-red-400 cursor-pointer text-white mr-2' onClick={openModal2}>Cancelled</span>

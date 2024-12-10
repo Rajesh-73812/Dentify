@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Header from '../components/Header';
 import SidebarMenu from '../components/SideBar';
 import { GoArrowDown, GoArrowUp } from 'react-icons/go';
@@ -8,28 +8,32 @@ import axios from 'axios';
 import UseListHeader from './UseListHeader';
 
 const UserList = () => {
-    const [countries, setCountries] = useState([]);
-    const [filteredCountries, setFilteredCountries] = useState([]);
+    const hasFetched = useRef(false);
+    const [user, setuser] = useState([]);
+    const [filtereduser, setFiltereduser] = useState([]);
     const [sortConfig, setSortConfig] = useState({ key: '', direction: '' });
 
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 10;
-    
+    const itemsPerPage = 10; 
+
     // useEffect(() => {
-    //     const userList = async () => {
+    //     async function userlist() {
     //         try {
-    //             const response = await axios.get("http://localhost:5000/user/all");
-    //             setCountries(response.data);
-    //             setFilteredCountries(response.data); 
+    //             const response = await axios.get("http://localhost:5000/users/user/getalluser");
+    //             console.log(response.data);
+    //             setuser(response.data);
+    //             setFiltereduser(response.data);
     //         } catch (error) {
-    //             console.error("Error fetching userList:", error);
+    //             console.error("Error fetching user:", error);
     //         }
-    //     };
-    //     userList();
+    //     }
+    
+    //     userlist();
     // }, []);
+    
 
     const handleSearch = (event) => {
-        searchFunction(event, countries, setFilteredCountries);
+        // searchFunction(event, user, setFiltereduser);
         setCurrentPage(1);
     };
 
@@ -39,7 +43,7 @@ const UserList = () => {
             direction = 'desc';
         }
 
-        const sortedData = [...filteredCountries].sort((a, b) => {
+        const sortedData = [...filtereduser].sort((a, b) => {
             if (key === 'slno') {
                 return direction === 'asc' ? a.id - b.id : b.id - a.id;
             } else if (key === 'totalProperties') {
@@ -48,18 +52,18 @@ const UserList = () => {
             return a[key]?.localeCompare(b[key]) * (direction === 'asc' ? 1 : -1);
         });
 
-        setFilteredCountries(sortedData);
+        setFiltereduser(sortedData);
         setSortConfig({ key, direction });
         setCurrentPage(1);
     };
 
     const indexOfLastCountry = currentPage * itemsPerPage;
     const indexOfFirstCountry = indexOfLastCountry - itemsPerPage;
-    const currentCountries = filteredCountries.slice(indexOfFirstCountry, indexOfLastCountry);
+    const currentuser = filtereduser.slice(indexOfFirstCountry, indexOfLastCountry);
 
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-    const totalPages = Math.ceil(filteredCountries.length / itemsPerPage);
+    const totalPages = Math.ceil(filtereduser.length / itemsPerPage);
 
     return (
         <div>
@@ -182,7 +186,7 @@ const UserList = () => {
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-gray-200">
-                                        {currentCountries.map((country, index) => (
+                                        {currentuser.map((country, index) => (
                                             <tr key={country.id}>
                                                 <td className="px-4 py-3">{index + 1 + indexOfFirstCountry}</td>
                                                 <td className="px-4 py-3">
@@ -222,8 +226,8 @@ const UserList = () => {
                         <div className="bottom-0 left-0 w-full bg-[#f7fbff] py-4 flex justify-between items-center">
                             <span className="text-sm font-normal text-gray-500">
                                 Showing <span className="font-semibold text-gray-900">{indexOfFirstCountry + 1}</span> to{" "}
-                                <span className="font-semibold text-gray-900">{Math.min(indexOfLastCountry, filteredCountries.length)}</span> of{" "}
-                                <span className="font-semibold text-gray-900">{filteredCountries.length}</span>
+                                <span className="font-semibold text-gray-900">{Math.min(indexOfLastCountry, filtereduser.length)}</span> of{" "}
+                                <span className="font-semibold text-gray-900">{filtereduser.length}</span>
                             </span>
                             <ul className="inline-flex -space-x-px text-sm h-8">
                                 <li>

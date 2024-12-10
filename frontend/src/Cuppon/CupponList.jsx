@@ -5,6 +5,7 @@ import { GoArrowDown, GoArrowUp } from 'react-icons/go';
 import { FaPen,FaTrash } from "react-icons/fa";
 import { searchFunction } from '../Entity/SearchEntity';
 import CupponHeader from './CupponHeader';
+import { DeleteEntity } from '../utils/Delete';
 
 const CupponList = () => {
     const countries = [
@@ -71,6 +72,13 @@ const CupponList = () => {
 
     const totalPages = Math.ceil(filteredCountries.length / itemsPerPage);
 
+    // for dalete
+    const handledelete=async(id)=>{
+        const success=await DeleteEntity('Cuppon',id)
+        if(success){
+            
+        }
+    }
     return (
         <div>
             <div className="h-screen flex">

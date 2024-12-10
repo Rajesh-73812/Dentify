@@ -6,6 +6,7 @@ import { FaPen,FaTrash } from "react-icons/fa";
 import { searchFunction } from '../Entity/SearchEntity';
 import CategoryHeader from './CategoryHeader';
 import axios from 'axios';
+import { DeleteEntity } from '../utils/Delete';
 
 const CategoryList = () => {
     const [categories, setCategories] = useState([]);
@@ -68,6 +69,16 @@ const CategoryList = () => {
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
     const totalPages = Math.ceil(filteredcategories.length / itemsPerPage);
 
+    // update 
+    
+    const handledelete=async(id)=>{
+        const success=await DeleteEntity('Category',id);
+        if(success){
+            const updatedCategories=categories.filter((item)=> categories.id !== id);
+            setCategories(updatedCategories);
+            setFilteredcategories(updatedCategories)
+        }
+    }
     return (
         <div>
             <div className="h-screen flex">
@@ -135,7 +146,7 @@ const CategoryList = () => {
                                                     <button className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition mr-2">
                                                         <FaPen />
                                                     </button>
-                                                    <button className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition">
+                                                    <button className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition" onClick={()=>{handledelete(category.id)}}>
                                                         <FaTrash />
                                                     </button>
                                                 </td>
