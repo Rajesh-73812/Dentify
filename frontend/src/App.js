@@ -38,7 +38,7 @@ import PageList from './Page/PageList.jsx';
 import PageAdd from './Page/PageAdd.jsx';
 import FaqList from './Faq/FaqList.jsx';
 import FaqAdd from './Faq/FaqAdd.jsx';
-
+import ProtectedRoute from './ProtectedRoute.js';
 
 function App() {
 

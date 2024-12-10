@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 
 const Login = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -28,11 +29,12 @@ const Login = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "https://property-rental-backend-5.onrender.com/admin/login",
+        "http://localhost:5000/admin/login",
         formData,
         { withCredentials: true }
       );
-
+      console.log(response.data)
+      NotificationManager.success("Admin logged in successfully!");
       setTimeout(() => {
         NotificationManager.success("Admin logged in successfully!");
         navigate("/dashBoard");
@@ -128,6 +130,7 @@ const Login = () => {
           </form>
         </div>
       </div>
+      <NotificationContainer />
     </div>
   );
 };

@@ -1,20 +1,50 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from '../components/Header'
 import { Link } from 'react-router-dom'
 import SidebarMenu from '../components/SideBar'
+import axios from 'axios'
+import ImageUploader from '../common/ImageUploader';
 
 const Settings = () => {
-  const [timezones, setTimezones] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [formData, setFormData] = useState({  cupponimage: '',  status: '',  cupponCode: '',  expiryDate: '',  cupponTitle: '',  cupponSubtitle: '',  minOrderAmount: '',  cupponValue: '',  cupponDescription: '',});
-  const handleChange=(e)=>{
-    const { name, value } = e.target;
+  const [formData, setFormData] = useState({id:'',  webname: '',weblogo:'',  timezone: '',  currency: '',  tax: '',  sms_type: '',  auth_key: '',  twilio_number: '',  auth_token: '',  acc_id: '',otp_id:'', otp_auth:'', show_property:'', one_key:'', one_hash:'', rcredit:'', rcredit:'',scredit:'', wlimit:''});
 
+  useEffect(() => {
+    const fetchSettings = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/settings", {
+          withCredentials: true,
+        });
+
+        if (response.status === 200) {
+          const settingsData = response.data;
+          setFormData({
+            ...formData,
+            ...settingsData, 
+          });
+        }
+      } catch (error) {
+        console.error("Error fetching settings:", error.response?.data || error.message);
+      }
+    };
+
+    fetchSettings();
+  }, []);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
-  }
+  };
+
+const handleImageUploadSuccess = (imageUrl) => {
+  setFormData((prevData) => ({
+    ...prevData,
+    weblogo: imageUrl,
+  }));
+  
+};
 
   const handleFocus=()=>{
 
@@ -23,24 +53,31 @@ const Settings = () => {
   const handleBlur=()=>{
 
   }
-  // random cuppon generation
-  const makeEightDigitRand = () => {
-    let result = '';
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    const charactersLength = characters.length;
-    for (let i = 0; i < 8; i++) {
-      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    console.log(formData);
+
+ 
+    try {
+      const response = await axios.put(
+        `http://localhost:5000/settings/update/${formData.id}`, 
+        formData, 
+        {
+          withCredentials: true,
+          
+        }
+      );
+      console.log(response.data);
+      if (response.status === 200) {
+        alert('Settings updated successfully');
+      }
+    } catch (error) {
+      console.error(error);
     }
-    setFormData((prevData) => ({
-      ...prevData,
-      cupponCode: result, 
-    }));
   };
 
-  const handleSubmit=async(e)=>{
-    e.preventDefault();
-    console.log(formData)
-  }
   return (
     <div>
       <div className="flex bg-[#f7fbff]">
@@ -60,76 +97,82 @@ const Settings = () => {
           {/* Form Container */}
           <div className="h-full px-6 max-w-5xl" style={{paddingTop:'24px'}}> 
             <div className="bg-white h-[70vh] w-full rounded-xl border border-[#EAE5FF] py-4 px-6 overflow-y-auto" style={{scrollbarWidth:'none'}}>
-              <form className="mt-4">
+              <form className="mt-4" onSubmit={handleSubmit}>
                 <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-3 mt-6">
                         {/* website Name*/}
                         <div className="flex flex-col">
-                            <label  htmlFor="web_name"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> <span style={{color:'red'}}>*</span> Website Name </label>
-                            <input id="web_name" name="web_name" type="text" required className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}}
-                                onFocus={() => handleFocus('web_name')}
-                                onBlur={() => handleBlur('web_name')}
+                            <label  htmlFor="webname"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> <span style={{color:'red'}}>*</span> Website Name </label>
+                            <input id="webname" name="webname" type="text" value={formData.webname} required className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}}
+                                onFocus={() => handleFocus('webname')}
+                                onBlur={() => handleBlur('webname')}
+                                onChange={handleChange}
                             />
                         </div>
 
                         {/* website image */}
                         <div className="flex flex-col">
-                            <label  htmlFor="web_img"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]"><span style={{color:'red'}}>*</span>Website Image</label>
-                            <input  id="web_img"  name="web_img"  type="file"  required  className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px', border: '1px solid #EAEAFF'}}
-                                onFocus={() => handleFocus('web_img')}
-                                onBlur={() => handleBlur('web_img')}
-                            />
+                            <label  htmlFor="weblogo"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]"><span style={{color:'red'}}>*</span>Website Image</label>
+                            <ImageUploader onUploadSuccess={handleImageUploadSuccess}/>
+                            <img width={400} src={formData.weblogo} alt="" />
                         </div>
 
                         {/* time zone */}
                         <div className="flex flex-col">
-                            <label  htmlFor="time_zone"   className="text-sm font-medium text-start text-[12px] font-[Montserrat]" ><span style={{color:'red'}}>*</span> Select Timezone </label>
-                            <select  name="time_zone"  id="time_zone"  className="mt-1 block w-full p-4  bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm"  >
+                            <label  htmlFor="timezone"   className="text-sm font-medium text-start text-[12px] font-[Montserrat]" ><span style={{color:'red'}}>*</span> Select Timezone </label>
+                            <select  name="timezone"  id="timezone" value={formData.timezone}  className="mt-1 block w-full p-4  bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm" onChange={handleChange} >
                                 <option value="" disabled selected>Select TimeZone</option>
+                                <option value="asia/kolkata" >Asia/Kolkata</option>
                             </select>
                         </div>
                         {/* currency*/}
                         <div className="flex flex-col">
                             <label  htmlFor="currency"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]"><span style={{color:'red'}}>*</span> Currency</label>
-                            <input  id="currency"  name="currency"  type="text"  required  className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px', border: '1px solid #EAEAFF'}}
+                            <input  id="currency"  name="currency"  type="text" value={formData.currency}  required  className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px', border: '1px solid #EAEAFF'}}
                                 onFocus={() => handleFocus('currency')}
                                 onBlur={() => handleBlur('currency')}
+                                onChange={handleChange}
                             />
                         </div>
                     
                     {/* tax */}
                     <div className="flex flex-col">
                         <label  htmlFor="tax"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> <span style={{color:'red'}}>*</span>Tax</label>
-                        <input id="tax" name="tax" type="text" required className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}}
+                        <input id="tax" name="tax" type="text" required value={formData.tax} className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}}
                             onFocus={() => handleFocus('tax')}
                             onBlur={() => handleBlur('tax')}
-                            placeholder=""
+                            onChange={handleChange}
+                            placeholder="e.g 5"
                         />
                     </div>
                     {/* sms type */}
                     <div className="flex flex-col">
-                        <label  htmlFor="sms"   className="text-sm font-medium text-start text-[12px] font-[Montserrat]" ><span style={{color:'red'}}>*</span> Sms Type </label>
-                            <select  name="sms"  id="sms"  className="mt-1 block w-full p-4  bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm"  >
+                        <label  htmlFor="sms_type"   className="text-sm font-medium text-start text-[12px] font-[Montserrat]" ><span style={{color:'red'}}>*</span> Sms Type </label>
+                            <select  name="sms_type"  id="sms_type" value={formData.sms_type}  className="mt-1 block w-full p-4  bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm"  onChange={handleChange}>
                                 <option value="" disabled selected>Select sms type</option>
+                                <option value="msg91">Msg91</option>
+                                <option value="twilo">Twilo</option>
                             </select>
                     </div>
                 </div>
                 <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-2  mt-6">
                   {/* msg91 auth key */}
                   <div className="flex flex-col">
-                      <label  htmlFor="msg91_auth"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> <span style={{color:'red'}}>*</span>Msg91 Auth Key</label>
-                      <input id="msg91_auth" name="msg91_auth" type="text" required className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}}
-                        onFocus={() => handleFocus('msg91_auth')}
-                        onBlur={() => handleBlur('msg91_auth')}
-                        placeholder="********************************************"
+                      <label  htmlFor="auth_key"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> <span style={{color:'red'}}>*</span>Msg91 Auth Key</label>
+                      <input id="auth_key" name="auth_key" type="text" required value={formData.auth_key} className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}}
+                        onFocus={() => handleFocus('auth_key')}
+                        onBlur={() => handleBlur('auth_key')}
+                        onChange={handleChange}
+                        placeholder="*****"
                       />
                     </div>
                   {/* Msg91Otp Template Id */}
                   <div className="flex flex-col">
                       <label  htmlFor="Msg91Otp"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> <span style={{color:'red'}}>*</span> Msg91 Otp Template Id </label>
-                      <input id="Msg91Otp" name="Msg91Otp" type="text" required className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}}
-                        onFocus={() => handleFocus('Msg91Otp')}
-                        onBlur={() => handleBlur('Msg91Otp')}
-                        placeholder="****************************************"
+                      <input id="otp_id" name="otp_id" type="text" required value={formData.otp_id} className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}}
+                        onFocus={() => handleFocus('otp_id')}
+                        onBlur={() => handleBlur('otp_id')}
+                        onChange={handleChange}
+                        placeholder="*****"
                       />
                     </div>
     
@@ -137,31 +180,34 @@ const Settings = () => {
                 <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-3  mt-6">
                     {/* *Twilio Account SID */}
                     <div className="flex flex-col">
-                      <label  htmlFor="TwilioSID"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> <span style={{color:'red'}}>*</span>Twilio Account SID</label>
-                      <input id="TwilioSID" name="TwilioSID" type="text" required className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}}
-                        onFocus={() => handleFocus('TwilioSID')}
-                        onBlur={() => handleBlur('TwilioSID')}
-                        placeholder='*******************************************'
+                      <label  htmlFor="acc_id"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> <span style={{color:'red'}}>*</span>Twilio Account SID</label>
+                      <input id="acc_id" name="acc_id" type="text" required value={formData.acc_id} className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}}
+                        onFocus={() => handleFocus('acc_id')}
+                        onBlur={() => handleBlur('acc_id')}
+                        onChange={handleChange}
+                        placeholder='*****'
                       />
                     </div>
 
                   {/* Twilio Auth Token */}
                   <div className="flex flex-col">
-                      <label  htmlFor="TwilioAuth"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]"><span style={{color:'red'}}>*</span>Twilio Auth Token</label>
-                      <input id="TwilioAuth" name="TwilioAuth" type="text" required className="border rounded-lg p-3 mt-1 " style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}}
-                        onFocus={() => handleFocus('TwilioAuth')}
-                        onBlur={() => handleBlur('TwilioAuth')}
-                        placeholder='*******************************************'
+                      <label  htmlFor="auth_token"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]"><span style={{color:'red'}}>*</span>Twilio Auth Token</label>
+                      <input id="auth_token" name="auth_token" type="text" required value={formData.auth_token} className="border rounded-lg p-3 mt-1 " style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}}
+                        onFocus={() => handleFocus('auth_token')}
+                        onBlur={() => handleBlur('auth_token')}
+                        onChange={handleChange}
+                        placeholder='*****'
                       />
                   </div>
 
                   {/* Twilio Phone Number */}
                   <div className="flex flex-col">
-                      <label  htmlFor="TwilioPhone"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> <span style={{color:'red'}}>*</span>Twilio Phone Number</label>
-                      <input id="TwilioPhone" name="TwilioPhone" type="text" required className="border rounded-lg p-3 mt-1 " style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}}
-                        onFocus={() => handleFocus('TwilioPhone')}
-                        onBlur={() => handleBlur('TwilioPhone')}
-                        placeholder='*******************************************'
+                      <label  htmlFor="twilio_number"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> <span style={{color:'red'}}>*</span>Twilio Phone Number</label>
+                      <input id="twilio_number" name="twilio_number" type="text" required value={formData.twilio_number} className="border rounded-lg p-3 mt-1 " style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}}
+                        onFocus={() => handleFocus('twilio_number')}
+                        onBlur={() => handleBlur('twilio_number')}
+                        onChange={handleChange}
+                        placeholder='*****'
                       />
                   </div>
                 </div>
@@ -169,21 +215,23 @@ const Settings = () => {
                 <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-2  mt-6">
                     {/** Otp Auth In Signup ? */}
                     <div className="flex flex-col">
-                      <label  htmlFor="Signup"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> <span style={{color:'red'}}>*</span> Show Add Property Button ? </label>
-                      <input id="Signup" name="Signup" type="text" required className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}}
-                        onFocus={() => handleFocus('Signup')}
-                        onBlur={() => handleBlur('Signup')}
-                        placeholder='*******************************************'
+                      <label  htmlFor="otp_auth"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> <span style={{color:'red'}}>*</span> Show Add Property Button ? </label>
+                      <input id="otp_auth" name="otp_auth" type="text" required value={formData.otp_auth} className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}}
+                        onFocus={() => handleFocus('otp_auth')}
+                        onBlur={() => handleBlur('otp_auth')}
+                        onChange={handleChange}
+                        placeholder='*****'
                       />
                     </div>
 
                     {/** Show Add PropertyButton ? */}
                     <div className="flex flex-col">
-                      <label  htmlFor="PropertyButton"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> <span style={{color:'red'}}>*</span> Show Add Property Button ? </label>
-                      <input id="PropertyButton" name="PropertyButton" type="text" required className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}}
-                        onFocus={() => handleFocus('PropertyButton')}
-                        onBlur={() => handleBlur('PropertyButton')}
-                        placeholder='*******************************************'
+                      <label  htmlFor="show_property"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> <span style={{color:'red'}}>*</span> Show Add Property Button ? </label>
+                      <input id="show_property" name="show_property" type="text" value={formData.show_property} required className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}}
+                        onFocus={() => handleFocus('show_property')}
+                        onBlur={() => handleBlur('show_property')}
+                        onChange={handleChange}
+                        placeholder='*****'
                       />
                     </div>
                 </div>
@@ -191,21 +239,23 @@ const Settings = () => {
                 <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-2  mt-6">
                     {/** User App OnesignalAppId*/}
                     <div className="flex flex-col">
-                      <label  htmlFor="OnesignalAppId"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> <span style={{color:'red'}}>*</span> User App Onesignal App Id</label>
-                      <input id="OnesignalAppId" name="OnesignalAppId" type="text" required className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}}
-                        onFocus={() => handleFocus('OnesignalAppId')}
-                        onBlur={() => handleBlur('OnesignalAppId')}
-                        placeholder='*******************************************'
+                      <label  htmlFor="one_key"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> <span style={{color:'red'}}>*</span> User App Onesignal App Id</label>
+                      <input id="one_key" name="one_key" type="text" required value={formData.one_key} className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}}
+                        onFocus={() => handleFocus('one_key')}
+                        onBlur={() => handleBlur('one_key')}
+                        onChange={handleChange}
+                        placeholder='*****'
                       />
                     </div>
 
                     {/** User App Onesignal RestApiKey */}
                     <div className="flex flex-col">
-                      <label  htmlFor="RestApiKey"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> <span style={{color:'red'}}>*</span> User App Onesignal Rest Api Key </label>
-                      <input id="RestApiKey" name="RestApiKey" type="text" required className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}}
-                        onFocus={() => handleFocus('RestApiKey')}
-                        onBlur={() => handleBlur('RestApiKey')}
-                        placeholder='*******************************************'
+                      <label  htmlFor="one_hash"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> <span style={{color:'red'}}>*</span> User App Onesignal Rest Api Key </label>
+                      <input id="one_hash" name="one_hash" type="text" required value={formData.one_hash} className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}}
+                        onFocus={() => handleFocus('one_hash')}
+                        onBlur={() => handleBlur('one_hash')}
+                        onChange={handleChange}
+                        placeholder='*****'
                       />
                     </div>
                 </div>
@@ -213,31 +263,34 @@ const Settings = () => {
                 <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-3  mt-6">                   
                   {/* * SignUpCredit*/}
                   <div className="flex flex-col">
-                      <label  htmlFor="SignUpCredit"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> <span style={{color:'red'}}>*</span> Sign Up Credit</label>
-                      <input id="SignUpCredit" name="SignUpCredit" type="text" required className="border rounded-lg p-3 mt-1 " style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}}
-                        onFocus={() => handleFocus('SignUpCredit')}
-                        onBlur={() => handleBlur('SignUpCredit')}
-                        placeholder='*******************************************'
+                      <label  htmlFor="scredit"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> <span style={{color:'red'}}>*</span> Sign Up Credit</label>
+                      <input id="scredit" name="scredit" type="text" required value={formData.scredit} className="border rounded-lg p-3 mt-1 " style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}}
+                        onFocus={() => handleFocus('scredit')}
+                        onBlur={() => handleBlur('scredit')}
+                        onChange={handleChange}
+                        placeholder='*****'
                       />
                   </div>
 
                   {/* * ReferCredit*/}
                   <div className="flex flex-col">
-                      <label  htmlFor="ReferCredit"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> <span style={{color:'red'}}>*</span> Refer Credit</label>
-                      <input id="ReferCredit" name="ReferCredit" type="text" required className="border rounded-lg p-3 mt-1 " style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}}
-                        onFocus={() => handleFocus('ReferCredit')}
-                        onBlur={() => handleBlur('ReferCredit')}
-                        placeholder='*******************************************'
+                      <label  htmlFor="rcredit"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> <span style={{color:'red'}}>*</span> Refer Credit</label>
+                      <input id="rcredit" name="rcredit" type="text" required value={formData.rcredit} className="border rounded-lg p-3 mt-1 " style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}}
+                        onFocus={() => handleFocus('rcredit')}
+                        onBlur={() => handleBlur('rcredit')}
+                        onChange={handleChange}
+                        placeholder='*****'
                       />
                   </div>
 
                   {/* *  Payout Withdraw Limit*/}
                   <div className="flex flex-col">
-                      <label  htmlFor="Withdraw"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> <span style={{color:'red'}}>*</span> Payout Withdraw Limit </label>
-                      <input id="Withdraw" name="Withdraw" type="text" required className="border rounded-lg p-3 mt-1 " style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}}
-                        onFocus={() => handleFocus('Withdraw')}
-                        onBlur={() => handleBlur('Withdraw')}
-                        placeholder='*******************************************'
+                      <label  htmlFor="wlimit"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> <span style={{color:'red'}}>*</span> Payout Withdraw Limit </label>
+                      <input id="wlimit" name="wlimit" type="text" required value={formData.wlimit} className="border rounded-lg p-3 mt-1 " style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}}
+                        onFocus={() => handleFocus('wlimit')}
+                        onBlur={() => handleBlur('wlimit')}
+                        onChange={handleChange}
+                        placeholder='*****'
                       />
                   </div>
                 </div>

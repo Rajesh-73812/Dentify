@@ -6,15 +6,15 @@ import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css'; // Import the styles
+import 'react-quill/dist/quill.snow.css';
 
 const PageAdd = () => {
+  
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    title: '',
-    img: '',
-    status: 0,
-    description:'',
+    ctitle: '',
+    cstatus: 0,
+    cdesc:'',
   });
 
 
@@ -26,51 +26,28 @@ const PageAdd = () => {
     }));
   };
 
-  const handleImageUpload = async (e) => {
-    const file = e.target.files[0]; 
-    if (!file) return;
-
-    const imageFormData = new FormData();
-    imageFormData.append("file", file);
-    imageFormData.append("upload_preset", "infinitum-task");
-    imageFormData.append("cloud_name", "dhr4xnftl");
-
-    try {
-      const res = await axios.post(
-        "https://api.cloudinary.com/v1_1/dhr4xnftl/image/upload",
-        imageFormData
-      );
-      setFormData((prevData) => ({
-        ...prevData,
-        img: res.data.secure_url, 
-      }));
-      console.log("Image uploaded successfully:", res.data.secure_url);
-    } catch (error) {
-      console.error("Error uploading image to Cloudinary:", error);
-    }
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
-
+    const plainTextDescription = new DOMParser().parseFromString(formData.cdesc, 'text/html').body.innerText;
+      const dataToSend = {
+      ...formData,
+      cdesc: plainTextDescription, 
+    };
+  
+    console.log("Form submitted:", dataToSend);
+  
     try {
-      const response = await axios.post("http://localhost:5000/countries/upsert",
-         formData
-         ,
-         {
-          withCredentials: true, 
-        }
-        );
-      console.log("package added successfully:", response.data);
-      if(response.status === 201 ){
-        toast.success('package added successfully!')
+      const response = await axios.post("http://localhost:5000/pages/upsert", dataToSend, {
+        withCredentials: true, 
+      });
+      console.log("page added successfully:", response.data);
+      if (response.status === 201) {
+        toast.success('page added successfully!');
       }
-      // alert("package added successfully!");
-      navigate("/package-list");
+      navigate("/page-list");
     } catch (error) {
-      console.error("Error adding package:", error);
-      alert("An error occurred while adding the package.");
+      console.error("Error adding page:", error);
+      alert("An error occurred while adding the page.");
     }
   };
 
@@ -102,21 +79,21 @@ const PageAdd = () => {
             <div className="bg-white h-[70vh] w-full rounded-xl border border-[#EAE5FF] py-4 px-6 overflow-y-auto" style={{scrollbarWidth:'none'}}>
               <form onSubmit={handleSubmit} className="mt-4">
                 <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-1  mt-6">
-                  {/* package name */}
+                  {/* page name */}
                   <div className="flex flex-col">
-                      <label  htmlFor="package_name"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> Page name </label>
-                      <input id="package_name" value={formData.title} onChange={handleChange} name="title" type="text" required className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}}
-                        onFocus={() => handleFocus('title')}
-                        onBlur={() => handleBlur('title')}
-                        placeholder="Enter package "
+                      <label  htmlFor="ctitle"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> Page name </label>
+                      <input id="ctitle" value={formData.title} onChange={handleChange} name="ctitle" type="text" required className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}}
+                        onFocus={() => handleFocus('ctitle')}
+                        onBlur={() => handleBlur('ctitle')}
+                        placeholder="Enter page "
                       />
                     </div>
                 </div>
                 <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-1 mt-6">
                   {/* page Status */}
                   <div className="flex flex-col">
-                    <label  htmlFor="status"   className="text-sm font-medium text-start text-[12px] font-[Montserrat]" >Page  Status </label>
-                    <select  name="status"  id="status" value={formData.status} onChange={handleChange} className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm"  >
+                    <label  htmlFor="cstatus"   className="text-sm font-medium text-start text-[12px] font-[Montserrat]" >Page  Status </label>
+                    <select  name="cstatus"  id="cstatus" value={formData.status} onChange={handleChange} className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm"  >
                       <option value="" disabled selected>Select Status</option>
                       <option value={1}>Publish</option>
                       <option value={0}>Unpublish</option>
@@ -124,12 +101,12 @@ const PageAdd = () => {
                   </div>
                 </div>
                 <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-1  mt-6">
-                  {/* package description  */}
+                  {/* page description  */}
                   <div className="flex flex-col">
-                    <label htmlFor="description" className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> Page Description </label>
+                    <label htmlFor="cdesc" className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> Page Description </label>
                     <ReactQuill 
-                      value={formData.description} 
-                      onChange={(value) => setFormData({ ...formData, description: value })} 
+                      value={formData.cdesc} 
+                      onChange={(value) => setFormData({ ...formData, cdesc: value })} // Fixed here
                       required 
                       className="border rounded-lg mt-1 w-full h-40" 
                     />

@@ -11,10 +11,9 @@ import 'react-quill/dist/quill.snow.css'; // Import the styles
 const FaqAdd = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    title: '',
-    img: '',
+    question: '',
+    question: '',
     status: 0,
-    description:'',
   });
 
 
@@ -26,51 +25,26 @@ const FaqAdd = () => {
     }));
   };
 
-  const handleImageUpload = async (e) => {
-    const file = e.target.files[0]; 
-    if (!file) return;
-
-    const imageFormData = new FormData();
-    imageFormData.append("file", file);
-    imageFormData.append("upload_preset", "infinitum-task");
-    imageFormData.append("cloud_name", "dhr4xnftl");
-
-    try {
-      const res = await axios.post(
-        "https://api.cloudinary.com/v1_1/dhr4xnftl/image/upload",
-        imageFormData
-      );
-      setFormData((prevData) => ({
-        ...prevData,
-        img: res.data.secure_url, 
-      }));
-      console.log("Image uploaded successfully:", res.data.secure_url);
-    } catch (error) {
-      console.error("Error uploading image to Cloudinary:", error);
-    }
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Form submitted:", formData);
 
     try {
-      const response = await axios.post("http://localhost:5000/countries/upsert",
+      const response = await axios.post("http://localhost:5000/faq",
          formData
          ,
          {
           withCredentials: true, 
         }
         );
-      console.log("package added successfully:", response.data);
+      console.log("faq added successfully:", response.data);
       if(response.status === 201 ){
-        toast.success('package added successfully!')
+        toast.success('faq added successfully!')
       }
-      // alert("package added successfully!");
-      navigate("/package-list");
+      navigate("/faq-list");
     } catch (error) {
-      console.error("Error adding package:", error);
-      alert("An error occurred while adding the package.");
+      console.error("Error adding faq:", error);
+      alert("An error occurred while adding the faq.");
     }
   };
 
@@ -104,10 +78,10 @@ const FaqAdd = () => {
                 <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-1  mt-6">
                   {/* faq question */}
                   <div className="flex flex-col">
-                      <label  htmlFor="faqQs"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> Faq Question </label>
-                      <input id="faqQs" value={formData.title} onChange={handleChange} name="faqQs" type="text" required className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}}
-                        onFocus={() => handleFocus('faqQs')}
-                        onBlur={() => handleBlur('faqQs')}
+                      <label  htmlFor="question"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> Faq Question </label>
+                      <input id="question" value={formData.title} onChange={handleChange} name="question" type="text" required className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}}
+                        onFocus={() => handleFocus('question')}
+                        onBlur={() => handleBlur('question')}
                         placeholder="Enter question "
                       />
                     </div>
@@ -116,10 +90,10 @@ const FaqAdd = () => {
                 <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-1  mt-6">
                   {/* faq answer */}
                   <div className="flex flex-col">
-                      <label  htmlFor="faqAns"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> Faq Answer </label>
-                      <input id="faqQs" value={formData.title} onChange={handleChange} name="faqAns" type="text" required className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}}
-                        onFocus={() => handleFocus('faqAns')}
-                        onBlur={() => handleBlur('faqAns')}
+                      <label  htmlFor="answer"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> Faq Answer </label>
+                      <input id="answer" value={formData.title} onChange={handleChange} name="answer" type="text" required className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}}
+                        onFocus={() => handleFocus('answer')}
+                        onBlur={() => handleBlur('answer')}
                         placeholder="Enter Anwer "
                       />
                     </div>
