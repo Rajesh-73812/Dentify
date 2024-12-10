@@ -4,6 +4,9 @@ import { Link } from 'react-router-dom'
 import SidebarMenu from '../components/SideBar'
 import axios from 'axios'
 import ImageUploader from '../common/ImageUploader';
+import { useLoading } from '../Context/LoadingContext';
+import { useLocation } from 'react-router-dom';
+import Loader from '../common/Loader';
 
 const Settings = () => {
   const [formData, setFormData] = useState({id:'',  webname: '',weblogo:'',  timezone: '',  currency: '',  tax: '',  sms_type: '',  auth_key: '',  twilio_number: '',  auth_token: '',  acc_id: '',otp_id:'', otp_auth:'', show_property:'', one_key:'', one_hash:'', rcredit:'', rcredit:'',scredit:'', wlimit:''});
@@ -29,6 +32,20 @@ const Settings = () => {
 
     fetchSettings();
   }, []);
+
+
+  const location = useLocation();
+  const { isLoading, setIsLoading } = useLoading();
+
+  useEffect(() => {
+    setIsLoading(true);
+
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1000); 
+
+    return () => clearTimeout(timer);
+  }, [location, setIsLoading]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -80,6 +97,7 @@ const handleImageUploadSuccess = (imageUrl) => {
 
   return (
     <div>
+      {isLoading && <Loader />}
       <div className="flex bg-[#f7fbff]">
       {/* Sidebar */}
       <SidebarMenu />

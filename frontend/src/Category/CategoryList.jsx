@@ -1,13 +1,19 @@
 
-import React, { useEffect, useState } from 'react';
-import Header from '../components/Header';
-import SidebarMenu from '../components/SideBar';
-import { GoArrowDown, GoArrowUp } from 'react-icons/go';
-import { FaPen,FaTrash } from "react-icons/fa";
-import { searchFunction } from '../Entity/SearchEntity';
-import CategoryHeader from './CategoryHeader';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import Header from "../components/Header";
+import SidebarMenu from "../components/SideBar";
+import { GoArrowDown, GoArrowUp } from "react-icons/go";
+import { FaPen, FaTrash } from "react-icons/fa";
+import { searchFunction } from "../Entity/SearchEntity";
+import CategoryHeader from "./CategoryHeader";
+import axios from "axios";
+import { useLoading } from '../Context/LoadingContext';
+import { useLocation } from 'react-router-dom';
+import Loader from '../common/Loader';
+
+
 import { DeleteEntity } from '../utils/Delete';
+
 
 
 const CategoryList = () => {
@@ -19,23 +25,42 @@ const CategoryList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
+ 
+
   // Fetch categories from API
   useEffect(() => {
     async function fetchCategories() {
       try {
+       
         const response = await axios.get("http://localhost:5000/categories/all", {
           withCredentials: true,
         });
         console.log("Fetched categories:", response.data);
         setCategories(response.data);
         setFilteredcategories(response.data);
+        
       } catch (error) {
         console.error("Error fetching categories:", error);
+        
       }
     }
 
     fetchCategories();
   }, []);
+
+
+  const location = useLocation();
+  const { isLoading, setIsLoading } = useLoading();
+
+  useEffect(() => {
+    setIsLoading(true);
+
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1000); 
+
+    return () => clearTimeout(timer);
+  }, [location, setIsLoading]);
 
   // Handle search
   const handleSearch = (event) => {
@@ -80,6 +105,12 @@ const CategoryList = () => {
   const currentCategories = filteredcategories.slice(indexOfFirstCategory, indexOfLastCategory);
 
 
+  // Change page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const totalPages = Math.ceil(filteredcategories.length / itemsPerPage);
+
+ 
+
     // update 
     
     const handledelete=async(id)=>{
@@ -92,6 +123,7 @@ const CategoryList = () => {
     }
     return (
         <div>
+      {isLoading && <Loader />}
             <div className="h-screen flex">
                 {/* Sidebar */}
                 <SidebarMenu />
@@ -166,6 +198,7 @@ const CategoryList = () => {
                                     </tbody>
                                 </table>
                             </div>
+
 
                         </div>
                       </th>

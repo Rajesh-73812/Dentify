@@ -6,6 +6,9 @@ import { FaPen,FaTrash } from "react-icons/fa";
 import { searchFunction } from '../Entity/SearchEntity';
 import PaymentGatewayHeader from './PaymentGatewayHeader';
 import axios from 'axios';
+import { useLoading } from '../Context/LoadingContext';
+import { useLocation } from 'react-router-dom';
+import Loader from '../common/Loader';
 
 const PaymentGatewayList = () => {
     // const countries = [
@@ -34,6 +37,20 @@ const PaymentGatewayList = () => {
     // Pagination state
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10; 
+
+
+    const location = useLocation();
+  const { isLoading, setIsLoading } = useLoading();
+
+  useEffect(() => {
+    setIsLoading(true);
+
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1000); 
+
+    return () => clearTimeout(timer);
+  }, [location, setIsLoading]);
 
     // for searching
     const handleSearch = (event) => {
@@ -90,6 +107,7 @@ const PaymentGatewayList = () => {
 
     return (
         <div>
+            {isLoading && <Loader />}
             <div className="h-screen flex">
                 {/* Sidebar */}
                 <SidebarMenu />

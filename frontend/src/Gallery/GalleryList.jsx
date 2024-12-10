@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '../components/Header';
 import SidebarMenu from '../components/SideBar';
 import { GoArrowDown, GoArrowUp } from 'react-icons/go';
 import { FaPen,FaTrash } from "react-icons/fa";
 import { searchFunction } from '../Entity/SearchEntity';
 import GalleryHeader from './GalleryHeader';
+import { useLoading } from '../Context/LoadingContext';
+import { useLocation } from 'react-router-dom';
+import Loader from '../common/Loader';
 
 const GalleryList = () => {
     const countries = [
@@ -71,8 +74,22 @@ const GalleryList = () => {
 
     const totalPages = Math.ceil(filteredCountries.length / itemsPerPage);
 
+    const location = useLocation();
+  const { isLoading, setIsLoading } = useLoading();
+
+  useEffect(() => {
+    setIsLoading(true);
+
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1000); 
+
+    return () => clearTimeout(timer);
+  }, [location, setIsLoading]);
+
     return (
         <div>
+            {isLoading && <Loader />}
             <div className="h-screen flex">
                 {/* Sidebar */}
                 <SidebarMenu />

@@ -3,6 +3,11 @@ import Header from '../components/Header'
 import { Link } from 'react-router-dom'
 import SidebarMenu from '../components/SideBar'
 import axios from 'axios'
+import LoaderComponent from '../common/ReactLoader'
+import { useLoading } from '../Context/LoadingContext';
+import { useLocation } from 'react-router-dom';
+import Loader from '../common/Loader'
+
 
 const Profile = () => {
    
@@ -11,9 +16,24 @@ const Profile = () => {
 
   }
 
+
+
   const handleBlur=()=>{
 
   }
+
+  const location = useLocation();
+  const { isLoading, setIsLoading } = useLoading();
+
+  useEffect(() => {
+    setIsLoading(true);
+
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1000); 
+
+    return () => clearTimeout(timer);
+  }, [location, setIsLoading]);
 
   const [formData, setFormData] = useState({
     id:0,
@@ -37,6 +57,7 @@ const Profile = () => {
 
  async function fetchData(){
     try {
+          
         const response = await axios.get("http://localhost:5000/admin/userbytoken", {
             withCredentials: true,  
           });
@@ -46,11 +67,12 @@ const Profile = () => {
             username:response.data.username,
             password:response.data.password
           })
-
+ 
         console.log(response, "from response");
 
     } catch (error) {
         console.log(error)
+       
     }
   }
 
@@ -77,6 +99,7 @@ const Profile = () => {
   };
   return (
     <div>
+      {isLoading && <Loader />}
       <div className="flex bg-[#f7fbff]">
       {/* Sidebar */}
       <SidebarMenu />
