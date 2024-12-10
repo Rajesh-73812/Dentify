@@ -6,8 +6,13 @@ import { FaPen,FaTrash } from "react-icons/fa";
 import { searchFunction } from '../Entity/SearchEntity';
 import axios from 'axios';
 import FaqHeader from './FaqHeader';
+import { useNavigate } from 'react-router-dom';
+import { DeleteEntity } from '../utils/Delete';
+import { NotificationContainer, NotificationManager } from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 
 const FaqList = () => {
+    const navigate=useNavigate();
     const [faq, setfaq] = useState([]);
     const [filteredfaq, setFilteredfaq] = useState([]);
     const [sortConfig, setSortConfig] = useState({ key: '', direction: '' });
@@ -18,6 +23,7 @@ const FaqList = () => {
         const fetchfaq = async () => {
             try {
                 const response = await axios.get("http://localhost:5000/faq/all");
+                console.log(response.data)
                 setfaq(response.data);
                 setFilteredfaq(response.data); 
             } catch (error) {
@@ -41,8 +47,6 @@ const FaqList = () => {
         const sortedData = [...filteredfaq].sort((a, b) => {
             if (key === 'slno') {
                 return direction === 'asc' ? a.id - b.id : b.id - a.id;
-            } else if (key === 'totalProperties') {
-                return direction === 'asc' ? a.totalProperties - b.totalProperties : b.totalProperties - a.totalProperties;
             }
             return a[key]?.localeCompare(b[key]) * (direction === 'asc' ? 1 : -1);
         });
@@ -52,14 +56,26 @@ const FaqList = () => {
         setCurrentPage(1);
     };
 
-    const indexOfLastCountry = currentPage * itemsPerPage;
-    const indexOfFirstCountry = indexOfLastCountry - itemsPerPage;
-    const currentfaq = filteredfaq.slice(indexOfFirstCountry, indexOfLastCountry);
+    const indexOfLastFaq = currentPage * itemsPerPage;
+    const indexOfFirstFaq = indexOfLastFaq - itemsPerPage;
+    const currentfaq = filteredfaq.slice(indexOfFirstFaq, indexOfLastFaq);
 
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     const totalPages = Math.ceil(filteredfaq.length / itemsPerPage);
 
+    // for update
+    const updateFAQ=(id)=>{
+        navigate('/create-faq',{state:{id:id}})
+    }
+
+    // for delete
+      const handledelete = async (id) => {
+        DeleteEntity("Faq", id);
+        const updatedFaq = faq.filter((item) => item.id !== id);
+        setfaq(updatedFaq);
+        setFilteredfaq(updatedFaq);
+     };
     return (
         <div>
             <div className="h-screen flex">
@@ -76,59 +92,60 @@ const FaqList = () => {
                                             <th className="px-4 py-3 min-w-[150px]">
                                                 Sr. No
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp onClick={() => handleSort('slno')} />
-                                                    <GoArrowDown onClick={() => handleSort('slno')} />
+                                                    <GoArrowUp className='cursor-pointer' onClick={() => handleSort('slno')} />
+                                                    <GoArrowDown className='cursor-pointer' onClick={() => handleSort('slno')} />
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[250px]">
                                                 Faq Question
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp onClick={() => handleSort('question')} />
-                                                    <GoArrowDown onClick={() => handleSort('titquestionle')} />
+                                                    <GoArrowUp className='cursor-pointer' onClick={() => handleSort('question')} />
+                                                    <GoArrowDown className='cursor-pointer' onClick={() => handleSort('question')} />
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[250px]">
                                                 Faq Answer
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp onClick={() => handleSort('answer')} />
-                                                    <GoArrowDown onClick={() => handleSort('answer')} />
+                                                    <GoArrowUp className='cursor-pointer' onClick={() => handleSort('answer')} />
+                                                    <GoArrowDown className='cursor-pointer' onClick={() => handleSort('answer')} />
                                                 </div>
                                             </th>                                            
                                             <th className="px-4 py-3 min-w-[250px]">
                                               Status
                                               <div className="inline-flex items-center ml-2">
-                                                  <GoArrowUp onClick={() => handleSort('status')} />
-                                                  <GoArrowDown onClick={() => handleSort('status')} />
+                                                  <GoArrowUp className='cursor-pointer' onClick={() => handleSort('status')} />
+                                                  <GoArrowDown className='cursor-pointer' onClick={() => handleSort('status')} />
                                               </div>
                                               </th>
                                             <th className="px-4 py-3 min-w-[250px]">
                                               Action
                                               <div className="inline-flex items-center ml-2">
-                                                  <GoArrowUp onClick={() => handleSort('action')} />
-                                                  <GoArrowDown onClick={() => handleSort('action')} />
+                                                  <GoArrowUp className='cursor-pointer' onClick={() => handleSort('action')} />
+                                                  <GoArrowDown className='cursor-pointer' onClick={() => handleSort('action')} />
                                               </div>
                                             </th>
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-gray-200">
-                                        {currentfaq.map((country, index) => (
-                                            <tr key={country.id}>
-                                                <td className="px-4 py-3">{index + 1 + indexOfFirstCountry}</td>
-                                                <td className="px-4 py-3">{country?.qs || "N/A"}</td>
+                                        {currentfaq.map((faq, index) => (
+                                            <tr key={faq.id}>
+                                                <td className="px-4 py-3">{index + 1 + indexOfFirstFaq}</td>
+                                                <td className="px-4 py-3">{faq?.question || "N/A"}</td>
                                                 
-                                                <td className="px-4 py-3">{country?.ans || "N/A"}</td>
+                                                <td className="px-4 py-3">{faq?.answer || "N/A"}</td>
                                                 <td className="px-4 py-3">
                                                     <span
-                                                        className={`px-3 py-1 text-sm rounded-full ${country.status === 1 ? 'bg-green-500 text-white' : 'bg-gray-400 text-white'}`}
+                                                        className={`px-3 py-1 text-sm rounded-full ${faq.status === 1 ? 'bg-green-500 text-white' : 'bg-gray-400 text-white'}`}
                                                     >
-                                                        {country.status === 1 ? "publish" : "unpublish"}
+                                                        {faq.status === 1 ? "publish" : "unpublish"}
                                                     </span>
                                                 </td>
                                                 <td className="px-4 py-3">
-                                                    <button className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition mr-2">
+                                                    <button className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition mr-2" onClick={()=>{updateFAQ(faq.id)}}>
                                                         <FaPen />
                                                     </button>
-                                                    <button className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition">
+                                                    <NotificationContainer />
+                                                    <button className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition" onClick={()=>{handledelete(faq.id)}}>
                                                         <FaTrash />
                                                     </button>
                                                 </td>
@@ -140,8 +157,8 @@ const FaqList = () => {
                         </div>
                         <div className="bottom-0 left-0 w-full bg-[#f7fbff] py-4 flex justify-between items-center">
                             <span className="text-sm font-normal text-gray-500">
-                                Showing <span className="font-semibold text-gray-900">{indexOfFirstCountry + 1}</span> to{" "}
-                                <span className="font-semibold text-gray-900">{Math.min(indexOfLastCountry, filteredfaq.length)}</span> of{" "}
+                                Showing <span className="font-semibold text-gray-900">{indexOfFirstFaq + 1}</span> to{" "}
+                                <span className="font-semibold text-gray-900">{Math.min(indexOfLastFaq, filteredfaq.length)}</span> of{" "}
                                 <span className="font-semibold text-gray-900">{filteredfaq.length}</span>
                             </span>
                             <ul className="inline-flex -space-x-px text-sm h-8">

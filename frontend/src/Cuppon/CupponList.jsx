@@ -12,7 +12,11 @@ import { FaPen,FaTrash } from "react-icons/fa";
 import { searchFunction } from '../Entity/SearchEntity';
 
 import CupponHeader from './CupponHeader';
+
+import { DeleteEntity } from '../utils/Delete';
+
 import axios from 'axios';
+
 
 const CupponList = () => {
     const [countries, setCountries] = useState([]);
@@ -85,6 +89,15 @@ const CupponList = () => {
     const currentCountries = filteredCountries.slice(indexOfFirstCountry, indexOfLastCountry);
 
     const totalPages = Math.ceil(filteredCountries.length / itemsPerPage);
+
+
+    // for dalete
+    const handledelete=async(id)=>{
+        const success=await DeleteEntity('Cuppon',id)
+        if(success){
+            
+        }
+    }
 
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 

@@ -6,9 +6,13 @@ import { GoArrowDown, GoArrowUp } from 'react-icons/go';
 import { FaPen,FaTrash } from "react-icons/fa";
 import { searchFunction } from '../Entity/SearchEntity';
 import axios from 'axios';
+
 import { useLoading } from '../Context/LoadingContext';
 import { useLocation } from 'react-router-dom';
 import Loader from '../common/Loader';
+
+import { DeleteEntity } from '../utils/Delete';
+
 
 const CountryList = () => {
     const [countries, setCountries] = useState([]);
@@ -19,17 +23,10 @@ const CountryList = () => {
     const itemsPerPage = 10;
 
     useEffect(() => {
-        const fetchCountries = async () => {
-            try {
-                const response = await axios.get("http://localhost:5000/countries/all");
-                setCountries(response.data);
-                setFilteredCountries(response.data); 
-            } catch (error) {
-                console.error("Error fetching countries:", error);
-            }
-        };
+        
         fetchCountries();
     }, []);
+
 
     const location = useLocation();
   const { isLoading, setIsLoading } = useLoading();
@@ -43,6 +40,17 @@ const CountryList = () => {
 
     return () => clearTimeout(timer);
   }, [location, setIsLoading]);
+
+    const fetchCountries = async () => {
+        try {
+            const response = await axios.get("http://localhost:5000/countries/all");
+            setCountries(response.data);
+            setFilteredCountries(response.data); 
+        } catch (error) {
+            console.error("Error fetching countries:", error);
+        }
+    };
+
 
     const handleSearch = (event) => {
         searchFunction(event, countries, setFilteredCountries);
@@ -77,6 +85,15 @@ const CountryList = () => {
 
     const totalPages = Math.ceil(filteredCountries.length / itemsPerPage);
 
+    const handledelete = async (id) => {
+        const success = await DeleteEntity("Country", id);
+        if (success) {
+            const updatedCountries = countries.filter((country) => country.id !== id);
+            setCountries(updatedCountries);
+            setFilteredCountries(updatedCountries);
+        }
+    };
+    
     return (
         <div>
             {isLoading && <Loader />}
@@ -142,7 +159,7 @@ const CountryList = () => {
                                                     <button className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition mr-2">
                                                         <FaPen />
                                                     </button>
-                                                    <button className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition">
+                                                    <button className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition" onClick={()=>{handledelete(country.id)}}>
                                                         <FaTrash />
                                                     </button>
                                                 </td>
