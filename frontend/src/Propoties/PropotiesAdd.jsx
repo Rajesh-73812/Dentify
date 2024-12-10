@@ -1,10 +1,12 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from '../components/Header'
 import { Link } from 'react-router-dom'
 import SidebarMenu from '../components/SideBar'
+import axios from 'axios'
+import ImageUploader from '../common/ImageUploader'
 
 const PropotiesAdd = () => {
-  const [formData, setFormData] = useState({  cupponimage: '',  status: '',  cupponCode: '',  expiryDate: '',  cupponTitle: '',  cupponSubtitle: '',  minOrderAmount: '',  cupponValue: '',  cupponDescription: '',});
+  const [formData, setFormData] = useState({ title:'', image: '',  status: 0,  price: '',  address: '',  facility: '',  description: '',  beds: 0,  bathroom: 0,  sqrft: 0,rate:'',ptype:0,latitude:'',longtitude:'',mobile:'',city:'',listing_date:'',add_user_id:0,pbuysell:'',country_id:0,plimit:0,is_sell:0,});
   const handleChange=(e)=>{
     const { name, value } = e.target;
 
@@ -13,6 +15,14 @@ const PropotiesAdd = () => {
       [name]: value,
     }));
   }
+
+  const handleImageUploadSuccess = (imageUrl) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      cupponimage: imageUrl,
+    }));
+    
+  };
 
   const handleFocus=()=>{
 
@@ -26,6 +36,36 @@ const PropotiesAdd = () => {
     e.preventDefault();
     console.log(formData)
   }
+
+  const [countries, setCountries] = useState([]);
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const countriesResponse = await axios.get("http://localhost:5000/countries/all",
+          {
+            withCredentials: true, 
+          }
+        );
+        // const categoriesResponse = await axios.get("http://localhost:5000/categories/all",
+        //   {
+        //     withCredentials: true, 
+        //   }
+        // );
+        setCountries(countriesResponse.data || []);
+        // setCategories(categoriesResponse.data.title || []);
+
+        console.log("Fetched countries:", countriesResponse.data);
+        // console.log("Fetched categories:", categoriesResponse.data.title);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <div>
       <div className="flex bg-[#f7fbff]">
@@ -60,10 +100,7 @@ const PropotiesAdd = () => {
                       {/* property image*/}
                       <div className="flex flex-col">
                         <label  htmlFor="image"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]">Property Image</label>
-                        <input  id="image"  name="image"  type="file"  required  className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px', border: '1px solid #EAEAFF'}}
-                          onFocus={() => handleFocus('image')}
-                          onBlur={() => handleBlur('image')}
-                        />
+                        <ImageUploader onUploadSuccess={handleImageUploadSuccess}/>
                       </div>
                   
                       {/* Property Sell Or Rent ?*/}
@@ -79,9 +116,10 @@ const PropotiesAdd = () => {
                       {/* property price per night */}
                       <div className="flex flex-col">
                           <label  htmlFor="cupponCode"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> Property Price Per Night </label>
-                          <input id="PropertyPricePerNight" name="PropertyPricePerNight" type="text" required className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}}
+                          <input id="PropertyPricePerNight" value={formData.price} name="price" type="text" required className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}}
                             onFocus={() => handleFocus('PropertyPricePerNight')}
                             onBlur={() => handleBlur('PropertyPricePerNight')}
+                            onChange={handleChange}
                             placeholder="Enter  Price Per Night"
                           />
                       </div>
@@ -93,11 +131,17 @@ const PropotiesAdd = () => {
                     <label  htmlFor="property_country"   className="text-sm font-medium text-start text-[12px] font-[Montserrat]" > Property Country ?</label>
                     <select  name="property_country"  id="property_country"  className="mt-1 block w-full p-4  bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm"  >
                       <option value="" disabled selected>Select Country</option>
-                      <option value="ind">India</option>
-                      <option value="aus">Australia</option>
-                      <option value="saffrica">South Africa</option>
-                      <option value="srilanka">Srilanka</option>
-                      <option value="nepal">Nepal</option>
+                      {
+                        countries && countries.map((item)=>{
+                          return (
+<option value={item.title}>{item.title}</option>
+                          )
+                        })
+
+                        }
+                      
+                      
+                      
                     </select>
                   </div>
 
@@ -106,8 +150,8 @@ const PropotiesAdd = () => {
                     <label  htmlFor="propertySellOrRent"   className="text-sm font-medium text-start text-[12px] font-[Montserrat]" > property Status</label>
                     <select  name="propertySellOrRent"  id="propertySellOrRent"  className="mt-1 block w-full p-4  bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm"  >
                       <option value="" disabled selected>Select Staus</option>
-                      <option value="publishunpublish">Publish</option>
-                      <option value="rent">Unpublish</option>
+                      <option value={1}>Publish</option>
+                      <option value={0}>Unpublish</option>
                     </select>
                   </div>
 
