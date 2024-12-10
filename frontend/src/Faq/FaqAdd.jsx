@@ -1,52 +1,82 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from '../components/Header'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import SidebarMenu from '../components/SideBar'
 import axios from 'axios'
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css'; // Import the styles
+import 'react-quill/dist/quill.snow.css'; 
+import { NotificationContainer, NotificationManager } from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 
 const FaqAdd = () => {
+  const location=useLocation();
+  const id = location.state ? location.state.id : null;
+  // console.log(id)
+  const [faq,setFaq]=useState(null)
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
+    id: id || null, 
     question: '',
-    question: '',
+    answer: '',
     status: 0,
-  });
+});
 
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
+  useEffect(() => {
+    if (id) {
+      getFAQ(id);
+    }
+  }, [id]);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    console.log("Form submitted:", formData);
-
+  const getFAQ = async (id) => {
     try {
-      const response = await axios.post("http://localhost:5000/faq",
-         formData
-         ,
-         {
-          withCredentials: true, 
-        }
-        );
-      console.log("faq added successfully:", response.data);
-      if(response.status === 201 ){
-        toast.success('faq added successfully!')
-      }
-      navigate("/faq-list");
+        const response = await axios.get(`http://localhost:5000/faq/${id}`);
+        const faq = response.data;
+        setFormData({
+            id, 
+            question: faq.question,
+            answer: faq.answer,
+            status: faq.status,
+        });
     } catch (error) {
-      console.error("Error adding faq:", error);
-      alert("An error occurred while adding the faq.");
+        console.error("Error fetching FAQ:", error);
     }
   };
+
+
+const handleChange = (e) => {
+  const { name, value } = e.target;
+  setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+      id: prevData.id,
+  }));
+};
+
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  console.log("Form submitted:", formData);
+
+  try {
+      const url = id  ? `http://localhost:5000/faq/upsert` : `http://localhost:5000/faq/upsert`;      
+      const successMessage = id  ? "FAQ updated successfully!" : "FAQ added successfully!";
+      const response = await axios.post(url, formData, { withCredentials: true });
+
+      if (response.status === 200 || response.status === 201) {
+        NotificationManager.success(successMessage);
+          setTimeout(() => {
+            navigate("/faq-list");
+          }, 4000);
+      } else {
+        NotificationManager.success("Something went wrong. Please try again.");
+      }
+  } catch (error) {
+      console.error("Error submitting FAQ:", error);
+      alert("An error occurred while submitting the FAQ. Please check your inputs or try again later.");
+  }
+};
+
 
   const handleFocus=()=>{
 
@@ -79,7 +109,7 @@ const FaqAdd = () => {
                   {/* faq question */}
                   <div className="flex flex-col">
                       <label  htmlFor="question"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> Faq Question </label>
-                      <input id="question" value={formData.title} onChange={handleChange} name="question" type="text" required className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}}
+                      <input id="question" value={formData.question} onChange={handleChange} name="question" type="text" required className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}}
                         onFocus={() => handleFocus('question')}
                         onBlur={() => handleBlur('question')}
                         placeholder="Enter question "
@@ -91,7 +121,7 @@ const FaqAdd = () => {
                   {/* faq answer */}
                   <div className="flex flex-col">
                       <label  htmlFor="answer"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> Faq Answer </label>
-                      <input id="answer" value={formData.title} onChange={handleChange} name="answer" type="text" required className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}}
+                      <input id="answer" value={formData.answer} onChange={handleChange} name="answer" type="text" required className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}}
                         onFocus={() => handleFocus('answer')}
                         onBlur={() => handleBlur('answer')}
                         placeholder="Enter Anwer "
@@ -113,7 +143,6 @@ const FaqAdd = () => {
                 {/* Action Buttons */}
                 <div className="flex justify-start mt-6 gap-3">
                   <button  type="submit" className=" py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 w-[150px] h-12 font-[Montserrat] font-bold" style={{ borderRadius: "8px", }} > Add Faq </button>
-                  <ToastContainer />
                 </div>
               </form>
 
@@ -121,6 +150,7 @@ const FaqAdd = () => {
           </div>
         </div>
       </main>
+      <NotificationContainer />
     </div>
     </div>
   )

@@ -36,7 +36,7 @@ const Login = () => {
       console.log(response.data)
       NotificationManager.success("Admin logged in successfully!");
       setTimeout(() => {
-        NotificationManager.success("Admin logged in successfully!");
+        
         navigate("/dashBoard");
       }, 2000);
       

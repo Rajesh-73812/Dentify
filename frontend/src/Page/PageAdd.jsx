@@ -1,55 +1,99 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from '../components/Header'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import SidebarMenu from '../components/SideBar'
 import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import { NotificationContainer, NotificationManager } from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 
 const PageAdd = () => {
-  
+  const location=useLocation();
+  const id=location.state ? location.state.id : null;
+  // console.log(id)
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
+    id: id || null,
     ctitle: '',
     cstatus: 0,
     cdesc:'',
   });
 
+  useEffect(() => {
+    if (id) {
+      getPage(id);
+    }
+  }, [id]);
+
+  const getPage = async (id) => {
+    try {
+        const response = await axios.get(`http://localhost:5000/pages/${id}`);
+        console.log(response.data)
+        const page = response.data;
+        setFormData({
+            id, 
+            ctitle: page.title,
+            cstatus: page.status,
+            cdesc: page.description,
+        });
+    } catch (error) {
+        console.error("Error fetching Page:", error);
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
+      id: prevData.id
     }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const plainTextDescription = new DOMParser().parseFromString(formData.cdesc, 'text/html').body.innerText;
-      const dataToSend = {
-      ...formData,
-      cdesc: plainTextDescription, 
+
+    console.log("Form submitted:", formData);
+    const plainTextDescription = new DOMParser()
+        .parseFromString(formData.cdesc, 'text/html')
+        .body.innerText;
+
+    const dataToSend = {
+        ...formData,
+        cdesc: plainTextDescription,
     };
-  
-    console.log("Form submitted:", dataToSend);
-  
+
+    console.log("Data to be sent to the server:", dataToSend);
+
     try {
-      const response = await axios.post("http://localhost:5000/pages/upsert", dataToSend, {
-        withCredentials: true, 
-      });
-      console.log("page added successfully:", response.data);
-      if (response.status === 201) {
-        toast.success('page added successfully!');
-      }
-      navigate("/page-list");
+        const url = id 
+            ? `http://localhost:5000/pages/upsert` 
+            : `http://localhost:5000/pages/upsert`;
+
+        const successMessage = id 
+            ? "Page updated successfully!" 
+            : "Page added successfully!";
+
+        // Make API call
+        const response = await axios.post(url, dataToSend, { withCredentials: true });
+
+        if (response.status === 200 || response.status === 201) {
+            NotificationManager.success(successMessage);
+            setTimeout(() => {
+                navigate("/page-list");
+            }, 2000);
+        } else {
+            NotificationManager.error("Something went wrong. Please try again.");
+        }
     } catch (error) {
-      console.error("Error adding page:", error);
-      alert("An error occurred while adding the page.");
+        console.error("Error submitting Page:", error);
+        NotificationManager.error("An error occurred while submitting the Page.");
     }
   };
+
 
   const handleFocus=()=>{
 
@@ -58,6 +102,7 @@ const PageAdd = () => {
   const handleBlur=()=>{
 
   }
+
   return (
     <div>
       <div className="flex bg-[#f7fbff]">
@@ -82,10 +127,10 @@ const PageAdd = () => {
                   {/* page name */}
                   <div className="flex flex-col">
                       <label  htmlFor="ctitle"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> Page name </label>
-                      <input id="ctitle" value={formData.title} onChange={handleChange} name="ctitle" type="text" required className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}}
+                      <input id="ctitle" value={formData.ctitle} onChange={handleChange} name="ctitle" type="text" required className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}}
                         onFocus={() => handleFocus('ctitle')}
                         onBlur={() => handleBlur('ctitle')}
-                        placeholder="Enter page "
+                        placeholder="Enter Page Title"
                       />
                     </div>
                 </div>
@@ -94,7 +139,7 @@ const PageAdd = () => {
                   <div className="flex flex-col">
                     <label  htmlFor="cstatus"   className="text-sm font-medium text-start text-[12px] font-[Montserrat]" >Page  Status </label>
                     <select  name="cstatus"  id="cstatus" value={formData.status} onChange={handleChange} className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm"  >
-                      <option value="" disabled selected>Select Status</option>
+                      <option value="" disabled >Select Status</option>
                       <option value={1}>Publish</option>
                       <option value={0}>Unpublish</option>
                     </select>
@@ -106,7 +151,7 @@ const PageAdd = () => {
                     <label htmlFor="cdesc" className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> Page Description </label>
                     <ReactQuill 
                       value={formData.cdesc} 
-                      onChange={(value) => setFormData({ ...formData, cdesc: value })} // Fixed here
+                      onChange={(value) => setFormData({ ...formData, cdesc: value })} 
                       required 
                       className="border rounded-lg mt-1 w-full h-40" 
                     />
@@ -124,6 +169,7 @@ const PageAdd = () => {
           </div>
         </div>
       </main>
+      <NotificationContainer />
     </div>
     </div>
   )
