@@ -59,6 +59,12 @@ const CategoryList = () => {
         setCurrentPage(1);
     };
 
+    // Get sort icon
+    const getSortIcon = (key) => {
+        if (sortConfig.key !== key) return null;
+        return sortConfig.direction === 'asc' ? <GoArrowUp /> : <GoArrowDown />;
+    };
+
     // Calculate paginated categories
     const indexOfLastCategory = currentPage * itemsPerPage;
     const indexOfFirstCategory = indexOfLastCategory - itemsPerPage;
@@ -89,15 +95,17 @@ const CategoryList = () => {
                                             <th className="px-4 py-3 min-w-[100px]">
                                                 Sr. No
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('slno')} />
-                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('slno')} />
+                                                    <span onClick={() => handleSort('slno')}>
+                                                        {getSortIcon('slno')}
+                                                    </span>
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[150px]">
                                                 Category Title
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('title')} />
-                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('title')} />
+                                                    <span onClick={() => handleSort('title')}>
+                                                        {getSortIcon('title')}
+                                                    </span>
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[150px]">
@@ -106,38 +114,47 @@ const CategoryList = () => {
                                             <th className="px-4 py-3 min-w-[100px]">
                                                 Category Status
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('status')} />
-                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('status')} />
+                                                    <span onClick={() => handleSort('status')}>
+                                                        {getSortIcon('status')}
+                                                    </span>
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[100px]">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-gray-200">
-                                        {currentCategories.map((category, index) => (
-                                            <tr key={category.id}>
-                                                <td className="px-4 py-3">{index + 1 + indexOfFirstCategory}</td>
-                                                <td className="px-4 py-3">{category.title}</td>
-                                                <td className="px-4 py-3">
-                                                    <img
-                                                        src={category.img || 'https://via.placeholder.com/50'}
-                                                        alt="Category"
-                                                        className="w-16 h-16 object-cover rounded-full"
-                                                        onError={(e) => (e.target.src = 'https://via.placeholder.com/50')}
-                                                    />
-                                                </td>
-                                                <td className="px-4 py-3">
-                                                    <span className={`px-3 py-1 text-sm rounded-full ${category.status === 1 ? 'bg-green-500 text-white' : 'bg-gray-400 text-white'}`}>
-                                                        {category.status == 1 ? "publish": "unpublish"}
-                                                    </span>
-                                                </td>
-                                                <td className="px-4 py-3">
-                                                    <button className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition">
-                                                        <FaPen />
-                                                    </button>
+                                        {currentCategories.length === 0 ? (
+                                            <tr>
+                                                <td colSpan="5" className="text-center py-4 text-gray-500">
+                                                    No categories found.
                                                 </td>
                                             </tr>
-                                        ))}
+                                        ) : (
+                                            currentCategories.map((category, index) => (
+                                                <tr key={category.id}>
+                                                    <td className="px-4 py-3">{index + 1 + indexOfFirstCategory}</td>
+                                                    <td className="px-4 py-3">{category.title}</td>
+                                                    <td className="px-4 py-3">
+                                                        <img
+                                                            src={category.img || 'https://via.placeholder.com/50'}
+                                                            alt="Category"
+                                                            className="w-16 h-16 object-cover rounded-full"
+                                                            onError={(e) => (e.target.src = 'https://via.placeholder.com/50')}
+                                                        />
+                                                    </td>
+                                                    <td className="px-4 py-3">
+                                                        <span className={`px-3 py-1 text-sm rounded-full ${category.status === 1 ? 'bg-green-500 text-white' : 'bg-gray-400 text-white'}`}>
+                                                            {category.status === 1 ? "publish" : "unpublish"}
+                                                        </span>
+                                                    </td>
+                                                    <td className="px-4 py-3">
+                                                        <button className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition">
+                                                            <FaPen />
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            ))
+                                        )}
                                     </tbody>
                                 </table>
                             </div>
