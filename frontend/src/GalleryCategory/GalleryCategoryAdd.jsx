@@ -1,7 +1,10 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Header from '../components/Header'
 import { Link } from 'react-router-dom'
 import SidebarMenu from '../components/SideBar'
+import { useLoading } from '../Context/LoadingContext';
+import { useLocation } from 'react-router-dom';
+import Loader from '../common/Loader';
 
 const GalleryCategoryAdd = () => {
 
@@ -12,8 +15,22 @@ const GalleryCategoryAdd = () => {
   const handleBlur=()=>{
 
   }
+
+  const location = useLocation();
+  const { isLoading, setIsLoading } = useLoading();
+
+  useEffect(() => {
+    setIsLoading(true);
+
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1000); 
+
+    return () => clearTimeout(timer);
+  }, [location, setIsLoading]);
   return (
     <div>
+      {isLoading && <Loader />}
       <div className="flex bg-[#f7fbff]">
       {/* Sidebar */}
       <SidebarMenu />

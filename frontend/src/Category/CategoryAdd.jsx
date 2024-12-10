@@ -1,10 +1,13 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from '../components/Header'
 import { Link, useNavigate } from 'react-router-dom'
 import SidebarMenu from '../components/SideBar'
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ImageUploader from '../common/ImageUploader';
 import axios from 'axios';
+import { useLoading } from '../Context/LoadingContext';
+import { useLocation } from 'react-router-dom';
+import Loader from '../common/Loader';
 
 const CategoryAdd = () => {
 
@@ -31,6 +34,20 @@ const CategoryAdd = () => {
     }));
     
   };
+
+
+  const location = useLocation();
+  const { isLoading, setIsLoading } = useLoading();
+
+  useEffect(() => {
+    setIsLoading(true);
+
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1000); 
+
+    return () => clearTimeout(timer);
+  }, [location, setIsLoading]);
 
 
 
@@ -66,6 +83,7 @@ const CategoryAdd = () => {
   };
   return (
     <div>
+      {isLoading && <Loader />}
       <div className="flex bg-[#f7fbff]">
       {/* Sidebar */}
       <SidebarMenu />

@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '../components/Header';
 import SidebarMenu from '../components/SideBar';
 import { GoArrowDown, GoArrowUp } from 'react-icons/go';
 import { FaPen,FaTrash } from "react-icons/fa";
 import { searchFunction } from '../Entity/SearchEntity';
 import ExtraImageHeader from './ExtraImageHeader';
+import { useLoading } from '../Context/LoadingContext';
+import { useLocation } from 'react-router-dom';
+import Loader from '../common/Loader';
 
 const ExtraImageList = () => {
     const countries = [
@@ -25,6 +28,20 @@ const ExtraImageList = () => {
         { id: 15, name: 'Japan', image: 'path/to/image5.jpg', totalProperties: 70, status: 'unpublish' },
         
     ];
+
+
+    const location = useLocation();
+  const { isLoading, setIsLoading } = useLoading();
+
+  useEffect(() => {
+    setIsLoading(true);
+
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1000); 
+
+    return () => clearTimeout(timer);
+  }, [location, setIsLoading]);
 
     const [filterData, setFilterData] = useState(countries);
     const [filteredCountries, setFilteredCountries] = useState(countries);
@@ -73,6 +90,7 @@ const ExtraImageList = () => {
 
     return (
         <div>
+            {isLoading && <Loader />}
             <div className="h-screen flex">
                 {/* Sidebar */}
                 <SidebarMenu />

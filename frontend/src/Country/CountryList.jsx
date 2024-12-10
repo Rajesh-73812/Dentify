@@ -6,6 +6,9 @@ import { GoArrowDown, GoArrowUp } from 'react-icons/go';
 import { FaPen,FaTrash } from "react-icons/fa";
 import { searchFunction } from '../Entity/SearchEntity';
 import axios from 'axios';
+import { useLoading } from '../Context/LoadingContext';
+import { useLocation } from 'react-router-dom';
+import Loader from '../common/Loader';
 
 const CountryList = () => {
     const [countries, setCountries] = useState([]);
@@ -27,6 +30,19 @@ const CountryList = () => {
         };
         fetchCountries();
     }, []);
+
+    const location = useLocation();
+  const { isLoading, setIsLoading } = useLoading();
+
+  useEffect(() => {
+    setIsLoading(true);
+
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1000); 
+
+    return () => clearTimeout(timer);
+  }, [location, setIsLoading]);
 
     const handleSearch = (event) => {
         searchFunction(event, countries, setFilteredCountries);
@@ -63,6 +79,7 @@ const CountryList = () => {
 
     return (
         <div>
+            {isLoading && <Loader />}
             <div className="h-screen flex">
                 <SidebarMenu />
                 <div className="flex flex-1 flex-col bg-[#f7fbff]">

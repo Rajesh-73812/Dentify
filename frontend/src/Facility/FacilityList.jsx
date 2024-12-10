@@ -1,31 +1,18 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '../components/Header';
 import SidebarMenu from '../components/SideBar';
 import { GoArrowDown, GoArrowUp } from 'react-icons/go';
 import { FaPen,FaTrash } from "react-icons/fa";
 import { searchFunction } from '../Entity/SearchEntity';
 import FacilityHeader from './FacilityHeader';
+import axios from 'axios';
+import { useLoading } from '../Context/LoadingContext';
+import { useLocation } from 'react-router-dom';
+import Loader from '../common/Loader';
 
 const FacilityList = () => {
-    const countries = [
-        { id: 1, title: 'luxury Bedrooms', image: 'path/to/image1.jpg',  status: 'publish' },
-        { id: 2, title: 'Swimming Pool and Gym', image: 'path/to/image2.jpg', status: 'publish' },
-        { id: 3, title: 'Air Conditioning', image: 'path/to/image3.jpg', status: 'unpublish' },
-        { id: 4, title: 'Balcony', image: 'path/to/image4.jpg', status: 'publish' },
-        { id: 5, title: 'Parking', image: 'path/to/image5.jpg', status: 'unpublish' },
-        { id: 6, title: 'luxury Bedrooms', image: 'path/to/image1.jpg',  status: 'publish' },
-        { id: 7, title: 'Swimming Pool and Gym', image: 'path/to/image2.jpg', status: 'publish' },
-        { id: 8, title: 'Air Conditioning', image: 'path/to/image3.jpg', status: 'unpublish' },
-        { id: 9, title: 'Balcony', image: 'path/to/image4.jpg', status: 'publish' },
-        { id: 10, title: 'Parking', image: 'path/to/image5.jpg', status: 'unpublish' },
-        { id: 11, title: 'luxury Bedrooms', image: 'path/to/image1.jpg',  status: 'publish' },
-        { id: 12, title: 'Swimming Pool and Gym', image: 'path/to/image2.jpg', status: 'publish' },
-        { id: 13, title: 'Air Conditioning', image: 'path/to/image3.jpg', status: 'unpublish' },
-        { id: 14, title: 'Balcony', image: 'path/to/image4.jpg', status: 'publish' },
-        { id: 15, title: 'Parking', image: 'path/to/image5.jpg', status: 'unpublish' },
-        
-    ];
-
+   
+     const [countries, setCountries] = useState([]);
     const [filterData, setFilterData] = useState(countries);
     const [filteredCountries, setFilteredCountries] = useState(countries);
     const [sortConfig, setSortConfig] = useState({ key: '', direction: '' });
@@ -39,6 +26,19 @@ const FacilityList = () => {
         searchFunction(event, countries, setFilteredCountries);
         setCurrentPage(1); 
     };
+
+    const location = useLocation();
+  const { isLoading, setIsLoading } = useLoading();
+
+  useEffect(() => {
+    setIsLoading(true);
+
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1000); 
+
+    return () => clearTimeout(timer);
+  }, [location, setIsLoading]);
 
     // for sorting
     const handleSort = (key) => {
@@ -71,8 +71,26 @@ const FacilityList = () => {
 
     const totalPages = Math.ceil(filteredCountries.length / itemsPerPage);
 
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const response = await axios.get("http://localhost:5000/facilities/all", {
+                    withCredentials: true,
+                });
+                console.log("API Response:", response.data); 
+                setCountries(response.data);
+                setFilterData(response.data);
+                setFilteredCountries(response.data); 
+            } catch (error) {
+                console.error("API Error:", error);
+            }
+        }
+        fetchData();
+    }, []);
+
     return (
         <div>
+            {isLoading && <Loader />}
             <div className="h-screen flex">
                 {/* Sidebar */}
                 <SidebarMenu />
@@ -133,8 +151,8 @@ const FacilityList = () => {
                                                 <td className="px-4 py-3">{index + 1 + indexOfFirstCountry}</td>
                                                 <td className="px-4 py-3">{country.title}</td>
                                                 <td className="px-4 py-3">
-                                                    {country.image && country.image.trim() !== '' ? (
-                                                        <img src={country.image} className="w-16 h-16 object-cover rounded-full" height={50} width={50} loading="lazy" alt="" onError={(e) => {
+                                                    {country.img && country.img.trim() !== '' ? (
+                                                        <img src={country.img} className="w-16 h-16 object-cover rounded-full" height={50} width={50} loading="lazy" alt="" onError={(e) => {
                                                             if (e.target.src !== 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg') {
                                                                 e.target.src = 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg';
                                                             }
@@ -145,8 +163,8 @@ const FacilityList = () => {
                                                 </td>
                                               
                                                 <td className="px-4 py-3">
-                                                    <span className={`px-3 py-1 text-sm rounded-full ${country.status === 'publish' ? 'bg-green-500 text-white' : 'bg-gray-400 text-white'}`}>
-                                                        {country.status}
+                                                    <span className={`px-3 py-1 text-sm rounded-full ${country.status === 1 ? 'bg-green-500 text-white' : 'bg-gray-400 text-white'}`}>
+                                                        {country.status === 1 ? "publish": "unpublish"}
                                                     </span>
                                                 </td>
                                                 <td className="px-4 py-3">
