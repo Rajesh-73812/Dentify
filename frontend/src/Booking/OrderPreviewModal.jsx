@@ -1,12 +1,15 @@
 import React from 'react';
 import PictureAsPdfOutlinedIcon from '@mui/icons-material/PictureAsPdfOutlined';
 import CameraAltOutlinedIcon from '@mui/icons-material/CameraAltOutlined';
-
-const OrderPreviewModal = ({ isOpen, closeModal, downloadModalAsImage, PdfFormat }) => {
+import { generateInvoicePdf } from '../utils/pdfUtils';
+const OrderPreviewModal = ({ isOpen, closeModal, downloadModalAsImage }) => {
     if (!isOpen) return null;
 
+    const PdfFormat=()=>{
+        generateInvoicePdf()
+    }
     return (
-        <div className="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div className="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true" onClick={PdfFormat}>
             <div className="fixed inset-0 bg-gray-500/75 transition-opacity" aria-hidden="true"></div>
             <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
                 <div className="flex min-h-full items-center justify-center p-4 text-center sm:items-center sm:p-0">

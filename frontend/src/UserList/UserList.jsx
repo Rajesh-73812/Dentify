@@ -14,38 +14,19 @@ const UserList = () => {
 
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
-
-    const userList = [
-        { id: 1, name: 'john doe',email: 'johndoe@gmail.com',mobile:'9090390396', image: 'path/to/image1.jpg',joinDate:'2024-11-19', refercode:'621645',status: 'Make Active',parentCode:'',wallet:'',isSubscribe:'subscribe',packageName:'subscribe',startDate:'12-12-23',expiredDate:'06-12-24' },
-        { id: 2, name: 'john cena',email: 'johncena@gmail.com',mobile:'8455844175', image: 'path/to/image2.jpg',joinDate:'2024-11-19',refercode:'621645', status: 'Make Active',parentCode:'',wallet:'',isSubscribe:'subscribe',packageName:'subscribe',startDate:'12-12-23',expiredDate:'06-12-24' },
-        { id: 3, name: 'john luke',email: 'johnluke@gmail.com',mobile:'9090390396', image: 'path/to/image3.jpg',joinDate:'2024-11-19',refercode:'621645',status: 'Make Deactive',parentCode:'',wallet:'',isSubscribe:'subscribe',packageName:'subscribe',startDate:'12-12-23',expiredDate:'06-12-24' },
-        { id: 4, name: 'andrade',email: 'andrade@gmail.com',mobile:'8455844175', image: 'path/to/image4.jpg',joinDate:'2024-11-19',refercode:'300766', status: 'Make Active',parentCode:'',wallet:'',isSubscribe:'subscribe',packageName:'subscribe',startDate:'12-12-23',expiredDate:'06-12-24' },
-        { id: 5, name: 'davidson',email: 'davidson@gmail.com',mobile:'8455844175', image: 'path/to/image5.jpg',joinDate:'2024-11-19',refercode:'300766',status: 'Make Deactive',parentCode:'',wallet:'',isSubscribe:'subscribe',packageName:'subscribe',startDate:'12-12-23',expiredDate:'06-12-24' },
-        { id: 6, name: 'john doe',email: 'johndoe@gmail.com',mobile:'8455844175', image: 'path/to/image1.jpg',joinDate:'2024-11-23',refercode:'300766', status: 'Make Active',parentCode:'',wallet:'',isSubscribe:'subscribe',packageName:'subscribe',startDate:'12-12-23',expiredDate:'06-12-24' },
-        { id: 7, name: 'Paypal',email: 'andrade@gmail.com',joinDate:'2024-11-23',mobile:'8455844175', image: 'path/to/image2.jpg',refercode:'621645', status: 'Make Active' ,parentCode:'',wallet:'',isSubscribe:'subscribe',packageName:'subscribe',startDate:'12-12-23',expiredDate:'06-12-24'},
-        { id: 8, name: 'john luke',email: 'johnluke@gmail.com',joinDate:'2024-11-23',mobile:'9090390396', image: 'path/to/image3.jpg',refercode:'949633', status: 'Make Deactive',parentCode:'',wallet:'',isSubscribe:'subscribe',packageName:'subscribe',startDate:'12-12-23',expiredDate:'06-12-24' },
-        { id: 9, name: 'andrade',email: 'andrade@gmail.com',joinDate:'2024-11-23',mobile:'', image: 'path/to/image4.jpg',refercode:'621645', status: 'Make Active' ,parentCode:'',wallet:'',isSubscribe:'subscribe',packageName:'subscribe',startDate:'12-12-23',expiredDate:'06-12-24'},
-        { id: 10, name: 'john cena',email: 'johncena@gmail.com',mobile:'8455844175', image: 'path/to/image5.jpg',joinDate:'2024-11-23',refercode:'949633', status: 'Make Deactive',parentCode:'',wallet:'',isSubscribe:'subscribe',packageName:'subscribe',startDate:'12-12-23',expiredDate:'06-12-24' },
-        { id: 11, name: 'john doe',email: 'johndoe@gmail.com',mobile:'8455844175', image: 'path/to/image1.jpg',joinDate:'2024-11-23',refercode:'949633', status: 'Make Active',parentCode:'',wallet:'',isSubscribe:'subscribe',packageName:'subscribe',startDate:'12-12-23',expiredDate:'06-12-24' },
-        { id: 12, name: 'Paypal',email: 'andrade@gmail.com',mobile:'9090390396', image: 'path/to/image2.jpg',joinDate:'2024-11-23',refercode:'949633', status: 'Make Active',parentCode:'',wallet:'',isSubscribe:'subscribe',packageName:'subscribe',startDate:'12-12-23',expiredDate:'06-12-24' },
-        { id: 13, name: 'john luke',email: 'johnluke@gmail.com',mobile:'8455844175', image: 'path/to/image3.jpg',joinDate:'2024-11-23',refercode:'949633', status: 'Make Deactive',parentCode:'',wallet:'',isSubscribe:'subscribe',packageName:'subscribe',startDate:'12-12-23',expiredDate:'06-12-24' },
-        { id: 14, name: 'andrade',email: 'andrade@gmail.com',mobile:'9090390396', image: 'path/to/image4.jpg',joinDate:'2024-11-23',refercode:'949633', status: 'Make Active',parentCode:'',wallet:'',isSubscribe:'subscribe',packageName:'subscribe',startDate:'12-12-23',expiredDate:'06-12-24' },
-        { id: 15, name: 'davidson',email: 'davidson@gmail.com',mobile:'8455844175', image: 'path/to/image5.jpg',joinDate:'2024-11-23',refercode:'621645', status: 'Make Deactive' ,parentCode:'',wallet:'',isSubscribe:'subscribe',packageName:'subscribe',startDate:'12-12-23',expiredDate:'06-12-24'},
-        
-    ];
     
-    useEffect(() => {
-        const fetchCountries = async () => {
-            try {
-                const response = await axios.get("http://localhost:5000/countries/all");
-                setCountries(response.data);
-                setFilteredCountries(response.data); 
-            } catch (error) {
-                console.error("Error fetching countries:", error);
-            }
-        };
-        fetchCountries();
-    }, []);
+    // useEffect(() => {
+    //     const userList = async () => {
+    //         try {
+    //             const response = await axios.get("http://localhost:5000/user/all");
+    //             setCountries(response.data);
+    //             setFilteredCountries(response.data); 
+    //         } catch (error) {
+    //             console.error("Error fetching userList:", error);
+    //         }
+    //     };
+    //     userList();
+    // }, []);
 
     const handleSearch = (event) => {
         searchFunction(event, countries, setFilteredCountries);

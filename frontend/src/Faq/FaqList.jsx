@@ -8,28 +8,27 @@ import axios from 'axios';
 import FaqHeader from './FaqHeader';
 
 const FaqList = () => {
-    const [countries, setCountries] = useState([]);
-    const [filteredCountries, setFilteredCountries] = useState([]);
+    const [faq, setfaq] = useState([]);
+    const [filteredfaq, setFilteredfaq] = useState([]);
     const [sortConfig, setSortConfig] = useState({ key: '', direction: '' });
-
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
 
     useEffect(() => {
-        const fetchCountries = async () => {
+        const fetchfaq = async () => {
             try {
-                const response = await axios.get("http://localhost:5000/countries/all");
-                setCountries(response.data);
-                setFilteredCountries(response.data); 
+                const response = await axios.get("http://localhost:5000/faq/all");
+                setfaq(response.data);
+                setFilteredfaq(response.data); 
             } catch (error) {
-                console.error("Error fetching countries:", error);
+                console.error("Error fetching faq:", error);
             }
         };
-        fetchCountries();
+        fetchfaq();
     }, []);
 
     const handleSearch = (event) => {
-        searchFunction(event, countries, setFilteredCountries);
+        searchFunction(event, faq, setFilteredfaq);
         setCurrentPage(1);
     };
 
@@ -39,7 +38,7 @@ const FaqList = () => {
             direction = 'desc';
         }
 
-        const sortedData = [...filteredCountries].sort((a, b) => {
+        const sortedData = [...filteredfaq].sort((a, b) => {
             if (key === 'slno') {
                 return direction === 'asc' ? a.id - b.id : b.id - a.id;
             } else if (key === 'totalProperties') {
@@ -48,18 +47,18 @@ const FaqList = () => {
             return a[key]?.localeCompare(b[key]) * (direction === 'asc' ? 1 : -1);
         });
 
-        setFilteredCountries(sortedData);
+        setFilteredfaq(sortedData);
         setSortConfig({ key, direction });
         setCurrentPage(1);
     };
 
     const indexOfLastCountry = currentPage * itemsPerPage;
     const indexOfFirstCountry = indexOfLastCountry - itemsPerPage;
-    const currentCountries = filteredCountries.slice(indexOfFirstCountry, indexOfLastCountry);
+    const currentfaq = filteredfaq.slice(indexOfFirstCountry, indexOfLastCountry);
 
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-    const totalPages = Math.ceil(filteredCountries.length / itemsPerPage);
+    const totalPages = Math.ceil(filteredfaq.length / itemsPerPage);
 
     return (
         <div>
@@ -91,8 +90,8 @@ const FaqList = () => {
                                             <th className="px-4 py-3 min-w-[250px]">
                                                 Faq Answer
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp onClick={() => handleSort('ans')} />
-                                                    <GoArrowDown onClick={() => handleSort('ans')} />
+                                                    <GoArrowUp onClick={() => handleSort('answer')} />
+                                                    <GoArrowDown onClick={() => handleSort('answer')} />
                                                 </div>
                                             </th>                                            
                                             <th className="px-4 py-3 min-w-[250px]">
@@ -112,7 +111,7 @@ const FaqList = () => {
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-gray-200">
-                                        {currentCountries.map((country, index) => (
+                                        {currentfaq.map((country, index) => (
                                             <tr key={country.id}>
                                                 <td className="px-4 py-3">{index + 1 + indexOfFirstCountry}</td>
                                                 <td className="px-4 py-3">{country?.qs || "N/A"}</td>
@@ -142,8 +141,8 @@ const FaqList = () => {
                         <div className="bottom-0 left-0 w-full bg-[#f7fbff] py-4 flex justify-between items-center">
                             <span className="text-sm font-normal text-gray-500">
                                 Showing <span className="font-semibold text-gray-900">{indexOfFirstCountry + 1}</span> to{" "}
-                                <span className="font-semibold text-gray-900">{Math.min(indexOfLastCountry, filteredCountries.length)}</span> of{" "}
-                                <span className="font-semibold text-gray-900">{filteredCountries.length}</span>
+                                <span className="font-semibold text-gray-900">{Math.min(indexOfLastCountry, filteredfaq.length)}</span> of{" "}
+                                <span className="font-semibold text-gray-900">{filteredfaq.length}</span>
                             </span>
                             <ul className="inline-flex -space-x-px text-sm h-8">
                                 <li>
