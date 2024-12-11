@@ -118,24 +118,29 @@ const CountryAdd = () => {
     <div>
       {isLoading && <Loader />}
       <div className="flex bg-[#f7fbff]">
-        {/* Sidebar */}
-        <SidebarMenu />
 
-        <main className="flex-grow">
-          <Header />
-          <div className="container mx-auto">
-            <div className="flex items-center mt-6 mb-4">
-              <h2
-                className="text-lg font-semibold ml-4"
-                style={{
-                  color: "#000000",
-                  fontSize: "24px",
-                  fontFamily: "Montserrat",
-                }}
-              >
-                Country Management
-              </h2>
-            </div>
+      {/* Sidebar */}
+      
+      
+      <main className="flex-grow">
+        <Header />
+        <div className="container mx-auto">
+          <div className="flex items-center mt-6  mb-4">
+            {/* <Link to="/rolesList" className="cursor-pointer ml-6">
+              
+            </Link> */}
+            <h2 className="text-lg font-semibold ml-4 " style={{color:'#000000',fontSize:'24px',fontFamily:'Montserrat'}}>Country Management</h2>
+          </div>
+
+          {/* Form Container */}
+          <div className="h-full px-6 max-w-5xl" style={{paddingTop:'24px'}}> 
+
+
+            <div className="bg-white h-[70vh] w-full rounded-xl border border-[#EAE5FF] py-4 px-6">
+              
+              <form onSubmit={handleSubmit} className="mt-4">
+
+
 
             <div
               className="h-full px-6 max-w-5xl"

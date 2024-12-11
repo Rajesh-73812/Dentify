@@ -20,6 +20,7 @@ const CategoryList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
+
   const location = useLocation();
   const { isLoading, setIsLoading } = useLoading();
   // Fetch categories from API
@@ -31,17 +32,17 @@ const CategoryList = () => {
   useEffect(() => {
     async function fetchCategories() {
       try {
-
+       
         const response = await axios.get("http://localhost:5000/categories/all", {
           withCredentials: true,
         });
         console.log("Fetched categories:", response.data);
         setCategories(response.data);
         setFilteredcategories(response.data);
-
+        
       } catch (error) {
         console.error("Error fetching categories:", error);
-
+        
       }
     }
 
@@ -68,7 +69,7 @@ const CategoryList = () => {
 
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 1000);
+    }, 1000); 
 
     return () => clearTimeout(timer);
   }, [location, setIsLoading]);
@@ -92,8 +93,10 @@ const CategoryList = () => {
       }
       return a[key] < b[key]
 
+
         ? direction === "asc" ? -1 : 1
         : direction === "asc" ? 1  : -1;
+
 
     });
 
@@ -120,7 +123,7 @@ const CategoryList = () => {
 
  
 
-    // delete 
+
     const handledelete=async(id)=>{
         const success=await DeleteEntity('Category',id);
         if(success){
@@ -128,18 +131,20 @@ const CategoryList = () => {
             setCategories(updatedCategories);
             setFilteredcategories(updatedCategories)
         }
+
     }
 
     // for update 
     const updateCategory=(id)=>{
       navigate('/add-category',{state:{id:id}})
+
     }
     return (
         <div>
       {isLoading && <Loader />}
             <div className="h-screen flex">
                 {/* Sidebar */}
-                <SidebarMenu />
+
 
                 <div className="flex flex-1 flex-col bg-[#f7fbff]">
                     {/* Header */}
@@ -199,7 +204,9 @@ const CategoryList = () => {
                                                     </span>
                                                 </td>
                                                 <td className="px-4 py-3">
+
                                                     <button className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition mr-2" onClick={()=>{updateCategory(category.id)}}>
+
                                                         <FaPen />
                                                     </button>
                                                     <button className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition" onClick={()=>{handledelete(category.id)}}>
@@ -211,8 +218,13 @@ const CategoryList = () => {
                                     </tbody>
                                 </table>
                             </div>
+
             </div>
 
+
+
+                        </div>
+                      
             <div className="bottom-0 left-0 w-full bg-[#f7fbff] py-4 flex justify-between items-center">
               <span className="text-sm font-normal text-gray-500">
                 Showing{" "}
