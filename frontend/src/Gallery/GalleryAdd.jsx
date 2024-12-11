@@ -14,6 +14,8 @@ const GalleryAdd = () => {
   const id = location.state ? location.state.id : null;
   const { isLoading, setIsLoading } = useLoading();
   const [image, setImage] = useState(null);
+  const [properties, setProperties] = useState([]);
+  const [galleryCategory, setgalleryCategory] = useState([]);
   const [formData, setFormData] = useState({
     id : id || null,
     pid: '',
@@ -32,14 +34,48 @@ const GalleryAdd = () => {
     return () => clearTimeout(timer);
   }, [location, setIsLoading]);
 
+  useEffect(() => {
+    if(id){
+      fetchGallery(id)
+    }
+    const fetchProperties = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/properties', {
+          withCredentials: true,
+      });
+        setProperties(response.data);
+      } catch (error) {
+        console.error('Error fetching properties:', error);
+      }
+    };
 
-
-  const handleFocus=()=>{
-
+    const fetchGalleryCategory=async()=>{
+      try {
+          const response=await axios.get(`http://localhost:5000/galleryCategories/all`)
+          setgalleryCategory(response.data)
+      } catch (error) {
+          console.error("Error fetching galleries:", error);
+      }
   }
 
-  const handleBlur=()=>{
+    fetchProperties();
+    fetchGalleryCategory();
+  }, []);
 
+  const fetchGallery=async(id)=>{
+    try {
+      const response=await axios.get(`http://localhost:5000/galleries/${id}`)
+      const gallery=response.data;
+      setFormData({
+        id,
+        pid : gallery.pid,
+        cat_id : gallery.cat_id,
+        img: gallery.img,
+        status: gallery.status,
+      })
+    } catch (error) {
+      
+    }
   }
 
   const handleChange = (e) => {
@@ -47,6 +83,7 @@ const GalleryAdd = () => {
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
+      id : prevData.id
     }));
   };
 
@@ -70,12 +107,12 @@ const GalleryAdd = () => {
           withCredentials: true, 
         }
         );
-      console.log("Category added successfully:", response.data);
-      alert("Category added successfully!");
-      navigate("/category-list");
+      console.log("Gallery added successfully:", response.data);
+      alert("Gallery added successfully!");
+      navigate("/gallery-list");
     } catch (error) {
-      console.error("Error adding Category:", error);
-      alert("An error occurred while adding the Category.");
+      console.error("Error adding Gallery:", error);
+      alert("An error occurred while adding the Gallery.");
     }
   };
 
@@ -103,30 +140,17 @@ const GalleryAdd = () => {
                 <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-1  mt-6">
                 <div className="flex flex-col">
                     <label  htmlFor="pid"   className="text-sm font-medium text-start text-[12px] font-[Montserrat]" > Select Property </label>
-                    <select  name="pid"  id="pid"  className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm"  >
+                    <select  name="pid"  id="pid"  value={formData.pid} className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm" onChange={handleChange} >
                       <option value="" disabled selected>Select Property</option>
-                      <option value="1">Villa</option>
-                      <option value="2">Villas</option>
-                      <option value="3">Flat For Sale</option>
-                      <option value="4">2BHK House</option>
-                      <option value="5">TO-LET</option>
-                      <option value="6">Sunset Villa</option>
-                      <option value="7">New Mansion 5BHK</option>
-                      <option value="8">Urban Loft</option>
-                      <option value="9">Mountain Retreat</option>
-                      <option value="10">Seaside Cottage</option>
-                      <option value="11">New Villa</option>
-                      <option value="12">DownTown Condo</option>
-                      <option value="13">New Hotel</option>
-                      <option value="14">Tanquil Haven</option>
-                      <option value="15">Woodland Retreat Cabin</option>
-                      <option value="16">New House</option>
-                      <option value="17">Ocean Breeze Villa</option>
-                      <option value="18">Sarenity Abode</option>
-                      <option value="19">New Lavish 3 BHK in KBHB Phase 15 with parking</option>
-                      <option value="20">2 BHK Furnished in Hafeezpet Near Hitech City</option>
-                      <option value="21">2 BHK Kukatpally in prime location with parking</option>
-                      <option value="22">Posh 3 BHK Furnished in Vishalakshi nagr near vizag</option>
+                        {isLoading ? (
+                          <option>Loading properties...</option>
+                        ) : (
+                          properties.map((properties) => (
+                            <option key={properties.id} value={properties.id}>
+                              {properties.title}
+                            </option>
+                          ))
+                        )}
                     </select>
                   </div>
                                   
@@ -134,10 +158,17 @@ const GalleryAdd = () => {
                 <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-1  mt-6">
                 <div className="flex flex-col">
                     <label  htmlFor="cat_id"   className="text-sm font-medium text-start text-[12px] font-[Montserrat]" > Select Gallery Category </label>
-                    <select  name="cat_id"  id="cat_id"  className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm"  >
+                    <select  name="cat_id"  id="cat_id" value={formData.cat_id} className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm" onChange={handleChange} >
                       <option value="" disabled selected>Choose Gallery Category</option>
-                      <option value="2">Villas</option>
-                      <option value="3">Flat For Sale</option>             
+                      {isLoading ? (
+                          <option>Loading Gallery Category...</option>
+                        ) : (
+                          galleryCategory.map((galleryCategory) => (
+                            <option key={galleryCategory.id} value={galleryCategory.id}>
+                              {galleryCategory.title}
+                            </option>
+                          ))
+                        )}            
                     </select>
                   </div>
                 </div>
@@ -163,7 +194,7 @@ const GalleryAdd = () => {
                   {/* gallery Status */}
                   <div className="flex flex-col">
                     <label  htmlFor="status"   className="text-sm font-medium text-start text-[12px] font-[Montserrat]" >Gallery Status </label>
-                    <select  name="status"  id="status"  className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm"  >
+                    <select  name="status"  id="status" value={formData.status}  className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm" onChange={handleChange} >
                       <option value="" disabled selected>Select Status</option>
                       <option value={1}>Publish</option>
                       <option value={0}>Unpublish</option>

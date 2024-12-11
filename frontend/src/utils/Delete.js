@@ -29,12 +29,24 @@ export const DeleteEntity = async (entity, id) => {
                     await axios.delete(`${BASE_URL}/coupons/delete/${id}`, { withCredentials: true });
                     break;
 
+                case 'PaymentGateWay':
+                    await axios.delete(`${BASE_URL}/payment-methods/delete/${id}`, { withCredentials: true });
+                    break;
+
                 case 'Page':
                     await axios.delete(`${BASE_URL}/pages/delete/${id}`, { withCredentials: true });
                     break;
 
                 case 'Package':
                     await axios.delete(`${BASE_URL}/packages/delete/${id}`, { withCredentials: true });
+                    break;
+
+                case 'Gallery':
+                    await axios.delete(`${BASE_URL}/galleries/delete/${id}`, { withCredentials: true });
+                    break;
+
+                case 'GalleryCategory':
+                    await axios.delete(`${BASE_URL}/galleryCategories/delete/${id}`, { withCredentials: true });
                     break;
 
                 case 'Faq':
