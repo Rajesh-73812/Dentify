@@ -19,10 +19,33 @@ const CategoryList = () => {
   const [sortConfig, setSortConfig] = useState({ key: "", direction: "" });
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
+
   const location = useLocation();
   const { isLoading, setIsLoading } = useLoading();
   // Fetch categories from API
+
+
+
+
+  // Fetch categories from API
   useEffect(() => {
+    async function fetchCategories() {
+      try {
+
+        const response = await axios.get("http://localhost:5000/categories/all", {
+          withCredentials: true,
+        });
+        console.log("Fetched categories:", response.data);
+        setCategories(response.data);
+        setFilteredcategories(response.data);
+
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+
+      }
+    }
+
+
     fetchCategories();
   }, []);
 
@@ -45,7 +68,7 @@ const CategoryList = () => {
 
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 1000); 
+    }, 1000);
 
     return () => clearTimeout(timer);
   }, [location, setIsLoading]);
@@ -68,8 +91,10 @@ const CategoryList = () => {
         return direction === "asc" ? a.id - b.id : b.id - a.id;
       }
       return a[key] < b[key]
+
         ? direction === "asc" ? -1 : 1
         : direction === "asc" ? 1  : -1;
+
     });
 
     setFilteredcategories(sortedData);
@@ -187,6 +212,7 @@ const CategoryList = () => {
                                 </table>
                             </div>
             </div>
+
             <div className="bottom-0 left-0 w-full bg-[#f7fbff] py-4 flex justify-between items-center">
               <span className="text-sm font-normal text-gray-500">
                 Showing{" "}
