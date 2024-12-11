@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import Header from '../components/Header';
 import SidebarMenu from '../components/SideBar';
 import { GoArrowDown, GoArrowUp } from 'react-icons/go';
-import { FaPen,FaTrash } from "react-icons/fa";
+import { FaPen, FaTrash } from "react-icons/fa";
 import { searchFunction } from '../Entity/SearchEntity';
 import axios from 'axios';
 import UseListHeader from './UseListHeader';
@@ -14,26 +14,26 @@ const UserList = () => {
     const [sortConfig, setSortConfig] = useState({ key: '', direction: '' });
 
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 10; 
+    const itemsPerPage = 10;
 
-    // useEffect(() => {
-    //     async function userlist() {
-    //         try {
-    //             const response = await axios.get("http://localhost:5000/users/user/getalluser");
-    //             console.log(response.data);
-    //             setuser(response.data);
-    //             setFiltereduser(response.data);
-    //         } catch (error) {
-    //             console.error("Error fetching user:", error);
-    //         }
-    //     }
-    
-    //     userlist();
-    // }, []);
-    
+    useEffect(() => {
+        async function userlist() {
+            try {
+                const response = await axios.get("http://localhost:5000/users/user/getalluser");
+                console.log(response.data);
+                setuser(response.data);
+                setFiltereduser(response.data);
+            } catch (error) {
+                console.error("Error fetching user:", error);
+            }
+        }
+
+        userlist();
+    }, []);
+
 
     const handleSearch = (event) => {
-        // searchFunction(event, user, setFiltereduser);
+        searchFunction(event, user, setFiltereduser);
         setCurrentPage(1);
     };
 
@@ -85,103 +85,96 @@ const UserList = () => {
                                                     <GoArrowDown onClick={() => handleSort('slno')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[250px]">
-                                                Image
+                                            <th className="px-4 py-3 min-w-[200px]">
+                                                Name
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp onClick={() => handleSort('title')} />
-                                                    <GoArrowDown onClick={() => handleSort('title')} />
+                                                    <GoArrowUp onClick={() => handleSort('image')} />
+                                                    <GoArrowDown onClick={() => handleSort('image')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[250px]">
-                                              Name
-                                              <div className="inline-flex items-center ml-2">
-                                                  <GoArrowUp onClick={() => handleSort('image')} />
-                                                  <GoArrowDown onClick={() => handleSort('image')} />
-                                              </div>
-                                            </th>
-                                            <th className="px-4 py-3 min-w-[250px]">
-                                              Email
+                                            <th className="px-4 py-3 min-w-[200px]">
+                                                Email
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp onClick={() => handleSort('day')} />
                                                     <GoArrowDown onClick={() => handleSort('day')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[250px]">
-                                              Mobile
+                                            <th className="px-4 py-3 min-w-[200px]">
+                                                Mobile
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp onClick={() => handleSort('price')} />
+                                                    <GoArrowDown onClick={() => handleSort('price')} />
+                                                </div>
+                                            </th>
+                                            <th className="px-4 py-3 min-w-[200px]">
+                                                Join Date
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp onClick={() => handleSort('price')} />
+                                                    <GoArrowDown onClick={() => handleSort('price')} />
+                                                </div>
+                                            </th>
+                                            <th className="px-4 py-3 min-w-[150px]">
+                                                Status
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp onClick={() => handleSort('status')} />
+                                                    <GoArrowDown onClick={() => handleSort('status')} />
+                                                </div>
+                                            </th>
+                                            <th className="px-4 py-3 min-w-[200px]">
+                                                Refer Code
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp onClick={() => handleSort('price')} />
+                                                    <GoArrowDown onClick={() => handleSort('price')} />
+                                                </div>
+                                            </th>
+                                            <th className="px-4 py-3 min-w-[200px]">
+                                                Parent Code
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp onClick={() => handleSort('price')} />
+                                                    <GoArrowDown onClick={() => handleSort('price')} />
+                                                </div>
+                                            </th>
+                                            <th className="px-4 py-3 min-w-[200px]">
+                                                Wallet
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp onClick={() => handleSort('price')} />
+                                                    <GoArrowDown onClick={() => handleSort('price')} />
+                                                </div>
+                                            </th>
+                                            <th className="px-4 py-3 min-w-[200px]">
+                                                IsSubscribe
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp onClick={() => handleSort('price')} />
+                                                    <GoArrowDown onClick={() => handleSort('price')} />
+                                                </div>
+                                            </th>
+                                            <th className="px-4 py-3 min-w-[200px]">
+                                                Package  Name
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp onClick={() => handleSort('price')} />
+                                                    <GoArrowDown onClick={() => handleSort('price')} />
+                                                </div>
+                                            </th>
+                                            <th className="px-4 py-3 min-w-[200px]">
+                                                Start Date
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp onClick={() => handleSort('price')} />
+                                                    <GoArrowDown onClick={() => handleSort('price')} />
+                                                </div>
+                                            </th>
+                                            <th className="px-4 py-3 min-w-[200px]">
+                                                Expired Date
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp onClick={() => handleSort('price')} />
                                                     <GoArrowDown onClick={() => handleSort('price')} />
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[250px]">
-                                              Join Date
+                                                Action
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp onClick={() => handleSort('price')} />
-                                                    <GoArrowDown onClick={() => handleSort('price')} />
+                                                    <GoArrowUp onClick={() => handleSort('action')} />
+                                                    <GoArrowDown onClick={() => handleSort('action')} />
                                                 </div>
-                                            </th>
-                                            <th className="px-4 py-3 min-w-[250px]">
-                                               Status
-                                              <div className="inline-flex items-center ml-2">
-                                                  <GoArrowUp onClick={() => handleSort('status')} />
-                                                  <GoArrowDown onClick={() => handleSort('status')} />
-                                              </div>
-                                            </th>
-                                            <th className="px-4 py-3 min-w-[250px]">
-                                              Refer Code
-                                                <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp onClick={() => handleSort('price')} />
-                                                    <GoArrowDown onClick={() => handleSort('price')} />
-                                                </div>
-                                            </th>
-                                            <th className="px-4 py-3 min-w-[250px]">
-                                              Parent Code
-                                                <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp onClick={() => handleSort('price')} />
-                                                    <GoArrowDown onClick={() => handleSort('price')} />
-                                                </div>
-                                            </th>
-                                            <th className="px-4 py-3 min-w-[250px]">
-                                              Wallet
-                                                <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp onClick={() => handleSort('price')} />
-                                                    <GoArrowDown onClick={() => handleSort('price')} />
-                                                </div>
-                                            </th>
-                                            <th className="px-4 py-3 min-w-[250px]">
-                                              IsSubscribe
-                                                <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp onClick={() => handleSort('price')} />
-                                                    <GoArrowDown onClick={() => handleSort('price')} />
-                                                </div>
-                                            </th>
-                                            <th className="px-4 py-3 min-w-[250px]">
-                                              Package  Name
-                                                <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp onClick={() => handleSort('price')} />
-                                                    <GoArrowDown onClick={() => handleSort('price')} />
-                                                </div>
-                                            </th>
-                                            <th className="px-4 py-3 min-w-[250px]">
-                                              Start Date
-                                                <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp onClick={() => handleSort('price')} />
-                                                    <GoArrowDown onClick={() => handleSort('price')} />
-                                                </div>
-                                            </th>
-                                            <th className="px-4 py-3 min-w-[250px]">
-                                              Expired Date
-                                                <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp onClick={() => handleSort('price')} />
-                                                    <GoArrowDown onClick={() => handleSort('price')} />
-                                                </div>
-                                            </th>
-                                            <th className="px-4 py-3 min-w-[250px]">
-                                              Action
-                                              <div className="inline-flex items-center ml-2">
-                                                  <GoArrowUp onClick={() => handleSort('action')} />
-                                                  <GoArrowDown onClick={() => handleSort('action')} />
-                                              </div>
                                             </th>
                                         </tr>
                                     </thead>
@@ -189,14 +182,6 @@ const UserList = () => {
                                         {currentuser.map((country, index) => (
                                             <tr key={country.id}>
                                                 <td className="px-4 py-3">{index + 1 + indexOfFirstCountry}</td>
-                                                <td className="px-4 py-3">
-                                                    <img
-                                                        src={country.image || 'fallback-image.jpg'}
-                                                        alt={country.name || "N/A"}
-                                                        className="w-16 h-16 object-cover rounded-full"
-                                                        onError={(e) => (e.target.src = 'fallback-image.jpg')}
-                                                    />
-                                                </td>
                                                 <td className="px-4 py-3">{country.name || "N/A"}</td>
                                                 <td className="px-4 py-3">{country.email || "N/A"}</td>
                                                 <td className="px-4 py-3">{country.mobile || "N/A"}</td>
@@ -210,7 +195,7 @@ const UserList = () => {
                                                 <td className="px-4 py-3">{country.startDate || "N/A"}</td>
                                                 <td className="px-4 py-3">{country.expiredDate || "N/A"}</td>
                                                 <td className="px-4 py-3">
-                                                <   button className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition mr-2">
+                                                    <   button className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition mr-2">
                                                         <FaPen />
                                                     </button>
                                                     <button className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition">
@@ -225,22 +210,22 @@ const UserList = () => {
                         </div>
                         <div className="bottom-0 left-0 w-full bg-[#f7fbff] py-4 flex justify-between items-center">
                             <span className="text-sm font-normal text-gray-500">
-                                Showing <span className="font-semibold text-gray-900">{indexOfFirstCountry + 1}</span> to{" "}
-                                <span className="font-semibold text-gray-900">{Math.min(indexOfLastCountry, filtereduser.length)}</span> of{" "}
-                                <span className="font-semibold text-gray-900">{filtereduser.length}</span>
+                                Showing <span className="font-semibold text-gray-900">{indexOfFirstCountry + 1}</span> to <span className="font-semibold text-gray-900">{Math.min(indexOfLastCountry, filtereduser.length)}</span> of <span className="font-semibold text-gray-900">{filtereduser.length}</span>
                             </span>
-                            <ul className="inline-flex -space-x-px text-sm h-8">
+                            <ul className="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">
                                 <li>
-                                    <button onClick={() => paginate(currentPage - 1)} disabled={currentPage === 1}>
-                                        Previous
+                                    <button onClick={() => paginate(currentPage > 1 ? currentPage - 1 : 1)} className="previous-button" disabled={currentPage === 1}>
+                                        <img src="/image/action/Left Arrow.svg" alt="Left" /> Previous
                                     </button>
                                 </li>
                                 <li>
-                                    <span>Page {currentPage} of {totalPages}</span>
+                                    <span className="current-page">
+                                        Page {currentPage} of {totalPages}
+                                    </span>
                                 </li>
                                 <li>
-                                    <button onClick={() => paginate(currentPage + 1)} disabled={currentPage === totalPages}>
-                                        Next
+                                    <button onClick={() => paginate(currentPage < totalPages ? currentPage + 1 : totalPages)} className="next-button" disabled={currentPage === totalPages}>
+                                        Next <img src="/image/action/Right Arrow (1).svg" alt="Right" />
                                     </button>
                                 </li>
                             </ul>
