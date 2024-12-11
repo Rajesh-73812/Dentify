@@ -2,42 +2,42 @@ import React, { useState } from 'react';
 import Header from '../components/Header';
 import SidebarMenu from '../components/SideBar';
 import { GoArrowDown, GoArrowUp } from 'react-icons/go';
-import { FaPen,FaTrash } from "react-icons/fa";
+import { FaPen, FaTrash } from "react-icons/fa";
 import { searchFunction } from '../Entity/SearchEntity';
 import PropotiesHeader from './PropotiesHeader';
 
 const PropotiesList = () => {
     const countries = [
-        { id: 1, propertyTittle: 'villa',propertyType: 'villa',propertyPrice:'10000',propertyPrice:'3000', image: 'path/to/image1.jpg', totalBeds:'4',totalBathrooms:'12',totalSQFT:'6000', status: 'publish' },
-        { id: 2, propertyTittle: 'villas',propertyType: 'villas',propertyPrice:'2500', image: 'path/to/image2.jpg',totalBeds:'4',totalBathrooms:'12',totalSQFT:'6000' , status: 'publish' },
-        { id: 3, propertyTittle: 'Mansion',propertyType: 'Mansion',propertyPrice:'10000', image: 'path/to/image3.jpg',totalBeds:'4',totalBathrooms:'12',totalSQFT:'6000', status: 'unpublish' },
-        { id: 4, propertyTittle: '2BHK House',propertyType: '2BHK House',propertyPrice:'2500', image: 'path/to/image4.jpg',totalBeds:'4',totalBathrooms:'12',totalSQFT:'6000' , status: 'publish' },
-        { id: 5, propertyTittle: 'Individual Houses',propertyType: 'Individual Houses',propertyPrice:'2500', image: 'path/to/image5.jpg',totalBeds:'4',totalBathrooms:'12',totalSQFT:'2300', status: 'unpublish' },
-        { id: 6, propertyTittle: 'villa',propertyType: 'evilla',propertyPrice:'10000', image: 'path/to/image1.jpg',totalBeds:'4',totalBathrooms:'12',totalSQFT:'2300' , status: 'publish' },
-        { id: 7, propertyTittle: 'villas',propertyType: 'villas',propertyPrice:'2500', image: 'path/to/image2.jpg',totalBeds:'4',totalBathrooms:'5',totalSQFT:'2300' , status: 'publish' },
-        { id: 8, propertyTittle: 'Apartments',propertyType: 'enjoy your weekend',propertyPrice:'10000', image: 'path/to/image3.jpg',totalBeds:'4',totalBathrooms:'5',totalSQFT:'2300' , status: 'unpublish' },
-        { id: 9, propertyTittle: '2BHK House',propertyType: '2BHK House',propertyPrice:'2500', image: 'path/to/image4.jpg',totalBeds:'4',totalBathrooms:'5',totalSQFT:'2300' , status: 'publish' },
-        { id: 10, propertyTittle: 'Individual Houses',propertyType: 'Individual Houses',propertyPrice:'3000', image: 'path/to/image5.jpg',totalBeds:'4',totalBathrooms:'5',totalSQFT:'8000' , status: 'unpublish' },
-        { id: 11, propertyTittle: 'Mansion',propertyType: 'Mansion',propertyPrice:'3000', image: 'path/to/image1.jpg',totalBeds:'4',totalBathrooms:'5',totalSQFT:'8000' , status: 'publish' },
-        { id: 12, propertyTittle: 'villas',propertyType: 'villas',propertyPrice:'10000', image: 'path/to/image2.jpg',totalBeds:'4',totalBathrooms:'6',totalSQFT:'8000' , status: 'publish' },
-        { id: 13, propertyTittle: 'Apartments',propertyType: 'appartments',propertyPrice:'10000', image: 'path/to/image3.jpg',totalBeds:'4',totalBathrooms:'6',totalSQFT:'1500' , status: 'unpublish' },
-        { id: 14, propertyTittle: '2BHK House',propertyType: '2BHK House',propertyPrice:'10000', image: 'path/to/image4.jpg',totalBeds:'4',totalBathrooms:'6',totalSQFT:'1500' , status: 'publish' },
-        { id: 15, propertyTittle: 'Individual Houses',propertyType: 'Individual Houses',propertyPrice:'10000', image: 'path/to/image5.jpg',totalBeds:'5',totalBathrooms:'6',totalSQFT:'1500' , status: 'unpublish' },
-        
+        { id: 1, propertyTittle: 'villa', propertyType: 'villa', propertyPrice: '10000', propertyPrice: '3000', image: 'path/to/image1.jpg', totalBeds: '4', totalBathrooms: '12', totalSQFT: '6000', status: 'publish' },
+        { id: 2, propertyTittle: 'villas', propertyType: 'villas', propertyPrice: '2500', image: 'path/to/image2.jpg', totalBeds: '4', totalBathrooms: '12', totalSQFT: '6000', status: 'publish' },
+        { id: 3, propertyTittle: 'Mansion', propertyType: 'Mansion', propertyPrice: '10000', image: 'path/to/image3.jpg', totalBeds: '4', totalBathrooms: '12', totalSQFT: '6000', status: 'unpublish' },
+        { id: 4, propertyTittle: '2BHK House', propertyType: '2BHK House', propertyPrice: '2500', image: 'path/to/image4.jpg', totalBeds: '4', totalBathrooms: '12', totalSQFT: '6000', status: 'publish' },
+        { id: 5, propertyTittle: 'Individual Houses', propertyType: 'Individual Houses', propertyPrice: '2500', image: 'path/to/image5.jpg', totalBeds: '4', totalBathrooms: '12', totalSQFT: '2300', status: 'unpublish' },
+        { id: 6, propertyTittle: 'villa', propertyType: 'evilla', propertyPrice: '10000', image: 'path/to/image1.jpg', totalBeds: '4', totalBathrooms: '12', totalSQFT: '2300', status: 'publish' },
+        { id: 7, propertyTittle: 'villas', propertyType: 'villas', propertyPrice: '2500', image: 'path/to/image2.jpg', totalBeds: '4', totalBathrooms: '5', totalSQFT: '2300', status: 'publish' },
+        { id: 8, propertyTittle: 'Apartments', propertyType: 'enjoy your weekend', propertyPrice: '10000', image: 'path/to/image3.jpg', totalBeds: '4', totalBathrooms: '5', totalSQFT: '2300', status: 'unpublish' },
+        { id: 9, propertyTittle: '2BHK House', propertyType: '2BHK House', propertyPrice: '2500', image: 'path/to/image4.jpg', totalBeds: '4', totalBathrooms: '5', totalSQFT: '2300', status: 'publish' },
+        { id: 10, propertyTittle: 'Individual Houses', propertyType: 'Individual Houses', propertyPrice: '3000', image: 'path/to/image5.jpg', totalBeds: '4', totalBathrooms: '5', totalSQFT: '8000', status: 'unpublish' },
+        { id: 11, propertyTittle: 'Mansion', propertyType: 'Mansion', propertyPrice: '3000', image: 'path/to/image1.jpg', totalBeds: '4', totalBathrooms: '5', totalSQFT: '8000', status: 'publish' },
+        { id: 12, propertyTittle: 'villas', propertyType: 'villas', propertyPrice: '10000', image: 'path/to/image2.jpg', totalBeds: '4', totalBathrooms: '6', totalSQFT: '8000', status: 'publish' },
+        { id: 13, propertyTittle: 'Apartments', propertyType: 'appartments', propertyPrice: '10000', image: 'path/to/image3.jpg', totalBeds: '4', totalBathrooms: '6', totalSQFT: '1500', status: 'unpublish' },
+        { id: 14, propertyTittle: '2BHK House', propertyType: '2BHK House', propertyPrice: '10000', image: 'path/to/image4.jpg', totalBeds: '4', totalBathrooms: '6', totalSQFT: '1500', status: 'publish' },
+        { id: 15, propertyTittle: 'Individual Houses', propertyType: 'Individual Houses', propertyPrice: '10000', image: 'path/to/image5.jpg', totalBeds: '5', totalBathrooms: '6', totalSQFT: '1500', status: 'unpublish' },
+
     ];
 
     const [filterData, setFilterData] = useState(countries);
     const [filteredCountries, setFilteredCountries] = useState(countries);
     const [sortConfig, setSortConfig] = useState({ key: '', direction: '' });
-    
+
     // Pagination state
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 10; 
+    const itemsPerPage = 10;
 
     // for searching
     const handleSearch = (event) => {
         searchFunction(event, countries, setFilteredCountries);
-        setCurrentPage(1); 
+        setCurrentPage(1);
     };
 
     // for sorting
@@ -46,7 +46,7 @@ const PropotiesList = () => {
         if (sortConfig.key === key && sortConfig.direction === 'asc') {
             direction = 'desc';
         }
-        
+
         const sortedData = [...filteredCountries].sort((a, b) => {
             if (key === 'slno') {
                 return direction === 'asc' ? a.id - b.id : b.id - a.id;
@@ -104,35 +104,35 @@ const PropotiesList = () => {
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[250px]">
-                                                 property Type
+                                                property Type
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('propertyType')} />
                                                     <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('propertyType')} />
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[250px]">
-                                              Property Price(/Night)
+                                                Property Price(/Night)
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('propertyPrice')} />
                                                     <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('propertyPrice')} />
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[250px]">
-                                                 Property Image
+                                                Property Image
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('image')} />
                                                     <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('image')} />
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[250px]">
-                                                 Total Beds
+                                                Total Beds
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('totalBeds')} />
                                                     <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('totalBeds')} />
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[250px]">
-                                                 Total BathRooms
+                                                Total BathRooms
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('totalBathrooms')} />
                                                     <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('totalBathrooms')} />
@@ -146,7 +146,7 @@ const PropotiesList = () => {
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[150px]">
-                                                 Status
+                                                Status
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('status')} />
                                                     <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('status')} />
