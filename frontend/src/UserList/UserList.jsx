@@ -68,7 +68,7 @@ const UserList = () => {
     return (
         <div>
             <div className="h-screen flex">
-                <SidebarMenu />
+               
                 <div className="flex flex-1 flex-col bg-[#f7fbff]">
                     <Header />
                     <UseListHeader onSearch={handleSearch} />
@@ -78,35 +78,35 @@ const UserList = () => {
                                 <table className="min-w-full text-sm text-left text-gray-700">
                                     <thead className="bg-gray-50 text-xs uppercase font-medium text-gray-500">
                                         <tr>
-                                            <th className="px-4 py-3 min-w-[150px]">
+                                            <th className="px-4 py-3 min-w-[110px]">
                                                 Sr. No
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp onClick={() => handleSort('slno')} />
                                                     <GoArrowDown onClick={() => handleSort('slno')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[200px]">
+                                            <th className="px-4 py-3 min-w-[150px]">
                                                 Name
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp onClick={() => handleSort('image')} />
                                                     <GoArrowDown onClick={() => handleSort('image')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[200px]">
+                                            <th className="px-4 py-3 min-w-[150px]">
                                                 Email
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp onClick={() => handleSort('day')} />
                                                     <GoArrowDown onClick={() => handleSort('day')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[200px]">
+                                            <th className="px-4 py-3 min-w-[150px]">
                                                 Mobile
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp onClick={() => handleSort('price')} />
                                                     <GoArrowDown onClick={() => handleSort('price')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[200px]">
+                                            <th className="px-4 py-3 min-w-[150px]">
                                                 Join Date
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp onClick={() => handleSort('price')} />
@@ -120,56 +120,56 @@ const UserList = () => {
                                                     <GoArrowDown onClick={() => handleSort('status')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[200px]">
+                                            <th className="px-4 py-3 min-w-[150px]">
                                                 Refer Code
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp onClick={() => handleSort('price')} />
                                                     <GoArrowDown onClick={() => handleSort('price')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[200px]">
+                                            <th className="px-4 py-3 min-w-[150px]">
                                                 Parent Code
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp onClick={() => handleSort('price')} />
                                                     <GoArrowDown onClick={() => handleSort('price')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[200px]">
+                                            <th className="px-4 py-3 min-w-[150px]">
                                                 Wallet
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp onClick={() => handleSort('price')} />
                                                     <GoArrowDown onClick={() => handleSort('price')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[200px]">
+                                            <th className="px-4 py-3 min-w-[150px]">
                                                 IsSubscribe
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp onClick={() => handleSort('price')} />
                                                     <GoArrowDown onClick={() => handleSort('price')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[200px]">
+                                            <th className="px-4 py-3 min-w-[150px]">
                                                 Package  Name
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp onClick={() => handleSort('price')} />
                                                     <GoArrowDown onClick={() => handleSort('price')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[200px]">
+                                            <th className="px-4 py-3 min-w-[150px]">
                                                 Start Date
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp onClick={() => handleSort('price')} />
                                                     <GoArrowDown onClick={() => handleSort('price')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[200px]">
+                                            <th className="px-4 py-3 min-w-[150px]">
                                                 Expired Date
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp onClick={() => handleSort('price')} />
                                                     <GoArrowDown onClick={() => handleSort('price')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[250px]">
+                                            <th className="px-4 py-3 min-w-[150px]">
                                                 Action
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp onClick={() => handleSort('action')} />

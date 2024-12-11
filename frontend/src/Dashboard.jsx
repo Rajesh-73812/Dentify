@@ -24,7 +24,7 @@ const Dashboard = () => {
     <div className="h-screen flex ">
       {isLoading && <Loader />}
       {/* Sidebar */}
-      <Sidebar />
+      
 
       <div className="flex flex-1 flex-col bg-[#f7fbff] overflow-auto">
         {/* Header */}

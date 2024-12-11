@@ -98,7 +98,7 @@ const CountryList = () => {
         <div>
             {isLoading && <Loader />}
             <div className="h-screen flex">
-                <SidebarMenu />
+                
                 <div className="flex flex-1 flex-col bg-[#f7fbff]">
                     <Header />
                     <CountryHeader onSearch={handleSearch} />

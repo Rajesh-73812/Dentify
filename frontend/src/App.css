@@ -150,16 +150,48 @@ input[type="search"]::-webkit-search-cancel-button {
 
 .css-vj11vy {
   background: #439BFF;
+  padding-top: 10px;
+  font-weight: 500;
 }
 
 .css-ewdv3l {
   color: #fff;
 }
+.ps-menuitem-root >.ps-active{
+background-color: white;
+color: #439BFF !important;
+font-weight: 700 !important;
+margin: 0px 10px 0px 10px;
+border-radius: 5px;
+
+}
+
+
+.css-ewdv3l .sub-menu-item{
+  background-color: #439BFF !important;
+  color: white !important;
+}
+
+.ps-menuitem-root >.ps-active:hover{
+  background-color: white;
+color: #439BFF !important;
+font-weight: 700 !important;
+}
+
 /* ps-menuitem-root ps-active css-1654oxy" */
 .ps-menuitem-root >.ps-menu-button:hover {
   background-color: #439BFF !important;
+  color: white !important;
+ 
 }
 
 .css-dip3t8 {
   scrollbar-width: none;
 }
+
+.sub-menu-item:hover{
+  background-color: #439BFF !important;
+  color: white !important;
+}
+
+
