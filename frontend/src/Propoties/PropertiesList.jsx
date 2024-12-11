@@ -262,17 +262,6 @@ const PropotiesList = () => {
                                                         {property.status}
                                                     </span>
                                                 </td>
-                                                {/* <td className="px-4 py-3">{property.rate}</td> */}
-                                                {/* <td className="px-4 py-3">{property.latitude}</td>
-                                                <td className="px-4 py-3">{property.longtitude}</td>
-                                                <td className="py-2 px-4 border-b border-gray-200">{property.mobile}</td>
-                                                <td className="py-2 px-4 border-b border-gray-200">{property.city}</td>
-                                                <td className="py-2 px-4 border-b border-gray-200">{property.listing_date}</td> */}
-                                                {/* <td className="py-2 px-4 border-b border-gray-200">{property.add_user_id}</td> */}
-                                                {/* <td className="py-2 px-4 border-b border-gray-200">{property.pbuysell}</td> */}
-                                                {/* <td className="py-2 px-4 border-b border-gray-200">{property.country_id}</td> */}
-                                                {/* <td className="py-2 px-4 border-b border-gray-200">{property.plimit}</td> */}
-                                                {/* <td className="py-2 px-4 border-b border-gray-200">{property.is_sell === 1 ? 'Yes' : 'No'}</td> */}
                                                 <td className="px-4 py-3">
                                                     <button className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition mr-2">
                                                         <FaPen />
