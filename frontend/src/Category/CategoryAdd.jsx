@@ -10,14 +10,16 @@ import { useLocation } from 'react-router-dom';
 import Loader from '../common/Loader';
 
 const CategoryAdd = () => {
-
+  const navigate = useNavigate();
+  const location=useLocation()
+  const id = location.state ? location.state.id : null;
+  const { isLoading, setIsLoading } = useLoading();
+  const [image, setImage] = useState(null);
   const [formData, setFormData] = useState({
     title: '',
     img: '',
     status: 0,
   });
-
-  const navigate = useNavigate()
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -34,10 +36,6 @@ const CategoryAdd = () => {
     }));
     
   };
-
-
-  const location = useLocation();
-  const { isLoading, setIsLoading } = useLoading();
 
   useEffect(() => {
     setIsLoading(true);
@@ -120,6 +118,15 @@ const CategoryAdd = () => {
                       <label  htmlFor="category_image"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]">Category Image</label>
                     
                       <ImageUploader onUploadSuccess={handleImageUploadSuccess}/>
+                      {formData.img && (
+                      <div className="mt-4">
+                        <img
+                          src={formData.img}
+                          alt="Uploaded Preview"
+                          className="w-32 h-32 object-cover rounded"
+                        />
+                      </div>
+                    )}
                     </div>
                 </div>
 

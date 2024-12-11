@@ -8,24 +8,25 @@ import { searchFunction } from "../Entity/SearchEntity";
 import CategoryHeader from "./CategoryHeader";
 import axios from "axios";
 import { useLoading } from '../Context/LoadingContext';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Loader from '../common/Loader';
-
-
 import { DeleteEntity } from '../utils/Delete';
 
-
-
 const CategoryList = () => {
+  const navigate=useNavigate();
   const [categories, setCategories] = useState([]);
   const [filteredcategories, setFilteredcategories] = useState([]);
   const [sortConfig, setSortConfig] = useState({ key: "", direction: "" });
-
-  // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
- 
+
+  const location = useLocation();
+  const { isLoading, setIsLoading } = useLoading();
+  // Fetch categories from API
+
+
+
 
   // Fetch categories from API
   useEffect(() => {
@@ -45,12 +46,23 @@ const CategoryList = () => {
       }
     }
 
+
     fetchCategories();
   }, []);
 
-
-  const location = useLocation();
-  const { isLoading, setIsLoading } = useLoading();
+  const  fetchCategories=async()=> {
+    try {
+     
+      const response = await axios.get("http://localhost:5000/categories/all")
+      console.log("Fetched categories:", response.data);
+      setCategories(response.data);
+      setFilteredcategories(response.data);
+      
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+      
+    }
+  }
 
   useEffect(() => {
     setIsLoading(true);
@@ -80,12 +92,12 @@ const CategoryList = () => {
         return direction === "asc" ? a.id - b.id : b.id - a.id;
       }
       return a[key] < b[key]
-        ? direction === "asc"
-          ? -1
-          : 1
-        : direction === "asc"
-        ? 1
-        : -1;
+
+
+        ? direction === "asc" ? -1 : 1
+        : direction === "asc" ? 1  : -1;
+
+
     });
 
     setFilteredcategories(sortedData);
@@ -111,8 +123,7 @@ const CategoryList = () => {
 
  
 
-    // update 
-    
+
     const handledelete=async(id)=>{
         const success=await DeleteEntity('Category',id);
         if(success){
@@ -120,13 +131,20 @@ const CategoryList = () => {
             setCategories(updatedCategories);
             setFilteredcategories(updatedCategories)
         }
+
+    }
+
+    // for update 
+    const updateCategory=(id)=>{
+      navigate('/add-category',{state:{id:id}})
+
     }
     return (
         <div>
       {isLoading && <Loader />}
             <div className="h-screen flex">
                 {/* Sidebar */}
-              
+
 
                 <div className="flex flex-1 flex-col bg-[#f7fbff]">
                     {/* Header */}
@@ -186,7 +204,9 @@ const CategoryList = () => {
                                                     </span>
                                                 </td>
                                                 <td className="px-4 py-3">
-                                                    <button className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition mr-2">
+
+                                                    <button className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition mr-2" onClick={()=>{updateCategory(category.id)}}>
+
                                                         <FaPen />
                                                     </button>
                                                     <button className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition" onClick={()=>{handledelete(category.id)}}>
@@ -198,6 +218,9 @@ const CategoryList = () => {
                                     </tbody>
                                 </table>
                             </div>
+
+            </div>
+
 
 
                         </div>

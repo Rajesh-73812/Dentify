@@ -1,19 +1,26 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from '../components/Header'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import SidebarMenu from '../components/SideBar'
 import { useLoading } from '../Context/LoadingContext';
 import { useLocation } from 'react-router-dom';
 import Loader from '../common/Loader';
+import axios from 'axios';
+import ImageUploader from '../common/ImageUploader';
 
 const GalleryAdd = () => {
-
-  const handleFocus=()=>{
-
-  }
-
-  const location = useLocation();
+  const navigate = useNavigate();
+  const location=useLocation()
+  const id = location.state ? location.state.id : null;
   const { isLoading, setIsLoading } = useLoading();
+  const [image, setImage] = useState(null);
+  const [formData, setFormData] = useState({
+    id : id || null,
+    pid: '',
+    cat_id: '',
+    img: '',
+    status: 0,
+  });
 
   useEffect(() => {
     setIsLoading(true);
@@ -25,9 +32,53 @@ const GalleryAdd = () => {
     return () => clearTimeout(timer);
   }, [location, setIsLoading]);
 
+
+
+  const handleFocus=()=>{
+
+  }
+
   const handleBlur=()=>{
 
   }
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleImageUploadSuccess = (imageUrl) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      img: imageUrl,
+    }));
+    
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log("Form submitted:", formData);
+
+    try {
+      const response = await axios.post("http://localhost:5000/galleries/upsert",
+         formData
+         ,
+         {
+          withCredentials: true, 
+        }
+        );
+      console.log("Category added successfully:", response.data);
+      alert("Category added successfully!");
+      navigate("/category-list");
+    } catch (error) {
+      console.error("Error adding Category:", error);
+      alert("An error occurred while adding the Category.");
+    }
+  };
+
   return (
     <div>
       {isLoading && <Loader />}
@@ -47,7 +98,7 @@ const GalleryAdd = () => {
           {/* Form Container */}
           <div className="h-full px-6 max-w-5xl" style={{paddingTop:'24px'}}> 
             <div className="bg-white h-[70vh] w-full rounded-xl border border-[#EAE5FF] py-4 px-6 overflow-y-auto " style={{scrollbarWidth:'none'}} >
-              <form className="mt-4">
+              <form className="mt-4" onSubmit={handleSubmit}>
                 <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-1  mt-6">
                 <div className="flex flex-col">
                     <label  htmlFor="pid"   className="text-sm font-medium text-start text-[12px] font-[Montserrat]" > Select Property </label>
@@ -84,7 +135,8 @@ const GalleryAdd = () => {
                     <label  htmlFor="cat_id"   className="text-sm font-medium text-start text-[12px] font-[Montserrat]" > Select Gallery Category </label>
                     <select  name="cat_id"  id="cat_id"  className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm"  >
                       <option value="" disabled selected>Choose Gallery Category</option>
-                      <option value="1">No Result Found</option>             
+                      <option value="2">Villas</option>
+                      <option value="3">Flat For Sale</option>             
                     </select>
                   </div>
                 </div>
@@ -92,10 +144,16 @@ const GalleryAdd = () => {
                     {/* facility image*/}
                     <div className="flex flex-col">
                       <label  htmlFor="img"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]">Gallery  Image</label>
-                      <input  id="img"  name="img"  type="file"  required  className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px', border: '1px solid #EAEAFF'}}
-                        onFocus={() => handleFocus('img')}
-                        onBlur={() => handleBlur('img')}
-                      />
+                      <ImageUploader onUploadSuccess={handleImageUploadSuccess}/>
+                      {formData.img && (
+                      <div className="mt-4">
+                        <img
+                          src={formData.img}
+                          alt="Uploaded Preview"
+                          className="w-32 h-32 object-cover rounded"
+                        />
+                      </div>
+                    )}
                     </div>
                     
                 </div>
