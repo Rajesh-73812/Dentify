@@ -33,6 +33,10 @@ export const DeleteEntity = async (entity, id) => {
                     await axios.delete(`${BASE_URL}/pages/delete/${id}`, { withCredentials: true });
                     break;
 
+                case 'Package':
+                    await axios.delete(`${BASE_URL}/packages/delete/${id}`, { withCredentials: true });
+                    break;
+
                 case 'Faq':
                     await axios.delete(`${BASE_URL}/faq/delete/${id}`, { withCredentials: true });
                     break;
