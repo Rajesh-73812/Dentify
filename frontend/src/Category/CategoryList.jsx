@@ -8,49 +8,37 @@ import { searchFunction } from "../Entity/SearchEntity";
 import CategoryHeader from "./CategoryHeader";
 import axios from "axios";
 import { useLoading } from '../Context/LoadingContext';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Loader from '../common/Loader';
-
-
 import { DeleteEntity } from '../utils/Delete';
 
-
-
 const CategoryList = () => {
+  const navigate=useNavigate();
   const [categories, setCategories] = useState([]);
   const [filteredcategories, setFilteredcategories] = useState([]);
   const [sortConfig, setSortConfig] = useState({ key: "", direction: "" });
-
-  // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
-
- 
-
+  const location = useLocation();
+  const { isLoading, setIsLoading } = useLoading();
   // Fetch categories from API
   useEffect(() => {
-    async function fetchCategories() {
-      try {
-       
-        const response = await axios.get("http://localhost:5000/categories/all", {
-          withCredentials: true,
-        });
-        console.log("Fetched categories:", response.data);
-        setCategories(response.data);
-        setFilteredcategories(response.data);
-        
-      } catch (error) {
-        console.error("Error fetching categories:", error);
-        
-      }
-    }
-
     fetchCategories();
   }, []);
 
-
-  const location = useLocation();
-  const { isLoading, setIsLoading } = useLoading();
+  const  fetchCategories=async()=> {
+    try {
+     
+      const response = await axios.get("http://localhost:5000/categories/all")
+      console.log("Fetched categories:", response.data);
+      setCategories(response.data);
+      setFilteredcategories(response.data);
+      
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+      
+    }
+  }
 
   useEffect(() => {
     setIsLoading(true);
@@ -80,12 +68,8 @@ const CategoryList = () => {
         return direction === "asc" ? a.id - b.id : b.id - a.id;
       }
       return a[key] < b[key]
-        ? direction === "asc"
-          ? -1
-          : 1
-        : direction === "asc"
-        ? 1
-        : -1;
+        ? direction === "asc" ? -1 : 1
+        : direction === "asc" ? 1  : -1;
     });
 
     setFilteredcategories(sortedData);
@@ -111,8 +95,7 @@ const CategoryList = () => {
 
  
 
-    // update 
-    
+    // delete 
     const handledelete=async(id)=>{
         const success=await DeleteEntity('Category',id);
         if(success){
@@ -120,6 +103,11 @@ const CategoryList = () => {
             setCategories(updatedCategories);
             setFilteredcategories(updatedCategories)
         }
+    }
+
+    // for update 
+    const updateCategory=(id)=>{
+      navigate('/add-category',{state:{id:id}})
     }
     return (
         <div>
@@ -186,7 +174,7 @@ const CategoryList = () => {
                                                     </span>
                                                 </td>
                                                 <td className="px-4 py-3">
-                                                    <button className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition mr-2">
+                                                    <button className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition mr-2" onClick={()=>{updateCategory(category.id)}}>
                                                         <FaPen />
                                                     </button>
                                                     <button className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition" onClick={()=>{handledelete(category.id)}}>
@@ -198,69 +186,6 @@ const CategoryList = () => {
                                     </tbody>
                                 </table>
                             </div>
-
-
-                        </div>
-                      </th>
-                      <th className="px-4 py-3 min-w-[150px]">
-                        Category Title
-                        <div className="inline-flex items-center ml-2">
-                          <span onClick={() => handleSort("title")}>{getSortIcon("title")}</span>
-                        </div>
-                      </th>
-                      <th className="px-4 py-3 min-w-[150px]">Category Image</th>
-                      <th className="px-4 py-3 min-w-[100px]">
-                        Category Status
-                        <div className="inline-flex items-center ml-2">
-                          <span onClick={() => handleSort("status")}>{getSortIcon("status")}</span>
-                        </div>
-                      </th>
-                      <th className="px-4 py-3 min-w-[100px]">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-200">
-                    {currentCategories.length === 0 ? (
-                      <tr>
-                        <td colSpan="5" className="text-center py-4 text-gray-500">
-                          No categories found.
-                        </td>
-                      </tr>
-                    ) : (
-                      currentCategories.map((category, index) => (
-                        <tr key={category.id}>
-                          <td className="px-4 py-3">{index + 1 + indexOfFirstCategory}</td>
-                          <td className="px-4 py-3">{category.title}</td>
-                          <td className="px-4 py-3">
-                            <img
-                              src={category.img || "https://via.placeholder.com/50"}
-                              alt="Category"
-                              className="w-16 h-16 object-cover rounded-full"
-                              onError={(e) => (e.target.src = "https://via.placeholder.com/50")}
-                            />
-                          </td>
-                          <td className="px-4 py-3">
-                            <span
-                              className={`px-3 py-1 text-sm rounded-full ${
-                                category.status === 1 ? "bg-green-500 text-white" : "bg-gray-400 text-white"
-                              }`}
-                            >
-                              {category.status === 1 ? "Publish" : "Unpublish"}
-                            </span>
-                          </td>
-                          <td className="px-4 py-3">
-                            <button className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition mr-2">
-                              <FaPen />
-                            </button>
-                            <button className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition">
-                              <FaTrash />
-                            </button>
-                          </td>
-                        </tr>
-                      ))
-                    )}
-                  </tbody>
-                </table>
-              </div>
             </div>
             <div className="bottom-0 left-0 w-full bg-[#f7fbff] py-4 flex justify-between items-center">
               <span className="text-sm font-normal text-gray-500">

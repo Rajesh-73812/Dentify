@@ -6,19 +6,14 @@ import { GoArrowDown, GoArrowUp } from 'react-icons/go';
 import { FaPen,FaTrash } from "react-icons/fa";
 import { searchFunction } from '../Entity/SearchEntity';
 import axios from 'axios';
-
-import { useLoading } from '../Context/LoadingContext';
-import { useLocation } from 'react-router-dom';
-import Loader from '../common/Loader';
-
 import { DeleteEntity } from '../utils/Delete';
-
+import { useNavigate } from 'react-router-dom';
 
 const CountryList = () => {
+    const navigate=useNavigate();
     const [countries, setCountries] = useState([]);
     const [filteredCountries, setFilteredCountries] = useState([]);
     const [sortConfig, setSortConfig] = useState({ key: '', direction: '' });
-
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
 
@@ -26,20 +21,6 @@ const CountryList = () => {
         
         fetchCountries();
     }, []);
-
-
-    const location = useLocation();
-  const { isLoading, setIsLoading } = useLoading();
-
-  useEffect(() => {
-    setIsLoading(true);
-
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 1000); 
-
-    return () => clearTimeout(timer);
-  }, [location, setIsLoading]);
 
     const fetchCountries = async () => {
         try {
@@ -50,7 +31,6 @@ const CountryList = () => {
             console.error("Error fetching countries:", error);
         }
     };
-
 
     const handleSearch = (event) => {
         searchFunction(event, countries, setFilteredCountries);
@@ -93,10 +73,14 @@ const CountryList = () => {
             setFilteredCountries(updatedCountries);
         }
     };
+
+    // for update
+    const updateCountry=(id)=>{
+        navigate('/add-country',{state:{id:id}})
+    }
     
     return (
         <div>
-            {isLoading && <Loader />}
             <div className="h-screen flex">
                 <SidebarMenu />
                 <div className="flex flex-1 flex-col bg-[#f7fbff]">
@@ -156,7 +140,7 @@ const CountryList = () => {
                                                     </span>
                                                 </td>
                                                 <td className="px-4 py-3">
-                                                    <button className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition mr-2">
+                                                    <button className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition mr-2" onClick={()=>{updateCountry(country.id)}}>
                                                         <FaPen />
                                                     </button>
                                                     <button className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition" onClick={()=>{handledelete(country.id)}}>
