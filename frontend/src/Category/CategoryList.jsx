@@ -201,67 +201,7 @@ const CategoryList = () => {
 
 
                         </div>
-                      </th>
-                      <th className="px-4 py-3 min-w-[150px]">
-                        Category Title
-                        <div className="inline-flex items-center ml-2">
-                          <span onClick={() => handleSort("title")}>{getSortIcon("title")}</span>
-                        </div>
-                      </th>
-                      <th className="px-4 py-3 min-w-[150px]">Category Image</th>
-                      <th className="px-4 py-3 min-w-[100px]">
-                        Category Status
-                        <div className="inline-flex items-center ml-2">
-                          <span onClick={() => handleSort("status")}>{getSortIcon("status")}</span>
-                        </div>
-                      </th>
-                      <th className="px-4 py-3 min-w-[100px]">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-200">
-                    {currentCategories.length === 0 ? (
-                      <tr>
-                        <td colSpan="5" className="text-center py-4 text-gray-500">
-                          No categories found.
-                        </td>
-                      </tr>
-                    ) : (
-                      currentCategories.map((category, index) => (
-                        <tr key={category.id}>
-                          <td className="px-4 py-3">{index + 1 + indexOfFirstCategory}</td>
-                          <td className="px-4 py-3">{category.title}</td>
-                          <td className="px-4 py-3">
-                            <img
-                              src={category.img || "https://via.placeholder.com/50"}
-                              alt="Category"
-                              className="w-16 h-16 object-cover rounded-full"
-                              onError={(e) => (e.target.src = "https://via.placeholder.com/50")}
-                            />
-                          </td>
-                          <td className="px-4 py-3">
-                            <span
-                              className={`px-3 py-1 text-sm rounded-full ${
-                                category.status === 1 ? "bg-green-500 text-white" : "bg-gray-400 text-white"
-                              }`}
-                            >
-                              {category.status === 1 ? "Publish" : "Unpublish"}
-                            </span>
-                          </td>
-                          <td className="px-4 py-3">
-                            <button className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition mr-2">
-                              <FaPen />
-                            </button>
-                            <button className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition">
-                              <FaTrash />
-                            </button>
-                          </td>
-                        </tr>
-                      ))
-                    )}
-                  </tbody>
-                </table>
-              </div>
-            </div>
+                      
             <div className="bottom-0 left-0 w-full bg-[#f7fbff] py-4 flex justify-between items-center">
               <span className="text-sm font-normal text-gray-500">
                 Showing{" "}
