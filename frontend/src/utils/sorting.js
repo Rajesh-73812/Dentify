@@ -1,17 +1,26 @@
 export const handleSort = (data, key, sortConfig, setSortConfig, setData) => {
-  console.log(data,key,sortConfig,setSortConfig,setData)
-    let direction = 'asc';
-    if (sortConfig.key === key && sortConfig.direction === 'asc') {
-      direction = 'desc';
+  console.log(data, key, sortConfig, setSortConfig, setData);
+
+  let direction = 'asc';
+  if (sortConfig.key === key && sortConfig.direction === 'asc') {
+    direction = 'desc';
+  }
+
+  const sortedData = [...data].sort((a, b) => {
+    const valA = a[key] ?? ''; 
+    const valB = b[key] ?? ''; 
+
+    if (typeof valA === 'string' && typeof valB === 'string') {
+      return valA.localeCompare(valB) * (direction === 'asc' ? 1 : -1);
     }
-  
-    const sortedData = [...data].sort((a, b) => {
-      if (key === 'id') {
-        return direction === 'asc' ? a[key] - b[key] : b[key] - a[key];
-      }
-      return a[key]?.localeCompare(b[key]) * (direction === 'asc' ? 1 : -1);
-    });
-  
-    setData(sortedData);
-    setSortConfig({ key, direction });
-  };
+
+    if (typeof valA === 'number' && typeof valB === 'number') {
+      return direction === 'asc' ? valA - valB : valB - valA;
+    }
+
+    return String(valA).localeCompare(String(valB)) * (direction === 'asc' ? 1 : -1);
+  });
+
+  setData(sortedData);
+  setSortConfig({ key, direction });
+};

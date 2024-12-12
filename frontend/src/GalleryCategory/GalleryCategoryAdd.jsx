@@ -73,21 +73,11 @@ const GalleryCategoryAdd = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
   
-    if (name === "pid") {
-      const selectedProperty = properties.find((property) => property.id === Number(value)); 
-      setFormData((prevData) => ({
-        ...prevData,
-        [name]: selectedProperty ? selectedProperty.title : "",
-      }));
-    } else {
-      setFormData((prevData) => ({
-        ...prevData,
-        [name]: value,
-      }));
-    }
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
-  
-  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -115,20 +105,6 @@ const GalleryCategoryAdd = () => {
     <div>
       {isLoading && <Loader />}
       <div className="flex bg-[#f7fbff]">
-
-     
-      
-      <main className="flex-grow">
-        <Header />
-        <div className="container mx-auto">
-          <div className="flex items-center mt-6  mb-4">
-            {/* <Link to="/rolesList" className="cursor-pointer ml-6">
-              
-            </Link> */}
-            <h2 className="text-lg font-semibold ml-4 " style={{color:'#000000',fontSize:'24px',fontFamily:'Montserrat'}}>Gallery Category Management</h2>
-          </div>
-
-
         <main className="flex-grow">
           <Header />
           <div className="container mx-auto">
@@ -166,7 +142,7 @@ const GalleryCategoryAdd = () => {
                       <select
                         name="pid"
                         id="pid"
-                        value={formData.pid?.id || ""}
+                        value={formData.pid || ""}
                         onChange={handleChange}
                         className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm"
                       >

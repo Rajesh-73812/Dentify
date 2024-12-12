@@ -1,23 +1,22 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Header from '../components/Header';
-import SidebarMenu from '../components/SideBar';
 import { GoArrowDown, GoArrowUp } from 'react-icons/go';
 import axios from 'axios';
 import PendingBookHeader from './PendingBookHeader';
-import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import { useNavigate } from 'react-router-dom';
 import OrderPreviewModal from './OrderPreviewModal';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
+import {handleSort} from '../utils/sorting'
 
 const PendingBook = () => {
     const navigate = useNavigate();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isModalOpen2, setIsModalOpen2] = useState(false);
     const [selectedProperty, setSelectedProperty] = useState(null);
-    const [countries, setCountries] = useState([]);
-    const [filteredCountries, setFilteredCountries] = useState([]);
+    const [pending, setpending] = useState([]);
+    const [filteredpending, setFilteredpending] = useState([]);
     const [sortConfig, setSortConfig] = useState({ key: '', direction: '' });
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
@@ -29,54 +28,25 @@ const PendingBook = () => {
                 const response = await axios.get(`http://localhost:5000/bookings/status/${status}`, {
                     withCredentials: true,
                 });
-                console.log(response.data)
-                setCountries(response.data);
-                setFilteredCountries(response.data);
+                // console.log(response.data)
+                setpending(response.data);
+                setFilteredpending(response.data);
             } catch (error) {
                 console.error('Error fetching bookings:', error.message);
             }
         };
         fetchBookings();
     }, []);
-// console.log(countries)
+// console.log(pending)
     const handleSearch = (event) => {
-        const searchValue = event.target.value.toLowerCase();
-        const filtered = countries.filter((country) =>
-            country.title.toLowerCase().includes(searchValue)
-        );
-        setFilteredCountries(filtered);
-        setCurrentPage(1);
+        
     };
 
-    const handleSort = (key) => {
-        let direction = 'asc';
-        if (sortConfig.key === key && sortConfig.direction === 'asc') {
-          direction = 'desc';
-        }
-        console.log("3"+direction)
-        const sortedData = [...filteredCountries].sort((a, b) => {
-          if (a[key] < b[key]) {
-            return direction === 'asc' ? -1 : 1;
-          }
-          if (a[key] > b[key]) {
-            return direction === 'asc' ? 1 : -1;
-          }
-          return 0;
-        });
-        // console.log(sortedData)
-        setFilteredCountries(sortedData);
-        setSortConfig({ key, direction });
-        setCurrentPage(1)
-      };
-    
-
-    const indexOfLastCountry = currentPage * itemsPerPage;
-    const indexOfFirstCountry = indexOfLastCountry - itemsPerPage;
-    const currentCountries = filteredCountries.slice(indexOfFirstCountry, indexOfLastCountry);
-
+    const indexOfLast = currentPage * itemsPerPage;
+    const indexOfFirst = indexOfLast - itemsPerPage;
+    const currentpending = filteredpending.slice(indexOfFirst, indexOfLast);
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
-    const totalPages = Math.ceil(filteredCountries.length / itemsPerPage);
+    const totalPages = Math.ceil(filteredpending.length / itemsPerPage);
 
     const openModal = (property) => {
         setSelectedProperty(property);
@@ -99,11 +69,7 @@ const PendingBook = () => {
 
     const navigateApprove = async (id, newStatus) => {
         try {
-            const response = await axios.put(
-                `http://localhost:5000/bookings/status/${id}`, 
-                { status: newStatus }, 
-                { withCredentials: true }
-            );
+            const response = await axios.put(`http://localhost:5000/bookings/status/${id}`,{ status: newStatus },{ withCredentials: true });
     
             if (response.status === 200) {
                 NotificationManager.success('Status updated successfully!');
@@ -116,8 +82,11 @@ const PendingBook = () => {
             NotificationManager.error(error.response?.data?.error || 'Failed to update status. Please try again.');
         }
     };
-    
-    
+
+    // Handle sorting
+    const sortData = (key) => {
+        handleSort(filteredpending,key,sortConfig,setSortConfig,setFilteredpending)
+    };
 
     return (
         <div className="h-screen flex">
@@ -127,103 +96,111 @@ const PendingBook = () => {
                 <PendingBookHeader onSearch={handleSearch} />
                 <div className="py-6 px-6 h-full w-[1000px] overflow-scroll scrollbar-none">
                     <div className="bg-white w-full rounded-xl border border-[#EAE5FF] py-4 px-3 overflow-x-auto scrollbar-none">
-                        <div className="relative sm:rounded-lg">
+                        <div className="relative sm:rounded-lg overflow-y-auto max-h-[400px] scrollbar-none">
                             <table className="min-w-full text-sm text-left text-gray-700">
-                                <thead className="bg-gray-50 text-xs uppercase font-medium text-gray-500">
+                                <thead className="bg-gray-50 text-xs uppercase font-medium text-gray-500 sticky top-0 z-10">
                                 <tr>
-                                            <th className="px-4 py-3 min-w-[150px]">
-                                                Sr. No
-                                                <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className='cursor-pointer' onClick={() => handleSort('slno')} />
-                                                    <GoArrowDown className='cursor-pointer' onClick={() => handleSort('slno')} />
-                                                </div>
-                                            </th>
-                                            <th className="px-4 py-3 min-w-[250px]">
-                                                Property Title 
-                                                <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className='cursor-pointer' onClick={() => handleSort('prop_title')} />
-                                                    <GoArrowDown className='cursor-pointer' onClick={() => handleSort('prop_title')} />
-                                                </div>
-                                            </th>
-                                            <th className="px-4 py-3 min-w-[250px]">
-                                                Property Image
-                                              <div className="inline-flex items-center ml-2">
-                                                  <GoArrowUp className='cursor-pointer' onClick={() => handleSort('prop_img')} />
-                                                  <GoArrowDown className='cursor-pointer' onClick={() => handleSort('prop_img')} />
-                                              </div>
-                                            </th>
-                                            <th className="px-4 py-3 min-w-[250px]">
-                                                Property Price
-                                                <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className='cursor-pointer' onClick={() => handleSort('prop_price')} />
-                                                    <GoArrowDown className='cursor-pointer' onClick={() => handleSort('prop_price')} />
-                                                </div>
-                                            </th>
-                                            <th className="px-4 py-3 min-w-[250px]">
-                                              Property Total Day
-                                                <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className='cursor-pointer' onClick={() => handleSort('total_day')} />
-                                                    <GoArrowDown className='cursor-pointer' onClick={() => handleSort('total_day')} />
-                                                </div>
-                                            </th>
+                                    <th className="px-4 py-3 min-w-[130px]">
+                                        Sr. No
+                                        <div className="inline-flex items-center ml-2">
+                                            <GoArrowUp className='cursor-pointer' onClick={() => sortData('slno')} />
+                                            <GoArrowDown className='cursor-pointer' onClick={() => sortData('slno')} />
+                                        </div>
+                                    </th>
+                                    <th className="px-4 py-3 min-w-[180px]">
+                                        Property Title 
+                                        <div className="inline-flex items-center ml-2">
+                                            <GoArrowUp className='cursor-pointer' onClick={() => sortData('prop_title')} />
+                                            <GoArrowDown className='cursor-pointer' onClick={() => sortData('prop_title')} />
+                                        </div>
+                                    </th>
+                                    <th className="px-4 py-3 min-w-[180px]">  Property Image </th>
+                                    <th className="px-4 py-3 min-w-[180px]">
+                                        Property Price
+                                        <div className="inline-flex items-center ml-2">
+                                            <GoArrowUp className='cursor-pointer' onClick={() => sortData('prop_price')} />
+                                            <GoArrowDown className='cursor-pointer' onClick={() => sortData('prop_price')} />
+                                        </div>
+                                    </th>
+                                    <th className="px-4 py-3 min-w-[200px]">
+                                        Property Total Day
+                                        <div className="inline-flex items-center ml-2">
+                                            <GoArrowUp className='cursor-pointer' onClick={() => sortData('total_day')} />
+                                            <GoArrowDown className='cursor-pointer' onClick={() => sortData('total_day')} />
+                                        </div>
+                                    </th>
                                             
-                                            <th className="px-4 py-3 min-w-[350px]">
-                                              Action
-                                              <div className="inline-flex items-center ml-2">
-                                                  <GoArrowUp className='cursor-pointer' onClick={() => handleSort('action')} />
-                                                  <GoArrowDown className='cursor-pointer' onClick={() => handleSort('action')} />
-                                              </div>
-                                              
-                                            </th>
+                                    <th className="px-4 py-3 min-w-[350px]">  Action </th>
                                 </tr>
                                 </thead>
                                 <tbody className="divide-y divide-gray-200">
-                                    {currentCountries.map((country, index) => (
+                                    {currentpending.length > 0 ? (
+                                        currentpending.map((pendingList, index) => (
                                         <tr key={index+1}>
-                                            <td className="px-4 py-3">{index + 1 + indexOfFirstCountry}</td>
-                                            <td className="px-4 py-3">{country.prop_title || 'N/A'}</td>
+                                            <td className="px-4 py-3">{index + 1 + indexOfFirst}</td>
+                                            <td className="px-4 py-3">{pendingList?.prop_title || 'N/A'}</td>
                                             <td className="px-4 py-3">
-                                                <img
-                                                    src={country.prop_img || 'fallback-image.jpg'}
-                                                    alt={country.prop_title || 'N/A'}
-                                                    className="w-16 h-16 object-cover rounded-full"
-                                                />
+                                                {pendingList.prop_img ? (
+                                                        <img src={pendingList.prop_img} className="w-16 h-16 object-cover rounded-full" alt="Pending" 
+                                                            onError={(e) => { e.target.src = 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg';
+                                                            }}
+                                                        />
+                                                    ) : (
+                                                    <img src="https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg" className="w-16 h-16 object-cover rounded-full" alt="Placeholder"  />
+                                                )}
                                             </td>
-                                            <td className="px-4 py-3">{country.prop_price}</td>
-                                            <td className="px-4 py-3">{country.total_day}</td>
+                                            <td className="px-4 py-3">{pendingList?.prop_price || 'N/A'}</td>
+                                            <td className="px-4 py-3">{pendingList?.total_day || 'N/A'}</td>
                                             <td className="px-4 py-3">
                                                 <NotificationContainer />
-                                                    <span className='px-3 py-1 text-sm rounded-full bg-green-400 cursor-pointer text-white mr-2' onClick={() => openModal(country)}>View Details</span>
-                                                    <span className=' px-3 py-1 text-sm rounded-full bg-cyan-400 cursor-pointer text-white mr-2' onClick={()=>{navigateApprove(country.id,'Confirmed')}}>Confirmed</span>
+                                                    <span className='px-3 py-1 text-sm rounded-full bg-green-400 cursor-pointer text-white mr-2' onClick={() => openModal(pendingList)}>View Details</span>
+                                                    <span className=' px-3 py-1 text-sm rounded-full bg-cyan-400 cursor-pointer text-white mr-2' onClick={()=>{navigateApprove(pendingList.id,'Confirmed')}}>Confirmed</span>
                                                     <span className='px-3 py-1 text-sm rounded-full bg-red-400 cursor-pointer text-white mr-2' onClick={openModal2}>Cancelled</span>
                                             </td>
                                         </tr>
-                                    ))}
+                                    ))
+                                ) : (
+                                    <tr>
+                                        <td className="px-4 py-3 text-center" colSpan="6">
+                                            No data available
+                                        </td>
+                                    </tr>
+                                )}
                                 </tbody>
                             </table>
                         </div>
                     </div>
                     <div className="bottom-0 left-0 w-full bg-[#f7fbff] py-4 flex justify-between items-center">
-                            <span className="text-sm font-normal text-gray-500">
-                                Showing <span className="font-semibold text-gray-900">{indexOfFirstCountry + 1}</span> to <span className="font-semibold text-gray-900">{Math.min(indexOfLastCountry, filteredCountries.length)}</span> of <span className="font-semibold text-gray-900">{filteredCountries.length}</span>
-                            </span>
-                            <ul className="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">
+                        <span className="text-sm font-normal text-gray-500">
+                            Showing <span className="font-semibold text-gray-900">{indexOfFirst + 1}</span> to <span className="font-semibold text-gray-900">{Math.min(indexOfLast, filteredpending.length)}</span> of <span className="font-semibold text-gray-900">{filteredpending.length}</span>
+                        </span>
+                        <ul className="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">
                                 <li>
-                                    <button onClick={() => paginate(currentPage > 1 ? currentPage - 1 : 1)} className="previous-button" disabled={currentPage === 1}>
+                                    <button 
+                                        onClick={() => paginate(currentPage > 1 ? currentPage - 1 : 1)} 
+                                        className={`previous-button ${filteredpending.length === 0 ? 'cursor-not-allowed' : ''}`} 
+                                        disabled={currentPage === 1 || filteredpending.length === 0} 
+                                        title={filteredpending.length === 0 ? 'No data available' : ''}
+                                    >
                                         <img src="/image/action/Left Arrow.svg" alt="Left" /> Previous
                                     </button>
                                 </li>
                                 <li>
                                     <span className="current-page">
-                                        Page {currentPage} of {totalPages}
+                                        Page {filteredpending.length > 0 ? currentPage : 0} of {filteredpending.length > 0 ? totalPages : 0}
                                     </span>
                                 </li>
                                 <li>
-                                    <button onClick={() => paginate(currentPage < totalPages ? currentPage + 1 : totalPages)} className="next-button" disabled={currentPage === totalPages}>
+                                    <button 
+                                        onClick={() => paginate(currentPage < totalPages ? currentPage + 1 : totalPages)} 
+                                        className={`next-button ${filteredpending.length === 0 ? 'cursor-not-allowed' : ''}`} 
+                                        disabled={currentPage === totalPages || filteredpending.length === 0} 
+                                        title={filteredpending.length === 0 ? 'No data available' : ''}
+                                    >
                                         Next <img src="/image/action/Right Arrow (1).svg" alt="Right" />
                                     </button>
                                 </li>
-                            </ul>
+                        </ul>
                     </div>
                     <OrderPreviewModal isOpen={isModalOpen} closeModal={closeModal}/>
                     {isModalOpen2 && (

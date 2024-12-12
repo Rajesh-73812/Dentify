@@ -3,11 +3,12 @@ import Header from "../components/Header";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import SidebarMenu from "../components/SideBar";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { useLoading } from "../Context/LoadingContext";
 import { useLocation } from "react-router-dom";
 import Loader from "../common/Loader";
+import ImageUploader from "../common/ImageUploader";
+import { NotificationContainer, NotificationManager } from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 
 const CountryAdd = () => {
   const navigate = useNavigate();
@@ -57,38 +58,14 @@ const CountryAdd = () => {
     }));
   };
 
-  const handleImageUpload = async (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImage(reader.result);
-      };
-      reader.readAsDataURL(file);
-    }
-    if (!file) return;
-
-    const imageFormData = new FormData();
-    imageFormData.append("file", file);
-    imageFormData.append("upload_preset", "infinitum-task");
-    imageFormData.append("cloud_name", "dhr4xnftl");
-
-    try {
-      const res = await axios.post(
-        "https://api.cloudinary.com/v1_1/dhr4xnftl/image/upload",
-        imageFormData
-      );
-      setFormData((prevData) => ({
-        ...prevData,
-        img: res.data.secure_url,
-      }));
-      toast.success("Image uploaded successfully!");
-    } catch (error) {
-      console.error("Error uploading image to Cloudinary:", error);
-      toast.error("Failed to upload image.");
-    }
+  const handleImageUploadSuccess = (imageUrl) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      img: imageUrl,
+    }));
   };
-  console.log(formData)
+  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -106,11 +83,11 @@ const CountryAdd = () => {
       const successMessage = id
         ? "Country updated successfully!"
         : "Country added successfully!";
-      toast.success(successMessage);
+      NotificationManager.success(successMessage);
       navigate("/country-list");
     } catch (error) {
       console.error("Error submitting country data:", error);
-      toast.error("An error occurred. Please try again.");
+      NotificationManager.error("An error occurred. Please try again.");
     }
   };
 
@@ -118,10 +95,6 @@ const CountryAdd = () => {
     <div>
       {isLoading && <Loader />}
       <div className="flex bg-[#f7fbff]">
-
-        {/* Sidebar */}
-
-
         <main className="flex-grow">
           <Header />
           <div className="container mx-auto">
@@ -131,15 +104,7 @@ const CountryAdd = () => {
             </Link> */}
               <h2 className="text-lg font-semibold ml-4 " style={{ color: '#000000', fontSize: '24px', fontFamily: 'Montserrat' }}>Country Management</h2>
             </div>
-
-            {/* Form Container */}
-
-
-
-            <div
-              className="h-full px-6 max-w-5xl"
-              style={{ paddingTop: "24px" }}
-            >
+            <div className="h-full px-6 max-w-5xl"  style={{ paddingTop: "24px" }} >
               <div className="bg-white h-[70vh] w-full rounded-xl border border-[#EAE5FF] py-4 px-6 overflow-y-auto" style={{ scrollbarWidth: 'none' }}>
                 <form onSubmit={handleSubmit} className="mt-4">
                   <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-1 mt-6">
@@ -170,29 +135,17 @@ const CountryAdd = () => {
                       >
                         Country Image
                       </label>
-                      <input
-                        id="country_image"
-                        onChange={handleImageUpload}
-                        name="img"
-                        type="file"
-                        required
-                        className="border rounded-lg p-3 mt-1 w-full h-14"
-                        style={{
-                          borderRadius: "8px",
-                          border: "1px solid #EAEAFF",
-                        }}
-                      />
-                    </div>
-                    {formData.img && (
+                      <ImageUploader onUploadSuccess={handleImageUploadSuccess}/>
+                      {formData.img && (
                       <div className="mt-4">
                         <img
                           src={formData.img}
-                          alt="Uploaded"
-                          className=" h-auto rounded-lg"
-                          style={{ maxHeight: '200px', objectFit: 'cover' }} // Adjust styles as needed
+                          alt="Uploaded Preview"
+                          className="w-32 h-32 object-cover rounded"
                         />
                       </div>
-                    )}
+                      )}
+                    </div>
                   </div>
 
                   <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-1 mt-6">
@@ -220,18 +173,18 @@ const CountryAdd = () => {
                   <div className="flex justify-start mt-6 gap-3">
                     <button
                       type="submit"
-                      className="py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 w-[150px] h-12 font-[Montserrat] font-bold"
+                      className={`py-2 ${id ? 'bg-green-500 hover:bg-green-600' : 'bg-blue-500 hover:bg-blue-600'}  text-white rounded-lg  w-[150px] h-12 font-[Montserrat] font-bold`}
                       style={{ borderRadius: "8px" }}
                     >
-                      {formData.id ? "Update Country" : "Add Country"}
+                      {id ? "Update Country" : "Add Country"}
                     </button>
-                    <ToastContainer />
                   </div>
                 </form>
               </div>
             </div>
           </div>
         </main>
+        <NotificationContainer />
       </div>
     </div>
   );
