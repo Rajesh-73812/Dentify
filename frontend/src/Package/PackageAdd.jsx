@@ -106,7 +106,11 @@ const PackageAdd = () => {
   return (
     <div>
       <div className="flex bg-[#f7fbff]">
-        <SidebarMenu />
+
+      
+      
+      
+
 
         <main className="flex-grow">
           <Header />

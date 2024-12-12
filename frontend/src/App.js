@@ -16,7 +16,7 @@ import PaymentGatewayList from "./PaymentGateway/PaymentGatewayList.jsx";
 import EnquiryList from "./Enquiry/EnquiryList.jsx";
 import PayOutList from "./PayOut/PayOutList.jsx";
 import PropertiesList from "./Propoties/PropertiesList.jsx";
-// import PropotiesAdd from './Propoties/PropotiesAdd.jsx';
+import PropertiesAdd from "./Propoties/PropertiesAdd.jsx";
 import ExtraImageList from "./ExtraImage/ExtraImageList.jsx";
 import ExtraImageAdd from "./ExtraImage/ExetraImageAdd.jsx";
 import FacilityList from "./Facility/FacilityList.jsx";
@@ -38,74 +38,316 @@ import PageList from "./Page/PageList.jsx";
 import PageAdd from "./Page/PageAdd.jsx";
 import FaqList from "./Faq/FaqList.jsx";
 import FaqAdd from "./Faq/FaqAdd.jsx";
-import ProtectedRoute from "./ProtectedRoute.js";
-import PropertiesAdd from "./Propoties/PropertiesAdd.jsx";
+import SidebarMenu from "./components/SideBar.jsx";
+
+// Layout component for common sidebar
+const LayoutWithSidebar = ({ children }) => (
+  <div className="h-screen flex">
+    <SidebarMenu />
+    <div className="flex-1">{children}</div>
+  </div>
+);
 
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
         <Routes>
+          {/* Excluded routes */}
           <Route path="/" element={<Login />} />
-          <Route path="/forgotpassword" element={<ForgotPassword />}></Route>
-          <Route path="/sendotp" element={<SendOTP />}></Route>
-          <Route path="/setnewpassword" element={<SetNewPassword />}></Route>
-          <Route path="/dashboard" element={<Dashboard />}></Route>
+          <Route path="/forgotpassword" element={<ForgotPassword />} />
+          <Route path="/sendotp" element={<SendOTP />} />
+          <Route path="/setnewpassword" element={<SetNewPassword />} />
 
-          <Route path="/add-country" element={<CountryAdd />}></Route>
-          <Route path="/country-list" element={<CountryList />}></Route>
-          <Route path="/add-category" element={<CategoryAdd />}></Route>
-          <Route path="/category-list" element={<CategoryList />}></Route>
-
-          <Route path="/add-cuppon" element={<CupponAdd />}></Route>
-          <Route path="/cuppon-list" element={<CupponList />}></Route>
-
-          <Route path="/payment-list" element={<PaymentGatewayList />}></Route>
-          <Route path="/enquiry-list" element={<EnquiryList />}></Route>
-
-          <Route path="/payout-list" element={<PayOutList />}></Route>
-          <Route path="/enquiry-list" element={<EnquiryList />}></Route>
-
-          <Route path="/property-list" element={<PropertiesList />}></Route>
-          <Route path="/create-property" element={<PropertiesAdd />}></Route>
-
-          <Route path="/extra-image-list" element={<ExtraImageList />}></Route>
-          <Route path="/create-extra-image" element={<ExtraImageAdd />}></Route>
-
-          <Route path="/facility-list" element={<FacilityList />}></Route>
-          <Route path="/create-facility" element={<FacilityAdd />}></Route>
-
+          {/* Routes with Sidebar */}
           <Route
-            path="/gallery-category-list"
-            element={<GalleryCategoryList />}
-          ></Route>
+            path="/dashboard"
+            element={
+              <LayoutWithSidebar>
+                <Dashboard />
+              </LayoutWithSidebar>
+            }
+          />
           <Route
-            path="/create-gallery-category"
-            element={<GalleryCategoryAdd />}
-          ></Route>
+            path="/add-country"
+            element={
+              <LayoutWithSidebar>
+                <CountryAdd />
+              </LayoutWithSidebar>
+            }
+          />
+          <Route
+            path="/country-list"
+            element={
+              <LayoutWithSidebar>
+                <CountryList />
+              </LayoutWithSidebar>
+            }
+          />
+          
+          <Route
+            path="/add-category"
+            element={
+              <LayoutWithSidebar>
+                <CategoryAdd />
+              </LayoutWithSidebar>
+            }
+          />
+          <Route
+            path="/category-list"
+            element={
+              <LayoutWithSidebar>
+                <CategoryList />
+              </LayoutWithSidebar>
+            }
+          />
+          <Route
+  path="/add-cuppon"
+  element={
+    <LayoutWithSidebar>
+      <CupponAdd />
+    </LayoutWithSidebar>
+  }
+/>
+<Route
+  path="/cuppon-list"
+  element={
+    <LayoutWithSidebar>
+      <CupponList />
+    </LayoutWithSidebar>
+  }
+/>
 
-          <Route path="/gallery-list" element={<GalleryList />}></Route>
-          <Route path="/create-gallery" element={<GalleryAdd />}></Route>
+<Route
+  path="/payment-list"
+  element={
+    <LayoutWithSidebar>
+      <PaymentGatewayList />
+    </LayoutWithSidebar>
+  }
+/>
+<Route
+  path="/enquiry-list"
+  element={
+    <LayoutWithSidebar>
+      <EnquiryList />
+    </LayoutWithSidebar>
+  }
+/>
 
-          <Route path="/package-list" element={<PackageList />}></Route>
-          <Route path="/create-package" element={<PackageAdd />}></Route>
+<Route
+  path="/payout-list"
+  element={
+    <LayoutWithSidebar>
+      <PayOutList />
+    </LayoutWithSidebar>
+  }
+/>
 
-          <Route path="/page-list" element={<PageList />}></Route>
-          <Route path="/create-page" element={<PageAdd />}></Route>
+<Route
+  path="/property-list"
+  element={
+    <LayoutWithSidebar>
+      <PropertiesList />
+    </LayoutWithSidebar>
+  }
+/>
+<Route
+  path="/create-property"
+  element={
+    <LayoutWithSidebar>
+      <PropertiesAdd />
+    </LayoutWithSidebar>
+  }
+/>
 
-          <Route path="/faq-list" element={<FaqList />}></Route>
-          <Route path="/create-faq" element={<FaqAdd />}></Route>
+<Route
+  path="/extra-image-list"
+  element={
+    <LayoutWithSidebar>
+      <ExtraImageList />
+    </LayoutWithSidebar>
+  }
+/>
+<Route
+  path="/create-extra-image"
+  element={
+    <LayoutWithSidebar>
+      <ExtraImageAdd />
+    </LayoutWithSidebar>
+  }
+/>
 
-          <Route path="/pending-book-list" element={<PendingBook />}></Route>
-          <Route path="/approved-book-list" element={<ApprovedBook />}></Route>
-          <Route path="/check-in-list" element={<CheckInBook />}></Route>
-          <Route path="/completed-list" element={<CompletedBook />}></Route>
-          <Route path="/cancelled-list" element={<CancelledBook />}></Route>
+<Route
+  path="/facility-list"
+  element={
+    <LayoutWithSidebar>
+      <FacilityList />
+    </LayoutWithSidebar>
+  }
+/>
+<Route
+  path="/create-facility"
+  element={
+    <LayoutWithSidebar>
+      <FacilityAdd />
+    </LayoutWithSidebar>
+  }
+/>
 
-          {/* for profile */}
-          <Route path="/profile" element={<Profile />}></Route>
-          <Route path="/settings" element={<Settings />}></Route>
-          <Route path="/user-list" element={<UserList />}></Route>
+<Route
+  path="/gallery-category-list"
+  element={
+    <LayoutWithSidebar>
+      <GalleryCategoryList />
+    </LayoutWithSidebar>
+  }
+/>
+<Route
+  path="/create-gallery-category"
+  element={
+    <LayoutWithSidebar>
+      <GalleryCategoryAdd />
+    </LayoutWithSidebar>
+  }
+/>
+
+<Route
+  path="/gallery-list"
+  element={
+    <LayoutWithSidebar>
+      <GalleryList />
+    </LayoutWithSidebar>
+  }
+/>
+<Route
+  path="/create-gallery"
+  element={
+    <LayoutWithSidebar>
+      <GalleryAdd />
+    </LayoutWithSidebar>
+  }
+/>
+
+<Route
+  path="/package-list"
+  element={
+    <LayoutWithSidebar>
+      <PackageList />
+    </LayoutWithSidebar>
+  }
+/>
+<Route
+  path="/create-package"
+  element={
+    <LayoutWithSidebar>
+      <PackageAdd />
+    </LayoutWithSidebar>
+  }
+/>
+
+<Route
+  path="/page-list"
+  element={
+    <LayoutWithSidebar>
+      <PageList />
+    </LayoutWithSidebar>
+  }
+/>
+<Route
+  path="/create-page"
+  element={
+    <LayoutWithSidebar>
+      <PageAdd />
+    </LayoutWithSidebar>
+  }
+/>
+
+<Route
+  path="/faq-list"
+  element={
+    <LayoutWithSidebar>
+      <FaqList />
+    </LayoutWithSidebar>
+  }
+/>
+<Route
+  path="/create-faq"
+  element={
+    <LayoutWithSidebar>
+      <FaqAdd />
+    </LayoutWithSidebar>
+  }
+/>
+
+<Route
+  path="/pending-book-list"
+  element={
+    <LayoutWithSidebar>
+      <PendingBook />
+    </LayoutWithSidebar>
+  }
+/>
+<Route
+  path="/approved-book-list"
+  element={
+    <LayoutWithSidebar>
+      <ApprovedBook />
+    </LayoutWithSidebar>
+  }
+/>
+<Route
+  path="/check-in-list"
+  element={
+    <LayoutWithSidebar>
+      <CheckInBook />
+    </LayoutWithSidebar>
+  }
+/>
+<Route
+  path="/completed-list"
+  element={
+    <LayoutWithSidebar>
+      <CompletedBook />
+    </LayoutWithSidebar>
+  }
+/>
+<Route
+  path="/cancelled-list"
+  element={
+    <LayoutWithSidebar>
+      <CancelledBook />
+    </LayoutWithSidebar>
+  }
+/>
+
+{/* For profile and settings */}
+<Route
+  path="/profile"
+  element={
+    <LayoutWithSidebar>
+      <Profile />
+    </LayoutWithSidebar>
+  }
+/>
+<Route
+  path="/settings"
+  element={
+    <LayoutWithSidebar>
+      <Settings />
+    </LayoutWithSidebar>
+  }
+/>
+<Route
+  path="/user-list"
+  element={
+    <LayoutWithSidebar>
+      <UserList />
+    </LayoutWithSidebar>
+  }
+/>
+
+
         </Routes>
       </BrowserRouter>
     </div>

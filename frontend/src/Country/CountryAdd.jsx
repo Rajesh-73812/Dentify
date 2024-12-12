@@ -3,15 +3,15 @@ import Header from "../components/Header";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import SidebarMenu from "../components/SideBar";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { useLoading } from "../Context/LoadingContext";
 import { useLocation } from "react-router-dom";
 import Loader from "../common/Loader";
-import { NotificationContainer, NotificationManager } from 'react-notifications';
-import 'react-notifications/lib/notifications.css';
 
 const CountryAdd = () => {
   const navigate = useNavigate();
-  const location=useLocation()
+  const location = useLocation()
   const id = location.state ? location.state.id : null;
   const { isLoading, setIsLoading } = useLoading();
   const [image, setImage] = useState(null);
@@ -25,7 +25,7 @@ const CountryAdd = () => {
   useEffect(() => {
     setIsLoading(true);
     if (id) {
-      getCountry(id); 
+      getCountry(id);
     }
     const timer = setTimeout(() => {
       setIsLoading(false);
@@ -62,9 +62,9 @@ const CountryAdd = () => {
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setImage(reader.result); 
+        setImage(reader.result);
       };
-      reader.readAsDataURL(file); 
+      reader.readAsDataURL(file);
     }
     if (!file) return;
 
@@ -82,16 +82,16 @@ const CountryAdd = () => {
         ...prevData,
         img: res.data.secure_url,
       }));
-      NotificationManager.success("Image uploaded successfully!");
+      toast.success("Image uploaded successfully!");
     } catch (error) {
       console.error("Error uploading image to Cloudinary:", error);
-      NotificationManager.error("Failed to upload image.");
+      toast.error("Failed to upload image.");
     }
   };
   console.log(formData)
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     try {
       const apiEndpoint = id
         ? `http://localhost:5000/countries/upsert`
@@ -106,11 +106,11 @@ const CountryAdd = () => {
       const successMessage = id
         ? "Country updated successfully!"
         : "Country added successfully!";
-        NotificationManager.success(successMessage);
+      toast.success(successMessage);
       navigate("/country-list");
     } catch (error) {
       console.error("Error submitting country data:", error);
-      NotificationManager.error("An error occurred. Please try again.");
+      toast.error("An error occurred. Please try again.");
     }
   };
 
@@ -118,36 +118,79 @@ const CountryAdd = () => {
     <div>
       {isLoading && <Loader />}
       <div className="flex bg-[#f7fbff]">
+
         {/* Sidebar */}
-        <SidebarMenu />
+
 
         <main className="flex-grow">
           <Header />
           <div className="container mx-auto">
-            <div className="flex items-center mt-6 mb-4">
-              <h2  className="text-lg font-semibold ml-4"  style={{    color: "#000000",    fontSize: "24px",    fontFamily: "Montserrat",  }}>  Country Management</h2>
+            <div className="flex items-center mt-6  mb-4">
+              {/* <Link to="/rolesList" className="cursor-pointer ml-6">
+              
+            </Link> */}
+              <h2 className="text-lg font-semibold ml-4 " style={{ color: '#000000', fontSize: '24px', fontFamily: 'Montserrat' }}>Country Management</h2>
             </div>
 
-            <div  className="h-full px-6 max-w-5xl"  style={{ paddingTop: "24px" }}>
-              <div className="bg-white h-[70vh] w-full rounded-xl border border-[#EAE5FF] py-4 px-6 overflow-y-auto" style={{scrollbarWidth:'none'}}>
+            {/* Form Container */}
+
+
+
+            <div
+              className="h-full px-6 max-w-5xl"
+              style={{ paddingTop: "24px" }}
+            >
+              <div className="bg-white h-[70vh] w-full rounded-xl border border-[#EAE5FF] py-4 px-6 overflow-y-auto" style={{ scrollbarWidth: 'none' }}>
                 <form onSubmit={handleSubmit} className="mt-4">
                   <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-1 mt-6">
                     {/* Country Name */}
                     <div className="flex flex-col">
-                      <label  htmlFor="country_name"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]">  Country Name</label>
-                      <input   id="country_name" value={formData.title} onChange={handleChange} name="title" type="text" required className="border rounded-lg p-3 mt-1 w-full h-14" style={{ borderRadius: "8px",  border: "1px solid #EAEAFF",  }} placeholder="Enter Country name" />
+                      <label
+                        htmlFor="country_name"
+                        className="text-sm font-medium text-start text-[12px] font-[Montserrat]"
+                      >
+                        Country Name
+                      </label>
+                      <input id="country_name" value={formData.title} onChange={handleChange} name="title" type="text" required className="border rounded-lg p-3 mt-1 w-full h-14"
+                        style={{
+                          borderRadius: "8px",
+                          border: "1px solid #EAEAFF",
+                        }}
+                        placeholder="Enter Country name"
+                      />
                     </div>
                   </div>
 
                   <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-1 mt-6">
                     {/* Country Image */}
                     <div className="flex flex-col">
-                      <label  htmlFor="country_image"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]">  Country Image   </label>
-                      <input  id="country_image"  onChange={handleImageUpload}  name="img"  type="file"  required  className="border rounded-lg p-3 mt-1 w-full h-14"  style={{    borderRadius: "8px",    border: "1px solid #EAEAFF",  }}/>
+                      <label
+                        htmlFor="country_image"
+                        className="text-sm font-medium text-start text-[12px] font-[Montserrat]"
+                      >
+                        Country Image
+                      </label>
+                      <input
+                        id="country_image"
+                        onChange={handleImageUpload}
+                        name="img"
+                        type="file"
+                        required
+                        className="border rounded-lg p-3 mt-1 w-full h-14"
+                        style={{
+                          borderRadius: "8px",
+                          border: "1px solid #EAEAFF",
+                        }}
+                      />
                     </div>
-                    {formData.img && ( 
+                    {formData.img && (
                       <div className="mt-4">
-                        <img  src={formData.img}  alt="Uploaded"  className=" h-auto rounded-lg"  style={{ maxHeight: '200px', objectFit: 'cover' }} />
+                        <img
+                          src={formData.img}
+                          alt="Uploaded"
+                          className=" h-auto rounded-lg"
+                          style={{ maxHeight: '200px', objectFit: 'cover' }} // Adjust styles as needed
+                        />
                       </div>
                     )}
                   </div>
@@ -155,8 +198,19 @@ const CountryAdd = () => {
                   <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-1 mt-6">
                     {/* Country Status */}
                     <div className="flex flex-col">
-                      <label  htmlFor="country_status"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> Status </label>
-                      <select  name="status"  id="country_status"  value={formData.status}  onChange={handleChange}  className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm">
+                      <label
+                        htmlFor="country_status"
+                        className="text-sm font-medium text-start text-[12px] font-[Montserrat]"
+                      >
+                        Status
+                      </label>
+                      <select
+                        name="status"
+                        id="country_status"
+                        value={formData.status}
+                        onChange={handleChange}
+                        className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm"
+                      >
                         <option value={1}>Publish</option>
                         <option value={0}>Unpublish</option>
                       </select>
@@ -164,16 +218,20 @@ const CountryAdd = () => {
                   </div>
 
                   <div className="flex justify-start mt-6 gap-3">
-                    <button type="submit"   className={`py-2 ${id ? 'bg-green-500 hover:bg-green-600' : 'bg-blue-500 hover:bg-blue-600'} text-white rounded-lg w-[150px] h-12 font-[Montserrat] font-bold`}  style={{ borderRadius: '8px' }}   >
-                      {id ? 'Update Country' : 'Add Country'}
+                    <button
+                      type="submit"
+                      className="py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 w-[150px] h-12 font-[Montserrat] font-bold"
+                      style={{ borderRadius: "8px" }}
+                    >
+                      {formData.id ? "Update Country" : "Add Country"}
                     </button>
+                    <ToastContainer />
                   </div>
                 </form>
               </div>
             </div>
           </div>
         </main>
-        <NotificationContainer />
       </div>
     </div>
   );

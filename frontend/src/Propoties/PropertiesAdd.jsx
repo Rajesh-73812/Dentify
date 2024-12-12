@@ -99,8 +99,7 @@ const PropertiesAdd = () => {
     <div>
       <div className="flex bg-[#f7fbff]">
         {/* Sidebar */}
-        <SidebarMenu />
-
+       
         <main className="flex-grow">
           <Header />
           <div className="container mx-auto">

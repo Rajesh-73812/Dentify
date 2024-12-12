@@ -92,7 +92,7 @@ const CupponAdd = () => {
       {isLoading && <Loader />}
       <div className="flex bg-[#f7fbff]">
       {/* Sidebar */}
-      <SidebarMenu />
+      
       
       <main className="flex-grow">
         <Header />

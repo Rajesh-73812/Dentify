@@ -121,7 +121,7 @@ const PendingBook = () => {
 
     return (
         <div className="h-screen flex">
-            <SidebarMenu />
+            
             <div className="flex-1 flex flex-col bg-[#f7fbff]">
                 <Header />
                 <PendingBookHeader onSearch={handleSearch} />

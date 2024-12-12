@@ -33,7 +33,7 @@ const ExtraImageAdd = () => {
       {isLoading && <Loader />}
       <div className="flex bg-[#f7fbff]">
       {/* Sidebar */}
-      <SidebarMenu />
+      
       
       <main className="flex-grow">
         <Header />
