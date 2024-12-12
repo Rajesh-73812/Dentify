@@ -11,7 +11,7 @@ import Loader from "../common/Loader";
 
 const CountryAdd = () => {
   const navigate = useNavigate();
-  const location=useLocation()
+  const location = useLocation()
   const id = location.state ? location.state.id : null;
   const { isLoading, setIsLoading } = useLoading();
   const [image, setImage] = useState(null);
@@ -25,7 +25,7 @@ const CountryAdd = () => {
   useEffect(() => {
     setIsLoading(true);
     if (id) {
-      getCountry(id); 
+      getCountry(id);
     }
     const timer = setTimeout(() => {
       setIsLoading(false);
@@ -62,9 +62,9 @@ const CountryAdd = () => {
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setImage(reader.result); 
+        setImage(reader.result);
       };
-      reader.readAsDataURL(file); 
+      reader.readAsDataURL(file);
     }
     if (!file) return;
 
@@ -91,7 +91,7 @@ const CountryAdd = () => {
   console.log(formData)
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     try {
       const apiEndpoint = id
         ? `http://localhost:5000/countries/upsert`
@@ -119,26 +119,20 @@ const CountryAdd = () => {
       {isLoading && <Loader />}
       <div className="flex bg-[#f7fbff]">
 
-      {/* Sidebar */}
-      
-      
-      <main className="flex-grow">
-        <Header />
-        <div className="container mx-auto">
-          <div className="flex items-center mt-6  mb-4">
-            {/* <Link to="/rolesList" className="cursor-pointer ml-6">
+        {/* Sidebar */}
+
+
+        <main className="flex-grow">
+          <Header />
+          <div className="container mx-auto">
+            <div className="flex items-center mt-6  mb-4">
+              {/* <Link to="/rolesList" className="cursor-pointer ml-6">
               
             </Link> */}
-            <h2 className="text-lg font-semibold ml-4 " style={{color:'#000000',fontSize:'24px',fontFamily:'Montserrat'}}>Country Management</h2>
-          </div>
+              <h2 className="text-lg font-semibold ml-4 " style={{ color: '#000000', fontSize: '24px', fontFamily: 'Montserrat' }}>Country Management</h2>
+            </div>
 
-          {/* Form Container */}
-          <div className="h-full px-6 max-w-5xl" style={{paddingTop:'24px'}}> 
-
-
-            <div className="bg-white h-[70vh] w-full rounded-xl border border-[#EAE5FF] py-4 px-6">
-              
-              <form onSubmit={handleSubmit} className="mt-4">
+            {/* Form Container */}
 
 
 
@@ -146,7 +140,7 @@ const CountryAdd = () => {
               className="h-full px-6 max-w-5xl"
               style={{ paddingTop: "24px" }}
             >
-              <div className="bg-white h-[70vh] w-full rounded-xl border border-[#EAE5FF] py-4 px-6 overflow-y-auto" style={{scrollbarWidth:'none'}}>
+              <div className="bg-white h-[70vh] w-full rounded-xl border border-[#EAE5FF] py-4 px-6 overflow-y-auto" style={{ scrollbarWidth: 'none' }}>
                 <form onSubmit={handleSubmit} className="mt-4">
                   <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-1 mt-6">
                     {/* Country Name */}
@@ -157,7 +151,7 @@ const CountryAdd = () => {
                       >
                         Country Name
                       </label>
-                      <input   id="country_name" value={formData.title} onChange={handleChange} name="title" type="text" required className="border rounded-lg p-3 mt-1 w-full h-14"
+                      <input id="country_name" value={formData.title} onChange={handleChange} name="title" type="text" required className="border rounded-lg p-3 mt-1 w-full h-14"
                         style={{
                           borderRadius: "8px",
                           border: "1px solid #EAEAFF",
@@ -189,7 +183,7 @@ const CountryAdd = () => {
                         }}
                       />
                     </div>
-                    {formData.img && ( 
+                    {formData.img && (
                       <div className="mt-4">
                         <img
                           src={formData.img}
