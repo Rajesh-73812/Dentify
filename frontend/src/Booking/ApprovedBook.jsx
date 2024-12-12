@@ -114,8 +114,8 @@ const ApprovedBook = () => {
             if (response.status === 200) {
                 NotificationManager.success('Status updated successfully!');
                 setTimeout(() => {
-                    navigate('/approved-book-list');
-                }, 4000);
+                    navigate('/check-in-list');
+                }, 3000);
             }
         } catch (error) {
             console.error('Error updating status:', error.response?.data || error.message);
