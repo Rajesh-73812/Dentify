@@ -109,15 +109,7 @@ const PackageAdd = () => {
 
       
       
-      <main className="flex-grow">
-        <Header />
-        <div className="container mx-auto">
-          <div className="flex items-center mt-6  mb-4">
-            {/* <Link to="/rolesList" className="cursor-pointer ml-6">
-              
-            </Link> */}
-            <h2 className="text-lg font-semibold ml-4 " style={{color:'#000000',fontSize:'24px',fontFamily:'Montserrat'}}>Package Management</h2>
-          </div>
+      
 
 
         <main className="flex-grow">
