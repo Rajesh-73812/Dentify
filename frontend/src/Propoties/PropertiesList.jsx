@@ -14,7 +14,6 @@ const PropotiesList = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
 
-    // Fetch properties from the server
     useEffect(() => {
         const fetchProperties = async () => {
             try {
@@ -258,8 +257,10 @@ const PropotiesList = () => {
                                                 <td className="px-4 py-3">{property.sqrft}</td>
                                                 <td className="px-4 py-3">{property.rate}</td>
                                                 <td className="px-4 py-3">
-                                                    <span className={`px-3 py-1 text-sm rounded-full ${property.status === 'publish' ? 'bg-green-500 text-white' : 'bg-gray-400 text-white'}`}>
-                                                        {property.status}
+                                                    <span
+                                                        className={`px-3 py-1 text-sm rounded-full ${property.status === 1 ? 'bg-green-500 text-white' : 'bg-gray-400 text-white'}`}
+                                                    >
+                                                        {property.status === 1 ? "publish" : "unpublish"}
                                                     </span>
                                                 </td>
                                                 <td className="px-4 py-3">

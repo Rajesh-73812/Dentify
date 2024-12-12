@@ -8,6 +8,7 @@ import { searchFunction } from '../Entity/SearchEntity';
 import axios from 'axios';
 import { DeleteEntity } from '../utils/Delete';
 import { useNavigate } from 'react-router-dom';
+import { handleSort } from '../utils/sorting';
 
 const CountryList = () => {
     const navigate=useNavigate();
@@ -18,13 +19,13 @@ const CountryList = () => {
     const itemsPerPage = 10;
 
     useEffect(() => {
-        
         fetchCountries();
     }, []);
 
     const fetchCountries = async () => {
         try {
             const response = await axios.get("http://localhost:5000/countries/all");
+            console.log(response.data)
             setCountries(response.data);
             setFilteredCountries(response.data); 
         } catch (error) {
@@ -37,32 +38,16 @@ const CountryList = () => {
         setCurrentPage(1);
     };
 
-    const handleSort = (key) => {
-        let direction = 'asc';
-        if (sortConfig.key === key && sortConfig.direction === 'asc') {
-            direction = 'desc';
-        }
-
-        const sortedData = [...filteredCountries].sort((a, b) => {
-            if (key === 'slno') {
-                return direction === 'asc' ? a.id - b.id : b.id - a.id;
-            } else if (key === 'totalProperties') {
-                return direction === 'asc' ? a.totalProperties - b.totalProperties : b.totalProperties - a.totalProperties;
-            }
-            return a[key]?.localeCompare(b[key]) * (direction === 'asc' ? 1 : -1);
-        });
-
-        setFilteredCountries(sortedData);
-        setSortConfig({ key, direction });
-        setCurrentPage(1);
-    };
+    // for sorting
+    const sortData = (key) => {
+        handleSort(filteredCountries, key, sortConfig, setSortConfig, setFilteredCountries);
+      };
+    
 
     const indexOfLastCountry = currentPage * itemsPerPage;
     const indexOfFirstCountry = indexOfLastCountry - itemsPerPage;
     const currentCountries = filteredCountries.slice(indexOfFirstCountry, indexOfLastCountry);
-
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
     const totalPages = Math.ceil(filteredCountries.length / itemsPerPage);
 
     const handledelete = async (id) => {
@@ -95,23 +80,23 @@ const CountryList = () => {
                                             <th className="px-4 py-3 min-w-[100px]">
                                                 Sr. No
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp onClick={() => handleSort('slno')} />
-                                                    <GoArrowDown onClick={() => handleSort('slno')} />
+                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('slno')} />
+                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('slno')} />
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[150px]">
                                                 Country Title Name
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp onClick={() => handleSort('name')} />
-                                                    <GoArrowDown onClick={() => handleSort('name')} />
+                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('title')} />
+                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('title')} />
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[150px]">Country Image</th>
                                             <th className="px-4 py-3 min-w-[100px]">
                                                 Total Properties
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp onClick={() => handleSort('totalProperties')} />
-                                                    <GoArrowDown onClick={() => handleSort('totalProperties')} />
+                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('totalProperties')} />
+                                                    <GoArrowDown className='cursor-pointer'  onClick={() => sortData('totalProperties')} />
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[100px]">Country Status</th>
@@ -124,12 +109,15 @@ const CountryList = () => {
                                                 <td className="px-4 py-3">{index + 1 + indexOfFirstCountry}</td>
                                                 <td className="px-4 py-3">{country?.title || "N/A"}</td>
                                                 <td className="px-4 py-3">
-                                                    <img
-                                                        src={country.img || 'fallback-image.jpg'}
-                                                        alt={country.title || "N/A"}
-                                                        className="w-16 h-16 object-cover rounded-full"
-                                                        onError={(e) => (e.target.src = 'fallback-image.jpg')}
-                                                    />
+                                                    {country.img && country.img.trim() !== '' ? (
+                                                        <img src={country.img} className="w-16 h-16 object-cover rounded-full" height={50} width={50} loading="lazy" alt="" onError={(e) => {
+                                                            if (e.target.src !== 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg') {
+                                                                e.target.src = 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg';
+                                                            }
+                                                        }} />
+                                                    ) : (
+                                                        <img src={'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg'} height={50} width={50} loading="lazy" alt="" />
+                                                    )}
                                                 </td>
                                                 <td className="px-4 py-3">{country?.totalProperties || 0}</td>
                                                 <td className="px-4 py-3">
