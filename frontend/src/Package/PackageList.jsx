@@ -147,10 +147,10 @@ const PackageList = () => {
                                                 <td className="px-4 py-3">{Package?.title || "N/A"}</td>
                                                 <td className="px-4 py-3">
                                                     <img
-                                                        src={Package.img || 'fallback-image.jpg'}
+                                                        src={Package.image || 'fallback-image.jpg'}
                                                         alt={Package.title || "N/A"}
                                                         className="w-16 h-16 object-cover rounded-full"
-                                                        onError={(e) => (e.target.src = 'fallback-image.jpg')}
+                                                        // onError={(e) => (e.target.src = 'fallback-image.jpg')}
                                                     />
                                                 </td>
                                                 <td className="px-4 py-3">{Package?.day || 1}</td>
