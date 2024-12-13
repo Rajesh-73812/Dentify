@@ -137,20 +137,20 @@ const SidebarMenu = () => {
           </MenuItem>
           
         {/* enquiry list */}
-          <MenuItem icon={<PiUsersBold />}
+          {/* <MenuItem icon={<PiUsersBold />}
             active={location.pathname === "/enquiry-list"}
             onClick={() => navigate("/enquiry-list")}
           >
            Enquiry List
-          </MenuItem>
+          </MenuItem> */}
 
         {/* Payout List */}
-          <MenuItem icon={<FaUser />}
+          {/* <MenuItem icon={<FaUser />
             active={location.pathname === "/payout-list"}
             onClick={() => navigate("/payout-list")}
           >
            Payout List
-          </MenuItem>
+          </MenuItem> */}
 
         {/* propoties */}
         <SubMenu label="Propoties"  icon={<IoMdHome />}>
@@ -201,7 +201,7 @@ const SidebarMenu = () => {
         </SubMenu>
 
         {/* Gallery Category */}
-        <SubMenu label="Gallery Category"  icon={<FaRegFolder />}>
+        {/* <SubMenu label="Gallery Category"  icon={<FaRegFolder />}>
           <MenuItem icon={<KeyboardArrowRightOutlinedIcon/>} className="sub-menu-item"
             active={location.pathname === "/create-gallery-category"}
             onClick={() => navigate("/create-gallery-category")}
@@ -214,10 +214,10 @@ const SidebarMenu = () => {
           >
             List Gall Category
           </MenuItem>
-        </SubMenu>
+        </SubMenu> */}
 
         {/* gallery */}
-        <SubMenu label="Gallery "  icon={<CiImageOn />}>
+        {/* <SubMenu label="Gallery "  icon={<CiImageOn />}>
           <MenuItem icon={<KeyboardArrowRightOutlinedIcon/>} className="sub-menu-item"
             active={location.pathname === "/create-gallery"}
             onClick={() => navigate("/create-gallery")}
@@ -230,7 +230,7 @@ const SidebarMenu = () => {
           >
             List Gallery
           </MenuItem>
-        </SubMenu>
+        </SubMenu> */}
 
         {/* package */}
         <SubMenu label="Package "  icon={<FaLayerGroup />}>
@@ -292,7 +292,7 @@ const SidebarMenu = () => {
         </SubMenu>
 
         {/* page */}
-        <SubMenu label="Page "  icon={<BsFileEarmarkPlus />}>
+        {/* <SubMenu label="Page "  icon={<BsFileEarmarkPlus />}>
           <MenuItem icon={<KeyboardArrowRightOutlinedIcon/>} className="sub-menu-item"
             active={location.pathname === "/create-page"}
             onClick={() => navigate("/create-page")}
@@ -305,7 +305,7 @@ const SidebarMenu = () => {
           >
             List Page
           </MenuItem>
-        </SubMenu>
+        </SubMenu> */}
 
         {/* faq */}
         <SubMenu label="Faq "  icon={<IoCheckboxOutline />}>

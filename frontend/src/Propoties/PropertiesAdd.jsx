@@ -26,7 +26,7 @@ const PropertiesAdd = () => {
     city: '',
     listing_date: '',
     add_user_id: 1,
-    pbuysell: 0,
+    rules: '',
     country_id: 0,  // New country field
     plimit: 0,
     is_sell: 0
@@ -65,6 +65,7 @@ const PropertiesAdd = () => {
 
   }
 
+  
   const handleImageUploadSuccess = (imageUrl) => {
     setFormData((prevData) => ({
       ...prevData,
@@ -133,7 +134,7 @@ const PropertiesAdd = () => {
                 }}
               >
                 <form className="mt-4" onSubmit={handleSubmit}>
-                  <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-4 mt-6">
+                  <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-3 mt-6">
                     {/* property title */}
                     <div className="flex flex-col">
                       <label
@@ -174,29 +175,7 @@ const PropertiesAdd = () => {
                       />
                     </div>
 
-                    {/* Property Sell Or Rent ?*/}
-                    <div className="flex flex-col">
-                      <label
-                        htmlFor="price"
-                        className="text-sm font-medium text-start text-[12px] font-[Montserrat]"
-                      >
-                        {" "}
-                        property Sell Or Rent ?
-                      </label>
-                      <select
-                        name="pbuysell"
-                        id="price"
-                        onChange={handleChange}
-                        value={formData.pbuysell}
-                        className="mt-1 block w-full p-4  bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm"
-                      >
-                        <option value="" disabled selected>
-                          Select Option
-                        </option>
-                        <option value={0}>Buy</option>
-                        <option value={1}>Rent</option>
-                      </select>
-                    </div>
+                   
 
                     {/* property price per night */}
                     <div className="flex flex-col">
@@ -362,31 +341,16 @@ const PropertiesAdd = () => {
                     </div>
                   </div>
 
-                  <div className="grid gap-6 w-full sm:grid-cols-1 md:grid-cols-4 mt-6">
+                  <div className="grid gap-6 w-full sm:grid-cols-1 md:grid-cols-3 mt-6">
                     {/* Property description */}
-                    <div className="md:col-span-1">
-                      <label
-                        htmlFor="description"
-                        className="text-sm font-medium text-start text-[12px] font-[Montserrat]"
-                      >
-                        Property Description
-                      </label>
-                      <textarea
-                        id="description"
-                        name="description"
-                        value={formData.description}
-                        className="border rounded-lg p-3 mt-1 w-full resize-none h-64 focus:ring-blue-500 focus:border-blue-500"
-                        placeholder="Enter Property Description"
-                        onChange={handleChange}
-                      ></textarea>
-                    </div>
+                    
 
                     <div className="md:col-span-3 grid gap-6 sm:grid-cols-2 md:grid-cols-4">
                       {/* Total Beds */}
                       <div>
                         <label
                           htmlFor="beds"
-                          className="text-sm font-medium text-start text-[12px] font-[Montserrat]"
+                          className="text-sm font-medium  float-left text-[12px] font-[Montserrat]"
                         >
                           Total Beds
                         </label>
@@ -405,7 +369,7 @@ const PropertiesAdd = () => {
                       <div>
                         <label
                           htmlFor="bathroom"
-                          className="text-sm font-medium text-start text-[12px] font-[Montserrat]"
+                          className="text-sm font-medium float-left text-[12px] font-[Montserrat]"
                         >
                           Total Bathroom
                         </label>
@@ -424,7 +388,7 @@ const PropertiesAdd = () => {
                       <div>
                         <label
                           htmlFor="sqrft"
-                          className="text-sm font-medium text-start text-[12px] font-[Montserrat]"
+                          className="text-sm font-medium float-left text-[12px] font-[Montserrat]"
                         >
                           Property SQFT
                         </label>
@@ -443,7 +407,7 @@ const PropertiesAdd = () => {
                       <div>
                         <label
                           htmlFor="rate"
-                          className="text-sm font-medium text-start text-[12px] font-[Montserrat]"
+                          className="text-sm font-medium float-left text-[12px] font-[Montserrat]"
                         >
                           Property Rating
                         </label>
@@ -462,7 +426,7 @@ const PropertiesAdd = () => {
                       <div className="sm:col-span-2 md:col-span-1">
                         <label
                           htmlFor="ptype"
-                          className="text-sm font-medium text-start text-[12px] font-[Montserrat]"
+                          className="text-sm font-medium float-left text-[12px] font-[Montserrat]"
                         >
                           Select Property Type
                         </label>
@@ -486,7 +450,7 @@ const PropertiesAdd = () => {
                       <div>
                         <label
                           htmlFor="latitude"
-                          className="text-sm font-medium text-start text-[12px] font-[Montserrat]"
+                          className="text-sm font-medium float-left text-[12px] font-[Montserrat]"
                         >
                           Latitude
                         </label>
@@ -505,15 +469,15 @@ const PropertiesAdd = () => {
                       <div>
                         <label
                           htmlFor="longitude"
-                          className="text-sm font-medium text-start te  xt-[12px] font-[Montserrat]"
+                          className="text-sm font-medium float-left te  xt-[12px] font-[Montserrat]"
                         >
                           Longitude
                         </label>
                         <input
                           type="text"
                           id="longitude"
-                          value={formData.longitude}
-                          name="longitude"
+                          value={formData.longtitude}
+                          name="longtitude"
                           className="border rounded-lg p-3 mt-1 w-full focus:ring-blue-500 focus:border-blue-500"
                           placeholder="Enter Longitude"
                           onChange={handleChange}
@@ -524,7 +488,7 @@ const PropertiesAdd = () => {
                       <div>
                         <label
                           htmlFor="mobile"
-                          className="text-sm font-medium text-start text-[12px] font-[Montserrat]"
+                          className="text-sm font-medium float-left text-[12px] font-[Montserrat]"
                         >
                           Mobile Number
                         </label>
@@ -543,7 +507,7 @@ const PropertiesAdd = () => {
                       <div>
                         <label
                           htmlFor="city"
-                          className="text-sm font-medium text-start text-[12px] font-[Montserrat]"
+                          className="text-sm font-medium float-left text-[12px] font-[Montserrat]"
                         >
                           City, Country
                         </label>
@@ -557,6 +521,41 @@ const PropertiesAdd = () => {
                           onChange={handleChange}
                         />
                       </div>
+
+                      <div className="md:col-span-2">
+                      <label
+                        htmlFor="description"
+                        className="text-sm font-medium float-left text-[12px] font-[Montserrat]"
+                      >
+                        Property Description
+                      </label>
+                      <textarea
+                        id="description"
+                        name="description"
+                        value={formData.description}
+                        className="border rounded-lg p-3 mt-1 w-full resize-none h-64 focus:ring-blue-500 focus:border-blue-500"
+                        placeholder="Enter Property Description"
+                        onChange={handleChange}
+                      ></textarea>
+                    </div>
+                      <div className="md:col-span-1">
+                      <label
+                        htmlFor="description"
+                        className="text-sm font-medium float-left text-[12px] font-[Montserrat]"
+                      >
+                        Property Rules
+                      </label>
+                      <textarea
+                        id="description"
+                        name="rules"
+                        value={formData.rules}
+                        className="border rounded-lg p-3 mt-1 w-full resize-none h-64 focus:ring-blue-500 focus:border-blue-500"
+                        placeholder="Enter Property Rules"
+                        onChange={handleChange}
+                      ></textarea>
+                    </div>
+                      
+                      
                     </div>
                   </div>
 
