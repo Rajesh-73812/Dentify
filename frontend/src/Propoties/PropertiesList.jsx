@@ -59,6 +59,7 @@ const PropotiesList = () => {
         <div>
             <div className="h-screen flex">
                 {/* Sidebar */}
+
                 <div className="flex flex-1 flex-col bg-[#f7fbff]">
                     {/* Header */}
                     <Header />
@@ -212,14 +213,16 @@ const PropotiesList = () => {
                                             currentProperties.map((property, index) => (
                                             <tr key={property.id}>
                                                 <td className="px-4 py-3">{index + 1 + indexOfFirstItem}</td>
-                                                <td className="px-4 py-3">{property?.title || "N/A"}</td>
-                                                <td className="px-4 py-3">{property?.ptype || "N/A"}</td>
-                                                <td className="px-4 py-3">{property?.description || "N/A"}</td>
-                                                <td className="px-4 py-3">{property?.address || "N/A"}</td>
-                                                <td className="px-4 py-3">{property?.city || "N/A"}</td>
-                                                <td className="px-4 py-3">{property?.is_sell || "N/A"}</td>
-                                                <td className="px-4 py-3">{property?.facility || "N/A"}</td>
-                                                <td className="px-4 py-3">₹{property?.price || "N/A"}</td>
+
+                                                <td className="px-4 py-3">{property.title}</td>
+                                                <td className="px-4 py-3">{property.category.title}</td>
+                                                <td className="px-4 py-3">{property.description}</td>
+                                                <td className="px-4 py-3">{property.address}</td>
+                                                <td className="px-4 py-3">{property.city}</td>
+                                                <td className="px-4 py-3">{property.is_sell}</td>
+                                                <td className="px-4 py-3">{property.facility}</td>
+                                                <td className="px-4 py-3">₹{property.price}</td>
+
                                                 <td className="px-4 py-3">
                                                     {property.image && property.image.trim() !== '' ? (
                                                         <img src={property.image} className="w-16 h-16 object-cover rounded-full" height={50} width={50} loading="lazy" alt="" onError={(e) => {
@@ -231,13 +234,15 @@ const PropotiesList = () => {
                                                         <img src={'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg'} height={50} width={50} loading="lazy" alt="" />
                                                     )}
                                                 </td>
-                                                <td className="px-4 py-3">{property?.mobile || "N/A"}</td>
-                                                <td className="px-4 py-3">{property?.country_id || "N/A"}</td>
-                                                <td className="px-4 py-3">{property?.add_user_id || "N/A"}</td>
-                                                <td className="px-4 py-3">{property?.beds || "N/A"}</td>
-                                                <td className="px-4 py-3">{property?.bathroom || "N/A"}</td>
-                                                <td className="px-4 py-3">{property?.sqrft || "N/A"}</td>
-                                                <td className="px-4 py-3">{property?.rate || "N/A"}</td>
+
+                                                <td className="px-4 py-3">{property.mobile}</td>
+                                                <td className="px-4 py-3">{property.country}</td>
+                                                <td className="px-4 py-3">{property.add_user_id}</td>
+                                                <td className="px-4 py-3">{property.beds}</td>
+                                                <td className="px-4 py-3">{property.bathroom}</td>
+                                                <td className="px-4 py-3">{property.sqrft}</td>
+                                                <td className="px-4 py-3">{property.rate}</td>
+
                                                 <td className="px-4 py-3">
                                                     <span
                                                         className={`px-3 py-1 text-sm rounded-full ${property.status === 1 ? 'bg-green-500 text-white' : 'bg-gray-400 text-white'}`}

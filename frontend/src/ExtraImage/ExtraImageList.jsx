@@ -132,10 +132,20 @@ const ExtraImageList = () => {
                                                             }}
                                                         />
                                                     ) : (
-                                                        <img src={ "https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg" } height={50} width={50}    loading="lazy"    alt=""/>
-                                                    )}
-                                                </td>
-                                                <td className="px-4 py-3">{extraImage.Property?.title || "No Title"}</td>
+
+                                                        <img
+                                                            src={
+                                                                "https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg"
+                                                            }
+                                                            height={50}
+                                                            width={50}
+                                                            loading="lazy"
+                                                            alt=""
+                                                        />
+                                                    )}{" "}
+                                                </td>{" "}
+                                                <td className="px-4 py-3">{extraImage.properties?.title || "No Title"}</td>
+
                                                 <td className="px-4 py-3">
                                                     <span className={`px-3 py-1 text-sm rounded-full ${extraImage.status === 1 ? "bg-green-500 text-white"  : "bg-gray-400 text-white"  }`}
                                                     >
