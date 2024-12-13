@@ -184,7 +184,7 @@ const ExtraImageList = () => {
                                                         />
                                                     )}{" "}
                                                 </td>{" "}
-                                                <td className="px-4 py-3">{extraImage.Property?.title || "No Title"}</td>
+                                                <td className="px-4 py-3">{extraImage.properties?.title || "No Title"}</td>
                                                 <td className="px-4 py-3">
                                                     {" "}
                                                     <span

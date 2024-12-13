@@ -73,9 +73,9 @@ function App() {
             element={
               
               <LayoutWithSidebar>
-               <PrivateRoute>
+              
                 <Dashboard />
-                </PrivateRoute>
+              
               </LayoutWithSidebar>
              
             }
