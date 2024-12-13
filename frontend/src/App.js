@@ -39,7 +39,12 @@ import PageAdd from "./Page/PageAdd.jsx";
 import FaqList from "./Faq/FaqList.jsx";
 import FaqAdd from "./Faq/FaqAdd.jsx";
 import SidebarMenu from "./components/SideBar.jsx";
+
 import NotFound from "./NotFound.jsx";
+
+import { AuthProvider } from "./Context/AuthContext.js";
+import PrivateRoute from "./Context/PrivateRoute.js";
+
 
 // Layout component for common sidebar
 const LayoutWithSidebar = ({ children }) => (
@@ -53,6 +58,7 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
+      <AuthProvider>
         <Routes>
           {/* Excluded routes */}
           <Route path="/" element={<Login />} />
@@ -65,9 +71,13 @@ function App() {
           <Route
             path="/dashboard"
             element={
+              
               <LayoutWithSidebar>
+               <PrivateRoute>
                 <Dashboard />
+                </PrivateRoute>
               </LayoutWithSidebar>
+             
             }
           />
           <Route
@@ -351,6 +361,7 @@ function App() {
 
 
         </Routes>
+        </AuthProvider>
       </BrowserRouter>
     </div>
   );

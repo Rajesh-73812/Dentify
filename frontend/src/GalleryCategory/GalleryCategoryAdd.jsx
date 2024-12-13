@@ -105,6 +105,7 @@ const GalleryCategoryAdd = () => {
     <div>
       {isLoading && <Loader />}
       <div className="flex bg-[#f7fbff]">
+
         <main className="flex-grow">
           <Header />
           <div className="container mx-auto">

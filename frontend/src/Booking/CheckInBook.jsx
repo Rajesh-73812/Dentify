@@ -87,7 +87,7 @@ const CheckInBook = () => {
                 NotificationManager.success('Status updated successfully!');
                 setTimeout(() => {
                     navigate('/completed-list');
-                }, 4000);
+                }, 3000);
             }
         } catch (error) {
             console.error('Error updating status:', error.response?.data || error.message);

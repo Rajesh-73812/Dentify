@@ -62,8 +62,12 @@ const SidebarMenu = () => {
 
     <Sidebar collapsed={!isSidebarOpen}    width="250px"  style={{overflowY:'auto',height:'100vh'}}>
       <div className="h-[80px] bg-white flex justify-center items-center gap-2" >
-        <img src="/image/logo frame.svg" alt="Logo" className="h-[46px] w-[46px]" />
-        <span  className=" text-2xl font-normal">RENTAL</span>
+        <img src="/image/Frame 1984078701.png" alt="Logo" className="h-[40px] w-[40px]" />
+        <div className="flex flex-col">
+        <span  className=" text-2xl  ">SERVOSTAY</span>
+        <span  className=" text-[10px] ml-2 text-slate-500 font-[italic] italic ">A Home away from Home</span>
+        </div>
+        
       </div>
 
       <div style={{ overflowY: 'auto', height: 'calc(100vh - 80px)', scrollbarWidth:'none'}}>
