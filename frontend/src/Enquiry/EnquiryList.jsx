@@ -1,76 +1,55 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '../components/Header';
 import SidebarMenu from '../components/SideBar';
 import { GoArrowDown, GoArrowUp } from 'react-icons/go';
 import { FaPen,FaTrash } from "react-icons/fa";
 import { searchFunction } from '../Entity/SearchEntity';
 import EnquiryHeader from './EnquiryHeader';
+import axios from 'axios';
+import { DeleteEntity } from '../utils/Delete';
+import { handleSort } from '../utils/sorting';
 
 const EnquiryList = () => {
-    const countries = [
-        { id: 1, propertyTitle: 'Flat for Sale',image: 'path/to/image1.jpg',enquiryUserName: 'Tester',status: 'publish' },
-        { id: 2, propertyTitle: '2BHK House',image: 'path/to/image1.jpg',enquiryUserName: 'Tester', status: 'publish' },
-        { id: 3, propertyTitle: 'Flat for Sale',image: 'path/to/image1.jpg',enquiryUserName: 'Tester',status: 'unpublish' },
-        { id: 4, propertyTitle: 'Villas',image: 'path/to/image1.jpg',enquiryUserName: 'Tester', status: 'publish' },
-        { id: 5, propertyTitle: 'Villas',image: 'path/to/image1.jpg',enquiryUserName: 'Tester',status: 'unpublish' },
-        { id: 6, propertyTitle: 'Flat for Sale',image: 'path/to/image1.jpg',enquiryUserName: 'Tester',status: 'publish' },
-        { id: 7, propertyTitle: 'Villas',image: 'path/to/image1.jpg',enquiryUserName: 'Tester',status: 'publish' },
-        { id: 8, propertyTitle: 'Flat for Sale',image: 'path/to/image1.jpg',enquiryUserName: 'Tester', status: 'unpublish' },
-        { id: 9, propertyTitle: 'Villas',image: 'path/to/image1.jpg',enquiryUserName: 'Tester',status: 'publish' },
-        { id: 10, propertyTitle: '2BHK House',image: 'path/to/image1.jpg',enquiryUserName: 'Tester',status: 'unpublish' },
-        { id: 11, propertyTitle: 'Flat for Sale',image: 'path/to/image1.jpg',enquiryUserName: 'Tester', status: 'publish' },
-        { id: 12, propertyTitle: 'Villas',image: 'path/to/image1.jpg',enquiryUserName: 'Tester', status: 'publish' },
-        { id: 13, propertyTitle: 'Flat for Sale',image: 'path/to/image1.jpg',enquiryUserName: 'Tester',status: 'unpublish' },
-        { id: 14, propertyTitle: 'Villas',image: 'path/to/image1.jpg',enquiryUserName: 'Tester', status: 'publish' },
-        { id: 15, propertyTitle: 'Villas',image: 'path/to/image1.jpg',enquiryUserName: 'Tester', status: 'unpublish' },
-        
-    ];
-
-    const [filterData, setFilterData] = useState(countries);
-    const [filteredCountries, setFilteredCountries] = useState(countries);
+    const [enquiry,setenquiry]=useState([]);
+    const [filterData, setFilterData] = useState(enquiry);
+    const [filteredenquiry, setFilteredenquiry] = useState(enquiry);
     const [sortConfig, setSortConfig] = useState({ key: '', direction: '' });
-    
-    // Pagination state
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10; 
 
+    useEffect(()=>{
+        // getEnquiryList()
+    },[])
+
+    // const getEnquiryList= async()=>{
+    //     const response=await axios.get(`http://localhost:5000/enquiries/retrieve`,{withCredentials:true})
+    //     console.log(response.data)
+    // }
     // for searching
     const handleSearch = (event) => {
-        searchFunction(event, countries, setFilteredCountries);
+        searchFunction(event, enquiry, setFilteredenquiry);
         setCurrentPage(1); 
     };
 
     // for sorting
-    const handleSort = (key) => {
-        let direction = 'asc';
-        if (sortConfig.key === key && sortConfig.direction === 'asc') {
-            direction = 'desc';
-        }
-        
-        const sortedData = [...filteredCountries].sort((a, b) => {
-            if (key === 'slno') {
-                return direction === 'asc' ? a.id - b.id : b.id - a.id;
-            } else if (key === 'totalProperties') {
-                return direction === 'asc' ? a.totalProperties - b.totalProperties : b.totalProperties - a.totalProperties;
-            }
-            return a[key] < b[key] ? (direction === 'asc' ? -1 : 1) : (direction === 'asc' ? 1 : -1);
-        });
-
-        setFilteredCountries(sortedData);
-        setSortConfig({ key, direction });
-        setCurrentPage(1);
-    };
-
-    // Calculate paginated countries
-    const indexOfLastCountry = currentPage * itemsPerPage;
-    const indexOfFirstCountry = indexOfLastCountry - itemsPerPage;
-    const currentCountries = filteredCountries.slice(indexOfFirstCountry, indexOfLastCountry);
-
-    // Change page
+    const handleSort=(key)=>{
+        handleSort(filteredenquiry, key, sortConfig, setSortConfig, setFilteredenquiry);
+    }
+    // Calculate paginated enquiry
+    const indexOfLastEnquiry = currentPage * itemsPerPage;
+    const indexOfFirstEnquiry = indexOfLastEnquiry - itemsPerPage;
+    const currentenquiry = filteredenquiry.slice(indexOfFirstEnquiry, indexOfLastEnquiry);
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
+    const totalPages = Math.ceil(filteredenquiry.length / itemsPerPage);
 
-    const totalPages = Math.ceil(filteredCountries.length / itemsPerPage);
-
+    const handledelete = async (id) => {
+        const success = await DeleteEntity("Enquiry", id);
+        if (success) {
+            const updatedEnquiry = enquiry.filter((enquiry) => enquiry.id !== id);
+            setenquiry(updatedEnquiry);
+            setFilteredenquiry(updatedEnquiry);
+        }
+    };
     return (
         <div>
             <div className="h-screen flex">
@@ -97,25 +76,46 @@ const EnquiryList = () => {
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[250px]">
-                                                Property Title
+                                                Amount
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('propertyTitle')} />
-                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('propertyTitle')} />
+                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('amount')} />
+                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('amount')} />
                                                 </div>
                                             </th>
                                                                                         
                                             <th className="px-4 py-3 min-w-[250px]">
-                                                Property Image
+                                                Service Provider Name
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('propertyimage')} />
-                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('propertyimage')} />
+                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('serviceprovidername')} />
+                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('serviceprovidername')} />
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[250px]">
-                                                Enquiry UserName
+                                                Transfer Details 
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('username')} />
-                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('username')} />
+                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('transferdetails')} />
+                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('transferdetails')} />
+                                                </div>
+                                            </th>
+                                            <th className="px-4 py-3 min-w-[250px]">
+                                                Transfer Type 
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('transfertype')} />
+                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('transfertype')} />
+                                                </div>
+                                            </th>
+                                            <th className="px-4 py-3 min-w-[250px]">
+                                                Vendor Mobile 
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('mobile')} />
+                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('mobile')} />
+                                                </div>
+                                            </th>
+                                            <th className="px-4 py-3 min-w-[250px]">
+                                                Transfer Photo
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('transferphoto')} />
+                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('transferphoto')} />
                                                 </div>
                                             </th>
                                             
@@ -126,54 +126,62 @@ const EnquiryList = () => {
                                                     <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('status')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[150px]">
-                                                Action
-                                                <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('action')} />
-                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('action')} />
-                                                </div>
-                                            </th>
+                                            <th className="px-4 py-3 min-w-[150px]">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-gray-200">
-                                        {currentCountries.map((country, index) => (
-                                            <tr key={country.id}>
-                                                <td className="px-4 py-3">{index + 1 + indexOfFirstCountry}</td>
-                                                <td className="px-4 py-3">{country.propertyTitle}</td>
-                                                <td className="px-4 py-3">
-                                                    {country.image && country.image.trim() !== '' ? (
-                                                        <img src={country.image} className="w-16 h-16 object-cover rounded-full" height={50} width={50} loading="lazy" alt="" onError={(e) => {
-                                                            if (e.target.src !== 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg') {
-                                                                e.target.src = 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg';
-                                                            }
-                                                        }} />
-                                                    ) : (
-                                                        <img src={'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg'} height={50} width={50} loading="lazy" alt="" />
-                                                    )}
-                                                </td>
-                                                <td className="px-4 py-3">{country.enquiryUserName}</td>
-                                                <td className="px-4 py-3">
-                                                    <span className={`px-3 py-1 text-sm rounded-full ${country.status === 'publish' ? 'bg-green-500 text-white' : 'bg-gray-400 text-white'}`}>
-                                                        {country.status}
-                                                    </span>
-                                                </td>
-                                                <td className="px-4 py-3">
-                                                    <button className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition mr-2">
-                                                        <FaPen />
-                                                    </button>
-                                                    <button className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition">
-                                                        <FaTrash />
-                                                    </button>
+                                        {currentenquiry.length > 0 ? (
+                                            currentenquiry.map((enquiry, index) => (
+                                                <tr key={enquiry.id}>
+                                                    <td className="px-4 py-3">{index + 1 + indexOfFirstEnquiry}</td> Enquiry?.title || "N/A"
+                                                    <td className="px-4 py-3">{enquiry?.amount || "N/A"}</td>
+                                                    <td className="px-4 py-3">{enquiry?.sProviderName || "N/A"}</td>
+                                                    <td className="px-4 py-3">{enquiry?.transferDetails || "N/A"}</td>
+                                                    <td className="px-4 py-3">{enquiry?.transferType || "N/A"}</td>
+                                                    <td className="px-4 py-3">{enquiry?.vendorMobile || "N/A"}</td>
+                                                    <td className="px-4 py-3">
+                                                        {enquiry.img && enquiry.img.trim() !== '' ? (
+                                                            <img src={enquiry.img} className="w-16 h-16 object-cover rounded-full" height={50} width={50} loading="lazy" alt="" 
+                                                                onError={(e) => {
+                                                                    if ( e.target.src !== 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg' ) {
+                                                                        e.target.src = 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg';
+                                                                    }
+                                                                }}
+                                                            />
+                                                        ) : (
+                                                            <img src="https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg"    height={50}    width={50}    loading="lazy"    alt=""/>
+                                                        )}
+                                                    </td>
+                                                    <td className="px-4 py-3">
+                                                        <span   className={`px-3 py-1 text-sm rounded-full ${ enquiry.status === 'publish' ? 'bg-green-500 text-white'  : 'bg-gray-400 text-white' }`}   >
+                                                            {enquiry.status}
+                                                        </span>
+                                                    </td>
+                                                    <td className="px-4 py-3">
+                                                        <button className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition mr-2">
+                                                            <FaPen />
+                                                        </button>
+                                                        <button className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition" onClick={()=>{handledelete(enquiry.id)}}>
+                                                            <FaTrash />
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            ))
+                                        ) : (
+                                            <tr>
+                                                <td className="px-4 py-3 text-center" colSpan="6">
+                                                    No data available
                                                 </td>
                                             </tr>
-                                        ))}
+                                        )}
                                     </tbody>
+
                                 </table>
                             </div>
                         </div>
                         <div className="bottom-0 left-0 w-full bg-[#f7fbff] py-4 flex justify-between items-center">
                             <span className="text-sm font-normal text-gray-500">
-                                Showing <span className="font-semibold text-gray-900">{indexOfFirstCountry + 1}</span> to <span className="font-semibold text-gray-900">{Math.min(indexOfLastCountry, filteredCountries.length)}</span> of <span className="font-semibold text-gray-900">{filteredCountries.length}</span>
+                                Showing <span className="font-semibold text-gray-900">{indexOfFirstEnquiry + 1}</span> to <span className="font-semibold text-gray-900">{Math.min(indexOfLastEnquiry, filteredenquiry.length)}</span> of <span className="font-semibold text-gray-900">{filteredenquiry.length}</span>
                             </span>
                             <ul className="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">
                                 <li>

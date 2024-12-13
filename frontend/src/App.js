@@ -39,8 +39,12 @@ import PageAdd from "./Page/PageAdd.jsx";
 import FaqList from "./Faq/FaqList.jsx";
 import FaqAdd from "./Faq/FaqAdd.jsx";
 import SidebarMenu from "./components/SideBar.jsx";
+
+import NotFound from "./NotFound.jsx";
+
 import { AuthProvider } from "./Context/AuthContext.js";
 import PrivateRoute from "./Context/PrivateRoute.js";
+
 
 // Layout component for common sidebar
 const LayoutWithSidebar = ({ children }) => (
@@ -58,6 +62,7 @@ function App() {
         <Routes>
           {/* Excluded routes */}
           <Route path="/" element={<Login />} />
+          <Route path="/*" element={<NotFound />} />
           <Route path="/forgotpassword" element={<ForgotPassword />} />
           <Route path="/sendotp" element={<SendOTP />} />
           <Route path="/setnewpassword" element={<SetNewPassword />} />

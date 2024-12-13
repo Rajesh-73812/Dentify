@@ -1,75 +1,50 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '../components/Header';
 import SidebarMenu from '../components/SideBar';
 import { GoArrowDown, GoArrowUp } from 'react-icons/go';
 import { FaPen,FaTrash } from "react-icons/fa";
 import { searchFunction } from '../Entity/SearchEntity';
 import PayOutHeader from './PayOutHeader';
+import axios from 'axios';
 
 const PayOutList = () => {
-    const countries = [
-        { id: 1, Amount: '2000',serviceProviderName: '*****',TransferDetails:'unpublish', image: 'path/to/image1.jpg',TransferType:'publish', vendorMobile:'unpublish',status: 'publish' },
-        { id: 2, Amount: '2000',serviceProviderName: '****',TransferDetails:'publish', image: 'path/to/image2.jpg',TransferType:'publish',vendorMobile:'unpublish', status: 'publish' },
-        { id: 3, Amount: '2000',serviceProviderName: '****',TransferDetails:'unpublish', image: 'path/to/image3.jpg',TransferType:'publish',vendorMobile:'unpublish',status: 'unpublish' },
-        { id: 4, Amount: '2000',serviceProviderName: '****',TransferDetails:'publish', image: 'path/to/image4.jpg',TransferType:'publish',vendorMobile:'publish', status: 'publish' },
-        { id: 5, Amount: '2000',serviceProviderName: '****',TransferDetails:'publish', image: 'path/to/image5.jpg',TransferType:'publish',vendorMobile:'publish',status: 'unpublish' },
-        { id: 6, Amount: '2000',serviceProviderName: '*****',TransferDetails:'publish', image: 'path/to/image1.jpg',TransferType:'publish',vendorMobile:'publish', status: 'publish' },
-        { id: 7, Amount: '2000',serviceProviderName: '****',TransferType:'publish',TransferDetails:'publish', image: 'path/to/image2.jpg',vendorMobile:'unpublish', status: 'publish' },
-        { id: 8, Amount: '2000',serviceProviderName: '****',TransferType:'publish',TransferDetails:'unpublish', image: 'path/to/image3.jpg',vendorMobile:'publish', status: 'unpublish' },
-        { id: 9, Amount: '2000',serviceProviderName: '****',TransferType:'publish',TransferDetails:'publish', image: 'path/to/image4.jpg',vendorMobile:'unpublish', status: 'publish' },
-        { id: 10, Amount: '2000',serviceProviderName: '****',TransferDetails:'publish', image: 'path/to/image5.jpg',TransferType:'publish',vendorMobile:'publish', status: 'unpublish' },
-        { id: 11, Amount: '2000',serviceProviderName: '*****',TransferDetails:'publish', image: 'path/to/image1.jpg',TransferType:'publish',vendorMobile:'publish', status: 'publish' },
-        { id: 12, Amount: '2000',serviceProviderName: '****',TransferDetails:'unpublish', image: 'path/to/image2.jpg',TransferType:'publish',vendorMobile:'publish', status: 'publish' },
-        { id: 13, Amount: '2000',serviceProviderName: '****',TransferDetails:'publish', image: 'path/to/image3.jpg',TransferType:'publish',vendorMobile:'publish', status: 'unpublish' },
-        { id: 14, Amount: '2000',serviceProviderName: '****',TransferDetails:'unpublish', image: 'path/to/image4.jpg',TransferType:'publish',vendorMobile:'publish', status: 'publish' },
-        { id: 15, Amount: '2000 ',serviceProviderName: '****',TransferDetails:'publish', image: 'path/to/image5.jpg',TransferType:'publish',vendorMobile:'unpublish', status: 'unpublish' },
-        
-    ];
-
-    const [filterData, setFilterData] = useState(countries);
-    const [filteredCountries, setFilteredCountries] = useState(countries);
+    const [payOut,setPayOut]=useState([]);
+    const [filterData, setFilterData] = useState(payOut);
+    const [filteredpayOut, setFilteredpayOut] = useState(payOut);
     const [sortConfig, setSortConfig] = useState({ key: '', direction: '' });
-    
-    // Pagination state
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10; 
 
+    useEffect(()=>{
+        getPayOutList();
+    },[])
+
+    const getPayOutList=async()=>{
+        try {
+            const response=await axios.get(`http://localhost:5000/payout-settings/all`,{withCredentials:true})
+            setPayOut(response.data);
+            setFilteredpayOut(response.data)
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
     // for searching
     const handleSearch = (event) => {
-        searchFunction(event, countries, setFilteredCountries);
+        searchFunction(event, payOut, setFilteredpayOut);
         setCurrentPage(1); 
     };
 
     // for sorting
     const handleSort = (key) => {
-        let direction = 'asc';
-        if (sortConfig.key === key && sortConfig.direction === 'asc') {
-            direction = 'desc';
-        }
-        
-        const sortedData = [...filteredCountries].sort((a, b) => {
-            if (key === 'slno') {
-                return direction === 'asc' ? a.id - b.id : b.id - a.id;
-            } else if (key === 'totalProperties') {
-                return direction === 'asc' ? a.totalProperties - b.totalProperties : b.totalProperties - a.totalProperties;
-            }
-            return a[key] < b[key] ? (direction === 'asc' ? -1 : 1) : (direction === 'asc' ? 1 : -1);
-        });
-
-        setFilteredCountries(sortedData);
-        setSortConfig({ key, direction });
-        setCurrentPage(1);
     };
 
-    // Calculate paginated countries
+    // Calculate paginated payOut
     const indexOfLastCountry = currentPage * itemsPerPage;
     const indexOfFirstCountry = indexOfLastCountry - itemsPerPage;
-    const currentCountries = filteredCountries.slice(indexOfFirstCountry, indexOfLastCountry);
-
-    // Change page
+    const currentpayOut = filteredpayOut.slice(indexOfFirstCountry, indexOfLastCountry);
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
-    const totalPages = Math.ceil(filteredCountries.length / itemsPerPage);
+    const totalPages = Math.ceil(filteredpayOut.length / itemsPerPage);
 
     return (
         <div>
@@ -156,17 +131,17 @@ const PayOutList = () => {
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-gray-200">
-                                        {currentCountries.map((country, index) => (
-                                            <tr key={country.id}>
+                                        {currentpayOut.map((payOut, index) => (
+                                            <tr key={payOut.id}>
                                                 <td className="px-4 py-3">{index + 1 + indexOfFirstCountry}</td>
-                                                <td className="px-4 py-3">{country.Amount}</td>
-                                                <td className="px-4 py-3">{country.serviceProviderName}</td>
-                                                <td className="px-4 py-3">{country.TransferDetails}</td>
-                                                <td className="px-4 py-3">{country.TransferType}</td>
-                                                <td className="px-4 py-3">{country.vendorMobile}</td>
+                                                <td className="px-4 py-3">{payOut?.amt || "0.00"}</td>
+                                                <td className="px-4 py-3">{payOut?.serviceProviderName || "N/A"}</td>
+                                                <td className="px-4 py-3">{payOut?.TransferDetails || "N/A"}</td>
+                                                <td className="px-4 py-3">{payOut?.TransferType || "N/A"}</td>
+                                                <td className="px-4 py-3">{payOut?.vendorMobile || "N/A"}</td>
                                                 <td className="px-4 py-3">
-                                                    {country.image && country.image.trim() !== '' ? (
-                                                        <img src={country.image} className="w-16 h-16 object-cover rounded-full" height={50} width={50} loading="lazy" alt="" onError={(e) => {
+                                                    {payOut.proof && payOut.proof.trim() !== '' ? (
+                                                        <img src={payOut.proof} className="w-16 h-16 object-cover rounded-full" height={50} width={50} loading="lazy" alt="" onError={(e) => {
                                                             if (e.target.src !== 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg') {
                                                                 e.target.src = 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg';
                                                             }
@@ -176,8 +151,8 @@ const PayOutList = () => {
                                                     )}
                                                 </td>
                                                 <td className="px-4 py-3">
-                                                    <span className={`px-3 py-1 text-sm rounded-full ${country.status === 'publish' ? 'bg-green-500 text-white' : 'bg-gray-400 text-white'}`}>
-                                                        {country.status}
+                                                    <span className={`px-3 py-1 text-sm rounded-full ${payOut.status === 1 ? 'bg-green-500 text-white' : 'bg-gray-400 text-white'}`}>
+                                                        {payOut.status === 1 ? 'Publish' : 'Unpublish'}
                                                     </span>
                                                 </td>
                                                 <td className="px-4 py-3">
@@ -196,7 +171,7 @@ const PayOutList = () => {
                         </div>
                         <div className="bottom-0 left-0 w-full bg-[#f7fbff] py-4 flex justify-between items-center">
                             <span className="text-sm font-normal text-gray-500">
-                                Showing <span className="font-semibold text-gray-900">{indexOfFirstCountry + 1}</span> to <span className="font-semibold text-gray-900">{Math.min(indexOfLastCountry, filteredCountries.length)}</span> of <span className="font-semibold text-gray-900">{filteredCountries.length}</span>
+                                Showing <span className="font-semibold text-gray-900">{indexOfFirstCountry + 1}</span> to <span className="font-semibold text-gray-900">{Math.min(indexOfLastCountry, filteredpayOut.length)}</span> of <span className="font-semibold text-gray-900">{filteredpayOut.length}</span>
                             </span>
                             <ul className="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">
                                 <li>

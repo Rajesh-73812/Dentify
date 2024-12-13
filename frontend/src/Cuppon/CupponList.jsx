@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import Header from '../components/Header';
-import SidebarMenu from '../components/SideBar';
 import { GoArrowDown, GoArrowUp } from 'react-icons/go';
 import { useLoading } from '../Context/LoadingContext';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Loader from '../common/Loader';
 import { FaPen,FaTrash } from "react-icons/fa";
-import { searchFunction } from '../Entity/SearchEntity';
 import CupponHeader from './CupponHeader';
 import { DeleteEntity } from '../utils/Delete';
 import axios from 'axios';
 import { handleSort } from '../utils/sorting';
 
 const CupponList = () => {
+    const navigate=useNavigate();
     const [cuppons, setcuppons] = useState([]);
     const [filteredcuppons, setFilteredcuppons] = useState([]);
     const [sortConfig, setSortConfig] = useState({ key: '', direction: '' });
@@ -49,14 +48,6 @@ const CupponList = () => {
 
     // Handle search
     const handleSearch = (event) => {
-        const query = event.target.value.toLowerCase();
-        const filtered = cuppons.filter((country) =>
-            Object.values(country).some((value) =>
-                String(value).toLowerCase().includes(query)
-            )
-        );
-        setFilteredcuppons(filtered);
-        setCurrentPage(1); 
     };
 
     // Handle sorting
@@ -65,22 +56,26 @@ const CupponList = () => {
     };
 
     // Pagination logic
-    const indexOfLastCountry = currentPage * itemsPerPage;
-    const indexOfFirstCountry = indexOfLastCountry - itemsPerPage;
-    const currentcuppons = filteredcuppons.slice(indexOfFirstCountry, indexOfLastCountry);
-
+    const indexOfLast = currentPage * itemsPerPage;
+    const indexOfFirst = indexOfLast - itemsPerPage;
+    const currentcuppons = filteredcuppons.slice(indexOfFirst, indexOfLast);
     const totalPages = Math.ceil(filteredcuppons.length / itemsPerPage);
-
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     // for dalete
     const handledelete=async(id)=>{
         const success=await DeleteEntity('Cuppon',id)
         if(success){
-            
+            const updatedCuppon=cuppons.filter((cuppons)=> cuppons.id !== id);
+            setcuppons(updatedCuppon);
+            setFilteredcuppons(updatedCuppon)
         }
     }
 
-    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+    // for update
+    const updateCuppon=(id)=>{
+        navigate('/add-cuppon',{state:{id:id}})
+    }
 
     return (
         <div>
@@ -88,7 +83,6 @@ const CupponList = () => {
             <div className="h-screen flex">
                 {/* Sidebar */}
                 
-
                 <div className="flex flex-1 flex-col bg-[#f7fbff]">
                     {/* Header */}
                     <Header />
@@ -105,14 +99,8 @@ const CupponList = () => {
                                                 <th key={key} className="px-4 py-3 min-w-[150px]">
                                                     {key.charAt(0).toUpperCase() + key.slice(1)}
                                                     <div className="inline-flex items-center ml-2">
-                                                        <GoArrowUp
-                                                            className="text-gray-500 hover:text-gray-700 cursor-pointer"
-                                                            onClick={() => sortData(key)}
-                                                        />
-                                                        <GoArrowDown
-                                                            className="text-gray-500 hover:text-gray-700 cursor-pointer"
-                                                            onClick={() => sortData(key)}
-                                                        />
+                                                        <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer"   onClick={() => sortData(key)}   />
+                                                        <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData(key)}   />
                                                     </div>
                                                 </th>
                                             ))}
@@ -122,48 +110,39 @@ const CupponList = () => {
                                     <tbody className="divide-y divide-gray-200">
 
                                         {currentcuppons.length > 0 ? (
-                                            currentcuppons.map((country, index) => (
-                                                <tr key={country.id}>
-                                                    <td className="px-4 py-3">{index + 1 + indexOfFirstCountry}</td>
-                                                    <td className="px-4 py-3">{country.ctitle}</td>
-                                                    <td className="px-4 py-3">{country.subtitle}</td>
-                                                    <td className="px-4 py-3">{country.c_title}</td>
+                                            currentcuppons.map((cuppon, index) => (
+                                                <tr key={cuppon.id}>
+                                                    <td className="px-4 py-3">{index + 1 + indexOfFirst}</td>
+                                                    <td className="px-4 py-3">{cuppon?.ctitle || "N/A"}</td>
+                                                    <td className="px-4 py-3">{cuppon?.subtitle || "N/A"}</td>
+                                                    <td className="px-4 py-3">{cuppon?.c_title || "N/A"}</td>
                                                     <td className="px-4 py-3">
-                                                        {country.c_img ? (
-                                                            <img
-                                                                src={country.c_img}
-                                                                className="w-16 h-16 object-cover rounded-full"
-                                                                alt="Coupon"
-                                                                onError={(e) => {
-                                                                    e.target.src =
-                                                                        'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg';
+                                                        {cuppon.c_img ? (
+                                                            <img src={cuppon.c_img} className="w-16 h-16 object-cover rounded-full" alt="Coupon" 
+                                                                onError={(e) => { e.target.src = 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg';
                                                                 }}
                                                             />
                                                         ) : (
-                                                            <img
-                                                                src="https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg"
-                                                                className="w-16 h-16 object-cover rounded-full"
-                                                                alt="Placeholder"
-                                                            />
+                                                            <img src="https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg" className="w-16 h-16 object-cover rounded-full" alt="Placeholder"  />
                                                         )}
                                                     </td>
-                                                    <td className="px-4 py-3">{country.cdate}</td>
-                                                    <td className="px-4 py-3">{country.min_amt}</td>
-                                                    <td className="px-4 py-3">{country.c_value}</td>
+                                                    <td className="px-4 py-3">{cuppon?.cdate || "N/A"}</td>
+                                                    <td className="px-4 py-3">{cuppon?.min_amt || "N/A"}</td>
+                                                    <td className="px-4 py-3">{cuppon?.c_value || "N/A"}</td>
                                                     <td className="px-4 py-3">
                                                         <span
                                                             className={`px-3 py-1 text-sm rounded-full ${
-                                                                country.status === 1 ? 'bg-green-500 text-white' : 'bg-gray-400 text-white'
+                                                                cuppon.status === 1 ? 'bg-green-500 text-white' : 'bg-gray-400 text-white'
                                                             }`}
                                                         >
-                                                            {country.status === 1 ? "publish":"unpublish"}
+                                                            {cuppon.status === 1 ? "publish":"unpublish"}
                                                         </span>
                                                     </td>
                                                     <td className="px-4 py-3">
-                                                        <button className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition">
+                                                        <button className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition mr-2" onClick={()=>{updateCuppon(cuppon.id)}}>
                                                             <FaPen />
                                                         </button>
-                                                        <button className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition">
+                                                        <button className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition" onClick={()=>{handledelete(cuppon.id)}}>
                                                         <FaTrash />
                                                     </button>
                                                     </td>
@@ -173,7 +152,6 @@ const CupponList = () => {
                                             <tr>
                                                 <td colSpan="10" className="text-center">
                                                     No data available
-
                                                 </td>
                                             </tr>
                                         )}
@@ -184,35 +162,35 @@ const CupponList = () => {
 
                         {/* Pagination */}
                         <div className="bottom-0 left-0 w-full bg-[#f7fbff] py-4 flex justify-between items-center">
-                            <span className="text-sm font-normal text-gray-500">
-                                Showing <span className="font-semibold text-gray-900">{indexOfFirstCountry + 1}</span> to{' '}
-                                <span className="font-semibold text-gray-900">{Math.min(indexOfLastCountry, filteredcuppons.length)}</span> of{' '}
-                                <span className="font-semibold text-gray-900">{filteredcuppons.length}</span>
-                            </span>
+                        <span className="text-sm font-normal text-gray-500">
+                            Showing <span className="font-semibold text-gray-900">{indexOfFirst + 1}</span> to <span className="font-semibold text-gray-900">{Math.min(indexOfLast, filteredcuppons.length)}</span> of <span className="font-semibold text-gray-900">{filteredcuppons.length}</span>
+                        </span>
                             <ul className="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">
-                                <li>
-                                    <button
-                                        onClick={() => paginate(currentPage > 1 ? currentPage - 1 : 1)}
-                                        className="previous-button"
-                                        disabled={currentPage === 1}
-                                    >
-                                        Previous
-                                    </button>
-                                </li>
-                                <li>
-                                    <span className="current-page">
-                                        Page {currentPage} of {totalPages}
-                                    </span>
-                                </li>
-                                <li>
-                                    <button
-                                        onClick={() => paginate(currentPage < totalPages ? currentPage + 1 : totalPages)}
-                                        className="next-button"
-                                        disabled={currentPage === totalPages}
-                                    >
-                                        Next
-                                    </button>
-                                </li>
+                                    <li>
+                                        <button 
+                                            onClick={() => paginate(currentPage > 1 ? currentPage - 1 : 1)} 
+                                            className={`previous-button ${filteredcuppons.length === 0 ? 'cursor-not-allowed' : ''}`} 
+                                            disabled={currentPage === 1 || filteredcuppons.length === 0} 
+                                            title={filteredcuppons.length === 0 ? 'No data available' : ''}
+                                        >
+                                            <img src="/image/action/Left Arrow.svg" alt="Left" /> Previous
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <span className="current-page">
+                                            Page {filteredcuppons.length > 0 ? currentPage : 0} of {filteredcuppons.length > 0 ? totalPages : 0}
+                                        </span>
+                                    </li>
+                                    <li>
+                                        <button 
+                                            onClick={() => paginate(currentPage < totalPages ? currentPage + 1 : totalPages)} 
+                                            className={`next-button ${filteredcuppons.length === 0 ? 'cursor-not-allowed' : ''}`} 
+                                            disabled={currentPage === totalPages || filteredcuppons.length === 0} 
+                                            title={filteredcuppons.length === 0 ? 'No data available' : ''}
+                                        >
+                                            Next <img src="/image/action/Right Arrow (1).svg" alt="Right" />
+                                        </button>
+                                    </li>
                             </ul>
                         </div>
                     </div>

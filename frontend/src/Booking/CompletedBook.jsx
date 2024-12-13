@@ -2,24 +2,18 @@ import React, { useEffect, useRef, useState } from 'react';
 import Header from '../components/Header';
 import SidebarMenu from '../components/SideBar';
 import { GoArrowDown, GoArrowUp } from 'react-icons/go';
-import { FaPen } from "react-icons/fa";
-import { searchFunction } from '../Entity/SearchEntity';
 import axios from 'axios';
 import PendingBookHeader from './PendingBookHeader';
-import jsPDF from 'jspdf';
 import 'jspdf-autotable';
-import PictureAsPdfOutlinedIcon from '@mui/icons-material/PictureAsPdfOutlined';
-import CameraAltOutlinedIcon from '@mui/icons-material/CameraAltOutlined';
-import html2canvas from 'html2canvas';
 import OrderPreviewModal from './OrderPreviewModal';
-import { useNavigate } from 'react-router-dom';
+import { handleSort } from '../utils/sorting';
 
 const CompletedBook = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isModalOpen2, setIsModalOpen2] = useState(false);
     const [selectedProperty, setSelectedProperty] = useState(null);
-    const [countries, setCountries] = useState([]);
-    const [filteredCountries, setFilteredCountries] = useState([]);
+    const [completed, setcompleted] = useState([]);
+    const [filteredcompleted, setFilteredcompleted] = useState([]);
     const [sortConfig, setSortConfig] = useState({ key: '', direction: '' });
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
@@ -30,53 +24,34 @@ const CompletedBook = () => {
                 const response = await axios.get(`http://localhost:5000/bookings/status/${status}`, {
                     withCredentials: true,
                 });
-                setCountries(response.data);
-                setFilteredCountries(response.data);
+                setcompleted(response.data);
+                setFilteredcompleted(response.data);
             } catch (error) {
                 console.error('Error fetching bookings:', error.message);
             }
         };
         fetchBookings();
     }, []);
-// console.log(countries)
+// console.log(completed)
     const handleSearch = (event) => {
         const searchValue = event.target.value.toLowerCase();
-        const filtered = countries.filter((country) =>
-            country.title.toLowerCase().includes(searchValue)
+        const filtered = completed.filter((complete) =>
+            complete.title.toLowerCase().includes(searchValue)
         );
-        setFilteredCountries(filtered);
+        setFilteredcompleted(filtered);
         setCurrentPage(1);
     };
 
-    const handleSort = (key) => {
-        let direction = 'asc';
-        if (sortConfig.key === key && sortConfig.direction === 'asc') {
-          direction = 'desc';
-        }
-        console.log("3"+direction)
-        const sortedData = [...filteredCountries].sort((a, b) => {
-          if (a[key] < b[key]) {
-            return direction === 'asc' ? -1 : 1;
-          }
-          if (a[key] > b[key]) {
-            return direction === 'asc' ? 1 : -1;
-          }
-          return 0;
-        });
-        // console.log(sortedData)
-        setFilteredCountries(sortedData);
-        setSortConfig({ key, direction });
-        setCurrentPage(1)
+    const sortData = (key) => {
+        handleSort(filteredcompleted,key,sortConfig,setSortConfig,setFilteredcompleted)
       };
     
 
-    const indexOfLastCountry = currentPage * itemsPerPage;
-    const indexOfFirstCountry = indexOfLastCountry - itemsPerPage;
-    const currentCountries = filteredCountries.slice(indexOfFirstCountry, indexOfLastCountry);
-
+    const indexOfLast = currentPage * itemsPerPage;
+    const indexOfFirst = indexOfLast - itemsPerPage;
+    const currentcompleted = filteredcompleted.slice(indexOfFirst, indexOfLast);
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
-    const totalPages = Math.ceil(filteredCountries.length / itemsPerPage);
+    const totalPages = Math.ceil(filteredcompleted.length / itemsPerPage);
 
     const openModal = (property) => {
         setSelectedProperty(property);
@@ -111,68 +86,71 @@ const CompletedBook = () => {
                             <table className="min-w-full text-sm text-left text-gray-700">
                                 <thead className="bg-gray-50 text-xs uppercase font-medium text-gray-500">
                                 <tr>
-                                            <th className="px-4 py-3 min-w-[150px]">
+                                            <th className="px-4 py-3 min-w-[130px]">
                                                 Sr. No
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className='cursor-pointer' onClick={() => handleSort('slno')} />
-                                                    <GoArrowDown className='cursor-pointer' onClick={() => handleSort('slno')} />
+                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('slno')} />
+                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('slno')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[250px]">
+                                            <th className="px-4 py-3 min-w-[180px]">
                                                 Property Title 
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className='cursor-pointer' onClick={() => handleSort('prop_title')} />
-                                                    <GoArrowDown className='cursor-pointer' onClick={() => handleSort('prop_title')} />
+                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('prop_title')} />
+                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('prop_title')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[250px]">
+                                            <th className="px-4 py-3 min-w-[180px]">
                                                 Property Image
                                               <div className="inline-flex items-center ml-2">
-                                                  <GoArrowUp className='cursor-pointer' onClick={() => handleSort('prop_img')} />
-                                                  <GoArrowDown className='cursor-pointer' onClick={() => handleSort('prop_img')} />
+                                                  <GoArrowUp className='cursor-pointer' onClick={() => sortData('prop_img')} />
+                                                  <GoArrowDown className='cursor-pointer' onClick={() => sortData('prop_img')} />
                                               </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[250px]">
+                                            <th className="px-4 py-3 min-w-[180px]">
                                                 Property Price
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className='cursor-pointer' onClick={() => handleSort('prop_price')} />
-                                                    <GoArrowDown className='cursor-pointer' onClick={() => handleSort('prop_price')} />
+                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('prop_price')} />
+                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('prop_price')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[250px]">
+                                            <th className="px-4 py-3 min-w-[200px]">
                                               Property Total Day
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className='cursor-pointer' onClick={() => handleSort('total_day')} />
-                                                    <GoArrowDown className='cursor-pointer' onClick={() => handleSort('total_day')} />
+                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('total_day')} />
+                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('total_day')} />
                                                 </div>
                                             </th>
                                             
-                                            <th className="px-4 py-3 min-w-[350px]">
+                                            <th className="px-4 py-3 min-w-[150px]">
                                               Action
                                               <div className="inline-flex items-center ml-2">
-                                                  <GoArrowUp className='cursor-pointer' onClick={() => handleSort('action')} />
-                                                  <GoArrowDown className='cursor-pointer' onClick={() => handleSort('action')} />
+                                                  <GoArrowUp className='cursor-pointer' onClick={() => sortData('action')} />
+                                                  <GoArrowDown className='cursor-pointer' onClick={() => sortData('action')} />
                                               </div>
                                               
                                             </th>
                                 </tr>
                                 </thead>
                                 <tbody className="divide-y divide-gray-200">
-                                    {currentCountries.map((country, index) => (
+                                    {currentcompleted.map((completedList, index) => (
                                         <tr key={index+1}>
-                                            <td className="px-4 py-3">{index + 1 + indexOfFirstCountry}</td>
-                                            <td className="px-4 py-3">{country.prop_title || 'N/A'}</td>
+                                            <td className="px-4 py-3">{index + 1 + indexOfFirst}</td>
+                                            <td className="px-4 py-3">{completedList?.prop_title || 'N/A'}</td>
                                             <td className="px-4 py-3">
-                                                <img
-                                                    src={country.prop_img || 'fallback-image.jpg'}
-                                                    alt={country.prop_title || 'N/A'}
-                                                    className="w-16 h-16 object-cover rounded-full"
-                                                />
+                                                {completedList.prop_img ? (
+                                                        <img src={completedList.prop_img} className="w-16 h-16 object-cover rounded-full" alt="Coupon" 
+                                                            onError={(e) => { e.target.src = 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg';
+                                                            }}
+                                                        />
+                                                    ) : (
+                                                        <img src="https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg" className="w-16 h-16 object-cover rounded-full" alt="Placeholder"  />
+                                                )}
                                             </td>
-                                            <td className="px-4 py-3">{country.prop_price}</td>
-                                            <td className="px-4 py-3">{country.total_day}</td>
+                                            <td className="px-4 py-3">{completedList?.prop_price || 'N/A'}</td>
+                                            <td className="px-4 py-3">{completedList?.total_day || 'N/A'}</td>
                                             <td className="px-4 py-3">
-                                                    <span className='px-3 py-1 text-sm rounded-full bg-green-400 cursor-pointer text-white mr-2' onClick={() => openModal(country)}>View Details</span>
+                                                    <span className='px-3 py-1 text-sm rounded-full bg-green-400 cursor-pointer text-white mr-2' onClick={() => openModal(completedList)}>View Details</span>
                                             </td>
                                         </tr>
                                     ))}
@@ -181,26 +159,33 @@ const CompletedBook = () => {
                         </div>
                     </div>
                     <div className="bottom-0 left-0 w-full bg-[#f7fbff] py-4 flex justify-between items-center">
-                            <span className="text-sm font-normal text-gray-500">
-                                Showing <span className="font-semibold text-gray-900">{indexOfFirstCountry + 1}</span> to <span className="font-semibold text-gray-900">{Math.min(indexOfLastCountry, filteredCountries.length)}</span> of <span className="font-semibold text-gray-900">{filteredCountries.length}</span>
-                            </span>
-                            <ul className="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">
+                        <span className="text-sm font-normal text-gray-500">
+                                Showing <span className="font-semibold text-gray-900">{indexOfFirst + 1}</span> to <span className="font-semibold text-gray-900">{Math.min(indexOfLast, filteredcompleted.length)}</span> of <span className="font-semibold text-gray-900">{filteredcompleted.length}</span>
+                        </span>
+                        <ul className="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">
                                 <li>
-                                    <button onClick={() => paginate(currentPage > 1 ? currentPage - 1 : 1)} className="previous-button" disabled={currentPage === 1}>
+                                    <button onClick={() => paginate(currentPage > 1 ? currentPage - 1 : 1)} className={`previous-button ${filteredcompleted.length === 0 ? 'cursor-not-allowed' : ''}`}
+                                         disabled={currentPage === 1 || filteredcompleted.length === 0}
+                                         title={filteredcompleted.length === 0 ? 'No data available' : ''}
+                                         >
                                         <img src="/image/action/Left Arrow.svg" alt="Left" /> Previous
                                     </button>
                                 </li>
                                 <li>
                                     <span className="current-page">
-                                        Page {currentPage} of {totalPages}
+                                        Page {filteredcompleted.length > 0 ? currentPage : 0} of {filteredcompleted.length > 0 ? totalPages : 0}
                                     </span>
                                 </li>
                                 <li>
-                                    <button onClick={() => paginate(currentPage < totalPages ? currentPage + 1 : totalPages)} className="next-button" disabled={currentPage === totalPages}>
+                                    <button onClick={() => paginate(currentPage < totalPages ? currentPage + 1 : totalPages)} 
+                                    className={`next-button ${filteredcompleted.length === 0 ? 'cursor-not-allowed' : ''}`} 
+                                    disabled={currentPage === totalPages || filteredcompleted.length === 0}
+                                    title={filteredcompleted.length === 0 ? 'No data available' : ''}
+                                    >
                                         Next <img src="/image/action/Right Arrow (1).svg" alt="Right" />
                                     </button>
                                 </li>
-                            </ul>
+                        </ul>
                     </div>
                     <OrderPreviewModal isOpen={isModalOpen} closeModal={closeModal}  />
                     {isModalOpen2 && (

@@ -8,6 +8,7 @@ import axios from 'axios';
 import { useLoading } from '../Context/LoadingContext';
 import { useLocation } from 'react-router-dom';
 import Loader from '../common/Loader';
+import { NotificationContainer, NotificationManager } from 'react-notifications';
 
 const CategoryAdd = () => {
   const navigate = useNavigate();
@@ -26,7 +27,7 @@ const CategoryAdd = () => {
     if(id){
       getCategory(id)
     }
-  })
+  },[])
 
   const getCategory=async(id)=>{
     try {
@@ -82,21 +83,22 @@ const CategoryAdd = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Form submitted:", formData);
-
+    const url=`http://localhost:5000/categories/upsert`;
+    const successMessage=id ? 'Category Updated Succesfully!' : 'Category Added Successfully!'
     try {
-      const response = await axios.post("http://localhost:5000/categories/upsert",
-         formData
-         ,
-         {
-          withCredentials: true, 
-        }
-        );
-      console.log("Category added successfully:", response.data);
-      alert("Category added successfully!");
-      navigate("/category-list");
+      const response = await axios.post(url,formData,{withCredentials: true});
+      if(response.status === 200 || response.status === 201){
+        NotificationManager.success(successMessage)
+        setTimeout(() => {
+          navigate("/category-list");
+        }, 2000);
+      }else{
+        throw new Error('Unexpected server response')
+      }
+            
     } catch (error) {
-      console.error("Error adding Category:", error);
-      alert("An error occurred while adding the Category.");
+      console.error("Error submitting Category:", error);
+      NotificationManager.error("Error submitting Category:", error);
     }
   };
   return (
@@ -118,7 +120,7 @@ const CategoryAdd = () => {
 
           {/* Form Container */}
           <div className="h-full px-6 max-w-5xl" style={{paddingTop:'24px'}}> 
-            <div className="bg-white h-[70vh] w-full rounded-xl border border-[#EAE5FF] py-4 px-6">
+            <div className="bg-white h-[70vh] w-full rounded-xl border border-[#EAE5FF] py-4 px-6 overflow-y-auto scrollbar-none">
               <form onSubmit={handleSubmit} className="mt-4">
                 <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-1  mt-6">
                   {/* category name */}
@@ -136,7 +138,6 @@ const CategoryAdd = () => {
                     {/* category image*/}
                     <div className="flex flex-col">
                       <label  htmlFor="category_image"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]">Category Image</label>
-                    
                       <ImageUploader onUploadSuccess={handleImageUploadSuccess}/>
                       {formData.img && (
                       <div className="mt-4">
@@ -154,7 +155,7 @@ const CategoryAdd = () => {
                   {/* category Status */}
                   <div className="flex flex-col">
                     <label  htmlFor="category_status"   className="text-sm font-medium text-start text-[12px] font-[Montserrat]" > Status </label>
-                    <select onChange={handleChange}  name="status"  id="category_status"  className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm"  >
+                    <select onChange={handleChange} value={formData.status}  name="status"  id="category_status"  className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm"  >
                       <option value="" disabled selected>Select Status</option>
                       <option value={1}>Publish</option>
                       <option value={0}>Unpublish</option>
@@ -163,7 +164,7 @@ const CategoryAdd = () => {
                 </div>
 
                 {/* Action Buttons */}
-                <button type="submit"   className={`py-2 ${id ? 'bg-green-500 hover:bg-green-600' : 'bg-blue-500 hover:bg-blue-600'} text-white rounded-lg w-[250px] h-12 font-[Montserrat] font-bold`}  style={{ borderRadius: '8px' }}   >
+                <button type="submit"   className={`py-2 mt-6 float-start ${id ? 'bg-green-500 hover:bg-green-600' : 'bg-blue-500 hover:bg-blue-600'} text-white rounded-lg w-[150px] h-12 font-[Montserrat] font-bold`}  style={{ borderRadius: '8px' }}   >
                     {id ? 'Update Category' : 'Add  Category'}
                   </button>
               </form>
@@ -171,9 +172,8 @@ const CategoryAdd = () => {
             </div>
           </div>
         </div>
-        {/* Footer */}
-        {/* <Footer /> */}
       </main>
+      <NotificationContainer />
     </div>
     </div>
   )

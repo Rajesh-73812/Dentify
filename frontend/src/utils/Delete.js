@@ -33,23 +33,48 @@ export const DeleteEntity = async (entity, id) => {
                     await axios.delete(`${BASE_URL}/payment-methods/delete/${id}`, { withCredentials: true });
                     break;
 
-                case 'Page':
-                    await axios.delete(`${BASE_URL}/pages/delete/${id}`, { withCredentials: true });
+                case 'Enquiry':
+                    await axios.delete(`${BASE_URL}/enquiries/delete/${id}`, { withCredentials: true });
+                    break;
+                    
+                case 'PayOutList':
+                    await axios.delete(`${BASE_URL}/payout-settings/delete/${id}`, { withCredentials: true });
+                    break;
+
+
+                case 'Propoties':
+                    await axios.delete(`${BASE_URL}/properties/delete/${id}`, { withCredentials: true });
+                    break;
+
+                case 'ExtraImages':
+                    await axios.delete(`${BASE_URL}/extra/delete/${id}`, { withCredentials: true });
+                    break;
+
+                case 'Facility':
+                    await axios.delete(`${BASE_URL}/facilities/delete/${id}`, { withCredentials: true });
+                    break;
+
+                case 'Gallery':
+                    await axios.delete(`${BASE_URL}/galleries/delete/${id}`, { withCredentials: true });
+                    break;
+    
+                case 'GalleryCategory':
+                    await axios.delete(`${BASE_URL}/galleryCategories/delete/${id}`, { withCredentials: true });
                     break;
 
                 case 'Package':
                     await axios.delete(`${BASE_URL}/packages/delete/${id}`, { withCredentials: true });
                     break;
 
-                case 'Gallery':
-                    await axios.delete(`${BASE_URL}/galleries/delete/${id}`, { withCredentials: true });
-                    break;
-
-                case 'GalleryCategory':
-                    await axios.delete(`${BASE_URL}/galleryCategories/delete/${id}`, { withCredentials: true });
+                case 'Page':
+                    await axios.delete(`${BASE_URL}/pages/delete/${id}`, { withCredentials: true });
                     break;
 
                 case 'Faq':
+                    await axios.delete(`${BASE_URL}/faq/delete/${id}`, { withCredentials: true });
+                    break;
+
+                case 'UserList':
                     await axios.delete(`${BASE_URL}/faq/delete/${id}`, { withCredentials: true });
                     break;
 

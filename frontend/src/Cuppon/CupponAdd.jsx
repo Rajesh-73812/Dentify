@@ -10,20 +10,50 @@ import { useLocation } from 'react-router-dom';
 import Loader from '../common/Loader';
 
 const CupponAdd = () => {
-  const [formData, setFormData] = useState({  c_img: '',  status: 0,  c_title: '',  cdate: '',  ctitle: '',  subtitle: '',  min_amt: '',  c_value: '',  c_desc: '',});
+  const location=useLocation();
+  const id=location.state ? location.state.id : null ;
+  const navigate = useNavigate();
+  const { isLoading, setIsLoading } = useLoading();
+  const [formData, setFormData] = useState({id: id || null,  c_img: '',  status: 0,  c_title: '',  cdate: '',  ctitle: '',  subtitle: '',  min_amt: '',  c_value: '',  c_desc: '',});
+
+  useEffect(()=>{
+    if(id){
+      getCuppon(id)
+    }
+  },[])
+
+  const getCuppon=async(id)=>{
+    try {
+      const response=await axios.get(`http://localhost:5000/coupons/${id}`)
+      // console.log(response.data)
+      const cuppon=response.data
+      setFormData({
+        id,
+        c_img: cuppon.c_img,
+        cdate: cuppon.cdate,
+        c_desc: cuppon.c_desc,
+        c_title: cuppon.c_title,
+        c_value: cuppon.c_value,
+        cdate: cuppon.cdate,
+        ctitle: cuppon.ctitle,
+        min_amt: cuppon.min_amt,
+        status: cuppon.status,
+        subtitle: cuppon.subtitle
+
+      })
+    } catch (error) {
+        console.error(error)
+    }
+  }
   const handleChange=(e)=>{
     const { name, value } = e.target;
 
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
+      id: prevData.id
     }));
   }
-
- const navigate = useNavigate();
-
- 
-
 
   const handleFocus=()=>{
 
@@ -54,9 +84,6 @@ const CupponAdd = () => {
     }));
     
   };
-
-  const location = useLocation();
-  const { isLoading, setIsLoading } = useLoading();
 
   useEffect(() => {
     setIsLoading(true);
@@ -93,7 +120,6 @@ const CupponAdd = () => {
       <div className="flex bg-[#f7fbff]">
       {/* Sidebar */}
       
-      
       <main className="flex-grow">
         <Header />
         <div className="container mx-auto">
@@ -106,13 +132,22 @@ const CupponAdd = () => {
 
           {/* Form Container */}
           <div className="h-full px-6 max-w-5xl" style={{paddingTop:'24px'}}> 
-            <div className="bg-white h-[70vh] w-full rounded-xl border border-[#EAE5FF] py-4 px-6">
+            <div className="bg-white h-[70vh] w-full rounded-xl border border-[#EAE5FF] py-4 px-6 overflow-y-auto scrollbar-none">
               <form onSubmit={handleSubmit} className="mt-4">
               <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-4 mt-6">
                     {/* cuppon image*/}
                     <div className="flex flex-col">
                       <label  htmlFor="cupponimage"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]">Cuppon Image</label>
                       <ImageUploader onUploadSuccess={handleImageUploadSuccess}/>
+                      {formData.c_img && (
+                      <div className="mt-4">
+                        <img
+                          src={formData.c_img}
+                          alt="Uploaded Preview"
+                          className="w-32 h-32 object-cover rounded"
+                        />
+                      </div>
+                      )}
                     </div>
                 
                     {/* cuppon expiarydate*/}
@@ -127,7 +162,7 @@ const CupponAdd = () => {
                   {/* cuppon code */}
                   <div className="flex flex-col">
                       <label  htmlFor="c_title"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> Cuppon code </label>
-                      <input id="c_title" name="c_title" type="text" required className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}}
+                      <input id="c_title" name="c_title"  type="text" required className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}}
                         onFocus={() => handleFocus('c_title')}
                         onBlur={() => handleBlur('c_title')}
                         value={formData.c_title}
@@ -208,7 +243,7 @@ const CupponAdd = () => {
 
                 {/* Action Buttons */}
                 <div className="flex justify-start mt-6 gap-3">
-                  <button  type="submit" className=" py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 w-[150px] h-12 font-[Montserrat] font-bold" style={{ borderRadius: "8px", }} > Add Cuppon </button>
+                  <button  type="submit" className={` py-2 ${id ? 'bg-green-500 hover:bg-green-600' : 'bg-blue-500 hover:bg-blue-600'} text-white rounded-lg  w-[150px] h-12 font-[Montserrat] font-bold`} style={{ borderRadius: "8px", }} > {id ? 'Update Cuppon' : 'Add Cuppon'} </button>
                 </div>
               </form>
 
