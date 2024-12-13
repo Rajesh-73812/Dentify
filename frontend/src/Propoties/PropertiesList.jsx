@@ -76,7 +76,7 @@ const PropotiesList = () => {
         <div>
             <div className="h-screen flex">
                 {/* Sidebar */}
-               
+
 
                 <div className="flex flex-1 flex-col bg-[#f7fbff]">
                     {/* Header */}
@@ -250,7 +250,7 @@ const PropotiesList = () => {
                                                     )}
                                                 </td>
                                                 <td className="px-4 py-3">{property.mobile}</td>
-                                                <td className="px-4 py-3">{property.country.title}</td>
+                                                <td className="px-4 py-3">{property.country}</td>
                                                 <td className="px-4 py-3">{property.add_user_id}</td>
                                                 <td className="px-4 py-3">{property.beds}</td>
                                                 <td className="px-4 py-3">{property.bathroom}</td>
