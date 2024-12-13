@@ -13,53 +13,19 @@ const CategoryAdd = () => {
   const navigate = useNavigate();
   const location=useLocation()
   const id = location.state ? location.state.id : null;
-  console.log(id)
   const { isLoading, setIsLoading } = useLoading();
   const [image, setImage] = useState(null);
   const [formData, setFormData] = useState({
-    id : id || null,
     title: '',
     img: '',
     status: 0,
   });
-  useEffect(()=>{
-    if(id){
-      getCategory(id)
-    }
-  })
-
-  const getCategory=async(id)=>{
-    try {
-      const response=await axios.get(`http://localhost:5000/categories/${id}`)
-      const Category=response.data;
-      console.log(response.data)
-      setFormData({
-        id,
-        title: Category.title,
-        img: Category.img,
-        status: Category.status,
-      })
-    } catch (error) {
-      console.error("Error fetching Category:", error);
-    }
-  }
-
-  useEffect(() => {
-    setIsLoading(true);
-
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 1000); 
-
-    return () => clearTimeout(timer);
-  }, [location, setIsLoading]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
-      id : prevData.id,
     }));
   };
 
@@ -71,6 +37,18 @@ const CategoryAdd = () => {
     
   };
 
+  useEffect(() => {
+    setIsLoading(true);
+
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1000); 
+
+    return () => clearTimeout(timer);
+  }, [location, setIsLoading]);
+
+
+
   const handleFocus=()=>{
 
   }
@@ -78,6 +56,8 @@ const CategoryAdd = () => {
   const handleBlur=()=>{
 
   }
+
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -163,9 +143,9 @@ const CategoryAdd = () => {
                 </div>
 
                 {/* Action Buttons */}
-                <button type="submit"   className={`py-2 ${id ? 'bg-green-500 hover:bg-green-600' : 'bg-blue-500 hover:bg-blue-600'} text-white rounded-lg w-[250px] h-12 font-[Montserrat] font-bold`}  style={{ borderRadius: '8px' }}   >
-                    {id ? 'Update Category' : 'Add  Category'}
-                  </button>
+                <div className="flex justify-start mt-6 gap-3">
+                  <button  type="submit" className=" py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 w-[150px] h-12 font-[Montserrat] font-bold" style={{ borderRadius: "8px", }} > Add Category </button>
+                </div>
               </form>
 
             </div>

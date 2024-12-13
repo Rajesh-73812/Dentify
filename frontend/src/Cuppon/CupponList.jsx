@@ -5,37 +5,45 @@ import { GoArrowDown, GoArrowUp } from 'react-icons/go';
 import { useLoading } from '../Context/LoadingContext';
 import { useLocation } from 'react-router-dom';
 import Loader from '../common/Loader';
+
+
+
 import { FaPen,FaTrash } from "react-icons/fa";
 import { searchFunction } from '../Entity/SearchEntity';
+
 import CupponHeader from './CupponHeader';
+
 import { DeleteEntity } from '../utils/Delete';
+
 import axios from 'axios';
-import { handleSort } from '../utils/sorting';
+
 
 const CupponList = () => {
-    const [cuppons, setcuppons] = useState([]);
-    const [filteredcuppons, setFilteredcuppons] = useState([]);
+    const [countries, setCountries] = useState([]);
+    const [filteredCountries, setFilteredCountries] = useState([]);
     const [sortConfig, setSortConfig] = useState({ key: '', direction: '' });
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10; 
-    const location = useLocation();
-    const { isLoading, setIsLoading } = useLoading();
 
+    // Fetch data from API
     useEffect(() => {
         async function fetchData() {
             try {
                 const response = await axios.get("http://localhost:5000/coupons/all", {
                     withCredentials: true,
                 });
-                // console.log("API Response:", response.data); 
-                setcuppons(response.data);
-                setFilteredcuppons(response.data); 
+                console.log("API Response:", response.data); // Debug API response
+                setCountries(response.data);
+                setFilteredCountries(response.data); // Initialize filtered data
             } catch (error) {
                 console.error("API Error:", error);
             }
         }
         fetchData();
     }, []);
+
+    const location = useLocation();
+  const { isLoading, setIsLoading } = useLoading();
 
   useEffect(() => {
     setIsLoading(true);
@@ -50,26 +58,37 @@ const CupponList = () => {
     // Handle search
     const handleSearch = (event) => {
         const query = event.target.value.toLowerCase();
-        const filtered = cuppons.filter((country) =>
+        const filtered = countries.filter((country) =>
             Object.values(country).some((value) =>
                 String(value).toLowerCase().includes(query)
             )
         );
-        setFilteredcuppons(filtered);
-        setCurrentPage(1); 
+        setFilteredCountries(filtered);
+        setCurrentPage(1); // Reset to first page after search
     };
 
     // Handle sorting
-    const sortData = (key) => {
-        handleSort(filteredcuppons,key,sortConfig,setSortConfig,setFilteredcuppons)
+    const handleSort = (key) => {
+        let direction = 'asc';
+        if (sortConfig.key === key && sortConfig.direction === 'asc') {
+            direction = 'desc';
+        }
+        const sortedData = [...filteredCountries].sort((a, b) => {
+            if (a[key] < b[key]) return direction === 'asc' ? -1 : 1;
+            if (a[key] > b[key]) return direction === 'asc' ? 1 : -1;
+            return 0;
+        });
+        setFilteredCountries(sortedData);
+        setSortConfig({ key, direction });
+        setCurrentPage(1); // Reset to first page after sorting
     };
 
     // Pagination logic
     const indexOfLastCountry = currentPage * itemsPerPage;
     const indexOfFirstCountry = indexOfLastCountry - itemsPerPage;
-    const currentcuppons = filteredcuppons.slice(indexOfFirstCountry, indexOfLastCountry);
+    const currentCountries = filteredCountries.slice(indexOfFirstCountry, indexOfLastCountry);
 
-    const totalPages = Math.ceil(filteredcuppons.length / itemsPerPage);
+    const totalPages = Math.ceil(filteredCountries.length / itemsPerPage);
 
 
     // for dalete
@@ -107,11 +126,11 @@ const CupponList = () => {
                                                     <div className="inline-flex items-center ml-2">
                                                         <GoArrowUp
                                                             className="text-gray-500 hover:text-gray-700 cursor-pointer"
-                                                            onClick={() => sortData(key)}
+                                                            onClick={() => handleSort(key)}
                                                         />
                                                         <GoArrowDown
                                                             className="text-gray-500 hover:text-gray-700 cursor-pointer"
-                                                            onClick={() => sortData(key)}
+                                                            onClick={() => handleSort(key)}
                                                         />
                                                     </div>
                                                 </th>
@@ -121,8 +140,8 @@ const CupponList = () => {
                                     </thead>
                                     <tbody className="divide-y divide-gray-200">
 
-                                        {currentcuppons.length > 0 ? (
-                                            currentcuppons.map((country, index) => (
+                                        {currentCountries.length > 0 ? (
+                                            currentCountries.map((country, index) => (
                                                 <tr key={country.id}>
                                                     <td className="px-4 py-3">{index + 1 + indexOfFirstCountry}</td>
                                                     <td className="px-4 py-3">{country.ctitle}</td>
@@ -186,8 +205,8 @@ const CupponList = () => {
                         <div className="bottom-0 left-0 w-full bg-[#f7fbff] py-4 flex justify-between items-center">
                             <span className="text-sm font-normal text-gray-500">
                                 Showing <span className="font-semibold text-gray-900">{indexOfFirstCountry + 1}</span> to{' '}
-                                <span className="font-semibold text-gray-900">{Math.min(indexOfLastCountry, filteredcuppons.length)}</span> of{' '}
-                                <span className="font-semibold text-gray-900">{filteredcuppons.length}</span>
+                                <span className="font-semibold text-gray-900">{Math.min(indexOfLastCountry, filteredCountries.length)}</span> of{' '}
+                                <span className="font-semibold text-gray-900">{filteredCountries.length}</span>
                             </span>
                             <ul className="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">
                                 <li>

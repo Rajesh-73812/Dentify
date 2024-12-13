@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import Header from '../components/Header';
-import SidebarMenu from '../components/SideBar';
 import { GoArrowDown, GoArrowUp } from 'react-icons/go';
 import { FaPen, FaTrash } from "react-icons/fa";
 // import { searchFunction } from '../Entity/SearchEntity';
@@ -14,6 +13,7 @@ const PropotiesList = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
 
+    // Fetch properties from the server
     useEffect(() => {
         const fetchProperties = async () => {
             try {
@@ -76,7 +76,7 @@ const PropotiesList = () => {
         <div>
             <div className="h-screen flex">
                 {/* Sidebar */}
-               
+
 
                 <div className="flex flex-1 flex-col bg-[#f7fbff]">
                     {/* Header */}
@@ -169,7 +169,7 @@ const PropotiesList = () => {
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[150px]">
-                                                Conutry_Id
+                                                Conutry
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('country_id')} />
                                                     <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('country_id')} />
@@ -231,7 +231,8 @@ const PropotiesList = () => {
                                             <tr key={property.id}>
                                                 <td className="px-4 py-3">{index + 1 + indexOfFirstItem}</td>
                                                 <td className="px-4 py-3">{property.title}</td>
-                                                <td className="px-4 py-3">{property.ptype}</td>
+                                                {/* <td className="px-4 py-3">{property.ptype}</td> */}
+                                                <td cla ssName="px-4 py-3">{property.category?.title || "N/A"}</td>
                                                 <td className="px-4 py-3">{property.description}</td>
                                                 <td className="px-4 py-3">{property.address}</td>
                                                 <td className="px-4 py-3">{property.city}</td>
@@ -250,16 +251,14 @@ const PropotiesList = () => {
                                                     )}
                                                 </td>
                                                 <td className="px-4 py-3">{property.mobile}</td>
-                                                <td className="px-4 py-3">{property.country_id}</td>
+                                                <td className="px-4 py-3">{property.country?.title}</td>
                                                 <td className="px-4 py-3">{property.add_user_id}</td>
                                                 <td className="px-4 py-3">{property.beds}</td>
                                                 <td className="px-4 py-3">{property.bathroom}</td>
                                                 <td className="px-4 py-3">{property.sqrft}</td>
                                                 <td className="px-4 py-3">{property.rate}</td>
                                                 <td className="px-4 py-3">
-                                                    <span
-                                                        className={`px-3 py-1 text-sm rounded-full ${property.status === 1 ? 'bg-green-500 text-white' : 'bg-gray-400 text-white'}`}
-                                                    >
+                                                    <span className={`px-3 py-1 text-sm rounded-full ${property.status === 1 ? 'bg-green-500 text-white' : 'bg-gray-400 text-white'}`}>
                                                         {property.status === 1 ? "publish" : "unpublish"}
                                                     </span>
                                                 </td>

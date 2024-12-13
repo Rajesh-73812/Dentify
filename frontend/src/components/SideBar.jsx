@@ -202,13 +202,13 @@ const SidebarMenu = () => {
             active={location.pathname === "/create-gallery-category"}
             onClick={() => navigate("/create-gallery-category")}
           >
-            Add Gall Category 
+            Add Gallery Category 
           </MenuItem>
           <MenuItem icon={<KeyboardArrowRightOutlinedIcon/>} className="sub-menu-item"
             active={location.pathname === "/gallery-category-list"}
             onClick={() => navigate("/gallery-category-list")}
           >
-            List Gall Category
+            List Gallery Category
           </MenuItem>
         </SubMenu>
 

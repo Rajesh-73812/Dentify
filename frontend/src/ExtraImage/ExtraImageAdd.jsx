@@ -2,15 +2,16 @@ import React, { useEffect, useState } from 'react';
 import Loader from '../common/Loader';
 import Header from '../components/Header';
 import axios from 'axios';
-import SidebarMenu from '../components/SideBar';
 import ImageUploader from '../common/ImageUploader';
 
 const ExtraImageAdd = () => {
     const [properties, setProperties] = useState([]);
     const [formData, setFormData] = useState({
-        pid: '',
-        status: '',
-        img: ""
+        id:null,
+        pid: null,
+        status: 0,
+        img: "",
+        pano:null
     });
     const [selectedPropertyTitle, setSelectedPropertyTitle] = useState('');
     const [isLoading, setIsLoading] = useState(false);
@@ -62,17 +63,29 @@ const ExtraImageAdd = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsLoading(true);
+
+        // Ensure required fields are populated
+        if (!formData.pid || !formData.status || !formData.img) {
+            console.error('Form validation failed:', formData);
+            alert('Please fill all the required fields.');
+            setIsLoading(false);
+            return;
+        }
+
         try {
             const submitData = new FormData();
             submitData.append('pid', formData.pid);
             submitData.append('status', formData.status);
             submitData.append('img', formData.img);
+            submitData.append('pano', formData.pano);
 
-            const response = await axios.post('http://localhost:5000/extra/upsert', submitData, {
+            console.log('Submitting data:', formData);
+
+            const response = await axios.post('http://localhost:5000/extra/upsert', formData, {
                 withCredentials: true,
             });
             console.log('Extra image added successfully:', response.data);
-            alert('Extra image added successfully!'); // Alert message
+            alert('Extra image added successfully!');
         } catch (error) {
             console.error('Error adding extra image:', error.response ? error.response.data : error.message);
         } finally {
@@ -98,12 +111,7 @@ const ExtraImageAdd = () => {
                                         {/* Select Property */}
                                         <div className="flex flex-col">
                                             <label htmlFor="pid" className="text-sm font-medium text-start text-[12px] font-[Montserrat]">Select Property</label>
-                                            <select name="pid" id="pid" className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm" onChange={handleChange} required>
-                                                <option value="" disabled selected>Select Property</option>
-                                                {properties.map((property) => (
-                                                    <option key={property.id} value={property.id}>{property.title}</option>
-                                                ))}
-                                            </select>
+                                            <select name="pid" id="pid" className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm" onChange={handleChange} required> <option value="" disabled selected>Select Property</option> {properties.map((property) => (<option key={property.id} value={property.id}>{property.title}</option>))} </select>
                                             {selectedPropertyTitle && (
                                                 <p className="mt-2 text-sm text-gray-600">Selected Property: {selectedPropertyTitle}</p>
                                             )}
@@ -120,20 +128,18 @@ const ExtraImageAdd = () => {
                                         {/* Yes/No image*/}
                                         <div className="flex flex-col">
                                             <label htmlFor="image2" className="text-sm font-medium text-start text-[12px] font-[Montserrat]" > Status </label>
-                                            <select name="image2" id="image2" className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm"  >
+                                            <select name="status" onChange={handleChange} id="status" value={formData.status} className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm"  >
                                                 <option value="" disabled selected>Select Status</option>
-                                                <option value="yes">Yes</option>
-                                                <option value="no">No</option>
+                                                <option value={1}>Yes</option>
+                                                <option value={0}>No</option>
                                             </select>
                                         </div>
                                         {/* Property Image Status */}
                                         <div className="flex flex-col">
                                             <label htmlFor="status" className="text-sm font-medium text-start text-[12px] font-[Montserrat]">Property Image Status</label>
-                                            <select name="status" id="status" className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm" onChange={handleChange} required>
-                                                <option value="" disabled selected>Select Status</option>
-                                                <option value={1}>Publish</option>
-                                                <option value={0}>Unpublish</option>
-                                            </select>
+                                            <select name="pano" value={formData.pano} id="status" className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm" onChange={handleChange} required>
+                                                <option value="" disabled selected>Select Status</option> <option value={1}>Publish</option>
+                                                <option value={0}>Unpublish</option> </select>
                                         </div>
                                     </div>
                                     {/* Action Buttons */}

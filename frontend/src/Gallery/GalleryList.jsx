@@ -9,13 +9,12 @@ import { useLoading } from '../Context/LoadingContext';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Loader from '../common/Loader';
 import axios from 'axios';
-import { DeleteEntity } from '../utils/Delete';
 
 const GalleryList = () => {
     const navigate=useNavigate();
     const [gallery,setgallery]=useState([])
     const location = useLocation();
-    const { isLoading, setIsLoading } = useLoading();
+  const { isLoading, setIsLoading } = useLoading();
     const [filteredgallery, setFilteredgallery] = useState(gallery);
     const [sortConfig, setSortConfig] = useState({ key: '', direction: '' });
     const [currentPage, setCurrentPage] = useState(1);
@@ -79,21 +78,6 @@ const GalleryList = () => {
     const currentgallery = filteredgallery.slice(indexOfFirstgallery, indexOfLastgallery);
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
     const totalPages = Math.ceil(filteredgallery.length / itemsPerPage);
-
-    // for delete
-    const handledelete = async (id) => {
-        const success = await DeleteEntity("Gallery", id);
-        if (success) {
-            const updatedgallery = gallery.filter((gallery) => gallery.id !== id);
-            setgallery(updatedgallery);
-            setFilteredgallery(updatedgallery);
-        }
-    };
-
-    // for update
-    const updateGallery=(id)=>{
-        navigate('/create-gallery',{state:{id:id}})
-    }
 
     return (
         <div>
@@ -177,17 +161,15 @@ const GalleryList = () => {
                                                 <td className="px-4 py-3">{gallery.pid}</td>
                                                 <td className="px-4 py-3">{gallery.cat_id}</td>
                                                 <td className="px-4 py-3">
-                                                    <span
-                                                        className={`px-3 py-1 text-sm rounded-full ${gallery.status === 1 ? 'bg-green-500 text-white' : 'bg-gray-400 text-white'}`}
-                                                    >
-                                                        {gallery.status === 1 ? "publish" : "unpublish"}
+                                                    <span className={`px-3 py-1 text-sm rounded-full ${gallery.status === 'publish' ? 'bg-green-500 text-white' : 'bg-gray-400 text-white'}`}>
+                                                        {gallery.status}
                                                     </span>
                                                 </td>
                                                 <td className="px-4 py-3">
-                                                    <button className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition mr-2" onClick={()=>{updateGallery(gallery.id)}}>
+                                                    <button className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition mr-2">
                                                         <FaPen />
                                                     </button>
-                                                    <button className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition" onClick={()=>{handledelete(gallery.id)}}>
+                                                    <button className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition">
                                                         <FaTrash />
                                                     </button>
                                                 </td>

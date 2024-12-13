@@ -11,10 +11,10 @@ import 'react-notifications/lib/notifications.css';
 
 const PackageAdd = () => {
   const navigate = useNavigate();
-  const location=useLocation();
-  const id=location.state ? location.state.id : null;
+  const location = useLocation();
+  const id = location.state ? location.state.id : null;
   const [formData, setFormData] = useState({
-    id : id || null,
+    id: id || null,
     title: '',
     day: '',
     price: '',
@@ -31,19 +31,19 @@ const PackageAdd = () => {
 
   const getPackage = async (id) => {
     try {
-        const response = await axios.get(`http://localhost:5000/packages/${id}`);
-        console.log(response.data)
-        const packages = response.data;
-        setFormData({
-            id, 
-            title: packages.title,
-            status: packages.status,
-            description: packages.description,
-            day: packages.day,
-            price: packages.price,
-        });
+      const response = await axios.get(`http://localhost:5000/packages/${id}`);
+      console.log(response.data)
+      const packages = response.data;
+      setFormData({
+        id,
+        title: packages.title,
+        status: packages.status,
+        description: packages.description,
+        day: packages.day,
+        price: packages.price,
+      });
     } catch (error) {
-        console.error("Error fetching Page:", error);
+      console.error("Error fetching Page:", error);
     }
   };
 
@@ -66,28 +66,28 @@ const PackageAdd = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-      const plainTextDescription = new DOMParser()
+    const plainTextDescription = new DOMParser()
       .parseFromString(formData.description, 'text/html')
       .body.innerText;
-  
+
     const dataToSend = {
       ...formData,
-      description: plainTextDescription, 
+      description: plainTextDescription,
     };
-  
+
     console.log("Data to be sent to the server:", dataToSend);
-  
+
     try {
-      const url = id 
-        ? `http://localhost:5000/packages/upsert` 
+      const url = id
+        ? `http://localhost:5000/packages/upsert`
         : `http://localhost:5000/packages/upsert`;
-  
-      const successMessage = id 
-        ? "Package updated successfully!" 
+
+      const successMessage = id
+        ? "Package updated successfully!"
         : "Package added successfully!";
-  
+
       const response = await axios.post(url, dataToSend, { withCredentials: true });
-  
+
       if (response.status === 200 || response.status === 201) {
         NotificationManager.success(successMessage);
         setTimeout(() => {
@@ -101,17 +101,11 @@ const PackageAdd = () => {
       NotificationManager.error("An error occurred while submitting the Package.");
     }
   };
-  
+
 
   return (
     <div>
       <div className="flex bg-[#f7fbff]">
-
-      
-      
-      
-
-
         <main className="flex-grow">
           <Header />
           <div className="container mx-auto">

@@ -7,7 +7,7 @@ import ImageUploader from "../common/ImageUploader";
 
 const PropertiesAdd = () => {
   const [formData, setFormData] = useState({
-    id:0,
+    id: 0,
     title: '',
     image: '',
     price: 0,
@@ -34,18 +34,23 @@ const PropertiesAdd = () => {
 
   const [countries, setCountries] = useState([]);
   const [categories, setCategories] = useState([]);
-  
+
   useEffect(() => {
-    // Fetch countries
     axios.get('http://localhost:5000/countries/all')
-      .then(response => setCountries(response.data))
+      .then(response => {
+        console.log(response.data, "Countries API Response");
+        setCountries(response.data);
+      })
       .catch(error => console.error('Error fetching countries:', error));
 
-    // Fetch categories
     axios.get('http://localhost:5000/categories/all')
-      .then(response => setCategories(response.data))
+      .then(response => {
+        console.log(response.data, "Categories API Response");
+        setCategories(response.data);
+      })
       .catch(error => console.error('Error fetching categories:', error));
   }, []);
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -55,13 +60,13 @@ const PropertiesAdd = () => {
     }));
   };
 
- 
 
-  const handleBlur = (e)=>{
+
+  const handleBlur = (e) => {
 
   }
 
-  const handleFocus = (e)=>{
+  const handleFocus = (e) => {
 
   }
 
@@ -70,24 +75,24 @@ const PropertiesAdd = () => {
       ...prevData,
       image: imageUrl,
     }));
-    
+
   };
-  console.log(formData,"from formdata");
+  console.log(formData, "from formdata");
   const handleSubmit = async (e) => {
     e.preventDefault();
 
- 
-    console.log(formData,"from formdata");
+
+    console.log(formData, "from formdata");
     try {
       await axios.post('http://localhost:5000/properties/upsert',
         formData,
-          {
-        
-          withCredentials: true, 
-        
-      });
+        {
+
+          withCredentials: true,
+
+        });
       alert('Property submitted successfully');
-      
+
     } catch (error) {
       console.error('Error submitting property:', error);
       alert('Error submitting property');
@@ -99,7 +104,7 @@ const PropertiesAdd = () => {
     <div>
       <div className="flex bg-[#f7fbff]">
         {/* Sidebar */}
-       
+
         <main className="flex-grow">
           <Header />
           <div className="container mx-auto">
@@ -401,7 +406,7 @@ const PropertiesAdd = () => {
                         />
                       </div>
 
-                      {/* Total bathrooms */} 
+                      {/* Total bathrooms */}
                       <div>
                         <label
                           htmlFor="bathroom"
@@ -459,28 +464,20 @@ const PropertiesAdd = () => {
                       </div>
 
                       {/* Property Type */}
-                      <div className="sm:col-span-2 md:col-span-1">
-                        <label
-                          htmlFor="ptype"
-                          className="text-sm font-medium text-start text-[12px] font-[Montserrat]"
-                        >
-                          Select Property Type
-                        </label>
-                        <select
-                          name="ptype"
-                          id="ptype"
-                          value={formData.ptype}
-                          className="mt-1 block w-full p-4 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm"
-                          onChange={handleChange}
-                        >
-                          <option value="">Select Property Type</option>
-                          {categories.map((category) => (
-                            <option key={category.id} value={category.id}>
-                              {category.title}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
+                      <select
+                        name="ptype"
+                        id="ptype"
+                        value={formData.ptype}
+                        className="mt-1 block w-full p-4 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm"
+                        onChange={handleChange}
+                      >
+                        <option value="">Select Property Type</option>
+                        {categories.map((category) => (
+                          <option key={category.id} value={category.id}>
+                            {category.title}
+                          </option>
+                        ))}
+                      </select>
 
                       {/* Latitude */}
                       <div>

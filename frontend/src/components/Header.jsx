@@ -8,6 +8,7 @@ const Header = () => {
   const [isHovered, setIsHovered] = useState(false);
   const [showCard, setShowCard] = useState(false);
   const [loading,setloading]=useState(false);
+
   const navigate=useNavigate();
 
   useEffect(() => {
@@ -33,7 +34,7 @@ const Header = () => {
   const logout = async () => {
     setloading(true)
     try {
-      await axios.post(`http://localhost:5000/admin/logout`,{},{ withCredentials: true });
+      const response = await axios.post(`http://localhost:5000/admin/logout`,{},{ withCredentials: true });
       // console.log(response.data);
       setTimeout(() => {
         navigate("/");
@@ -46,14 +47,9 @@ const Header = () => {
   };
   
 
-  const navigation=(data)=>{
-    if(data === 'profile'){
-      navigate("/profile")
-    }else if(data === 'settings'){
-      navigate("/settings")
-    }
+  const account=()=>{
+    navigate("/profile")
   }
-
   return (
     <div className="bg-white h-[65px] sm:h-[80px] p-6 flex items-center justify-between relative">
       {loading && (
@@ -89,13 +85,13 @@ const Header = () => {
               className={`absolute top-12 right-0 w-[220px] bg-white border border-gray-300 rounded-lg shadow-lg z-10 transition-all duration-300`}
             >
               <ul className="py-2 divide-y divide-gray-200">
-                <li className="px-4 py-3 flex items-center gap-3 hover:bg-gray-100 cursor-pointer" onClick={()=>{navigation('profile')}}>
+                <li className="px-4 py-3 flex items-center gap-3 hover:bg-gray-100 cursor-pointer" onClick={account}>
                   <FaUser className="text-gray-500" /> <span>Account</span>
                 </li>
                 <li className="px-4 py-3 flex items-center gap-3 hover:bg-gray-100 cursor-pointer" onClick={logout}>
                   <FaSignOutAlt className="text-gray-500" /> <span>Logout</span>
                 </li>
-                <li className="px-4 py-3 flex items-center gap-3 hover:bg-gray-100 cursor-pointer" onClick={()=>{navigation('settings')}}>
+                <li className="px-4 py-3 flex items-center gap-3 hover:bg-gray-100 cursor-pointer">
                   <FaCog className="text-gray-500" /> <span>Settings</span>
                 </li>
               </ul>
@@ -105,6 +101,7 @@ const Header = () => {
       </div>
     </div>
   );
+  
 };
 
 export default Header;
