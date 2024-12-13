@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import Header from '../components/Header'
 import { Link, useNavigate } from 'react-router-dom'
-import SidebarMenu from '../components/SideBar'
-import Cookie from 'js-cookie';
 import ImageUploader from '../common/ImageUploader';
 import axios from 'axios';
 import { useLoading } from '../Context/LoadingContext';
 import { useLocation } from 'react-router-dom';
 import Loader from '../common/Loader';
+import { NotificationManager,NotificationContainer } from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 
 const CupponAdd = () => {
   const location=useLocation();
@@ -96,22 +96,23 @@ const CupponAdd = () => {
   }, [location, setIsLoading]);
 
   const handleSubmit=async(e)=>{
-    console.log(formData, "from formdata");
     e.preventDefault();
+    console.log(formData, "from formdata");
+    const url=id ? `http://localhost:5000/coupons/upsert` : `http://localhost:5000/coupons/upsert`;
+    const successMessage=id ? `Category Updated Successfully` : `Cuppon Added Successfully!` ;
     try {
-      const response = await axios.post("http://localhost:5000/coupons/upsert",
-        formData
-        ,
-        {
-         withCredentials: true, 
-       }
-       );
-
-       console.log("Caupon added successfully:", response.data);
-      alert("Caupon added successfully!");
-      navigate("/cuppon-list");
+      const response=await axios.post(url,formData,{withCredentials:true});
+      if(response.status === 200 || response.status === 201){
+        NotificationManager.success(successMessage)
+        setTimeout(() => {
+          navigate('/add-cuppon')
+        }, 2000);
+      }else{
+        throw new Error('Unexpected server response')
+      }
     } catch (error) {
-      console.log(error)
+        console.error("Error submitting Category:", error);
+        NotificationManager.error("Error submitting Category:", error);
     }
   }
   return (
@@ -250,8 +251,8 @@ const CupponAdd = () => {
             </div>
           </div>
         </div>
-
       </main>
+      <NotificationContainer />
     </div>
     </div>
   )

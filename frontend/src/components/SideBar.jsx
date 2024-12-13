@@ -145,7 +145,11 @@ const SidebarMenu = () => {
           </MenuItem> */}
 
         {/* Payout List */}
+<<
+         
+
           {/* <MenuItem icon={<FaUser />
+
             active={location.pathname === "/payout-list"}
             onClick={() => navigate("/payout-list")}
           >
@@ -345,6 +349,14 @@ const SidebarMenu = () => {
             onClick={() => navigate("/settings")}
           >
             Setting
+        </MenuItem>
+
+        {/*  role change */}
+        <MenuItem 
+            active={location.pathname === "/role"} icon={<LuSettings2 />}
+            onClick={() => navigate("/role")}
+          >
+            Role Request
         </MenuItem>
 
         {/* logout */}

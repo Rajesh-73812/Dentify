@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Header from '../components/Header'
 import { Link, useNavigate } from 'react-router-dom'
-import SidebarMenu from '../components/SideBar'
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ImageUploader from '../common/ImageUploader';
 import axios from 'axios';
@@ -9,6 +8,7 @@ import { useLoading } from '../Context/LoadingContext';
 import { useLocation } from 'react-router-dom';
 import Loader from '../common/Loader';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 
 const CategoryAdd = () => {
   const navigate = useNavigate();

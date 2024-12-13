@@ -1,20 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import Header from '../components/Header';
-import SidebarMenu from '../components/SideBar';
 import { GoArrowDown, GoArrowUp } from 'react-icons/go';
 import { FaPen,FaTrash } from "react-icons/fa";
-import { searchFunction } from '../Entity/SearchEntity';
 import axios from 'axios';
 import PackageHeader from './PackageHeader';
 import { useNavigate } from 'react-router-dom';
 import { DeleteEntity } from '../utils/Delete';
+import { handleSort } from '../utils/sorting';
 
 const PackageList = () => {
     const navigate=useNavigate();
     const [packages, setpackages] = useState([]);
     const [filteredpackages, setFilteredpackages] = useState([]);
     const [sortConfig, setSortConfig] = useState({ key: '', direction: '' });
-
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
 
@@ -32,28 +30,10 @@ const PackageList = () => {
     }, []);     
 
     const handleSearch = (event) => {
-        searchFunction(event, packages, setFilteredpackages);
-        setCurrentPage(1);
     };
 
-    const handleSort = (key) => {
-        let direction = 'asc';
-        if (sortConfig.key === key && sortConfig.direction === 'asc') {
-            direction = 'desc';
-        }
-
-        const sortedData = [...filteredpackages].sort((a, b) => {
-            if (key === 'slno') {
-                return direction === 'asc' ? a.id - b.id : b.id - a.id;
-            } else if (key === 'totalProperties') {
-                return direction === 'asc' ? a.totalProperties - b.totalProperties : b.totalProperties - a.totalProperties;
-            }
-            return a[key]?.localeCompare(b[key]) * (direction === 'asc' ? 1 : -1);
-        });
-
-        setFilteredpackages(sortedData);
-        setSortConfig({ key, direction });
-        setCurrentPage(1);
+    const sortData = (key) => {
+        handleSort(filteredpackages,key,sortConfig,setSortConfig,setFilteredpackages)
     };
 
     const indexOfLastPackage = currentPage * itemsPerPage;
@@ -92,56 +72,51 @@ const PackageList = () => {
                                             <th className="px-4 py-3 min-w-[150px]">
                                                 Sr. No
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className='cursor-pointer' onClick={() => handleSort('slno')} />
-                                                    <GoArrowDown className='cursor-pointer' onClick={() => handleSort('slno')} />
+                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('slno')} />
+                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('slno')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[250px]">
+                                            <th className="px-4 py-3 min-w-[180px]">
                                                 Package Title 
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className='cursor-pointer' onClick={() => handleSort('title')} />
-                                                    <GoArrowDown className='cursor-pointer' onClick={() => handleSort('title')} />
+                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('title')} />
+                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('title')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[250px]">
+                                            <th className="px-4 py-3 min-w-[180px]">
                                               Package Image
                                               <div className="inline-flex items-center ml-2">
-                                                  <GoArrowUp className='cursor-pointer' onClick={() => handleSort('image')} />
-                                                  <GoArrowDown className='cursor-pointer' onClick={() => handleSort('image')} />
+                                                  <GoArrowUp className='cursor-pointer' onClick={() => sortData('image')} />
+                                                  <GoArrowDown className='cursor-pointer' onClick={() => sortData('image')} />
                                               </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[250px]">
+                                            <th className="px-4 py-3 min-w-[180px]">
                                               Package Day
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className='cursor-pointer' onClick={() => handleSort('day')} />
-                                                    <GoArrowDown className='cursor-pointer' onClick={() => handleSort('day')} />
+                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('day')} />
+                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('day')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[250px]">
+                                            <th className="px-4 py-3 min-w-[180px]">
                                               Package Price
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className='cursor-pointer' onClick={() => handleSort('price')} />
-                                                    <GoArrowDown className='cursor-pointer' onClick={() => handleSort('price')} />
+                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('price')} />
+                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('price')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[250px]">
-                                              Package Status
+                                            <th className="px-4 py-3 min-w-[150px]">
+                                               Status
                                               <div className="inline-flex items-center ml-2">
-                                                  <GoArrowUp className='cursor-pointer' onClick={() => handleSort('status')} />
-                                                  <GoArrowDown className='cursor-pointer' onClick={() => handleSort('status')} />
+                                                  <GoArrowUp className='cursor-pointer' onClick={() => sortData('status')} />
+                                                  <GoArrowDown className='cursor-pointer' onClick={() => sortData('status')} />
                                               </div>
                                               </th>
-                                            <th className="px-4 py-3 min-w-[250px]">
-                                              Action
-                                              <div className="inline-flex items-center ml-2">
-                                                  <GoArrowUp className='cursor-pointer' onClick={() => handleSort('action')} />
-                                                  <GoArrowDown className='cursor-pointer' onClick={() => handleSort('action')} />
-                                              </div>
-                                            </th>
+                                            <th className="px-4 py-3 min-w-[250px]"> Action  </th>
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-gray-200">
-                                        {currentpackages.map((Package, index) => (
+                                        {currentpackages.length > 0 ? (
+                                            currentpackages.map((Package, index) => (
                                             <tr key={Package.id}>
                                                 <td className="px-4 py-3">{index + 1 + indexOfFirstPackage}</td>
                                                 <td className="px-4 py-3">{Package?.title || "N/A"}</td>
@@ -153,8 +128,8 @@ const PackageList = () => {
                                                         // onError={(e) => (e.target.src = 'fallback-image.jpg')}
                                                     />
                                                 </td>
-                                                <td className="px-4 py-3">{Package?.day || 1}</td>
-                                                <td className="px-4 py-3">{Package?.price || 0}</td>
+                                                <td className="px-4 py-3">{Package?.day || "N/A"}</td>
+                                                <td className="px-4 py-3">{Package?.price || "N/A"}</td>
                                                 <td className="px-4 py-3">
                                                     <span
                                                         className={`px-3 py-1 text-sm rounded-full ${Package.status === 1 ? 'bg-green-500 text-white' : 'bg-gray-400 text-white'}`}
@@ -171,7 +146,15 @@ const PackageList = () => {
                                                     </button>
                                                 </td>
                                             </tr>
-                                        ))}
+                                        ))
+                                        ) : (
+                                            <tr>
+                                                <td colSpan="10" className="text-center">
+                                                    No data available
+                                                </td>
+                                            </tr>
+                                        )
+                                    }
                                     </tbody>
                                 </table>
                             </div>

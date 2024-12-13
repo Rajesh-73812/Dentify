@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import Header from '../components/Header';
-import SidebarMenu from '../components/SideBar';
 import { GoArrowDown, GoArrowUp } from 'react-icons/go';
 import { FaPen,FaTrash } from "react-icons/fa";
 import { searchFunction } from '../Entity/SearchEntity';
@@ -10,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { DeleteEntity } from '../utils/Delete';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
+import { handleSort } from '../utils/sorting';
 
 const FaqList = () => {
     const navigate=useNavigate();
@@ -34,34 +34,16 @@ const FaqList = () => {
     }, []);
 
     const handleSearch = (event) => {
-        searchFunction(event, faq, setFilteredfaq);
-        setCurrentPage(1);
     };
 
-    const handleSort = (key) => {
-        let direction = 'asc';
-        if (sortConfig.key === key && sortConfig.direction === 'asc') {
-            direction = 'desc';
-        }
-
-        const sortedData = [...filteredfaq].sort((a, b) => {
-            if (key === 'slno') {
-                return direction === 'asc' ? a.id - b.id : b.id - a.id;
-            }
-            return a[key]?.localeCompare(b[key]) * (direction === 'asc' ? 1 : -1);
-        });
-
-        setFilteredfaq(sortedData);
-        setSortConfig({ key, direction });
-        setCurrentPage(1);
+    const sortData = (key) => {
+        handleSort(filteredfaq,key,sortConfig,setSortConfig,setFilteredfaq)
     };
 
     const indexOfLastFaq = currentPage * itemsPerPage;
     const indexOfFirstFaq = indexOfLastFaq - itemsPerPage;
     const currentfaq = filteredfaq.slice(indexOfFirstFaq, indexOfLastFaq);
-
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
     const totalPages = Math.ceil(filteredfaq.length / itemsPerPage);
 
     // for update
@@ -71,10 +53,12 @@ const FaqList = () => {
 
     // for delete
       const handledelete = async (id) => {
-        DeleteEntity("Faq", id);
-        const updatedFaq = faq.filter((item) => item.id !== id);
-        setfaq(updatedFaq);
-        setFilteredfaq(updatedFaq);
+        const success= await DeleteEntity("Faq", id);
+        if(success){
+            const updatedFaq = faq.filter((faq) => faq.id !== id);
+            setfaq(updatedFaq);
+            setFilteredfaq(updatedFaq);
+        }
      };
     return (
         <div>
@@ -92,42 +76,43 @@ const FaqList = () => {
                                             <th className="px-4 py-3 min-w-[150px]">
                                                 Sr. No
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className='cursor-pointer' onClick={() => handleSort('slno')} />
-                                                    <GoArrowDown className='cursor-pointer' onClick={() => handleSort('slno')} />
+                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('slno')} />
+                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('slno')} />
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[250px]">
                                                 Faq Question
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className='cursor-pointer' onClick={() => handleSort('question')} />
-                                                    <GoArrowDown className='cursor-pointer' onClick={() => handleSort('question')} />
+                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('question')} />
+                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('question')} />
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[250px]">
                                                 Faq Answer
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className='cursor-pointer' onClick={() => handleSort('answer')} />
-                                                    <GoArrowDown className='cursor-pointer' onClick={() => handleSort('answer')} />
+                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('answer')} />
+                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('answer')} />
                                                 </div>
                                             </th>                                            
-                                            <th className="px-4 py-3 min-w-[250px]">
+                                            <th className="px-4 py-3 min-w-[150px]">
                                               Status
                                               <div className="inline-flex items-center ml-2">
-                                                  <GoArrowUp className='cursor-pointer' onClick={() => handleSort('status')} />
-                                                  <GoArrowDown className='cursor-pointer' onClick={() => handleSort('status')} />
+                                                  <GoArrowUp className='cursor-pointer' onClick={() => sortData('status')} />
+                                                  <GoArrowDown className='cursor-pointer' onClick={() => sortData('status')} />
                                               </div>
                                               </th>
-                                            <th className="px-4 py-3 min-w-[250px]">
+                                            <th className="px-4 py-3 min-w-[150px]">
                                               Action
                                               <div className="inline-flex items-center ml-2">
-                                                  <GoArrowUp className='cursor-pointer' onClick={() => handleSort('action')} />
-                                                  <GoArrowDown className='cursor-pointer' onClick={() => handleSort('action')} />
+                                                  <GoArrowUp className='cursor-pointer' onClick={() => sortData('action')} />
+                                                  <GoArrowDown className='cursor-pointer' onClick={() => sortData('action')} />
                                               </div>
                                             </th>
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-gray-200">
-                                        {currentfaq.map((faq, index) => (
+                                        {currentfaq.length > 0 ? (
+                                            currentfaq.map((faq, index) => (
                                             <tr key={faq.id}>
                                                 <td className="px-4 py-3">{index + 1 + indexOfFirstFaq}</td>
                                                 <td className="px-4 py-3">{faq?.question || "N/A"}</td>
@@ -150,7 +135,15 @@ const FaqList = () => {
                                                     </button>
                                                 </td>
                                             </tr>
-                                        ))}
+                                        ))
+                                        ) : (
+                                            <tr>
+                                                <td colSpan="10" className="text-center">
+                                                    No data available
+                                                </td>
+                                            </tr>
+                                        )
+                                    }
                                     </tbody>
                                 </table>
                             </div>
