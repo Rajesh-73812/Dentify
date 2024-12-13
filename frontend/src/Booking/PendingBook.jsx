@@ -70,7 +70,6 @@ const PendingBook = () => {
     const navigateApprove = async (id, newStatus) => {
         try {
             const response = await axios.put(`http://localhost:5000/bookings/status/${id}`,{ status: newStatus },{ withCredentials: true });
-    
             if (response.status === 200) {
                 NotificationManager.success('Status updated successfully!');
                 setTimeout(() => {

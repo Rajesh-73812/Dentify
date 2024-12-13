@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import Header from '../components/Header';
-import SidebarMenu from '../components/SideBar';
 import { GoArrowDown, GoArrowUp } from 'react-icons/go';
 import { FaPen,FaTrash } from "react-icons/fa";
 import { searchFunction } from '../Entity/SearchEntity';
@@ -10,6 +9,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import Loader from '../common/Loader';
 import axios from 'axios';
 import { DeleteEntity } from '../utils/Delete';
+import { handleSort } from '../utils/sorting';
 
 const GalleryList = () => {
     const navigate=useNavigate();
@@ -53,24 +53,8 @@ const GalleryList = () => {
     };
 
     // for sorting
-    const handleSort = (key) => {
-        let direction = 'asc';
-        if (sortConfig.key === key && sortConfig.direction === 'asc') {
-            direction = 'desc';
-        }
-        
-        const sortedData = [...filteredgallery].sort((a, b) => {
-            if (key === 'slno') {
-                return direction === 'asc' ? a.id - b.id : b.id - a.id;
-            } else if (key === 'totalProperties') {
-                return direction === 'asc' ? a.totalProperties - b.totalProperties : b.totalProperties - a.totalProperties;
-            }
-            return a[key] < b[key] ? (direction === 'asc' ? -1 : 1) : (direction === 'asc' ? 1 : -1);
-        });
-
-        setFilteredgallery(sortedData);
-        setSortConfig({ key, direction });
-        setCurrentPage(1);
+    const sortData = (key) => {
+        handleSort(filteredgallery,key,sortConfig,setSortConfig,setFilteredgallery)
     };
 
     // Calculate paginated gallery
@@ -116,50 +100,39 @@ const GalleryList = () => {
                                             <th className="px-4 py-3 min-w-[100px]">
                                                 Sr. No
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('slno')} />
-                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('slno')} />
+                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('slno')} />
+                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('slno')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[150px]">
-                                                Gallery Image
-                                                <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('name')} />
-                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('name')} />
-                                                </div>
-                                            </th>
+                                            <th className="px-4 py-3 min-w-[150px]"> Gallery Image</th>
                                             <th className="px-4 py-3 min-w-[150px]">
                                                 Property Title 
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('name')} />
-                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('name')} />
+                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('name')} />
+                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('name')} />
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[150px]">
                                                 Category Title 
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('name')} />
-                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('name')} />
+                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('name')} />
+                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('name')} />
                                                 </div>
                                             </th>
                                             
                                             <th className="px-4 py-3 min-w-[100px]">
                                                 Gallery Status
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('status')} />
-                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('status')} />
+                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('status')} />
+                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('status')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[100px]">
-                                                Action
-                                                <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('action')} />
-                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('action')} />
-                                                </div>
-                                            </th>
+                                            <th className="px-4 py-3 min-w-[100px]"> Action</th>
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-gray-200">
-                                        {currentgallery.map((gallery, index) => (
+                                        {currentgallery.length > 0 ? (
+                                            currentgallery.map((gallery, index) => (
                                             <tr key={gallery.id}>
                                                 <td className="px-4 py-3">{index + 1 + indexOfFirstgallery}</td>
                                                 
@@ -174,8 +147,8 @@ const GalleryList = () => {
                                                         <img src={'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg'} height={50} width={50} loading="lazy" alt="" />
                                                     )}
                                                 </td>
-                                                <td className="px-4 py-3">{gallery.pid}</td>
-                                                <td className="px-4 py-3">{gallery.cat_id}</td>
+                                                <td className="px-4 py-3">{gallery?.pid || "N/A"}</td>
+                                                <td className="px-4 py-3">{gallery?.cat_id || "N/A"}</td>
                                                 <td className="px-4 py-3">
                                                     <span
                                                         className={`px-3 py-1 text-sm rounded-full ${gallery.status === 1 ? 'bg-green-500 text-white' : 'bg-gray-400 text-white'}`}
@@ -192,7 +165,15 @@ const GalleryList = () => {
                                                     </button>
                                                 </td>
                                             </tr>
-                                        ))}
+                                        ))
+                                        ) : (
+                                            <tr>
+                                                <td colSpan="10" className="text-center">
+                                                    No data available
+                                                </td>
+                                            </tr>
+                                        )
+                                    }
                                     </tbody>
                                 </table>
                             </div>

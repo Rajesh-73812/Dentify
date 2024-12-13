@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import Header from '../components/Header';
-import SidebarMenu from '../components/SideBar';
 import { GoArrowDown, GoArrowUp } from 'react-icons/go';
 import { FaPen,FaTrash } from "react-icons/fa";
 import { searchFunction } from '../Entity/SearchEntity';
@@ -14,13 +13,28 @@ import { DeleteEntity } from '../utils/Delete';
 
 const PaymentGatewayList = () => {
    const [paymentGateway, setpaymentGateway] = useState([]);
-    const [filterData, setFilterData] = useState(paymentGateway);
     const [filteredpaymentGateway, setFilteredpaymentGateway] = useState(paymentGateway);
     const [sortConfig, setSortConfig] = useState({ key: '', direction: '' });
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10; 
     const location = useLocation();
     const { isLoading, setIsLoading } = useLoading();
+
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const response = await axios.get("http://localhost:5000/payment-methods/", {
+                    withCredentials: true,
+                });
+                console.log("API Response:", response.data);
+                setpaymentGateway(response.data);
+                setFilteredpaymentGateway(response.data); 
+            } catch (error) {
+                console.error("API Error:", error);
+            }
+        }
+        fetchData();
+    }, []);
 
   useEffect(() => {
     setIsLoading(true);
@@ -47,27 +61,9 @@ const PaymentGatewayList = () => {
     const indexOfLastpaymentgatway = currentPage * itemsPerPage;
     const indexOfFirstpaymentgatway = indexOfLastpaymentgatway - itemsPerPage;
     const currentpaymentGateway = filteredpaymentGateway.slice(indexOfFirstpaymentgatway, indexOfLastpaymentgatway);
-
-    // Change page
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
     const totalPages = Math.ceil(filteredpaymentGateway.length / itemsPerPage);
 
-    useEffect(() => {
-        async function fetchData() {
-            try {
-                const response = await axios.get("http://localhost:5000/payment-methods/", {
-                    withCredentials: true,
-                });
-                console.log("API Response:", response.data);
-                setpaymentGateway(response.data);
-                setFilteredpaymentGateway(response.data); 
-            } catch (error) {
-                console.error("API Error:", error);
-            }
-        }
-        fetchData();
-    }, []);
 
     // for delete
     const handledelete=async(id)=>{
@@ -84,7 +80,6 @@ const PaymentGatewayList = () => {
             {isLoading && <Loader />}
             <div className="h-screen flex">
                 {/* Sidebar */}
-               
 
                 <div className="flex flex-1 flex-col bg-[#f7fbff]">
                     {/* Header */}
@@ -105,14 +100,14 @@ const PaymentGatewayList = () => {
                                                     <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('slno')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[200px]">
+                                            <th className="px-4 py-3 min-w-[220px]">
                                                 PaymentGateway Name
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('title')} />
                                                     <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('title')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[200px]">
+                                            <th className="px-4 py-3 min-w-[240px]">
                                                 PaymentGateway SubTitle
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('subtitle')} />
@@ -120,17 +115,16 @@ const PaymentGatewayList = () => {
                                                 </div>
                                             </th>
 
-                                            <th className="px-4 py-3 min-w-[250px]">  PaymentGateway Image  </th>
-                                            <th className="px-4 py-3 min-w-[250px]">  PaymentGateway Status </th>
-                                            <th className="px-4 py-3 min-w-[250px]">  Show On Wallet  </th>
-                                            <th className="px-4 py-3 min-w-[250px]">  Show On Subscribe  </th>
-
-                                            
+                                            <th className="px-4 py-3 min-w-[200px]">  PaymentGateway Image  </th>
+                                            <th className="px-4 py-3 min-w-[200px]">  PaymentGateway Status </th>
+                                            <th className="px-4 py-3 min-w-[150px]">  Show On Wallet  </th>
+                                            <th className="px-4 py-3 min-w-[200px]">  Show On Subscribe  </th>
                                             <th className="px-4 py-3 min-w-[150px]"> Action </th>
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-gray-200">
-                                        {currentpaymentGateway.map((paymentgatway, index) => (
+                                        {currentpaymentGateway.length > 0 ? (
+                                            currentpaymentGateway.map((paymentgatway, index) => (
                                             <tr key={paymentgatway.id}>
                                                 <td className="px-4 py-3">{index + 1 + indexOfFirstpaymentgatway}</td>
                                                 <td className="px-4 py-3">{paymentgatway.title}</td>
@@ -165,7 +159,13 @@ const PaymentGatewayList = () => {
                                                     </button>
                                                 </td>
                                             </tr>
-                                        ))}
+                                        ))
+                                        ) : (
+                                            <tr>
+                                                <td colSpan={6} className="px-4 py-3 text-center">No data available </td>
+                                            </tr>
+                                        )
+                                    }
                                     </tbody>
                                 </table>
                             </div>
