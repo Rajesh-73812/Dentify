@@ -2,12 +2,10 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Table, Modal, Button, Form } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import PersonIcon from '@mui/icons-material/Person';
 import SearchIcon from '@mui/icons-material/Search';
 import BorderColorOutlinedIcon from '@mui/icons-material/BorderColorOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
-import './AdminList.css'; // Custom CSS file for additional styles
+import Header from '../components/Header';
 
 const AdminList = () => {
     const [admins, setAdmins] = useState([]);
@@ -100,13 +98,7 @@ const AdminList = () => {
 
     return (
         <div className="admin-container">
-            <div className="header">
-                <h1 className="title">Admins</h1>
-                <div className="icons">
-                    <NotificationsIcon className="icon" />
-                    <PersonIcon className="icon" />
-                </div>
-            </div>
+            <Header />
             <div className="sub-header">
                 <h1 className='title'>Admin List</h1>
                 <div className="icons">
