@@ -44,7 +44,7 @@ import NotFound from "./NotFound.jsx";
 
 import { AuthProvider } from "./Context/AuthContext.js";
 import PrivateRoute from "./Context/PrivateRoute.js";
-
+import AdminList from "./Admin/AdminList.jsx";
 
 // Layout component for common sidebar
 const LayoutWithSidebar = ({ children }) => (
@@ -58,309 +58,312 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-      <AuthProvider>
-        <Routes>
-          {/* Excluded routes */}
-          <Route path="/" element={<Login />} />
-          <Route path="/*" element={<NotFound />} />
-          <Route path="/forgotpassword" element={<ForgotPassword />} />
-          <Route path="/sendotp" element={<SendOTP />} />
-          <Route path="/setnewpassword" element={<SetNewPassword />} />
+        <AuthProvider>
+          <Routes>
+            {/* Excluded routes */}
+            <Route path="/" element={<Login />} />
+            <Route path="/*" element={<NotFound />} />
+            <Route path="/forgotpassword" element={<ForgotPassword />} />
+            <Route path="/sendotp" element={<SendOTP />} />
+            <Route path="/setnewpassword" element={<SetNewPassword />} />
 
-          {/* Routes with Sidebar */}
-          <Route
-            path="/dashboard"
-            element={
-              
-              <LayoutWithSidebar>
-              
-                <Dashboard />
-              
-              </LayoutWithSidebar>
-             
-            }
-          />
-          <Route
-            path="/add-country"
-            element={
-              <LayoutWithSidebar>
-                <CountryAdd />
-              </LayoutWithSidebar>
-            }
-          />
-          <Route
-            path="/country-list"
-            element={
-              <LayoutWithSidebar>
-                <CountryList />
-              </LayoutWithSidebar>
-            }
-          />
+            {/* Routes with Sidebar */}
+            <Route
+              path="/dashboard"
+              element={
+                <LayoutWithSidebar>
+                  <Dashboard />
+                </LayoutWithSidebar>
+              }
+            />
+            <Route
+              path="/add-country"
+              element={
+                <LayoutWithSidebar>
+                  <CountryAdd />
+                </LayoutWithSidebar>
+              }
+            />
+            <Route
+              path="/country-list"
+              element={
+                <LayoutWithSidebar>
+                  <CountryList />
+                </LayoutWithSidebar>
+              }
+            />
+
+            <Route
+              path="/add-category"
+              element={
+                <LayoutWithSidebar>
+                  <CategoryAdd />
+                </LayoutWithSidebar>
+              }
+            />
+            <Route
+              path="/category-list"
+              element={
+                <LayoutWithSidebar>
+                  <CategoryList />
+                </LayoutWithSidebar>
+              }
+            />
+            <Route
+              path="/add-cuppon"
+              element={
+                <LayoutWithSidebar>
+                  <CupponAdd />
+                </LayoutWithSidebar>
+              }
+            />
+            <Route
+              path="/cuppon-list"
+              element={
+                <LayoutWithSidebar>
+                  <CupponList />
+                </LayoutWithSidebar>
+              }
+            />
+
+            <Route
+              path="/payment-list"
+              element={
+                <LayoutWithSidebar>
+                  <PaymentGatewayList />
+                </LayoutWithSidebar>
+              }
+            />
+            <Route
+              path="/enquiry-list"
+              element={
+                <LayoutWithSidebar>
+                  <EnquiryList />
+                </LayoutWithSidebar>
+              }
+            />
+
+            <Route
+              path="/payout-list"
+              element={
+                <LayoutWithSidebar>
+                  <PayOutList />
+                </LayoutWithSidebar>
+              }
+            />
+
+            <Route
+              path="/property-list"
+              element={
+                <LayoutWithSidebar>
+                  <PropertiesList />
+                </LayoutWithSidebar>
+              }
+            />
+            <Route
+              path="/create-property"
+              element={
+                <LayoutWithSidebar>
+                  <PropertiesAdd />
+                </LayoutWithSidebar>
+              }
+            />
+
+            <Route
+              path="/extra-image-list"
+              element={
+                <LayoutWithSidebar>
+                  <ExtraImageList />
+                </LayoutWithSidebar>
+              }
+            />
+            <Route
+              path="/create-extra-image"
+              element={
+                <LayoutWithSidebar>
+                  <ExtraImageAdd />
+                </LayoutWithSidebar>
+              }
+            />
+
+            <Route
+              path="/facility-list"
+              element={
+                <LayoutWithSidebar>
+                  <FacilityList />
+                </LayoutWithSidebar>
+              }
+            />
+            <Route
+              path="/create-facility"
+              element={
+                <LayoutWithSidebar>
+                  <FacilityAdd />
+                </LayoutWithSidebar>
+              }
+            />
+
+            <Route
+              path="/gallery-category-list"
+              element={
+                <LayoutWithSidebar>
+                  <GalleryCategoryList />
+                </LayoutWithSidebar>
+              }
+            />
+            <Route
+              path="/create-gallery-category"
+              element={
+                <LayoutWithSidebar>
+                  <GalleryCategoryAdd />
+                </LayoutWithSidebar>
+              }
+            />
+
+            <Route
+              path="/gallery-list"
+              element={
+                <LayoutWithSidebar>
+                  <GalleryList />
+                </LayoutWithSidebar>
+              }
+            />
+            <Route
+              path="/create-gallery"
+              element={
+                <LayoutWithSidebar>
+                  <GalleryAdd />
+                </LayoutWithSidebar>
+              }
+            />
+
+            <Route
+              path="/package-list"
+              element={
+                <LayoutWithSidebar>
+                  <PackageList />
+                </LayoutWithSidebar>
+              }
+            />
+            <Route
+              path="/create-package"
+              element={
+                <LayoutWithSidebar>
+                  <PackageAdd />
+                </LayoutWithSidebar>
+              }
+            />
+
+            <Route
+              path="/page-list"
+              element={
+                <LayoutWithSidebar>
+                  <PageList />
+                </LayoutWithSidebar>
+              }
+            />
+            <Route
+              path="/create-page"
+              element={
+                <LayoutWithSidebar>
+                  <PageAdd />
+                </LayoutWithSidebar>
+              }
+            />
+
+            <Route
+              path="/faq-list"
+              element={
+                <LayoutWithSidebar>
+                  <FaqList />
+                </LayoutWithSidebar>
+              }
+            />
+            <Route
+              path="/create-faq"
+              element={
+                <LayoutWithSidebar>
+                  <FaqAdd />
+                </LayoutWithSidebar>
+              }
+            />
+
+            <Route
+              path="/pending-book-list"
+              element={
+                <LayoutWithSidebar>
+                  <PendingBook />
+                </LayoutWithSidebar>
+              }
+            />
+            <Route
+              path="/approved-book-list"
+              element={
+                <LayoutWithSidebar>
+                  <ApprovedBook />
+                </LayoutWithSidebar>
+              }
+            />
+            <Route
+              path="/check-in-list"
+              element={
+                <LayoutWithSidebar>
+                  <CheckInBook />
+                </LayoutWithSidebar>
+              }
+            />
+            <Route
+              path="/completed-list"
+              element={
+                <LayoutWithSidebar>
+                  <CompletedBook />
+                </LayoutWithSidebar>
+              }
+            />
+            <Route
+              path="/cancelled-list"
+              element={
+                <LayoutWithSidebar>
+                  <CancelledBook />
+                </LayoutWithSidebar>
+              }
+            />
+
+            {/* For profile and settings */}
+            <Route
+              path="/profile"
+              element={
+                <LayoutWithSidebar>
+                  <Profile />
+                </LayoutWithSidebar>
+              }
+            />
+            <Route
+              path="/settings"
+              element={
+                <LayoutWithSidebar>
+                  <Settings />
+                </LayoutWithSidebar>
+              }
+            />
+            <Route
+              path="/user-list"
+              element={
+                <LayoutWithSidebar>
+                  <UserList />
+                </LayoutWithSidebar>
+              }
+            />
+            <Route
+              path="/admin"
+              element={
+                <LayoutWithSidebar>
+                  <AdminList />
+                </LayoutWithSidebar>
+              }
+            />
           
-          <Route
-            path="/add-category"
-            element={
-              <LayoutWithSidebar>
-                <CategoryAdd />
-              </LayoutWithSidebar>
-            }
-          />
-          <Route
-            path="/category-list"
-            element={
-              <LayoutWithSidebar>
-                <CategoryList />
-              </LayoutWithSidebar>
-            }
-          />
-          <Route
-  path="/add-cuppon"
-  element={
-    <LayoutWithSidebar>
-      <CupponAdd />
-    </LayoutWithSidebar>
-  }
-/>
-<Route
-  path="/cuppon-list"
-  element={
-    <LayoutWithSidebar>
-      <CupponList />
-    </LayoutWithSidebar>
-  }
-/>
-
-<Route
-  path="/payment-list"
-  element={
-    <LayoutWithSidebar>
-      <PaymentGatewayList />
-    </LayoutWithSidebar>
-  }
-/>
-<Route
-  path="/enquiry-list"
-  element={
-    <LayoutWithSidebar>
-      <EnquiryList />
-    </LayoutWithSidebar>
-  }
-/>
-
-<Route
-  path="/payout-list"
-  element={
-    <LayoutWithSidebar>
-      <PayOutList />
-    </LayoutWithSidebar>
-  }
-/>
-
-<Route
-  path="/property-list"
-  element={
-    <LayoutWithSidebar>
-      <PropertiesList />
-    </LayoutWithSidebar>
-  }
-/>
-<Route
-  path="/create-property"
-  element={
-    <LayoutWithSidebar>
-      <PropertiesAdd />
-    </LayoutWithSidebar>
-  }
-/>
-
-<Route
-  path="/extra-image-list"
-  element={
-    <LayoutWithSidebar>
-      <ExtraImageList />
-    </LayoutWithSidebar>
-  }
-/>
-<Route
-  path="/create-extra-image"
-  element={
-    <LayoutWithSidebar>
-      <ExtraImageAdd />
-    </LayoutWithSidebar>
-  }
-/>
-
-<Route
-  path="/facility-list"
-  element={
-    <LayoutWithSidebar>
-      <FacilityList />
-    </LayoutWithSidebar>
-  }
-/>
-<Route
-  path="/create-facility"
-  element={
-    <LayoutWithSidebar>
-      <FacilityAdd />
-    </LayoutWithSidebar>
-  }
-/>
-
-<Route
-  path="/gallery-category-list"
-  element={
-    <LayoutWithSidebar>
-      <GalleryCategoryList />
-    </LayoutWithSidebar>
-  }
-/>
-<Route
-  path="/create-gallery-category"
-  element={
-    <LayoutWithSidebar>
-      <GalleryCategoryAdd />
-    </LayoutWithSidebar>
-  }
-/>
-
-<Route
-  path="/gallery-list"
-  element={
-    <LayoutWithSidebar>
-      <GalleryList />
-    </LayoutWithSidebar>
-  }
-/>
-<Route
-  path="/create-gallery"
-  element={
-    <LayoutWithSidebar>
-      <GalleryAdd />
-    </LayoutWithSidebar>
-  }
-/>
-
-<Route
-  path="/package-list"
-  element={
-    <LayoutWithSidebar>
-      <PackageList />
-    </LayoutWithSidebar>
-  }
-/>
-<Route
-  path="/create-package"
-  element={
-    <LayoutWithSidebar>
-      <PackageAdd />
-    </LayoutWithSidebar>
-  }
-/>
-
-<Route
-  path="/page-list"
-  element={
-    <LayoutWithSidebar>
-      <PageList />
-    </LayoutWithSidebar>
-  }
-/>
-<Route
-  path="/create-page"
-  element={
-    <LayoutWithSidebar>
-      <PageAdd />
-    </LayoutWithSidebar>
-  }
-/>
-
-<Route
-  path="/faq-list"
-  element={
-    <LayoutWithSidebar>
-      <FaqList />
-    </LayoutWithSidebar>
-  }
-/>
-<Route
-  path="/create-faq"
-  element={
-    <LayoutWithSidebar>
-      <FaqAdd />
-    </LayoutWithSidebar>
-  }
-/>
-
-<Route
-  path="/pending-book-list"
-  element={
-    <LayoutWithSidebar>
-      <PendingBook />
-    </LayoutWithSidebar>
-  }
-/>
-<Route
-  path="/approved-book-list"
-  element={
-    <LayoutWithSidebar>
-      <ApprovedBook />
-    </LayoutWithSidebar>
-  }
-/>
-<Route
-  path="/check-in-list"
-  element={
-    <LayoutWithSidebar>
-      <CheckInBook />
-    </LayoutWithSidebar>
-  }
-/>
-<Route
-  path="/completed-list"
-  element={
-    <LayoutWithSidebar>
-      <CompletedBook />
-    </LayoutWithSidebar>
-  }
-/>
-<Route
-  path="/cancelled-list"
-  element={
-    <LayoutWithSidebar>
-      <CancelledBook />
-    </LayoutWithSidebar>
-  }
-/>
-
-{/* For profile and settings */}
-<Route
-  path="/profile"
-  element={
-    <LayoutWithSidebar>
-      <Profile />
-    </LayoutWithSidebar>
-  }
-/>
-<Route
-  path="/settings"
-  element={
-    <LayoutWithSidebar>
-      <Settings />
-    </LayoutWithSidebar>
-  }
-/>
-<Route
-  path="/user-list"
-  element={
-    <LayoutWithSidebar>
-      <UserList />
-    </LayoutWithSidebar>
-  }
-/>
-
-
-        </Routes>
+          </Routes>
         </AuthProvider>
       </BrowserRouter>
     </div>
