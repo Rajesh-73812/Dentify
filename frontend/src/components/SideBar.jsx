@@ -19,7 +19,7 @@ import { CgCalendarDates } from "react-icons/cg";
 import { BsFileEarmarkPlus } from "react-icons/bs";
 import { IoCheckboxOutline } from "react-icons/io5";
 import KeyboardArrowRightOutlinedIcon from '@mui/icons-material/KeyboardArrowRightOutlined';
-import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import AdminPanelSettingsOutlinedIcon from '@mui/icons-material/AdminPanelSettingsOutlined';
 import axios from "axios";
 import Loader from "../common/Loader";
 
@@ -346,7 +346,7 @@ const SidebarMenu = () => {
 
             {/* admin */}
             <MenuItem
-              active={location.pathname === "/admin"} icon={<AdminPanelSettingsIcon />}
+              active={location.pathname === "/admin"} icon={<AdminPanelSettingsOutlinedIcon />}
               onClick={() => navigate("/admin")}
             >
               Admin

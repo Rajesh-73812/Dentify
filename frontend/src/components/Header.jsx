@@ -63,7 +63,7 @@ const Header = () => {
     }
   };
 
- 
+
   
   
 
@@ -84,14 +84,18 @@ const Header = () => {
       <div className="flex items-center gap-2">
         {/* Notification Icon */}
         <div className="relative">
+
           <div className="bg-[#f7fbff] rounded-full size-8 sm:size-11 flex items-center justify-center cursor-pointer" >
+
+          {/* <div className="bg-[#f7fbff] rounded-full size-8 sm:size-11 flex items-center justify-center cursor-pointer" onClick={handleNotificationClick}>
+
             <NotificationIcon />
             {notificationCount > 0 && (
               <span className="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full px-1">
                 {notificationCount}
               </span>
             )}
-          </div>
+          </div> */}
 
           {isPopupVisible && (
             <div className="notification-popup">
@@ -99,7 +103,7 @@ const Header = () => {
             </div>
           )}
 
-          {showNotifications && (
+          {/* {showNotifications && (
             <div ref={notificationRef} className="absolute top-12 right-0 w-[220px] bg-white border border-gray-300 rounded-lg shadow-lg z-10 transition-all duration-300">
               <ul className="py-2 divide-y divide-gray-200">
                 {notifications.length > 0 ? (
@@ -113,7 +117,7 @@ const Header = () => {
                 )}
               </ul>
             </div>
-          )}
+          )} */}
         </div>
 
         {/* Profile Icon with Smooth Hover Card */}

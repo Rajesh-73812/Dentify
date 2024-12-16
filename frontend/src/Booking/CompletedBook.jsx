@@ -150,7 +150,7 @@ const CompletedBook = () => {
                                             <td className="px-4 py-3">{completedList?.prop_price || 'N/A'}</td>
                                             <td className="px-4 py-3">{completedList?.total_day || 'N/A'}</td>
                                             <td className="px-4 py-3">
-                                                    <span className='px-3 py-1 text-sm rounded-full bg-green-400 cursor-pointer text-white mr-2' onClick={() => openModal(completedList)}>View Details</span>
+                                                    <span className='px-2 py-1 text-sm rounded-full bg-green-400 cursor-pointer text-white mr-2' onClick={() => openModal(completedList)}>View Details</span>
                                             </td>
                                         </tr>
                                     ))}

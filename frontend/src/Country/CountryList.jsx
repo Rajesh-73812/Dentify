@@ -8,6 +8,7 @@ import axios from 'axios';
 import { DeleteEntity } from '../utils/Delete';
 import { useNavigate } from 'react-router-dom';
 import { handleSort } from '../utils/sorting';
+import api from '../utils/api';
 
 const CountryList = () => {
     const navigate=useNavigate();
@@ -23,7 +24,7 @@ const CountryList = () => {
 
     const fetchCountries = async () => {
         try {
-            const response = await axios.get("http://localhost:5000/countries/all");
+            const response = await api.get("/countries/all")
             console.log(response.data)
             setCountries(response.data);
             setFilteredCountries(response.data); 
@@ -104,7 +105,7 @@ const CountryList = () => {
                                                     <GoArrowDown className='cursor-pointer'  onClick={() => sortData('totalProperties')} />
                                                 </div>
                                                 </th>
-                                            <th className="px-4 py-3 min-w-[100px]">Action</th>
+                                            <th className="px-4 py-3 min-w-[120px]">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-gray-200">
