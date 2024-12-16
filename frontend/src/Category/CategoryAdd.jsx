@@ -112,7 +112,7 @@ const CategoryAdd = () => {
         <Header />
         <div className="container mx-auto">
         <div className="flex items-center mt-6  mb-4">
-          <Link to="/dashboard" className="cursor-pointer ml-6">
+          <Link onClick={()=>{navigate(-1)}} className="cursor-pointer ml-6">
             <ArrowBackIosNewIcon />
           </Link>
           <h2 className="text-lg font-semibold ml-4 " style={{color:'#000000',fontSize:'24px',fontFamily:'Montserrat'}}>Create Category</h2>

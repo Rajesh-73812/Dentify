@@ -1,14 +1,15 @@
 import React from 'react'
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const PropotiesHeader =  ({ onSearch }) => {
+    const navigate = useNavigate()
   return (
     <div>
         <div className="bg-[#f7fbff] p-6 w-[1000px]">
             <div className=" flex items-center justify-between h-9" style={{ height: "36px" }}>
                 <div className="flex items-center mt-6  mb-4">
-                    <Link to="/dashboard" className="cursor-pointer ml-6">
+                    <Link onClick={()=>{navigate(-1)}} className="cursor-pointer ml-6">
                     <ArrowBackIosNewIcon />
                     </Link>
                     <h2 className="text-lg font-semibold ml-4 " style={{color:'#000000',fontSize:'24px',fontFamily:'Montserrat'}}>Property List</h2>
