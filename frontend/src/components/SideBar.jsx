@@ -145,7 +145,7 @@ const SidebarMenu = () => {
           </MenuItem> */}
 
         {/* Payout List */}
-<<
+
          
 
           {/* <MenuItem icon={<FaUser />

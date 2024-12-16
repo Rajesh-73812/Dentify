@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import Header from '../components/Header';
+import SidebarMenu from '../components/SideBar';
 import { GoArrowDown, GoArrowUp } from 'react-icons/go';
 import { FaPen, FaTrash } from "react-icons/fa";
+// import { searchFunction } from '../Entity/SearchEntity';
 import PropotiesHeader from './PropotiesHeader';
 import axios from 'axios';
-import { handleSort } from '../utils/sorting';
-import { DeleteEntity } from '../utils/Delete';
 
 const PropotiesList = () => {
     const [properties, setProperties] = useState([]);
@@ -32,11 +32,35 @@ const PropotiesList = () => {
 
     // Search functionality
     const handleSearch = (event) => {
+        const query = event.target.value.toLowerCase();
+        const filteredData = properties.filter(property =>
+            Object.values(property).some(value =>
+                String(value).toLowerCase().includes(query)
+            )
+        );
+        setFilteredProperties(filteredData);
+        setCurrentPage(1);
     };
 
     // Sorting functionality
-    const sortData = (key) => {
-        handleSort(filteredProperties,key,sortConfig,setSortConfig,setFilteredProperties)
+    const handleSort = (key) => {
+        let direction = 'asc';
+        if (sortConfig.key === key && sortConfig.direction === 'asc') {
+            direction = 'desc';
+        }
+
+        const sortedData = [...filteredProperties].sort((a, b) => {
+            if (key === 'id' || key === 'totalProperties') {
+                return direction === 'asc' ? a[key] - b[key] : b[key] - a[key];
+            }
+            return a[key] < b[key]
+                ? direction === 'asc' ? -1 : 1
+                : direction === 'asc' ? 1 : -1;
+        });
+
+        setFilteredProperties(sortedData);
+        setSortConfig({ key, direction });
+        setCurrentPage(1);
     };
 
     // Pagination calculations
@@ -44,21 +68,15 @@ const PropotiesList = () => {
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentProperties = filteredProperties.slice(indexOfFirstItem, indexOfLastItem);
     const totalPages = Math.ceil(filteredProperties.length / itemsPerPage);
+
+    // Change page
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-    // for delete
-    const handledelete=async(id)=>{
-        const success=await DeleteEntity('Propoties',id);
-        if(success){
-            const updatedPropoties=properties.filter((properties)=> properties.id !==id);
-            setProperties(updatedPropoties)
-            setFilteredProperties(updatedPropoties)
-        }
-    }
     return (
         <div>
             <div className="h-screen flex">
                 {/* Sidebar */}
+               
 
                 <div className="flex flex-1 flex-col bg-[#f7fbff]">
                     {/* Header */}
@@ -75,154 +93,151 @@ const PropotiesList = () => {
                                             <th className="px-4 py-3 min-w-[120px]">
                                                 Sr. No
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('slno')} />
-                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('slno')} />
+                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('slno')} />
+                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('slno')} />
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[200px]">
                                                 property Tittle
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('propertyTittle')} />
-                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('propertyTittle')} />
+                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('propertyTittle')} />
+                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('propertyTittle')} />
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[200px]">
                                                 property Type
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('propertyType')} />
-                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('propertyType')} />
+                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('propertyType')} />
+                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('propertyType')} />
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[200px]">
                                                 Description
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('propertyDescription')} />
-                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('propertyDescription')} />
+                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('propertyDescription')} />
+                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('propertyDescription')} />
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[200px]">
                                                 Address
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('propertyAddress')} />
-                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('propertyAddress')} />
+                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('propertyAddress')} />
+                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('propertyAddress')} />
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[150px]">
                                                 City
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('city')} />
-                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('city')} />
+                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('city')} />
+                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('city')} />
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[150px]">
                                                 Is_Sell
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('is_sell')} />
-                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('is_sell')} />
+                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('is_sell')} />
+                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('is_sell')} />
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[200px]">
                                                 Factility
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('propertyFacility')} />
-                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('propertyFacility')} />
+                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('propertyFacility')} />
+                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('propertyFacility')} />
                                                 </div>
                                             </th>
 
                                             <th className="px-4 py-3 min-w-[250px]">
                                                 Property Price(/Night)
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('propertyPrice')} />
-                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('propertyPrice')} />
+                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('propertyPrice')} />
+                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('propertyPrice')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[180px]">
+                                            <th className="px-4 py-3 min-w-[250px]">
                                                 Property Image
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('image')} />
-                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('image')} />
+                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('image')} />
+                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('image')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[150px]">
+                                            <th className="px-4 py-3 min-w-[200px]">
                                                 Mobile
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('mobile')} />
-                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('mobile')} />
+                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('mobile')} />
+                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('mobile')} />
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[150px]">
                                                 Conutry_Id
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('country_id')} />
-                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('country_id')} />
+                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('country_id')} />
+                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('country_id')} />
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[150px]">
                                                 Add_User_Id
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('user_id')} />
-                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('user_id')} />
+                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('user_id')} />
+                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('user_id')} />
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[150px]">
                                                 Total Beds
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('totalBeds')} />
-                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('totalBeds')} />
+                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('totalBeds')} />
+                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('totalBeds')} />
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[200px]">
                                                 Total BathRooms
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('totalBathrooms')} />
-                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('totalBathrooms')} />
+                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('totalBathrooms')} />
+                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('totalBathrooms')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[180px]">
+                                            <th className="px-4 py-3 min-w-[200px]">
                                                 total SQFT.
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('totalSQFT')} />
-                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('totalSQFT')} />
+                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('totalSQFT')} />
+                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('totalSQFT')} />
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[150px]">
                                                 Rating
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('rating')} />
-                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('rating')} />
+                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('rating')} />
+                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('rating')} />
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[150px]">
                                                 Status
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('status')} />
-                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('status')} />
+                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('status')} />
+                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('status')} />
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[150px]">
                                                 Action
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('action')} />
-                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('action')} />
+                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('action')} />
+                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('action')} />
                                                 </div>
                                             </th>
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-gray-200">
-                                        {currentProperties.length > 0 ? (
-                                            currentProperties.map((property, index) => (
+                                        {currentProperties.map((property, index) => (
                                             <tr key={property.id}>
                                                 <td className="px-4 py-3">{index + 1 + indexOfFirstItem}</td>
-
                                                 <td className="px-4 py-3">{property.title}</td>
-                                                <td className="px-4 py-3">{property.category.title}</td>
+                                                <td className="px-4 py-3">{property.ptype}</td>
                                                 <td className="px-4 py-3">{property.description}</td>
                                                 <td className="px-4 py-3">{property.address}</td>
                                                 <td className="px-4 py-3">{property.city}</td>
                                                 <td className="px-4 py-3">{property.is_sell}</td>
                                                 <td className="px-4 py-3">{property.facility}</td>
                                                 <td className="px-4 py-3">₹{property.price}</td>
-
                                                 <td className="px-4 py-3">
                                                     {property.image && property.image.trim() !== '' ? (
                                                         <img src={property.image} className="w-16 h-16 object-cover rounded-full" height={50} width={50} loading="lazy" alt="" onError={(e) => {
@@ -234,15 +249,13 @@ const PropotiesList = () => {
                                                         <img src={'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg'} height={50} width={50} loading="lazy" alt="" />
                                                     )}
                                                 </td>
-
                                                 <td className="px-4 py-3">{property.mobile}</td>
-                                                <td className="px-4 py-3">{property.country}</td>
+                                                <td className="px-4 py-3">{property.country_id}</td>
                                                 <td className="px-4 py-3">{property.add_user_id}</td>
                                                 <td className="px-4 py-3">{property.beds}</td>
                                                 <td className="px-4 py-3">{property.bathroom}</td>
                                                 <td className="px-4 py-3">{property.sqrft}</td>
                                                 <td className="px-4 py-3">{property.rate}</td>
-
                                                 <td className="px-4 py-3">
                                                     <span
                                                         className={`px-3 py-1 text-sm rounded-full ${property.status === 1 ? 'bg-green-500 text-white' : 'bg-gray-400 text-white'}`}
@@ -254,18 +267,12 @@ const PropotiesList = () => {
                                                     <button className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition mr-2">
                                                         <FaPen />
                                                     </button>
-                                                    <button className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition" onClick={()=>{handledelete(property.id)}}>
+                                                    <button className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition">
                                                         <FaTrash />
                                                     </button>
                                                 </td>
                                             </tr>
-                                        ))
-                                        ) : (
-                                            <tr>
-                                                <td className="px-4 py-3" colSpan={6}>No Data available </td>
-                                            </tr>
-                                        )
-                                    }
+                                        ))}
                                     </tbody>
                                 </table>
                             </div>

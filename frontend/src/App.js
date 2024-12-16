@@ -39,17 +39,11 @@ import PageAdd from "./Page/PageAdd.jsx";
 import FaqList from "./Faq/FaqList.jsx";
 import FaqAdd from "./Faq/FaqAdd.jsx";
 import SidebarMenu from "./components/SideBar.jsx";
-
 import NotFound from "./NotFound.jsx";
-
 import { AuthProvider } from "./Context/AuthContext.js";
 import PrivateRoute from "./Context/PrivateRoute.js";
-
 import RoleChange from "./Roles/RoleChange.jsx";
-
-
 import AdminList from "./Admin/AdminList.jsx";
-
 
 // Layout component for common sidebar
 const LayoutWithSidebar = ({ children }) => (
@@ -60,6 +54,18 @@ const LayoutWithSidebar = ({ children }) => (
 );
 
 function App() {
+
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker
+      .register("/firebase-messaging-sw.js")
+      .then((registration) => {
+        console.log("Service Worker registered:", registration);
+      })
+      .catch((error) => {
+        console.error("Service Worker registration failed:", error);
+      });
+  }
+  
   return (
     <div className="App">
       <BrowserRouter>
