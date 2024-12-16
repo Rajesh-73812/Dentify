@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Header from '../components/Header';
 import { GoArrowDown, GoArrowUp } from 'react-icons/go';
-import { FaPen,FaTrash } from "react-icons/fa";
+import { FaPen, FaTrash } from "react-icons/fa";
 import { searchFunction } from '../Entity/SearchEntity';
 import axios from 'axios';
 import FaqHeader from './FaqHeader';
@@ -12,7 +12,7 @@ import 'react-notifications/lib/notifications.css';
 import { handleSort } from '../utils/sorting';
 
 const FaqList = () => {
-    const navigate=useNavigate();
+    const navigate = useNavigate();
     const [faq, setfaq] = useState([]);
     const [filteredfaq, setFilteredfaq] = useState([]);
     const [sortConfig, setSortConfig] = useState({ key: '', direction: '' });
@@ -22,10 +22,10 @@ const FaqList = () => {
     useEffect(() => {
         const fetchfaq = async () => {
             try {
-                const response = await axios.get("http://localhost:5000/faq/all");
+                const response = await axios.get("http://localhost:5000/faqs/all");
                 console.log(response.data)
                 setfaq(response.data);
-                setFilteredfaq(response.data); 
+                setFilteredfaq(response.data);
             } catch (error) {
                 console.error("Error fetching faq:", error);
             }
@@ -37,7 +37,7 @@ const FaqList = () => {
     };
 
     const sortData = (key) => {
-        handleSort(filteredfaq,key,sortConfig,setSortConfig,setFilteredfaq)
+        handleSort(filteredfaq, key, sortConfig, setSortConfig, setFilteredfaq)
     };
 
     const indexOfLastFaq = currentPage * itemsPerPage;
@@ -47,23 +47,23 @@ const FaqList = () => {
     const totalPages = Math.ceil(filteredfaq.length / itemsPerPage);
 
     // for update
-    const updateFAQ=(id)=>{
-        navigate('/create-faq',{state:{id:id}})
+    const updateFAQ = (id) => {
+        navigate('/create-faq', { state: { id: id } })
     }
 
     // for delete
-      const handledelete = async (id) => {
-        const success= await DeleteEntity("Faq", id);
-        if(success){
+    const handledelete = async (id) => {
+        const success = await DeleteEntity("Faq", id);
+        if (success) {
             const updatedFaq = faq.filter((faq) => faq.id !== id);
             setfaq(updatedFaq);
             setFilteredfaq(updatedFaq);
         }
-     };
+    };
     return (
         <div>
             <div className="h-screen flex">
-                
+
                 <div className="flex flex-1 flex-col bg-[#f7fbff]">
                     <Header />
                     <FaqHeader onSearch={handleSearch} />
@@ -93,49 +93,49 @@ const FaqList = () => {
                                                     <GoArrowUp className='cursor-pointer' onClick={() => sortData('answer')} />
                                                     <GoArrowDown className='cursor-pointer' onClick={() => sortData('answer')} />
                                                 </div>
-                                            </th>                                            
+                                            </th>
                                             <th className="px-4 py-3 min-w-[150px]">
-                                              Status
-                                              <div className="inline-flex items-center ml-2">
-                                                  <GoArrowUp className='cursor-pointer' onClick={() => sortData('status')} />
-                                                  <GoArrowDown className='cursor-pointer' onClick={() => sortData('status')} />
-                                              </div>
-                                              </th>
+                                                Status
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('status')} />
+                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('status')} />
+                                                </div>
+                                            </th>
                                             <th className="px-4 py-3 min-w-[150px]">
-                                              Action
-                                              <div className="inline-flex items-center ml-2">
-                                                  <GoArrowUp className='cursor-pointer' onClick={() => sortData('action')} />
-                                                  <GoArrowDown className='cursor-pointer' onClick={() => sortData('action')} />
-                                              </div>
+                                                Action
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('action')} />
+                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('action')} />
+                                                </div>
                                             </th>
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-gray-200">
                                         {currentfaq.length > 0 ? (
                                             currentfaq.map((faq, index) => (
-                                            <tr key={faq.id}>
-                                                <td className="px-4 py-3">{index + 1 + indexOfFirstFaq}</td>
-                                                <td className="px-4 py-3">{faq?.question || "N/A"}</td>
-                                                
-                                                <td className="px-4 py-3">{faq?.answer || "N/A"}</td>
-                                                <td className="px-4 py-3">
-                                                    <span
-                                                        className={`px-3 py-1 text-sm rounded-full ${faq.status === 1 ? 'bg-green-500 text-white' : 'bg-gray-400 text-white'}`}
-                                                    >
-                                                        {faq.status === 1 ? "publish" : "unpublish"}
-                                                    </span>
-                                                </td>
-                                                <td className="px-4 py-3">
-                                                    <button className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition mr-2" onClick={()=>{updateFAQ(faq.id)}}>
-                                                        <FaPen />
-                                                    </button>
-                                                    <NotificationContainer />
-                                                    <button className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition" onClick={()=>{handledelete(faq.id)}}>
-                                                        <FaTrash />
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        ))
+                                                <tr key={faq.id}>
+                                                    <td className="px-4 py-3">{index + 1 + indexOfFirstFaq}</td>
+                                                    <td className="px-4 py-3">{faq?.question || "N/A"}</td>
+
+                                                    <td className="px-4 py-3">{faq?.answer || "N/A"}</td>
+                                                    <td className="px-4 py-3">
+                                                        <span
+                                                            className={`px-3 py-1 text-sm rounded-full ${faq.status === 1 ? 'bg-green-500 text-white' : 'bg-gray-400 text-white'}`}
+                                                        >
+                                                            {faq.status === 1 ? "publish" : "unpublish"}
+                                                        </span>
+                                                    </td>
+                                                    <td className="px-4 py-3">
+                                                        <button className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition mr-2" onClick={() => { updateFAQ(faq.id) }}>
+                                                            <FaPen />
+                                                        </button>
+                                                        <NotificationContainer />
+                                                        <button className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition" onClick={() => { handledelete(faq.id) }}>
+                                                            <FaTrash />
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            ))
                                         ) : (
                                             <tr>
                                                 <td colSpan="10" className="text-center">
@@ -143,7 +143,7 @@ const FaqList = () => {
                                                 </td>
                                             </tr>
                                         )
-                                    }
+                                        }
                                     </tbody>
                                 </table>
                             </div>

@@ -8,156 +8,157 @@ import OrderPreviewModal from './OrderPreviewModal';
 import { handleSort } from '../utils/sorting';
 
 const CancelledBook = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isModalOpen2, setIsModalOpen2] = useState(false);
-  const [selectedProperty, setSelectedProperty] = useState(null);
-  const [cancelled, setcancelled] = useState([]);
-  const [filteredcancelled, setFilteredcancelled] = useState([]);
-  const [sortConfig, setSortConfig] = useState({ key: '', direction: '' });
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
-  const status='Cancelled'
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isModalOpen2, setIsModalOpen2] = useState(false);
+    const [selectedProperty, setSelectedProperty] = useState(null);
+    const [cancelled, setcancelled] = useState([]);
+    const [filteredcancelled, setFilteredcancelled] = useState([]);
+    const [sortConfig, setSortConfig] = useState({ key: '', direction: '' });
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 10;
+    const status = 'Cancelled'
 
-  useEffect(() => {
-      const fetchBookings = async () => {
-          try {
-              const response = await axios.get(`http://localhost:5000/bookings/status/${status}`, {
-                  withCredentials: true,
-              });
-            //   console.log(response.data)
-              setcancelled(response.data);
-              setFilteredcancelled(response.data);
-          } catch (error) {
-              console.error('Error fetching bookings:', error.message);
-          }
-      };
-      fetchBookings();
-  }, []);
-// console.log(cancelled)
-  const handleSearch = (event) => {
+    useEffect(() => {
+        const fetchBookings = async () => {
+            try {
+                const response = await axios.get(`http://localhost:5000/bookings/status/${status}`, {
+                    withCredentials: true,
+                });
+                //   console.log(response.data)
+                setcancelled(response.data);
+                setFilteredcancelled(response.data);
+            } catch (error) {
+                console.error('Error fetching bookings:', error.message);
+            }
+        };
+        fetchBookings();
+    }, []);
+    // console.log(cancelled)
+    const handleSearch = (event) => {
 
-  };
-
-  const sortData = (key) => {
-    handleSort(filteredcancelled,key,sortConfig,setSortConfig,setFilteredcancelled)
     };
 
-  const indexOfLast = currentPage * itemsPerPage;
-  const indexOfFirst = indexOfLast - itemsPerPage;
-  const currentcancelled = filteredcancelled.slice(indexOfFirst, indexOfLast);
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
-  const totalPages = Math.ceil(filteredcancelled.length / itemsPerPage);
+    const sortData = (key) => {
+        handleSort(filteredcancelled, key, sortConfig, setSortConfig, setFilteredcancelled)
+    };
 
-  const openModal = (property) => {
-      setSelectedProperty(property);
-      setIsModalOpen(true);
-  };
+    const indexOfLast = currentPage * itemsPerPage;
+    const indexOfFirst = indexOfLast - itemsPerPage;
+    const currentcancelled = filteredcancelled.slice(indexOfFirst, indexOfLast);
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+    const totalPages = Math.ceil(filteredcancelled.length / itemsPerPage);
 
-  const closeModal = () => {
-      setIsModalOpen(false);
-      setSelectedProperty(null);
-  };
+    const openModal = (property) => {
+        setSelectedProperty(property);
+        setIsModalOpen(true);
+    };
 
-  const openModal2 = () => {
-      setIsModalOpen2(true);
-  };
+    const closeModal = () => {
+        setIsModalOpen(false);
+        setSelectedProperty(null);
+    };
 
-  const closeModal2 = () => {
-      setIsModalOpen2(false);
-      setSelectedProperty(null);
-  };
+    const openModal2 = () => {
+        setIsModalOpen2(true);
+    };
+
+    const closeModal2 = () => {
+        setIsModalOpen2(false);
+        setSelectedProperty(null);
+    };
 
     return (
         <div>
             <div className="h-screen flex">
-                
+
                 <div className="flex flex-1 flex-col bg-[#f7fbff]">
                     <Header />
                     <PendingBookHeader onSearch={handleSearch} />
                     <div className="py-6 px-6 h-full w-[1000px] overflow-scroll scrollbar-none">
-                    <div className="bg-white w-full rounded-xl border border-[#EAE5FF] py-4 px-3 overflow-x-auto scrollbar-none">
-                        <div className="relative sm:rounded-lg">
-                            <table className="min-w-full text-sm text-left text-gray-700">
-                                <thead className="bg-gray-50 text-xs uppercase font-medium text-gray-500">
-                                    <tr>
-                                        <th className="px-4 py-3 min-w-[130px]">
-                                            Sr. No
-                                            <div className="inline-flex items-center ml-2">
-                                                <GoArrowUp className='cursor-pointer' onClick={() => sortData('slno')} />
-                                                <GoArrowDown className='cursor-pointer' onClick={() => sortData('slno')} />
-                                            </div>
-                                        </th>
-                                        <th className="px-4 py-3 min-w-[180px]">
-                                            Property Title 
-                                            <div className="inline-flex items-center ml-2">
-                                                <GoArrowUp className='cursor-pointer' onClick={() => sortData('prop_title')} />
-                                                <GoArrowDown className='cursor-pointer' onClick={() => sortData('prop_title')} />
-                                            </div>
-                                        </th>
-                                        <th className="px-4 py-3 min-w-[180px]">Property Image</th>
-                                        <th className="px-4 py-3 min-w-[180px]">
-                                            Property Price
-                                            <div className="inline-flex items-center ml-2">
-                                                <GoArrowUp className='cursor-pointer' onClick={() => sortData('prop_price')} />
-                                                <GoArrowDown className='cursor-pointer' onClick={() => sortData('prop_price')} />
-                                            </div>
-                                        </th>
-                                        <th className="px-4 py-3 min-w-[200px]">
-                                            Property Total Day
-                                            <div className="inline-flex items-center ml-2">
-                                                <GoArrowUp className='cursor-pointer' onClick={() => sortData('total_day')} />
-                                                <GoArrowDown className='cursor-pointer' onClick={() => sortData('total_day')} />
-                                            </div>
-                                        </th>
-                                                
-                                        <th className="px-4 py-3 min-w-[150px]">Action </th>
-                                    </tr>
-                                </thead>
-                                <tbody className="divide-y divide-gray-200">
-                                    {currentcancelled.length > 0 ? (
-                                        currentcancelled.map((cancellList, index) => (
-                                        <tr key={index+1}>
-                                            <td className="px-4 py-3">{index + 1 + indexOfFirst}</td>
-                                            <td className="px-4 py-3">{cancellList.prop_title || 'N/A'}</td>
-                                            <td className="px-4 py-3">
-                                                {cancellList.prop_img ? (
-                                                    <img src={cancellList.prop_img} className="w-16 h-16 object-cover rounded-full" alt="Coupon" 
-                                                        onError={(e) => { e.target.src = 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg';
-                                                        }}
-                                                    />
-                                                ) : (
-                                                    <img src="https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg" className="w-16 h-16 object-cover rounded-full" alt="Placeholder"  />
-                                                )}
-                                            </td>
-                                            <td className="px-4 py-3">{cancellList?.prop_price || 'N/A'}</td>
-                                            <td className="px-4 py-3">{cancellList?.total_day || 'N/A'}</td>
-                                            <td className="px-4 py-3">
-                                                <span className='px-3 py-1 text-sm rounded-full bg-green-400 cursor-pointer text-white mr-2' onClick={() => openModal(cancellList)}>View Details</span>
-                                            </td>
-                                        </tr>
-                                    ))
-                                    ) : (
+                        <div className="bg-white w-full rounded-xl border border-[#EAE5FF] py-4 px-3 overflow-x-auto scrollbar-none">
+                            <div className="relative sm:rounded-lg">
+                                <table className="min-w-full text-sm text-left text-gray-700">
+                                    <thead className="bg-gray-50 text-xs uppercase font-medium text-gray-500">
                                         <tr>
-                                            <td className="px-4 py-3 text-center" colSpan="6">
-                                                No data available
-                                            </td>
+                                            <th className="px-4 py-3 min-w-[130px]">
+                                                Sr. No
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('slno')} />
+                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('slno')} />
+                                                </div>
+                                            </th>
+                                            <th className="px-4 py-3 min-w-[180px]">
+                                                Property Title
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('prop_title')} />
+                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('prop_title')} />
+                                                </div>
+                                            </th>
+                                            <th className="px-4 py-3 min-w-[180px]">Property Image</th>
+                                            <th className="px-4 py-3 min-w-[180px]">
+                                                Property Price
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('prop_price')} />
+                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('prop_price')} />
+                                                </div>
+                                            </th>
+                                            <th className="px-4 py-3 min-w-[200px]">
+                                                Property Total Day
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('total_day')} />
+                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('total_day')} />
+                                                </div>
+                                            </th>
+
+                                            <th className="px-4 py-3 min-w-[150px]">Action </th>
                                         </tr>
-                                    )
-                                }
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody className="divide-y divide-gray-200">
+                                        {currentcancelled.length > 0 ? (
+                                            currentcancelled.map((cancellList, index) => (
+                                                <tr key={index + 1}>
+                                                    <td className="px-4 py-3">{index + 1 + indexOfFirst}</td>
+                                                    <td className="px-4 py-3">{cancellList.prop_title || 'N/A'}</td>
+                                                    <td className="px-4 py-3">
+                                                        {cancellList.prop_img ? (
+                                                            <img src={cancellList.prop_img} className="w-16 h-16 object-cover rounded-full" alt="Coupon"
+                                                                onError={(e) => {
+                                                                    e.target.src = 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg';
+                                                                }}
+                                                            />
+                                                        ) : (
+                                                            <img src="https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg" className="w-16 h-16 object-cover rounded-full" alt="Placeholder" />
+                                                        )}
+                                                    </td>
+                                                    <td className="px-4 py-3">{cancellList?.prop_price || 'N/A'}</td>
+                                                    <td className="px-4 py-3">{cancellList?.total_day || 'N/A'}</td>
+                                                    <td className="px-4 py-3">
+                                                        <span className='px-2 py-1 text-sm rounded-full bg-green-600 cursor-pointer text-white mr-2' onClick={() => openModal(cancellList)}>View Details</span>
+                                                    </td>
+                                                </tr>
+                                            ))
+                                        ) : (
+                                            <tr>
+                                                <td className="px-4 py-3 text-center" colSpan="6">
+                                                    No data available
+                                                </td>
+                                            </tr>
+                                        )
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                    </div>
-                    <div className="bottom-0 left-0 w-full bg-[#f7fbff] py-4 flex justify-between items-center">
-                        <span className="text-sm font-normal text-gray-500">
-                            Showing <span className="font-semibold text-gray-900">{indexOfFirst + 1}</span> to <span className="font-semibold text-gray-900">{Math.min(indexOfLast, filteredcancelled.length)}</span> of <span className="font-semibold text-gray-900">{filteredcancelled.length}</span>
-                        </span>
-                        <ul className="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">
+                        <div className="bottom-0 left-0 w-full bg-[#f7fbff] py-4 flex justify-between items-center">
+                            <span className="text-sm font-normal text-gray-500">
+                                Showing <span className="font-semibold text-gray-900">{indexOfFirst + 1}</span> to <span className="font-semibold text-gray-900">{Math.min(indexOfLast, filteredcancelled.length)}</span> of <span className="font-semibold text-gray-900">{filteredcancelled.length}</span>
+                            </span>
+                            <ul className="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">
                                 <li>
                                     <button onClick={() => paginate(currentPage > 1 ? currentPage - 1 : 1)} className={`previous-button ${filteredcancelled.length === 0 ? 'cursor-not-allowed' : ''}`}
-                                         disabled={currentPage === 1 || filteredcancelled.length === 0}
-                                         title={filteredcancelled.length === 0 ? 'No data available' : ''}
-                                         >
+                                        disabled={currentPage === 1 || filteredcancelled.length === 0}
+                                        title={filteredcancelled.length === 0 ? 'No data available' : ''}
+                                    >
                                         <img src="/image/action/Left Arrow.svg" alt="Left" /> Previous
                                     </button>
                                 </li>
@@ -167,18 +168,18 @@ const CancelledBook = () => {
                                     </span>
                                 </li>
                                 <li>
-                                    <button onClick={() => paginate(currentPage < totalPages ? currentPage + 1 : totalPages)} 
-                                    className={`next-button ${filteredcancelled.length === 0 ? 'cursor-not-allowed' : ''}`} 
-                                    disabled={currentPage === totalPages || filteredcancelled.length === 0}
-                                    title={filteredcancelled.length === 0 ? 'No data available' : ''}
+                                    <button onClick={() => paginate(currentPage < totalPages ? currentPage + 1 : totalPages)}
+                                        className={`next-button ${filteredcancelled.length === 0 ? 'cursor-not-allowed' : ''}`}
+                                        disabled={currentPage === totalPages || filteredcancelled.length === 0}
+                                        title={filteredcancelled.length === 0 ? 'No data available' : ''}
                                     >
                                         Next <img src="/image/action/Right Arrow (1).svg" alt="Right" />
                                     </button>
                                 </li>
-                        </ul>
-                    </div>
-                    <OrderPreviewModal isOpen={isModalOpen} closeModal={closeModal}  />
-                    {isModalOpen2 && (
+                            </ul>
+                        </div>
+                        <OrderPreviewModal isOpen={isModalOpen} closeModal={closeModal} />
+                        {isModalOpen2 && (
                             <div className="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
                                 <div className="fixed inset-0 bg-gray-500/75 transition-opacity" aria-hidden="true"></div>
                                 <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
@@ -193,9 +194,9 @@ const CancelledBook = () => {
                                                     aria-label="Close"
                                                     title='Close'
                                                 >
-                                                    &times; 
+                                                    &times;
                                                 </button>
-                                                <form onSubmit={(e) => { e.preventDefault();  }}>
+                                                <form onSubmit={(e) => { e.preventDefault(); }}>
                                                     <div className="mb-4">
                                                         <label htmlFor="reason" className="block text-sm font-medium text-gray-700">Enter Reason:</label>
                                                         <input
@@ -204,7 +205,7 @@ const CancelledBook = () => {
                                                             name="reason"
                                                             placeholder="Type your reason here"
                                                             className="mt-3 block w-full rounded-md  shadow-sm "
-                                                            
+
                                                         />
                                                     </div>
                                                     <div className="flex ">
@@ -231,7 +232,7 @@ const CancelledBook = () => {
                                 </div>
                             </div>
                         )}
-                </div>
+                    </div>
                 </div>
             </div>
         </div>
