@@ -229,8 +229,8 @@ const PropotiesList = () => {
                                         {currentProperties.map((property, index) => (
                                             <tr key={property.id}>
                                                 <td className="px-4 py-3">{index + 1 + indexOfFirstItem}</td>
-                                                <td className="px-4 py-3">{property.title}</td>
-                                                <td className="px-4 py-3">{property.category.title}</td>
+                                                <td className="px-4 py-3">{property?.title}</td>
+                                                <td className="px-4 py-3">{property?.category?.title}</td>
                                                 <td className="px-4 py-3">{property.description}</td>
                                                 <td className="px-4 py-3">{property.address}</td>
                                                 <td className="px-4 py-3">{property.city}</td>
