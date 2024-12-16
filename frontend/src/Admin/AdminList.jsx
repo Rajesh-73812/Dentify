@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Table, Modal, Button, Form } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import BorderColorOutlinedIcon from '@mui/icons-material/BorderColorOutlined';
-import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import { FaPen, FaTrash } from "react-icons/fa";
 import Header from '../components/Header';
 import { useLoading } from '../Context/LoadingContext';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Loader from '../common/Loader';
 import AdminHeader from './AdminHeader';
+import { DeleteEntity } from '../utils/Delete';
+
 
 const AdminList = () => {
     const navigate = useNavigate();
@@ -43,33 +44,48 @@ const AdminList = () => {
             const response = await axios.get('http://localhost:5000/admin/all-admins', {
                 withCredentials: true,
             });
-            setAdmins(response.data);
-            setFilteredAdmins(response.data)
-            console.log(response.data);
+            console.log('API Response:', response.data); // Debugging
+            const { admins } = response.data; // Extract admins array
+            if (Array.isArray(admins)) {
+                setAdmins(admins);
+                setFilteredAdmins(admins);
+            } else {
+                console.error('Unexpected data format:', response.data);
+            }
         } catch (error) {
             console.error('Error fetching admins:', error);
         }
     };
 
-    const handleDelete = async (adminId) => {
-        try {
-            await axios.delete(`http://localhost:5000/admin/delete/${adminId}?forceDelete=true`, {
-                withCredentials: true,
-            });
-            // setAdmins(admins.filter(admin => admin.id !== adminId));
-            const updatedAdmins = admins.filter(admin => admin.id !== adminId);
+
+    // const handleDelete = async (adminId) => {
+    //     try {
+    //         await axios.delete(`http://localhost:5000/admin/delete/${adminId}?forceDelete=true`, {
+    //             withCredentials: true,
+    //         });
+    //         // setAdmins(admins.filter(admin => admin.id !== adminId));
+    //         const updatedAdmins = admins.filter(admin => admin.id !== adminId);
+    //         setAdmins(updatedAdmins);
+    //         setFilteredAdmins(updatedAdmins);
+    //         setShowDeleteModal(false);
+    //     } catch (error) {
+    //         console.error('Error deleting admin:', error);
+    //     }
+    // };
+
+    const handleDelete = async (id) => {
+        const success = await DeleteEntity('Admin', id);
+        if (success) {
+            const updatedAdmins = admins.filter((item) => item.id !== id);
             setAdmins(updatedAdmins);
             setFilteredAdmins(updatedAdmins);
-            setShowDeleteModal(false);
-        } catch (error) {
-            console.error('Error deleting admin:', error);
         }
     };
 
-    const confirmDelete = (admin) => {
-        setAdminToDelete(admin);
-        setShowDeleteModal(true);
-    };
+    // const confirmDelete = (admin) => {
+    //     setAdminToDelete(admin);
+    //     setShowDeleteModal(true);
+    // };
 
     const confirmEdit = (admin) => {
         setAdminToEdit(admin);
@@ -141,9 +157,9 @@ const AdminList = () => {
 
     const indexOfLastAdmin = currentPage * adminsPerPage;
     const indexOfFirstAdmin = indexOfLastAdmin - adminsPerPage;
-    const currentAdmins = admins.slice(indexOfFirstAdmin, indexOfLastAdmin, filteredAdmins);
-    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+    const currentAdmins = filteredAdmins.slice(indexOfFirstAdmin, indexOfLastAdmin); // Use filteredAdmins for slicing
 
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
     return (
         <div>
             {isLoading && <Loader />}
@@ -176,20 +192,24 @@ const AdminList = () => {
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-gray-200">
-                                        {filteredAdmins.length > 0 ? (
-                                            filteredAdmins.map((admin, index) => (
+                                        {currentAdmins.length > 0 ? (
+                                            currentAdmins.map((admin, index) => (
                                                 <tr key={admin.id}>
                                                     <td className="px-4 py-3">{indexOfFirstAdmin + index + 1}</td>
                                                     <td className="px-4 py-3">{admin.username}</td>
                                                     <td className="px-4 py-3">{admin.password}</td>
                                                     <td className="px-4 py-3">{admin.userType}</td>
                                                     <td className="px-4 py-3">
-                                                        <Button variant="" className="mr-2" onClick={() => confirmEdit(admin)}>
-                                                            <BorderColorOutlinedIcon />
-                                                        </Button>
-                                                        <Button variant="" onClick={() => confirmDelete(admin)}>
-                                                            <DeleteOutlineOutlinedIcon />
-                                                        </Button>
+                                                        <button variant="" className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition mr-2" onClick={() => confirmEdit(admin)}>
+                                                            <FaPen />
+                                                        </button>
+                                                        <button
+                                                            className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition mr-2"
+                                                            onClick={() => { handleDelete(admin.id); }}
+                                                        >
+                                                            <FaTrash />
+                                                        </button>
+
                                                     </td>
                                                 </tr>
                                             ))

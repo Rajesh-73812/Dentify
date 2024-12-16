@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import io from "socket.io-client";
 
-const socket = io("http://localhost:5000");
+// const socket = io("http://localhost:5000");
 
 const Header = () => {
   const [notifications, setNotifications] = useState([]);
@@ -39,58 +39,58 @@ const Header = () => {
     return () => clearTimeout(timeoutId);
   }, [isHovered]);
 
-  const fetchNotifications = async () => {
-    try {
-      const response = await axios.get('http://localhost:5000/notifications', { withCredentials: true });
-      const newNotifications = response.data;
-      setNotifications(newNotifications);
-      setNotificationCount(newNotifications.length);
-    } catch (error) {
-      console.error("Error fetching notifications:", error);
-    }
-  };
+  // const fetchNotifications = async () => {
+  //   try {
+  //     const response = await axios.get('http://localhost:5000/notifications', { withCredentials: true });
+  //     const newNotifications = response.data;
+  //     setNotifications(newNotifications);
+  //     setNotificationCount(newNotifications.length);
+  //   } catch (error) {
+  //     console.error("Error fetching notifications:", error);
+  //   }
+  // };
 
-  useEffect(() => {
-    socket.on("notification", (data) => {
-      setNotifications((prev) => [data, ...prev]);
-      setNotificationCount((prev) => prev + 1);
-      setIsPopupVisible(true);
+  // useEffect(() => {
+  //   socket.on("notification", (data) => {
+  //     setNotifications((prev) => [data, ...prev]);
+  //     setNotificationCount((prev) => prev + 1);
+  //     setIsPopupVisible(true);
 
-      if (popupTimeout) {
-        clearTimeout(popupTimeout);
-      }
+  //     if (popupTimeout) {
+  //       clearTimeout(popupTimeout);
+  //     }
 
-      const timeoutId = setTimeout(() => {
-        setIsPopupVisible(false);
-      }, 100000);
+  //     const timeoutId = setTimeout(() => {
+  //       setIsPopupVisible(false);
+  //     }, 100000);
 
-      setPopupTimeout(timeoutId);
-    });
+  //     setPopupTimeout(timeoutId);
+  //   });
 
-    return () => {
-      socket.off("notification");
-      if (popupTimeout) {
-        clearTimeout(popupTimeout); 
-      }
-    };
-  }, [popupTimeout]); 
+  //   return () => {
+  //     socket.off("notification");
+  //     if (popupTimeout) {
+  //       clearTimeout(popupTimeout); 
+  //     }
+  //   };
+  // }, [popupTimeout]); 
 
-  useEffect(() => {
-    // Add event listener to detect clicks outside
-    const handleClickOutside = (event) => {
-      if (notificationRef.current && !notificationRef.current.contains(event.target)) {
-        setShowNotifications(false); 
-      }
-    };
+  // useEffect(() => {
+  //   // Add event listener to detect clicks outside
+  //   const handleClickOutside = (event) => {
+  //     if (notificationRef.current && !notificationRef.current.contains(event.target)) {
+  //       setShowNotifications(false); 
+  //     }
+  //   };
   
-    // Attach the event listener
-    document.addEventListener("mousedown", handleClickOutside);
+  //   // Attach the event listener
+  //   document.addEventListener("mousedown", handleClickOutside);
   
-    // Cleanup the event listener on unmount or update
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+  //   // Cleanup the event listener on unmount or update
+  //   return () => {
+  //     document.removeEventListener("mousedown", handleClickOutside);
+  //   };
+  // }, []);
   
 
   const logout = async () => {
@@ -115,12 +115,12 @@ const Header = () => {
     }
   };
 
-  const handleNotificationClick = async () => {
-    setShowNotifications(!showNotifications); 
-    if (!showNotifications) {
-      await fetchNotifications(); 
-    }
-  };
+  // const handleNotificationClick = async () => {
+  //   setShowNotifications(!showNotifications); 
+  //   if (!showNotifications) {
+  //     await fetchNotifications(); 
+  //   }
+  // };
   
   
 
@@ -141,14 +141,14 @@ const Header = () => {
       <div className="flex items-center gap-5">
         {/* Notification Icon */}
         <div className="relative">
-          <div className="bg-[#f7fbff] rounded-full size-8 sm:size-11 flex items-center justify-center cursor-pointer" onClick={handleNotificationClick}>
+          {/* <div className="bg-[#f7fbff] rounded-full size-8 sm:size-11 flex items-center justify-center cursor-pointer" onClick={handleNotificationClick}>
             <NotificationIcon />
             {notificationCount > 0 && (
               <span className="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full px-1">
                 {notificationCount}
               </span>
             )}
-          </div>
+          </div> */}
 
           {isPopupVisible && (
             <div className="notification-popup">
@@ -156,7 +156,7 @@ const Header = () => {
             </div>
           )}
 
-          {showNotifications && (
+          {/* {showNotifications && (
             <div ref={notificationRef} className="absolute top-12 right-0 w-[220px] bg-white border border-gray-300 rounded-lg shadow-lg z-10 transition-all duration-300">
               <ul className="py-2 divide-y divide-gray-200">
                 {notifications.length > 0 ? (
@@ -170,7 +170,7 @@ const Header = () => {
                 )}
               </ul>
             </div>
-          )}
+          )} */}
         </div>
 
         {/* Profile Icon with Smooth Hover Card */}
