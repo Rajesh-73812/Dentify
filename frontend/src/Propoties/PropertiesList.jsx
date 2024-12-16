@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Header from '../components/Header';
+import SidebarMenu from '../components/SideBar';
 import { GoArrowDown, GoArrowUp } from 'react-icons/go';
 import { FaPen, FaTrash } from "react-icons/fa";
 // import { searchFunction } from '../Entity/SearchEntity';
@@ -229,8 +230,8 @@ const PropotiesList = () => {
                                         {currentProperties.map((property, index) => (
                                             <tr key={property.id}>
                                                 <td className="px-4 py-3">{index + 1 + indexOfFirstItem}</td>
-                                                <td className="px-4 py-3">{property?.title}</td>
-                                                <td className="px-4 py-3">{property?.category?.title}</td>
+                                                <td className="px-4 py-3">{property.title}</td>
+                                                <td className="px-4 py-3">{property.ptype}</td>
                                                 <td className="px-4 py-3">{property.description}</td>
                                                 <td className="px-4 py-3">{property.address}</td>
                                                 <td className="px-4 py-3">{property.city}</td>
@@ -249,7 +250,7 @@ const PropotiesList = () => {
                                                     )}
                                                 </td>
                                                 <td className="px-4 py-3">{property.mobile}</td>
-                                                <td className="px-4 py-3">{property.country}</td>
+                                                <td className="px-4 py-3">{property.country_id}</td>
                                                 <td className="px-4 py-3">{property.add_user_id}</td>
                                                 <td className="px-4 py-3">{property.beds}</td>
                                                 <td className="px-4 py-3">{property.bathroom}</td>

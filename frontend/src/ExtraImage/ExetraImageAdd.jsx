@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import Loader from '../common/Loader';
 import Header from '../components/Header';
 import axios from 'axios';
-import SidebarMenu from '../components/SideBar';
-import ImageUploader from '../common/ImageUploader';
+import MultiImageUploader from '../common/MultipleImageUploader';
+
+
 
 const ExtraImageAdd = () => {
     const [properties, setProperties] = useState([]);
@@ -113,7 +114,7 @@ const ExtraImageAdd = () => {
                                         {/* Property Image */}
                                         <div className="flex flex-col">
                                             <label htmlFor="img" className="text-sm font-medium text-start text-[12px] font-[Montserrat]">Property Image</label>
-                                            <ImageUploader onUploadSuccess={handleImageUploadSuccess} />
+                                            <MultiImageUploader onUploadSuccess={handleImageUploadSuccess} />
                                         </div>
                                     </div>
                                     <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-1 mt-6">

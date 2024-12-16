@@ -44,6 +44,9 @@ import NotFound from "./NotFound.jsx";
 
 import { AuthProvider } from "./Context/AuthContext.js";
 import PrivateRoute from "./Context/PrivateRoute.js";
+
+import RoleChange from "./Roles/RoleChange.jsx";
+
 import AdminList from "./Admin/AdminList.jsx";
 
 // Layout component for common sidebar
@@ -272,6 +275,16 @@ function App() {
             />
 
             <Route
+              path="/role"
+              element={
+                <LayoutWithSidebar>
+                  {" "}
+                  <RoleChange />{" "}
+                </LayoutWithSidebar>
+              }
+            />
+
+            <Route
               path="/faq-list"
               element={
                 <LayoutWithSidebar>
@@ -362,7 +375,6 @@ function App() {
                 </LayoutWithSidebar>
               }
             />
-          
           </Routes>
         </AuthProvider>
       </BrowserRouter>

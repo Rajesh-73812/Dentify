@@ -19,9 +19,9 @@ import { CgCalendarDates } from "react-icons/cg";
 import { BsFileEarmarkPlus } from "react-icons/bs";
 import { IoCheckboxOutline } from "react-icons/io5";
 import KeyboardArrowRightOutlinedIcon from '@mui/icons-material/KeyboardArrowRightOutlined';
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import axios from "axios";
 import Loader from "../common/Loader";
-import { SupervisedUserCircleOutlined, VerifiedUserOutlined } from "@mui/icons-material";
 
 const SidebarMenu = () => {
   const navigate = useNavigate();
@@ -114,18 +114,18 @@ const SidebarMenu = () => {
             </SubMenu>
 
             {/* cuppon */}
-            <SubMenu label="Coupon" icon={<TbSquareRoundedPercentage />}>
+            <SubMenu label="Cuppon" icon={<TbSquareRoundedPercentage />}>
               <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
                 active={location.pathname === "/add-cuppon"}
                 onClick={() => navigate("/add-cuppon")}
               >
-                Add Coupon
+                Add Cuppon
               </MenuItem>
               <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
                 active={location.pathname === "/cuppon-list"}
                 onClick={() => navigate("/cuppon-list")}
               >
-                List Coupon
+                List Cuppon
               </MenuItem>
             </SubMenu>
 
@@ -146,7 +146,11 @@ const SidebarMenu = () => {
           </MenuItem> */}
 
             {/* Payout List */}
-            {/* <MenuItem icon={<FaUser />}
+
+
+
+            {/* <MenuItem icon={<FaUser />
+
             active={location.pathname === "/payout-list"}
             onClick={() => navigate("/payout-list")}
           >
@@ -202,36 +206,36 @@ const SidebarMenu = () => {
             </SubMenu>
 
             {/* Gallery Category */}
-            <SubMenu label="Gallery Category" icon={<FaRegFolder />}>
-              <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
-                active={location.pathname === "/create-gallery-category"}
-                onClick={() => navigate("/create-gallery-category")}
-              >
-                Add Gall Category
-              </MenuItem>
-              <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
-                active={location.pathname === "/gallery-category-list"}
-                onClick={() => navigate("/gallery-category-list")}
-              >
-                List Gall Category
-              </MenuItem>
-            </SubMenu>
+            {/* <SubMenu label="Gallery Category"  icon={<FaRegFolder />}>
+          <MenuItem icon={<KeyboardArrowRightOutlinedIcon/>} className="sub-menu-item"
+            active={location.pathname === "/create-gallery-category"}
+            onClick={() => navigate("/create-gallery-category")}
+          >
+            Add Gall Category 
+          </MenuItem>
+          <MenuItem icon={<KeyboardArrowRightOutlinedIcon/>} className="sub-menu-item"
+            active={location.pathname === "/gallery-category-list"}
+            onClick={() => navigate("/gallery-category-list")}
+          >
+            List Gall Category
+          </MenuItem>
+        </SubMenu> */}
 
             {/* gallery */}
-            <SubMenu label="Gallery " icon={<CiImageOn />}>
-              <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
-                active={location.pathname === "/create-gallery"}
-                onClick={() => navigate("/create-gallery")}
-              >
-                Add Gallery
-              </MenuItem>
-              <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
-                active={location.pathname === "/gallery-list"}
-                onClick={() => navigate("/gallery-list")}
-              >
-                List Gallery
-              </MenuItem>
-            </SubMenu>
+            {/* <SubMenu label="Gallery "  icon={<CiImageOn />}>
+          <MenuItem icon={<KeyboardArrowRightOutlinedIcon/>} className="sub-menu-item"
+            active={location.pathname === "/create-gallery"}
+            onClick={() => navigate("/create-gallery")}
+          >
+            Add Gallery
+          </MenuItem>
+          <MenuItem icon={<KeyboardArrowRightOutlinedIcon/>} className="sub-menu-item"
+            active={location.pathname === "/gallery-list"}
+            onClick={() => navigate("/gallery-list")}
+          >
+            List Gallery
+          </MenuItem>
+        </SubMenu> */}
 
             {/* package */}
             <SubMenu label="Package " icon={<FaLayerGroup />}>
@@ -293,20 +297,20 @@ const SidebarMenu = () => {
             </SubMenu>
 
             {/* page */}
-            <SubMenu label="Page " icon={<BsFileEarmarkPlus />}>
-              <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
-                active={location.pathname === "/create-page"}
-                onClick={() => navigate("/create-page")}
-              >
-                Add Page
-              </MenuItem>
-              <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
-                active={location.pathname === "/page-list"}
-                onClick={() => navigate("/page-list")}
-              >
-                List Page
-              </MenuItem>
-            </SubMenu>
+            {/* <SubMenu label="Page "  icon={<BsFileEarmarkPlus />}>
+          <MenuItem icon={<KeyboardArrowRightOutlinedIcon/>} className="sub-menu-item"
+            active={location.pathname === "/create-page"}
+            onClick={() => navigate("/create-page")}
+          >
+            Add Page
+          </MenuItem>
+          <MenuItem icon={<KeyboardArrowRightOutlinedIcon/>} className="sub-menu-item"
+            active={location.pathname === "/page-list"}
+            onClick={() => navigate("/page-list")}
+          >
+            List Page
+          </MenuItem>
+        </SubMenu> */}
 
             {/* faq */}
             <SubMenu label="Faq " icon={<IoCheckboxOutline />}>
@@ -340,10 +344,11 @@ const SidebarMenu = () => {
               Account
             </MenuItem>
 
-            {/* Admin */}
-            <MenuItem active={location.pathname === "/admin"} icon={<SupervisedUserCircleOutlined />}
+            {/* admin */}
+            <MenuItem
+              active={location.pathname === "/admin"} icon={<AdminPanelSettingsIcon />}
               onClick={() => navigate("/admin")}
-            > 
+            >
               Admin
             </MenuItem>
 
@@ -353,6 +358,14 @@ const SidebarMenu = () => {
               onClick={() => navigate("/settings")}
             >
               Setting
+            </MenuItem>
+
+            {/*  role change */}
+            <MenuItem
+              active={location.pathname === "/role"} icon={<LuSettings2 />}
+              onClick={() => navigate("/role")}
+            >
+              Role Request
             </MenuItem>
 
             {/* logout */}
