@@ -1,67 +1,186 @@
 import React, { useEffect, useState } from 'react'
 import Header from '../components/Header'
+import { GoArrowDown, GoArrowUp } from 'react-icons/go';
+import { FaPen,FaTrash } from "react-icons/fa";
+import { searchFunction } from '../Entity/SearchEntity';
+import axios from 'axios';
+import { DeleteEntity } from '../utils/Delete';
+import { useNavigate } from 'react-router-dom';
+import { handleSort } from '../utils/sorting';
+import CountryHeader from '../Country/CountryHeader';
+import RoleHeader from './RoleHeader';
 
 const RoleChange = () => {
-    const [formData,setFormData]=useState({});
-    const handleChange=()=>{
+  const navigate=useNavigate();
+  const [countries, setCountries] = useState([]);
+  const [filteredCountries, setFilteredCountries] = useState([]);
+  const [sortConfig, setSortConfig] = useState({ key: '', direction: '' });
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
 
-    }
+  useEffect(() => {
+      fetchCountries();
+  }, []);
 
-    const handleSubmit=()=>{
+  const fetchCountries = async () => {
+      try {
+          const response = await axios.get("http://localhost:5000/countries/all");
+          console.log(response.data)
+          setCountries(response.data);
+          setFilteredCountries(response.data); 
+      } catch (error) {
+          console.error("Error fetching countries:", error);
+      }
+  };
 
-    }
+  const handleSearch = (event) => {
+      searchFunction(event, countries, setFilteredCountries);
+      setCurrentPage(1);
+  };
+
+  // for sorting
+  const sortData = (key) => {
+      handleSort(filteredCountries, key, sortConfig, setSortConfig, setFilteredCountries);
+    };
+  
+  const indexOfLast = currentPage * itemsPerPage;
+  const indexOfFirst = indexOfLast - itemsPerPage;
+  const currentCountries = filteredCountries.slice(indexOfFirst, indexOfLast);
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const totalPages = Math.ceil(filteredCountries.length / itemsPerPage);
+
+  const handledelete = async (id) => {
+      const success = await DeleteEntity("Country", id);
+      if (success) {
+          const updatedCountries = countries.filter((country) => country.id !== id);
+          setCountries(updatedCountries);
+          setFilteredCountries(updatedCountries);
+      }
+  };
+
+  // for update
+  const updateCountry=(id)=>{
+      navigate('/add-country',{state:{id:id}})
+  }
 
   return (
     <div>
-      <div className="flex bg-[#f7fbff]">
-      
-      <main className="flex-grow">
-        <Header />
-        <div className="container mx-auto">
-          <div className="flex items-center mt-6  mb-4">
-            {/* <Link to="/rolesList" className="cursor-pointer ml-6">
-              
-            </Link> */}
-            <h2 className="text-lg font-semibold ml-4 " style={{color:'#000000',fontSize:'24px',fontFamily:'Montserrat'}}>Role </h2>
-          </div>
-
-          {/* Form Container */}
-          <div className="h-full px-6 max-w-5xl" style={{paddingTop:'24px'}}> 
-            <div className="bg-white h-[70vh] w-full rounded-xl border border-[#EAE5FF] py-4 px-6 overflow-y-auto" style={{scrollbarWidth:'none'}}>
-              <form onSubmit={handleSubmit} className="mt-4">
-                <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-1  mt-6">
-                  {/* page name */}
-                  <div className="flex flex-col">
-                      <label  htmlFor="ctitle"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> Page name </label>
-                      <input id="ctitle" value={formData.ctitle} onChange={handleChange} name="ctitle" type="text" required className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}}
-                        placeholder="Enter Page Title"
-                      />
+      <div className="h-screen flex">
+                
+                <div className="flex flex-1 flex-col bg-[#f7fbff]">
+                    <Header />
+                    <RoleHeader onSearch={handleSearch} />
+                    <div className="py-6 px-6 h-full w-[1000px] overflow-scroll scrollbar-none">
+                        <div className="bg-white w-full rounded-xl border border-[#EAE5FF] py-4 px-3 overflow-x-auto scrollbar-none">
+                            <div className="relative sm:rounded-lg">
+                                <table className="min-w-full text-sm text-left text-gray-700">
+                                    <thead className="bg-gray-50 text-xs uppercase font-medium text-gray-500">
+                                        <tr>
+                                            <th className="px-4 py-3 min-w-[100px]">
+                                                Sr. No
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('slno')} />
+                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('slno')} />
+                                                </div>
+                                            </th>
+                                            <th className="px-4 py-3 min-w-[150px]">
+                                                Country Title Name
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('title')} />
+                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('title')} />
+                                                </div>
+                                            </th>
+                                            <th className="px-4 py-3 min-w-[150px]">Country Image</th>
+                                            <th className="px-4 py-3 min-w-[100px]">
+                                                Total Properties
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('totalProperties')} />
+                                                    <GoArrowDown className='cursor-pointer'  onClick={() => sortData('totalProperties')} />
+                                                </div>
+                                            </th>
+                                            <th className="px-4 py-3 min-w-[100px]">
+                                                Country Status
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('totalProperties')} />
+                                                    <GoArrowDown className='cursor-pointer'  onClick={() => sortData('totalProperties')} />
+                                                </div>
+                                                </th>
+                                            <th className="px-4 py-3 min-w-[100px]">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="divide-y divide-gray-200">
+                                        {currentCountries.map((country, index) => (
+                                            <tr key={country.id}>
+                                                <td className="px-4 py-3">{index + 1 + indexOfFirst}</td>
+                                                <td className="px-4 py-3">{country?.title || "N/A"}</td>
+                                                <td className="px-4 py-3">
+                                                    {country.img && country.img.trim() !== '' ? (
+                                                        <img src={country.img} className="w-16 h-16 object-cover rounded-full" height={50} width={50} loading="lazy" alt="" onError={(e) => {
+                                                            if (e.target.src !== 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg') {
+                                                                e.target.src = 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg';
+                                                            }
+                                                        }} />
+                                                    ) : (
+                                                        <img src={'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg'} height={50} width={50} loading="lazy" alt="" />
+                                                    )}
+                                                </td>
+                                                <td className="px-4 py-3">{country?.totalProperties || 0}</td>
+                                                <td className="px-4 py-3">
+                                                    <span
+                                                        className={`px-3 py-1 text-sm rounded-full ${country.status === 1 ? 'bg-green-500 text-white' : 'bg-gray-400 text-white'}`}
+                                                    >
+                                                        {country.status === 1 ? "publish" : "unpublish"}
+                                                    </span>
+                                                </td>
+                                                <td className="px-4 py-3">
+                                                    <button className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition mr-2" onClick={()=>{updateCountry(country.id)}}>
+                                                        <FaPen />
+                                                    </button>
+                                                    <button className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition" onClick={()=>{handledelete(country.id)}}>
+                                                        <FaTrash />
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div className="bottom-0 left-0 w-full bg-[#f7fbff] py-4 flex justify-between items-center">
+                            <span className="text-sm font-normal text-gray-500">
+                                Showing <span className="font-semibold text-gray-900">{indexOfFirst + 1}</span> to <span className="font-semibold text-gray-900">{Math.min(indexOfLast, filteredCountries.length)}</span> of <span className="font-semibold text-gray-900">{filteredCountries.length}</span>
+                            </span>
+                            <ul className="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">
+                                    <li>
+                                        <button 
+                                            onClick={() => paginate(currentPage > 1 ? currentPage - 1 : 1)} 
+                                            className={`previous-button ${filteredCountries.length === 0 ? 'cursor-not-allowed' : ''}`} 
+                                            disabled={currentPage === 1 || filteredCountries.length === 0} 
+                                            title={filteredCountries.length === 0 ? 'No data available' : ''}
+                                        >
+                                            <img src="/image/action/Left Arrow.svg" alt="Left" /> Previous
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <span className="current-page">
+                                            Page {filteredCountries.length > 0 ? currentPage : 0} of {filteredCountries.length > 0 ? totalPages : 0}
+                                        </span>
+                                    </li>
+                                    <li>
+                                        <button 
+                                            onClick={() => paginate(currentPage < totalPages ? currentPage + 1 : totalPages)} 
+                                            className={`next-button ${filteredCountries.length === 0 ? 'cursor-not-allowed' : ''}`} 
+                                            disabled={currentPage === totalPages || filteredCountries.length === 0} 
+                                            title={filteredCountries.length === 0 ? 'No data available' : ''}
+                                        >
+                                            Next <img src="/image/action/Right Arrow (1).svg" alt="Right" />
+                                        </button>
+                                    </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-                <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-1 mt-6">
-                  {/* page Status */}
-                  <div className="flex flex-col">
-                    <label  htmlFor="cstatus"   className="text-sm font-medium text-start text-[12px] font-[Montserrat]" >Page  Status </label>
-                    <select  name="cstatus"  id="cstatus" value={formData.status} onChange={handleChange} className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm"  >
-                      <option value="" disabled >Select Status</option>
-                      <option value={1}>Publish</option>
-                      <option value={0}>Unpublish</option>
-                    </select>
-                  </div>
-                </div>
-
-                {/* Action Buttons */}
-                <div className="flex justify-start mt-12 gap-3">
-                  <button  type="submit" className=" py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 w-[150px] h-12 font-[Montserrat] font-bold" style={{ borderRadius: "8px", }} > Add Page </button>
-                </div>
-              </form>
-
             </div>
-          </div>
-        </div>
-      </main>
-      {/* <NotificationContainer /> */}
-    </div>
     </div>
   )
 }

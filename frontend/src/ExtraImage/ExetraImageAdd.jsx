@@ -11,11 +11,12 @@ const ExtraImageAdd = () => {
     const [formData, setFormData] = useState({
         pid: '',
         status: '',
-        img: ""
+        img: []
     });
-    const [selectedPropertyTitle, setSelectedPropertyTitle] = useState('');
+    
     const [isLoading, setIsLoading] = useState(false);
 
+    
     useEffect(() => {
         const fetchProperties = async () => {
             try {
@@ -32,48 +33,38 @@ const ExtraImageAdd = () => {
     }, []);
 
     const handleChange = (e) => {
-        const { name, value, files } = e.target;
-        if (name === 'pid') {
-            const selectedProperty = properties.find(property => property.id === parseInt(value));
-            setSelectedPropertyTitle(selectedProperty ? selectedProperty.title : '');
-        }
-
-        if (files) {
-            setFormData((prevFormData) => ({
-                ...prevFormData,
-                [name]: files[0]
-            }));
-        } else {
+        const { name, value } = e.target;
+        
             setFormData((prevFormData) => ({
                 ...prevFormData,
                 [name]: value
             }));
-        }
+        
     };
 
-    const handleImageUploadSuccess = (imageUrl) => {
+    
+
+      const handleImageUploadSuccess = (imageUrls) => {
         setFormData((prevData) => ({
             ...prevData,
-            img: imageUrl,
+            img: [...prevData.img, ...imageUrls]
         }));
     };
-
-    console.log(formData);
+    
+    console.log(formData, "from form data");
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsLoading(true);
         try {
-            const submitData = new FormData();
-            submitData.append('pid', formData.pid);
-            submitData.append('status', formData.status);
-            submitData.append('img', formData.img);
+            
 
-            const response = await axios.post('http://localhost:5000/extra/upsert', submitData, {
+              
+            const response = await axios.post('http://localhost:5000/extra/upsert', formData, {
                 withCredentials: true,
             });
             console.log('Extra image added successfully:', response.data);
-            alert('Extra image added successfully!'); // Alert message
+            alert('Extra image added successfully!'); 
         } catch (error) {
             console.error('Error adding extra image:', error.response ? error.response.data : error.message);
         } finally {
@@ -105,9 +96,7 @@ const ExtraImageAdd = () => {
                                                     <option key={property.id} value={property.id}>{property.title}</option>
                                                 ))}
                                             </select>
-                                            {selectedPropertyTitle && (
-                                                <p className="mt-2 text-sm text-gray-600">Selected Property: {selectedPropertyTitle}</p>
-                                            )}
+                                            
                                         </div>
                                     </div>
                                     <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-1 mt-6">

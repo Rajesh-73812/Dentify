@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import Header from '../components/Header'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import SidebarMenu from '../components/SideBar'
 import axios from 'axios'
 import LoaderComponent from '../common/ReactLoader'
 import { useLoading } from '../Context/LoadingContext';
 import { useLocation } from 'react-router-dom';
 import Loader from '../common/Loader'
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 
 const Profile = () => {
@@ -17,7 +18,7 @@ const Profile = () => {
   }
 
 
-
+  const navigate = useNavigate()
   const handleBlur=()=>{
 
   }
@@ -107,7 +108,12 @@ const Profile = () => {
         <Header />
         <div className="container mx-auto">
           <div className="flex items-center mt-6  mb-4">
-            <h2 className="text-lg font-semibold ml-4 " style={{color:'#000000',fontSize:'24px',fontFamily:'Montserrat'}}>Profile Management</h2>
+          <div className="flex items-center mt-6  mb-4">
+                    <Link onClick={()=>{navigate(-1)}}  className="cursor-pointer ml-6">
+                    <ArrowBackIosNewIcon />
+                    </Link>
+                    <h2 className="text-lg font-semibold ml-4 " style={{color:'#000000',fontSize:'24px',fontFamily:'Montserrat'}}>Account Management</h2>
+                </div>
           </div>
 
           {/* Form Container */}

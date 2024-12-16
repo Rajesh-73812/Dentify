@@ -123,28 +123,43 @@ const ExtraImageList = () => {
                                             <tr key={extraImage.id}>
                                                 <td className="px-4 py-3">{index + 1 + indexOfFirstImage}</td>
                                                 <td className="px-4 py-3">
-                                                    {extraImage.img && extraImage.img.trim() !== "" ? (
-                                                        <img  src={`http://localhost:5000/${extraImage.img}`}  className="w-16 h-16 object-cover rounded-full"  height={50}  width={50}  loading="lazy"  alt=""  
-                                                        onError={(e) => {
-                                                                if (e.target.src !== "https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg") {
-                                                                    e.target.src ="https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg";
-                                                                }
-                                                            }}
-                                                        />
-                                                    ) : (
+  {extraImage.images && extraImage.images.length > 0 ? (
+    <div className="flex space-x-2">
+      {extraImage.images.map((image, index) => (
+        <img
+          key={index}
+          src={image.url}
+          className="w-16 h-16 object-cover rounded-full"
+          height={50}
+          width={50}
+          loading="lazy"
+          alt={`Image ${index + 1}`}
+          onError={(e) => {
+            if (
+              e.target.src !==
+              "https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg"
+            ) {
+              e.target.src =
+                "https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg";
+            }
+          }}
+        />
+      ))}
+    </div>
+  ) : (
+    <img
+      src={
+        "https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg"
+      }
+      height={50}
+      width={50}
+      loading="lazy"
+      alt="No images available"
+    />
+  )}
+</td>
 
-                                                        <img
-                                                            src={
-                                                                "https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg"
-                                                            }
-                                                            height={50}
-                                                            width={50}
-                                                            loading="lazy"
-                                                            alt=""
-                                                        />
-                                                    )}{" "}
-                                                </td>{" "}
-                                                <td className="px-4 py-3">{extraImage.properties?.title || "No Title"}</td>
+                                                <td className="px-4 py-3">{extraImage?.Property?.title || "No Title"}</td>
 
                                                 <td className="px-4 py-3">
                                                     <span className={`px-3 py-1 text-sm rounded-full ${extraImage.status === 1 ? "bg-green-500 text-white"  : "bg-gray-400 text-white"  }`}
