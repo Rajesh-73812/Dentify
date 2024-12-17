@@ -18,10 +18,14 @@ import { CiImageOn } from "react-icons/ci";
 import { CgCalendarDates } from "react-icons/cg";
 import { BsFileEarmarkPlus } from "react-icons/bs";
 import { IoCheckboxOutline } from "react-icons/io5";
+import { GoHome } from "react-icons/go";
+import { IoLayersOutline } from "react-icons/io5";
 import KeyboardArrowRightOutlinedIcon from '@mui/icons-material/KeyboardArrowRightOutlined';
 import AdminPanelSettingsOutlinedIcon from '@mui/icons-material/AdminPanelSettingsOutlined';
 import axios from "axios";
 import Loader from "../common/Loader";
+
+
 
 const SidebarMenu = () => {
   const navigate = useNavigate();
@@ -114,18 +118,18 @@ const SidebarMenu = () => {
             </SubMenu>
 
             {/* cuppon */}
-            <SubMenu label="Cuppon" icon={<TbSquareRoundedPercentage />}>
+            <SubMenu label="Coupon" icon={<TbSquareRoundedPercentage />}>
               <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
                 active={location.pathname === "/add-cuppon"}
                 onClick={() => navigate("/add-cuppon")}
               >
-                Add Cuppon
+                Add Coupon
               </MenuItem>
               <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
                 active={location.pathname === "/cuppon-list"}
                 onClick={() => navigate("/cuppon-list")}
               >
-                List Cuppon
+                List Coupon
               </MenuItem>
             </SubMenu>
 
@@ -158,18 +162,18 @@ const SidebarMenu = () => {
           </MenuItem> */}
 
             {/* propoties */}
-            <SubMenu label="Propoties" icon={<IoMdHome />}>
+            <SubMenu label="Properties" icon={<GoHome />}>
               <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
                 active={location.pathname === "/create-property"}
                 onClick={() => navigate("/create-property")}
               >
-                Add  Propoties
+                Add  Properties
               </MenuItem>
               <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
                 active={location.pathname === "/property-list"}
                 onClick={() => navigate("/property-list")}
               >
-                List Propoties
+                List Properties
               </MenuItem>
             </SubMenu>
 
@@ -238,7 +242,7 @@ const SidebarMenu = () => {
         </SubMenu> */}
 
             {/* package */}
-            <SubMenu label="Package " icon={<FaLayerGroup />}>
+            <SubMenu label="Package " icon={<IoLayersOutline />}>
               <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
                 active={location.pathname === "/create-package"}
                 onClick={() => navigate("/create-package")}
