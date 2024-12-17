@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import Header from '../components/Header'
+
+import { Link, useNavigate } from 'react-router-dom'
+import SidebarMenu from '../components/SideBar'
+
 import axios from 'axios'
 import ImageUploader from '../common/ImageUploader';
 import { useLoading } from '../Context/LoadingContext';
 import { useLocation } from 'react-router-dom';
 import Loader from '../common/Loader';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 const Settings = () => {
   const [formData, setFormData] = useState({id:'',  webname: '',weblogo:'',  timezone: '',  currency: '',  tax: '',  sms_type: '',  auth_key: '',  twilio_number: '',  auth_token: '',  acc_id: '',otp_id:'', otp_auth:'', show_property:'', one_key:'', one_hash:'', rcredit:'', rcredit:'',scredit:'', wlimit:''});
@@ -31,6 +36,13 @@ const Settings = () => {
 
     fetchSettings();
   }, []);
+
+
+  const navigate = useNavigate()
+
+
+
+
 
   useEffect(() => {
     setIsLoading(true);
@@ -92,7 +104,12 @@ const handleImageUploadSuccess = (imageUrl) => {
             {/* <Link to="/rolesList" className="cursor-pointer ml-6">
               
             </Link> */}
-            <h2 className="text-lg font-semibold ml-4 " style={{color:'#000000',fontSize:'24px',fontFamily:'Montserrat'}}>Settings Management</h2>
+            <div className="flex items-center mt-6  mb-4">
+                    <Link onClick={()=>{navigate(-1)}}  className="cursor-pointer ml-6">
+                    <ArrowBackIosNewIcon />
+                    </Link>
+                    <h2 className="text-lg font-semibold ml-4 " style={{color:'#000000',fontSize:'24px',fontFamily:'Montserrat'}}>Settings Management</h2>
+                </div>
           </div>
 
           {/* Form Container */}

@@ -7,11 +7,16 @@ import { generateToken, messaging } from "../Notification/firebase";
 import { onMessage } from "firebase/messaging";
 import toast, { Toaster } from "react-hot-toast";
 
+
+
+
+
 const Header = () => {
   const [notifications, setNotifications] = useState([]);
   const [notificationCount, setNotificationCount] = useState(0);
   console.log(notificationCount)
   const [showNotifications, setShowNotifications] = useState(false);
+  const [isPopupVisible, setIsPopupVisible] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [showCard, setShowCard] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -37,6 +42,7 @@ const Header = () => {
 
     return () => clearTimeout(timeoutId);
   }, [isHovered]);
+
 
   const fetchNotifications = async () => {
     try {
@@ -85,6 +91,7 @@ const Header = () => {
     };
   }, []);
 
+
   const logout = async () => {
     setLoading(true);
     try {
@@ -110,6 +117,7 @@ const Header = () => {
       navigate("/settings");
     }
   };
+
 
   const handleNotificationClick = async () => {
     setShowNotifications(!showNotifications);
@@ -145,6 +153,8 @@ const Header = () => {
     });
   }, []);
 
+
+
   return (
     <div className="bg-white h-[65px] sm:h-[80px] p-6 flex items-center justify-between relative">
       <div>
@@ -162,84 +172,79 @@ const Header = () => {
       </div>
 
       {/* Icons Section */}
-      <div className="flex items-center gap-5">
+      <div className="flex items-center gap-2">
         {/* Notification Icon */}
         <div className="relative">
+
           <div
             className="bg-[#f7fbff] rounded-full size-8 sm:size-11 flex items-center justify-center cursor-pointer"
             onClick={handleNotificationClick}
           >
-            <NotificationIcon />
-            {notificationCount > 0 && (
-              <span className="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full px-1">
-                {notificationCount}
-              </span>
-            )}
-          </div>
 
-          {showNotifications && (
-            <div
-              ref={notificationRef}
-              className="absolute top-12 right-0 w-[220px] bg-white border border-gray-300 rounded-lg shadow-lg z-10 transition-all duration-300"
-            >
-              <ul className="py-2 divide-y divide-gray-200">
-                {notifications.length > 0 ? (
-                  notifications.map((notification, index) => (
-                    <li
-                      key={index}
-                      className="px-4 py-3 flex items-center gap-3 hover:bg-gray-100 cursor-pointer"
-                    >
-                      <span>{notification.message}</span>
-                    </li>
-                  ))
-                ) : (
-                  <li className="px-4 py-3 text-gray-500">No notifications</li>
+
+
+
+
+
+
+            {showNotifications && (
+              <div
+                ref={notificationRef}
+                className="absolute top-12 right-0 w-[220px] bg-white border border-gray-300 rounded-lg shadow-lg z-10 transition-all duration-300"
+              >
+
+                {isPopupVisible && (
+                  <div className="notification-popup">
+                    <p>{notifications[0]?.message}</p>
+                  </div>
                 )}
-              </ul>
-            </div>
-          )}
-        </div>
+
+
+              </div>)}
+        
 
         {/* Profile Icon with Smooth Hover Card */}
-        <div
-          className="relative"
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
-        >
-          <div className="bg-[#f7fbff] rounded-full size-8 sm:size-11 flex items-center justify-center cursor-pointer">
-            <ProfileIcon />
-          </div>
-
-          {showCard && (
             <div
-              className={`absolute top-12 right-0 w-[220px] bg-white border border-gray-300 rounded-lg shadow-lg z-10 transition-all duration-300`}
+              className="relative"
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
             >
-              <ul className="py-2 divide-y divide-gray-200">
-                <li
-                  className="px-4 py-3 flex items-center gap-3 hover:bg-gray-100 cursor-pointer"
-                  onClick={() => {
-                    navigation("profile");
-                  }}
+              <div className="bg-[#f7fbff] rounded-full size-8 sm:size-11 flex items-center justify-center cursor-pointer">
+                <ProfileIcon />
+              </div>
+
+              {showCard && (
+                <div
+                  className={`absolute top-12 right-0 w-[220px] bg-white border border-gray-300 rounded-lg shadow-lg z-10 transition-all duration-300`}
                 >
-                  <FaUser className="text-gray-500" /> <span>Account</span>
-                </li>
-                <li
-                  className="px-4 py-3 flex items-center gap-3 hover:bg-gray-100 cursor-pointer"
-                  onClick={logout}
-                >
-                  <FaSignOutAlt className="text-gray-500" /> <span>Logout</span>
-                </li>
-                <li
-                  className="px-4 py-3 flex items-center gap-3 hover:bg-gray-100 cursor-pointer"
-                  onClick={() => {
-                    navigation("settings");
-                  }}
-                >
-                  <FaCog className="text-gray-500" /> <span>Settings</span>
-                </li>
-              </ul>
+                  <ul className="py-2 divide-y divide-gray-200">
+                    <li
+                      className="px-4 py-3 flex items-center gap-3 hover:bg-gray-100 cursor-pointer"
+                      onClick={() => {
+                        navigation("profile");
+                      }}
+                    >
+                      <FaUser className="text-gray-500" /> <span>Account</span>
+                    </li>
+                    <li
+                      className="px-4 py-3 flex items-center gap-3 hover:bg-gray-100 cursor-pointer"
+                      onClick={logout}
+                    >
+                      <FaSignOutAlt className="text-gray-500" /> <span>Logout</span>
+                    </li>
+                    <li
+                      className="px-4 py-3 flex items-center gap-3 hover:bg-gray-100 cursor-pointer"
+                      onClick={() => {
+                        navigation("settings");
+                      }}
+                    >
+                      <FaCog className="text-gray-500" /> <span>Settings</span>
+                    </li>
+                  </ul>
+                </div>
+              )}
             </div>
-          )}
+          </div>
         </div>
       </div>
     </div>

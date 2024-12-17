@@ -175,6 +175,10 @@ textarea:focus-visible {
   width: 260px !important;
 }
 
+.css-13cymwt-control {
+  min-height: 52px !important;
+}
+
 
 .css-ewdv3l .sub-menu-item{
   background-color: #439BFF !important;

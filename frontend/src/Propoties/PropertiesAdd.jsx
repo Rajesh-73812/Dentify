@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import SidebarMenu from "../components/SideBar";
 import axios from "axios";
 import ImageUploader from "../common/ImageUploader";
+import Select from 'react-select';
 
 const PropertiesAdd = () => {
   const [formData, setFormData] = useState({
@@ -34,6 +35,9 @@ const PropertiesAdd = () => {
 
   const [countries, setCountries] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [facilities, setFacilities] = useState([]);
+
+  const navigate = useNavigate();
   
   useEffect(() => {
     // Fetch countries
@@ -45,6 +49,10 @@ const PropertiesAdd = () => {
     axios.get('http://localhost:5000/categories/all')
       .then(response => setCategories(response.data))
       .catch(error => console.error('Error fetching categories:', error));
+
+    axios.get('http://localhost:5000/facilities/all')
+      .then(response => setFacilities(response.data))
+      .catch(error => console.error('Error fetching facilities:', error));
   }, []);
 
   const handleChange = (e) => {
@@ -55,7 +63,7 @@ const PropertiesAdd = () => {
     }));
   };
 
- 
+
 
   const handleBlur = (e)=>{
 
@@ -88,12 +96,15 @@ const PropertiesAdd = () => {
         
       });
       alert('Property submitted successfully');
+      navigate("/property-list")
       
     } catch (error) {
       console.error('Error submitting property:', error);
       alert('Error submitting property');
     }
   };
+
+  const [selectedOption, setSelectedOption] = useState(null);
 
 
   return (
@@ -122,7 +133,7 @@ const PropertiesAdd = () => {
 
             {/* Form Container */}
             <div
-              className="h-full px-6 max-w-5xl "
+              className="h-full px-6 max-w-5xl"
               style={{ paddingTop: "24px" }}
             >
               <div
@@ -316,29 +327,43 @@ const PropertiesAdd = () => {
 
                     {/* Select Property Facility */}
                     <div className="flex flex-col">
-                      <label
-                        htmlFor="facility"
-                        className="text-sm font-medium text-start text-[12px] font-[Montserrat]"
-                      >
-                        Select Property Facility
-                      </label>
-                      <input
-                        id="facility"
-                        name="facility"
-                        value={formData.facility}
-                        type="text"
-                        required
-                        className="border rounded-lg p-3 mt-1 w-full h-14"
-                        style={{
-                          borderRadius: "8px",
-                          border: "1px solid #EAEAFF",
-                        }}
-                        onFocus={() => handleFocus("facility")}
-                        onBlur={() => handleBlur("facility")}
-                        onChange={handleChange}
-                        placeholder="Choose Facility "
-                      />
-                    </div>
+  <label
+    htmlFor="facility"
+    className="text-sm font-medium text-start text-[12px] font-[Montserrat]"
+  >
+    Select Property Facility
+  </label>
+
+  <Select
+    isMulti
+    name="facility"
+    value={facilities.filter((facility) =>
+      formData.facility.split(",").includes(facility.id.toString())
+    ).map(facility => ({ value: facility.id, label: facility.title }))}
+
+    
+    options={facilities.map((facility) => ({
+      value: facility.id,
+      label: facility.title,
+    }))}
+
+    // Update formData when selection changes
+    onChange={(selectedOptions) => {
+      const selectedIds = selectedOptions.map((option) => option.value);
+      setFormData((prevData) => ({
+        ...prevData,
+        facility: selectedIds.join(","), // Store selected IDs as comma-separated string
+      }));
+    }}
+
+    className="mt-1 block w-full text-sm border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+    classNamePrefix="select"
+    placeholder="Select Facilities"
+  />
+</div>
+
+
+
                   </div>
 
                   <div className="grid gap-6 w-full sm:grid-cols-1 md:grid-cols-3 mt-6">

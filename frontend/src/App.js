@@ -43,6 +43,7 @@ import NotFound from "./NotFound.jsx";
 import { AuthProvider } from "./Context/AuthContext.js";
 import PrivateRoute from "./Context/PrivateRoute.js";
 import RoleChange from "./Roles/RoleChange.jsx";
+
 import AdminList from "./Admin/AdminList.jsx";
 
 // Layout component for common sidebar
@@ -69,7 +70,6 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-
         <AuthProvider>
           <Routes>
             {/* Excluded routes */}
@@ -78,7 +78,6 @@ function App() {
             <Route path="/forgotpassword" element={<ForgotPassword />} />
             <Route path="/sendotp" element={<SendOTP />} />
             <Route path="/setnewpassword" element={<SetNewPassword />} />
-
 
             {/* Routes with Sidebar */}
             <Route
@@ -284,9 +283,15 @@ function App() {
               }
             />
 
-
-         
-          <Route  path="/role"  element={ <LayoutWithSidebar>  <RoleChange />  </LayoutWithSidebar>  }/>
+            <Route
+              path="/role"
+              element={
+                <LayoutWithSidebar>
+                  {" "}
+                  <RoleChange />{" "}
+                </LayoutWithSidebar>
+              }
+            />
 
             <Route
               path="/faq-list"
@@ -346,7 +351,6 @@ function App() {
               }
             />
 
-
             {/* For profile and settings */}
             <Route
               path="/profile"
@@ -380,7 +384,6 @@ function App() {
                 </LayoutWithSidebar>
               }
             />
-          
           </Routes>
         </AuthProvider>
       </BrowserRouter>

@@ -63,6 +63,8 @@ const PropotiesList = () => {
         setCurrentPage(1);
     };
 
+    
+
     // Pagination calculations
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -71,7 +73,7 @@ const PropotiesList = () => {
 
     // Change page
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
+    
     return (
         <div>
             <div className="h-screen flex">
@@ -95,6 +97,13 @@ const PropotiesList = () => {
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('slno')} />
                                                     <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('slno')} />
+                                                </div>
+                                            </th>
+                                            <th className="px-4 py-3 min-w-[250px]">
+                                                Property Image
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('image')} />
+                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('image')} />
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[200px]">
@@ -154,13 +163,7 @@ const PropotiesList = () => {
                                                     <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('propertyPrice')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[250px]">
-                                                Property Image
-                                                <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('image')} />
-                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('image')} />
-                                                </div>
-                                            </th>
+                                            
                                             <th className="px-4 py-3 min-w-[200px]">
                                                 Mobile
                                                 <div className="inline-flex items-center ml-2">
@@ -169,7 +172,7 @@ const PropotiesList = () => {
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[150px]">
-                                                Conutry_Id
+                                                Conutry
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('country_id')} />
                                                     <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('country_id')} />
@@ -230,14 +233,6 @@ const PropotiesList = () => {
                                         {currentProperties.map((property, index) => (
                                             <tr key={property.id}>
                                                 <td className="px-4 py-3">{index + 1 + indexOfFirstItem}</td>
-                                                <td className="px-4 py-3">{property.title}</td>
-                                                <td className="px-4 py-3">{property.ptype}</td>
-                                                <td className="px-4 py-3">{property.description}</td>
-                                                <td className="px-4 py-3">{property.address}</td>
-                                                <td className="px-4 py-3">{property.city}</td>
-                                                <td className="px-4 py-3">{property.is_sell}</td>
-                                                <td className="px-4 py-3">{property.facility}</td>
-                                                <td className="px-4 py-3">₹{property.price}</td>
                                                 <td className="px-4 py-3">
                                                     {property.image && property.image.trim() !== '' ? (
                                                         <img src={property.image} className="w-16 h-16 object-cover rounded-full" height={50} width={50} loading="lazy" alt="" onError={(e) => {
@@ -249,8 +244,23 @@ const PropotiesList = () => {
                                                         <img src={'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg'} height={50} width={50} loading="lazy" alt="" />
                                                     )}
                                                 </td>
+                                                <td className="px-4 py-3">{property.title}</td>
+                                                <td className="px-4 py-3">{property.category.title}</td>
+                                                <td className="px-4 py-3">{property.description}</td>
+                                                <td className="px-4 py-3">{property.address}</td>
+                                                <td className="px-4 py-3">{property.city}</td>
+                                                <td className="px-4 py-3">{property.is_sell}</td>
+                                                <td className="px-4 py-3 flex flex-col">{property.facilities.map((item)=>{
+                                                    return (
+                                                        <span className='bg-lime-100 font-bold p-1 m-1 flex justify-center ' key={item.id}>
+                                                            {item.title}
+                                                        </span>
+                                                    )
+                                                })}</td>
+                                                <td className="px-4 py-3">₹{property.price}</td>
+                                               
                                                 <td className="px-4 py-3">{property.mobile}</td>
-                                                <td className="px-4 py-3">{property.country_id}</td>
+                                                <td className="px-4 py-3">{property.country.title}</td>
                                                 <td className="px-4 py-3">{property.add_user_id}</td>
                                                 <td className="px-4 py-3">{property.beds}</td>
                                                 <td className="px-4 py-3">{property.bathroom}</td>

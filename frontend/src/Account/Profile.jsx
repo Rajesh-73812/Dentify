@@ -1,13 +1,30 @@
 import React, { useEffect, useState } from 'react'
 import Header from '../components/Header'
+
+import { Link, useNavigate } from 'react-router-dom'
+
 import axios from 'axios'
 import { useLoading } from '../Context/LoadingContext';
 import { useLocation } from 'react-router-dom';
 import Loader from '../common/Loader'
 import { NotificationManager,NotificationContainer } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+
 
 const Profile = () => {
+   
+
+  const handleFocus=()=>{
+
+  }
+
+
+  const navigate = useNavigate()
+  const handleBlur=()=>{
+
+  }
+
   const location = useLocation();
   const { isLoading, setIsLoading } = useLoading();
   const [formData, setFormData] = useState({
@@ -86,7 +103,12 @@ const Profile = () => {
         <Header />
         <div className="container mx-auto">
           <div className="flex items-center mt-6  mb-4">
-            <h2 className="text-lg font-semibold ml-4 " style={{color:'#000000',fontSize:'24px',fontFamily:'Montserrat'}}>Profile Management</h2>
+          <div className="flex items-center mt-6  mb-4">
+                    <Link onClick={()=>{navigate(-1)}}  className="cursor-pointer ml-6">
+                    <ArrowBackIosNewIcon />
+                    </Link>
+                    <h2 className="text-lg font-semibold ml-4 " style={{color:'#000000',fontSize:'24px',fontFamily:'Montserrat'}}>Account Management</h2>
+                </div>
           </div>
 
           {/* Form Container */}
