@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import Header from '../components/Header'
+
 import { Link, useNavigate } from 'react-router-dom'
-import SidebarMenu from '../components/SideBar'
+
 import axios from 'axios'
-import LoaderComponent from '../common/ReactLoader'
 import { useLoading } from '../Context/LoadingContext';
 import { useLocation } from 'react-router-dom';
 import Loader from '../common/Loader'
+import { NotificationManager,NotificationContainer } from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 
@@ -25,6 +27,12 @@ const Profile = () => {
 
   const location = useLocation();
   const { isLoading, setIsLoading } = useLoading();
+  const [formData, setFormData] = useState({
+    id:0,
+    username:'',
+    email: '',
+    password: '',
+  });
 
   useEffect(() => {
     setIsLoading(true);
@@ -36,16 +44,8 @@ const Profile = () => {
     return () => clearTimeout(timer);
   }, [location, setIsLoading]);
 
-  const [formData, setFormData] = useState({
-    id:0,
-    username:'',
-    email: '',
-    password: '',
-  });
-
   const handleChange = (e) => {
     const { name, value } = e.target;
-    
       setFormData((prevData) => ({
         ...prevData,
         [name]: value,
@@ -54,36 +54,32 @@ const Profile = () => {
   };
 
     useEffect(()=>{
+      async function fetchData(){
+          try {
+                
+              const response = await axios.get("http://localhost:5000/admin/userbytoken", {
+                  withCredentials: true,  
+                });
+              
+                setFormData({
+                  id: response.data.id,
+                  username:response.data.username,
+                  password:response.data.password
+                })
+      
+              console.log(response, "from response");
 
-
- async function fetchData(){
-    try {
-          
-        const response = await axios.get("http://localhost:5000/admin/userbytoken", {
-            withCredentials: true,  
-          });
-        
-          setFormData({
-            id: response.data.id,
-            username:response.data.username,
-            password:response.data.password
-          })
- 
-        console.log(response, "from response");
-
-    } catch (error) {
-        console.log(error)
-       
-    }
-  }
-
-  fetchData();
-
+          } catch (error) {
+              console.log(error)
+            
+          }
+        }
+      fetchData();
     },[])
 
   const handleSubmit = async(e) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
+    // console.log('Form submitted:', formData);
     try {
         const response = await axios.put(
             `http://localhost:5000/admin/update/${formData.id}`,
@@ -92,10 +88,9 @@ const Profile = () => {
               withCredentials: true, 
             }
           );
-
-        alert("updated data successfully");
+          NotificationManager.success("updated data successfully");
     } catch (error) {
-        console.log(error);
+        NotificationManager.error("Error While Updating:", error);
     }
   };
   return (
@@ -125,8 +120,6 @@ const Profile = () => {
                   <div className="flex flex-col">
                       <label  htmlFor="username"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> Profile name </label>
                       <input id="username" name="username" type="text" value={formData.username} required className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}}
-                        onFocus={() => handleFocus('username')}
-                        onBlur={() => handleBlur('username')}
                         onChange={handleChange}
                         placeholder="Enter User name or email address" 
                       />
@@ -137,8 +130,6 @@ const Profile = () => {
                   <div className="flex flex-col">
                       <label  htmlFor="Password"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> Password </label>
                       <input id="Password" name="password" value={formData.password} type="text" required className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}}
-                        onFocus={() => handleFocus('password')}
-                        onBlur={() => handleBlur('password')}
                         onChange={handleChange}
                         placeholder="********************************"
                       />
@@ -155,6 +146,7 @@ const Profile = () => {
           </div>
         </div>
       </main>
+      <NotificationContainer />
     </div>
     </div>
   )

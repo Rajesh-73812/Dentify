@@ -35,11 +35,11 @@ const Login = () => {
       );
       console.log(response.data)
       NotificationManager.success("Admin logged in successfully!");
-      navigate('/dashboard');
-      // setTimeout(() => {
+      // navigate('/dashboard');
+      setTimeout(() => {
 
-      //   navigate("/dashboard");
-      // }, 2000);
+        navigate("/dashboard");
+      }, 2000);
 
     } catch (err) {
       NotificationManager.error(err.response?.data?.error || "Something went wrong!");
