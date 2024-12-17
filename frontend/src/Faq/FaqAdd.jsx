@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Header from '../components/Header'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import SidebarMenu from '../components/SideBar'
 import axios from 'axios'
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css'; 
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 

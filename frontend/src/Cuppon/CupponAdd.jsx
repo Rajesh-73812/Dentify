@@ -247,7 +247,6 @@ const CupponAdd = () => {
                   <button  type="submit" className={` py-2 ${id ? 'bg-green-500 hover:bg-green-600' : 'bg-blue-500 hover:bg-blue-600'} text-white rounded-lg  w-[150px] h-12 font-[Montserrat] font-bold`} style={{ borderRadius: "8px", }} > {id ? 'Update Cuppon' : 'Add Cuppon'} </button>
                 </div>
               </form>
-
             </div>
           </div>
         </div>
