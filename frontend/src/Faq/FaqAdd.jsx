@@ -8,7 +8,7 @@ import 'react-notifications/lib/notifications.css';
 const FaqAdd = () => {
   const location=useLocation();
   const id = location.state ? location.state.id : null;
-  // console.log(id)
+  console.log(id)
   const [faq,setFaq]=useState(null)
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -27,7 +27,7 @@ const FaqAdd = () => {
 
   const getFAQ = async (id) => {
     try {
-        const response = await axios.get(`http://localhost:5000/faq/${id}`);
+        const response = await axios.get(`http://localhost:5000/faqs/${id}`);
         const faq = response.data;
         setFormData({
             id, 
@@ -50,44 +50,35 @@ const handleChange = (e) => {
   }));
 };
 
-
 const handleSubmit = async (e) => {
   e.preventDefault();
   console.log("Form submitted:", formData);
 
   try {
-      const url = id  ? `http://localhost:5000/faq/upsert` : `http://localhost:5000/faq/upsert`;      
+      const url = id  ? `http://localhost:5000/faqs/upsert` : `http://localhost:5000/faqs/upsert`;      
       const successMessage = id  ? "FAQ updated successfully!" : "FAQ added successfully!";
       const response = await axios.post(url, formData, { withCredentials: true });
 
       if (response.status === 200 || response.status === 201) {
+        NotificationManager.removeAll();
         NotificationManager.success(successMessage);
           setTimeout(() => {
             navigate("/faq-list");
-          }, 4000);
+          }, 2000);
       } else {
         NotificationManager.success("Something went wrong. Please try again.");
       }
   } catch (error) {
+    NotificationManager.removeAll();
       console.error("Error submitting FAQ:", error);
-      alert("An error occurred while submitting the FAQ. Please check your inputs or try again later.");
+      NotificationManager.error("An error occurred while submitting the FAQ. Please check your inputs or try again later.");
   }
 };
 
-
-  const handleFocus=()=>{
-
-  }
-
-  const handleBlur=()=>{
-
-  }
   return (
     <div>
       <div className="flex bg-[#f7fbff]">
       {/* Sidebar */}
-      
-      
       <main className="flex-grow">
         <Header />
         <div className="container mx-auto">
@@ -106,23 +97,15 @@ const handleSubmit = async (e) => {
                   {/* faq question */}
                   <div className="flex flex-col">
                       <label  htmlFor="question"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> Faq Question </label>
-                      <input id="question" value={formData.question} onChange={handleChange} name="question" type="text" required className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}}
-                        onFocus={() => handleFocus('question')}
-                        onBlur={() => handleBlur('question')}
-                        placeholder="Enter question "
-                      />
-                    </div>
+                      <input id="question" value={formData.question} onChange={handleChange} name="question" type="text" required className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}} placeholder="Enter question "  />
+                  </div>
                 </div>
 
                 <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-1  mt-6">
                   {/* faq answer */}
                   <div className="flex flex-col">
                       <label  htmlFor="answer"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> Faq Answer </label>
-                      <input id="answer" value={formData.answer} onChange={handleChange} name="answer" type="text" required className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}}
-                        onFocus={() => handleFocus('answer')}
-                        onBlur={() => handleBlur('answer')}
-                        placeholder="Enter Anwer "
-                      />
+                      <input id="answer" value={formData.answer} onChange={handleChange} name="answer" type="text" required className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}}  placeholder="Enter Anwer " />
                     </div>
                 </div>
                 <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-1 mt-6">
@@ -139,7 +122,7 @@ const handleSubmit = async (e) => {
 
                 {/* Action Buttons */}
                 <div className="flex justify-start mt-6 gap-3">
-                  <button  type="submit" className=" py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 w-[150px] h-12 font-[Montserrat] font-bold" style={{ borderRadius: "8px", }} > Add Faq </button>
+                  <button  type="submit" className={`py-2 ${id ? 'bg-green-500 hover:bg-green-600' : 'bg-blue-500 hover:bg-blue-600'} text-white rounded-lg hover:bg-blue-600 w-[150px] h-12 font-[Montserrat] font-bold`} style={{ borderRadius: "8px", }} > {id ? 'Update Faq' : 'Add Faq'}</button>
                 </div>
               </form>
 

@@ -102,10 +102,6 @@ const CompletedBook = () => {
                                             </th>
                                             <th className="px-4 py-3 min-w-[180px]">
                                                 Property Image
-                                              <div className="inline-flex items-center ml-2">
-                                                  <GoArrowUp className='cursor-pointer' onClick={() => sortData('prop_img')} />
-                                                  <GoArrowDown className='cursor-pointer' onClick={() => sortData('prop_img')} />
-                                              </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[180px]">
                                                 Property Price
@@ -114,7 +110,7 @@ const CompletedBook = () => {
                                                     <GoArrowDown className='cursor-pointer' onClick={() => sortData('prop_price')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[200px]">
+                                            <th className="px-4 py-3 min-w-[250px]">
                                               Property Total Day
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className='cursor-pointer' onClick={() => sortData('total_day')} />
@@ -124,16 +120,12 @@ const CompletedBook = () => {
                                             
                                             <th className="px-4 py-3 min-w-[150px]">
                                               Action
-                                              <div className="inline-flex items-center ml-2">
-                                                  <GoArrowUp className='cursor-pointer' onClick={() => sortData('action')} />
-                                                  <GoArrowDown className='cursor-pointer' onClick={() => sortData('action')} />
-                                              </div>
-                                              
                                             </th>
                                 </tr>
                                 </thead>
                                 <tbody className="divide-y divide-gray-200">
-                                    {currentcompleted.map((completedList, index) => (
+                                    {currentcompleted.length > 0 ? (
+                                        currentcompleted.map((completedList, index) => (
                                         <tr key={index+1}>
                                             <td className="px-4 py-3">{index + 1 + indexOfFirst}</td>
                                             <td className="px-4 py-3">{completedList?.prop_title || 'N/A'}</td>
@@ -153,7 +145,15 @@ const CompletedBook = () => {
                                                     <span className='px-2 py-1 text-sm rounded-full bg-green-400 cursor-pointer text-white mr-2' onClick={() => openModal(completedList)}>View Details</span>
                                             </td>
                                         </tr>
-                                    ))}
+                                    ))
+                                ) : (
+                                    <tr>
+                                        <td className="px-4 py-3 text-center" colSpan="6">
+                                            No data available
+                                        </td>
+                                    </tr>
+                                )
+                                    }
                                 </tbody>
                             </table>
                         </div>
