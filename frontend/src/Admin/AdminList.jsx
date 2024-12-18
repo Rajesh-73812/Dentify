@@ -19,10 +19,8 @@ const AdminList = () => {
     const location = useLocation();
     const [admins, setAdmins] = useState([]);
     const [filteredAdmins, setFilteredAdmins] = useState([]);
-    const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [showEditModal, setShowEditModal] = useState(false);
     const [showAddModal, setShowAddModal] = useState(false);
-    const [adminToDelete, setAdminToDelete] = useState(null);
     const [adminToEdit, setAdminToEdit] = useState(null);
     const [editForm, setEditForm] = useState({
         username: '',
@@ -57,22 +55,6 @@ const AdminList = () => {
         }
     };
 
-
-    // const handleDelete = async (adminId) => {
-    //     try {
-    //         await axios.delete(`http://localhost:5000/admin/delete/${adminId}?forceDelete=true`, {
-    //             withCredentials: true,
-    //         });
-    //         // setAdmins(admins.filter(admin => admin.id !== adminId));
-    //         const updatedAdmins = admins.filter(admin => admin.id !== adminId);
-    //         setAdmins(updatedAdmins);
-    //         setFilteredAdmins(updatedAdmins);
-    //         setShowDeleteModal(false);
-    //     } catch (error) {
-    //         console.error('Error deleting admin:', error);
-    //     }
-    // };
-
     const handleDelete = async (id) => {
         const success = await DeleteEntity('Admin', id);
         if (success) {
@@ -81,11 +63,6 @@ const AdminList = () => {
             setFilteredAdmins(updatedAdmins);
         }
     };
-
-    // const confirmDelete = (admin) => {
-    //     setAdminToDelete(admin);
-    //     setShowDeleteModal(true);
-    // };
 
     const confirmEdit = (admin) => {
         setAdminToEdit(admin);
@@ -131,20 +108,20 @@ const AdminList = () => {
         }
     };
 
-    const handleSearch = async (query) => {
-        if (!query) {
-            setFilteredAdmins(admins); // Reset to full list if the search box is cleared
-            return;
-        }
-        try {
-            const response = await axios.get(`http://localhost:5000/admin/search?username=${query}`, {
-                withCredentials: true,
-            });
-            setFilteredAdmins(response.data);
-            setCurrentPage(1); // Reset to the first page after search
-        } catch (error) {
-            console.error("Error searching admins:", error);
-        }
+    // Search functionality
+    const handleSearch = (event) => {
+        const querySearch = event.target.value.toLowerCase();
+        const filteredData = admins.filter(item =>
+            Object.values(item).some(value =>
+                typeof value === 'object' && value !== null
+                    ? Object.values(value).some(nestedValue =>
+                        String(nestedValue).toLowerCase().includes(querySearch)
+                    )
+                    : String(value).toLowerCase().includes(querySearch)
+            )
+        );
+        setFilteredAdmins(filteredData);
+        setCurrentPage(1);
     };
 
     useEffect(() => {
@@ -248,24 +225,6 @@ const AdminList = () => {
                         </div>
 
                     </div>
-
-                    {/* Delete Confirmation Modal */}
-                    <Modal show={showDeleteModal} onHide={() => setShowDeleteModal(false)}>
-                        <Modal.Header closeButton>
-                            <Modal.Title>Confirm Delete</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                            Are you sure you want to delete {adminToDelete?.username}?
-                        </Modal.Body>
-                        <Modal.Footer>
-                            <Button variant="secondary" onClick={() => setShowDeleteModal(false)}>
-                                Cancel
-                            </Button>
-                            <Button variant="danger" onClick={() => handleDelete(adminToDelete?.id)}>
-                                Delete
-                            </Button>
-                        </Modal.Footer>
-                    </Modal>
 
                     {/* Edit Admin Modal */}
                     <Modal show={showEditModal} onHide={() => setShowEditModal(false)}>

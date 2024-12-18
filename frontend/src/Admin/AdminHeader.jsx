@@ -10,7 +10,7 @@ const AdminHeader = ({ onSearch, setShowAddModal }) => {
             <div className="bg-[#f7fbff] p-6 w-[1000px]">
                 <div className="flex items-center justify-between h-9" style={{ height: "36px" }}>
                     <div className="flex items-center mt-6 mb-4">
-                        <Link onClick={()=>{navigate(-1)}} className="cursor-pointer ml-6">
+                        <Link onClick={() => { navigate(-1) }} className="cursor-pointer ml-6">
                             <ArrowBackIosNewIcon />
                         </Link>
                         <h2 className="text-lg font-semibold ml-4" style={{ color: '#000000', fontSize: '24px', fontFamily: 'Montserrat' }}>Admin List Management System</h2>
@@ -22,7 +22,7 @@ const AdminHeader = ({ onSearch, setShowAddModal }) => {
                                 placeholder="Search"
                                 className="outline-none text-sm placeholder-gray-600 px-3 py-2 rounded-l-lg font-[Montserrat] h-9 w-[300px]"
                                 style={{ borderRadius: '8px 8px 8px 8px' }}
-                                onChange={(e) => onSearch(e.target.value)}
+                                onChange={onSearch}
                             />
                             {/* <img src="/image/action/search-normal.svg" alt="Search" className="w-9 h-5 text-[#131313]" /> */}
                         </div>

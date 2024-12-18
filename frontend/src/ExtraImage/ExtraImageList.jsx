@@ -41,9 +41,20 @@ const ExtraImageList = () => {
         fetchExtraImages();
     }, []);
 
-    // for searching
+    // Search functionality
     const handleSearch = (event) => {
-
+        const query = event.target.value.toLowerCase();
+        const filteredData = extraImages.filter(extraImage =>
+            Object.values(extraImage).some(value =>
+                typeof value === 'object' && value !== null
+                    ? Object.values(value).some(nestedValue =>
+                        String(nestedValue).toLowerCase().includes(query)
+                    )
+                    : String(value).toLowerCase().includes(query)
+            )
+        );
+        setFilteredImages(filteredData);
+        setCurrentPage(1);
     };
 
     // for sorting

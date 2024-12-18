@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Header from '../components/Header';
 import { GoArrowDown, GoArrowUp } from 'react-icons/go';
-import { FaPen,FaTrash } from "react-icons/fa";
+import { FaPen, FaTrash } from "react-icons/fa";
 import axios from 'axios';
 import PackageHeader from './PackageHeader';
 import { useNavigate } from 'react-router-dom';
@@ -9,7 +9,7 @@ import { DeleteEntity } from '../utils/Delete';
 import { handleSort } from '../utils/sorting';
 
 const PackageList = () => {
-    const navigate=useNavigate();
+    const navigate = useNavigate();
     const [packages, setpackages] = useState([]);
     const [filteredpackages, setFilteredpackages] = useState([]);
     const [sortConfig, setSortConfig] = useState({ key: '', direction: '' });
@@ -21,19 +21,28 @@ const PackageList = () => {
             try {
                 const response = await axios.get("http://localhost:5000/packages/all");
                 setpackages(response.data);
-                setFilteredpackages(response.data); 
+                setFilteredpackages(response.data);
             } catch (error) {
                 console.error("Error fetching countries:", error);
             }
         };
         fetchPackages();
-    }, []);     
+    }, []);
 
+    // Search functionality
     const handleSearch = (event) => {
-    };
+        const searchQuery = event.target.value.toLowerCase();
+        const filteredData = packages.filter(item =>
+            Object.values(item).some(value =>
+                String(value).toLocaleLowerCase().includes(searchQuery)
+            )
+        )
+        setFilteredpackages(filteredData)
+        setCurrentPage(1)
+    }
 
     const sortData = (key) => {
-        handleSort(filteredpackages,key,sortConfig,setSortConfig,setFilteredpackages)
+        handleSort(filteredpackages, key, sortConfig, setSortConfig, setFilteredpackages)
     };
 
     const indexOfLastPackage = currentPage * itemsPerPage;
@@ -43,8 +52,8 @@ const PackageList = () => {
     const totalPages = Math.ceil(filteredpackages.length / itemsPerPage);
 
     // for update
-    const updatePackage=(id)=>{
-        navigate('/create-package',{state:{id:id}})
+    const updatePackage = (id) => {
+        navigate('/create-package', { state: { id: id } })
     }
 
     // for delete
@@ -59,7 +68,7 @@ const PackageList = () => {
     return (
         <div>
             <div className="h-screen flex">
-                
+
                 <div className="flex flex-1 flex-col bg-[#f7fbff]">
                     <Header />
                     <PackageHeader onSearch={handleSearch} />
@@ -77,72 +86,72 @@ const PackageList = () => {
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[180px]">
-                                                Package Title 
+                                                Package Title
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className='cursor-pointer' onClick={() => sortData('title')} />
                                                     <GoArrowDown className='cursor-pointer' onClick={() => sortData('title')} />
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[180px]">
-                                              Package Image
+                                                Package Image
                                             </th>
                                             <th className="px-4 py-3 min-w-[180px]">
-                                              Package Day
+                                                Package Day
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className='cursor-pointer' onClick={() => sortData('day')} />
                                                     <GoArrowDown className='cursor-pointer' onClick={() => sortData('day')} />
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[180px]">
-                                              Package Price
+                                                Package Price
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className='cursor-pointer' onClick={() => sortData('price')} />
                                                     <GoArrowDown className='cursor-pointer' onClick={() => sortData('price')} />
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[150px]">
-                                               Status
-                                              <div className="inline-flex items-center ml-2">
-                                                  <GoArrowUp className='cursor-pointer' onClick={() => sortData('status')} />
-                                                  <GoArrowDown className='cursor-pointer' onClick={() => sortData('status')} />
-                                              </div>
-                                              </th>
+                                                Status
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('status')} />
+                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('status')} />
+                                                </div>
+                                            </th>
                                             <th className="px-4 py-3 min-w-[150px]"> Action  </th>
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-gray-200">
                                         {currentpackages.length > 0 ? (
                                             currentpackages.map((Package, index) => (
-                                            <tr key={Package.id}>
-                                                <td className="px-4 py-3">{index + 1 + indexOfFirstPackage}</td>
-                                                <td className="px-4 py-3">{Package?.title || "N/A"}</td>
-                                                <td className="px-4 py-3">
-                                                    <img
-                                                        src={Package.image || 'fallback-image.jpg'}
-                                                        alt={Package.title || "N/A"}
-                                                        className="w-16 h-16 object-cover rounded-full"
+                                                <tr key={Package.id}>
+                                                    <td className="px-4 py-3">{index + 1 + indexOfFirstPackage}</td>
+                                                    <td className="px-4 py-3">{Package?.title || "N/A"}</td>
+                                                    <td className="px-4 py-3">
+                                                        <img
+                                                            src={Package.image || 'fallback-image.jpg'}
+                                                            alt={Package.title || "N/A"}
+                                                            className="w-16 h-16 object-cover rounded-full"
                                                         // onError={(e) => (e.target.src = 'fallback-image.jpg')}
-                                                    />
-                                                </td>
-                                                <td className="px-4 py-3">{Package?.day || "N/A"}</td>
-                                                <td className="px-4 py-3">{Package?.price || "N/A"}</td>
-                                                <td className="px-4 py-3">
-                                                    <span
-                                                        className={`px-3 py-1 text-sm rounded-full ${Package.status === 1 ? 'bg-green-500 text-white' : 'bg-gray-400 text-white'}`}
-                                                    >
-                                                        {Package.status === 1 ? "publish" : "unpublish"}
-                                                    </span>
-                                                </td>
-                                                <td className="px-4 py-3">
-                                                    <button className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition mr-2" onClick={()=>{updatePackage(Package.id)}}>
-                                                        <FaPen />
-                                                    </button>
-                                                    <button className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition" onClick={()=>{handledelete(Package.id)}}>
-                                                        <FaTrash />
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        ))
+                                                        />
+                                                    </td>
+                                                    <td className="px-4 py-3">{Package?.day || "N/A"}</td>
+                                                    <td className="px-4 py-3">{Package?.price || "N/A"}</td>
+                                                    <td className="px-4 py-3">
+                                                        <span
+                                                            className={`px-3 py-1 text-sm rounded-full ${Package.status === 1 ? 'bg-green-500 text-white' : 'bg-gray-400 text-white'}`}
+                                                        >
+                                                            {Package.status === 1 ? "publish" : "unpublish"}
+                                                        </span>
+                                                    </td>
+                                                    <td className="px-4 py-3">
+                                                        <button className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition mr-2" onClick={() => { updatePackage(Package.id) }}>
+                                                            <FaPen />
+                                                        </button>
+                                                        <button className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition" onClick={() => { handledelete(Package.id) }}>
+                                                            <FaTrash />
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            ))
                                         ) : (
                                             <tr>
                                                 <td colSpan="10" className="text-center">
@@ -150,7 +159,7 @@ const PackageList = () => {
                                                 </td>
                                             </tr>
                                         )
-                                    }
+                                        }
                                     </tbody>
                                 </table>
                             </div>
@@ -160,33 +169,33 @@ const PackageList = () => {
                             <span className="text-sm font-normal text-gray-500">
                                 Showing <span className="font-semibold text-gray-900">{indexOfFirstPackage + 1}</span> to <span className="font-semibold text-gray-900">{Math.min(indexOfLastPackage, filteredpackages.length)}</span> of <span className="font-semibold text-gray-900">{filteredpackages.length}</span>
                             </span>
-                                <ul className="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">
-                                        <li>
-                                            <button 
-                                                onClick={() => paginate(currentPage > 1 ? currentPage - 1 : 1)} 
-                                                className={`previous-button ${filteredpackages.length === 0 ? 'cursor-not-allowed' : ''}`} 
-                                                disabled={currentPage === 1 || filteredpackages.length === 0} 
-                                                title={filteredpackages.length === 0 ? 'No data available' : ''}
-                                            >
-                                                <img src="/image/action/Left Arrow.svg" alt="Left" /> Previous
-                                            </button>
-                                        </li>
-                                        <li>
-                                            <span className="current-page">
-                                                Page {filteredpackages.length > 0 ? currentPage : 0} of {filteredpackages.length > 0 ? totalPages : 0}
-                                            </span>
-                                        </li>
-                                        <li>
-                                            <button 
-                                                onClick={() => paginate(currentPage < totalPages ? currentPage + 1 : totalPages)} 
-                                                className={`next-button ${filteredpackages.length === 0 ? 'cursor-not-allowed' : ''}`} 
-                                                disabled={currentPage === totalPages || filteredpackages.length === 0} 
-                                                title={filteredpackages.length === 0 ? 'No data available' : ''}
-                                            >
-                                                Next <img src="/image/action/Right Arrow (1).svg" alt="Right" />
-                                            </button>
-                                        </li>
-                                </ul>
+                            <ul className="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">
+                                <li>
+                                    <button
+                                        onClick={() => paginate(currentPage > 1 ? currentPage - 1 : 1)}
+                                        className={`previous-button ${filteredpackages.length === 0 ? 'cursor-not-allowed' : ''}`}
+                                        disabled={currentPage === 1 || filteredpackages.length === 0}
+                                        title={filteredpackages.length === 0 ? 'No data available' : ''}
+                                    >
+                                        <img src="/image/action/Left Arrow.svg" alt="Left" /> Previous
+                                    </button>
+                                </li>
+                                <li>
+                                    <span className="current-page">
+                                        Page {filteredpackages.length > 0 ? currentPage : 0} of {filteredpackages.length > 0 ? totalPages : 0}
+                                    </span>
+                                </li>
+                                <li>
+                                    <button
+                                        onClick={() => paginate(currentPage < totalPages ? currentPage + 1 : totalPages)}
+                                        className={`next-button ${filteredpackages.length === 0 ? 'cursor-not-allowed' : ''}`}
+                                        disabled={currentPage === totalPages || filteredpackages.length === 0}
+                                        title={filteredpackages.length === 0 ? 'No data available' : ''}
+                                    >
+                                        Next <img src="/image/action/Right Arrow (1).svg" alt="Right" />
+                                    </button>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Header from '../components/Header';
 import { GoArrowDown, GoArrowUp } from 'react-icons/go';
-import { FaPen,FaTrash } from "react-icons/fa";
+import { FaPen, FaTrash } from "react-icons/fa";
 import { searchFunction } from '../Entity/SearchEntity';
 import PaymentGatewayHeader from './PaymentGatewayHeader';
 import axios from 'axios';
@@ -12,11 +12,11 @@ import { handleSort } from '../utils/sorting';
 import { DeleteEntity } from '../utils/Delete';
 
 const PaymentGatewayList = () => {
-   const [paymentGateway, setpaymentGateway] = useState([]);
+    const [paymentGateway, setpaymentGateway] = useState([]);
     const [filteredpaymentGateway, setFilteredpaymentGateway] = useState(paymentGateway);
     const [sortConfig, setSortConfig] = useState({ key: '', direction: '' });
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 10; 
+    const itemsPerPage = 10;
     const location = useLocation();
     const { isLoading, setIsLoading } = useLoading();
 
@@ -28,7 +28,7 @@ const PaymentGatewayList = () => {
                 });
                 console.log("API Response:", response.data);
                 setpaymentGateway(response.data);
-                setFilteredpaymentGateway(response.data); 
+                setFilteredpaymentGateway(response.data);
             } catch (error) {
                 console.error("API Error:", error);
             }
@@ -36,26 +36,32 @@ const PaymentGatewayList = () => {
         fetchData();
     }, []);
 
-  useEffect(() => {
-    setIsLoading(true);
+    useEffect(() => {
+        setIsLoading(true);
 
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 1000); 
+        const timer = setTimeout(() => {
+            setIsLoading(false);
+        }, 1000);
 
-    return () => clearTimeout(timer);
-  }, [location, setIsLoading]);
+        return () => clearTimeout(timer);
+    }, [location, setIsLoading]);
 
-    // for searching
     const handleSearch = (event) => {
-        searchFunction(event, paymentGateway, setFilteredpaymentGateway);
-        setCurrentPage(1); 
+        const searchQuery = event.target.value.toLowerCase();
+        const filteredResults = paymentGateway.filter(gateway =>
+            Object.values(gateway).some(value =>
+                String(value).toLocaleLowerCase().includes(searchQuery)
+            )
+        );
+        setFilteredpaymentGateway(filteredResults);
+        setCurrentPage(1);
     };
+
 
     // for sorting
     const sortData = (key) => {
         handleSort(filteredpaymentGateway, key, sortConfig, setSortConfig, setFilteredpaymentGateway);
-      };
+    };
 
     // Calculate paginated paymentGateway
     const indexOfLastpaymentgatway = currentPage * itemsPerPage;
@@ -66,10 +72,10 @@ const PaymentGatewayList = () => {
 
 
     // for delete
-    const handledelete=async(id)=>{
-        const success=await DeleteEntity('PaymentGateWay',id);
-        if(success){
-            const updatedPaymentGateWay=paymentGateway.filter((item)=> paymentGateway.id !== id);
+    const handledelete = async (id) => {
+        const success = await DeleteEntity('PaymentGateWay', id);
+        if (success) {
+            const updatedPaymentGateWay = paymentGateway.filter((item) => paymentGateway.id !== id);
             setpaymentGateway(updatedPaymentGateWay);
             setFilteredpaymentGateway(updatedPaymentGateWay)
         }
@@ -125,47 +131,47 @@ const PaymentGatewayList = () => {
                                     <tbody className="divide-y divide-gray-200">
                                         {currentpaymentGateway.length > 0 ? (
                                             currentpaymentGateway.map((paymentgatway, index) => (
-                                            <tr key={paymentgatway.id}>
-                                                <td className="px-4 py-3">{index + 1 + indexOfFirstpaymentgatway}</td>
-                                                <td className="px-4 py-3">{paymentgatway.title}</td>
-                                                <td className="px-4 py-3">{paymentgatway.subtitle}</td>
-                                                <td className="px-4 py-3">
-                                                    {paymentgatway.img && paymentgatway.img.trim() !== '' ? (
-                                                        <img src={paymentgatway.img} className="w-16 h-16 object-cover rounded-full" height={50} width={50} loading="lazy" alt="" onError={(e) => {
-                                                            if (e.target.src !== 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg') {
-                                                                e.target.src = 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg';
-                                                            }
-                                                        }} />
-                                                    ) : (
-                                                        <img src={'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg'} height={50} width={50} loading="lazy" alt="" />
-                                                    )}
-                                                </td>
-                                                <td className="px-4 py-3"><span className={`px-3 py-1 text-sm rounded-full ${paymentgatway.status === 1 ? 'bg-green-500 text-white' : 'bg-gray-400 text-white'}`}>
-                                                        {paymentgatway.status === 1 ? "publish":"unpublish"}
+                                                <tr key={paymentgatway.id}>
+                                                    <td className="px-4 py-3">{index + 1 + indexOfFirstpaymentgatway}</td>
+                                                    <td className="px-4 py-3">{paymentgatway.title}</td>
+                                                    <td className="px-4 py-3">{paymentgatway.subtitle}</td>
+                                                    <td className="px-4 py-3">
+                                                        {paymentgatway.img && paymentgatway.img.trim() !== '' ? (
+                                                            <img src={paymentgatway.img} className="w-16 h-16 object-cover rounded-full" height={50} width={50} loading="lazy" alt="" onError={(e) => {
+                                                                if (e.target.src !== 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg') {
+                                                                    e.target.src = 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg';
+                                                                }
+                                                            }} />
+                                                        ) : (
+                                                            <img src={'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg'} height={50} width={50} loading="lazy" alt="" />
+                                                        )}
+                                                    </td>
+                                                    <td className="px-4 py-3"><span className={`px-3 py-1 text-sm rounded-full ${paymentgatway.status === 1 ? 'bg-green-500 text-white' : 'bg-gray-400 text-white'}`}>
+                                                        {paymentgatway.status === 1 ? "publish" : "unpublish"}
                                                     </span></td>
-                                                <td className="px-4 py-3"><span className={`px-3 py-1 text-sm rounded-full ${paymentgatway.p_show === 1 ? 'bg-green-500 text-white' : 'bg-gray-400 text-white'}`}>
-                                                        {paymentgatway.p_show === 1 ? "publish":"unpublish"}
+                                                    <td className="px-4 py-3"><span className={`px-3 py-1 text-sm rounded-full ${paymentgatway.p_show === 1 ? 'bg-green-500 text-white' : 'bg-gray-400 text-white'}`}>
+                                                        {paymentgatway.p_show === 1 ? "publish" : "unpublish"}
                                                     </span></td>
-                                                <td className="px-4 py-3"><span className={`px-3 py-1 text-sm rounded-full ${paymentgatway.s_show === 1 ? 'bg-green-500 text-white' : 'bg-gray-400 text-white'}`}>
-                                                        {paymentgatway.s_show === 1 ? "publish":"unpublish"}
+                                                    <td className="px-4 py-3"><span className={`px-3 py-1 text-sm rounded-full ${paymentgatway.s_show === 1 ? 'bg-green-500 text-white' : 'bg-gray-400 text-white'}`}>
+                                                        {paymentgatway.s_show === 1 ? "publish" : "unpublish"}
                                                     </span></td>
-                                                
-                                                <td className="px-4 py-3">
-                                                    <button className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition mr-2">
-                                                        <FaPen />
-                                                    </button>
-                                                    <button className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition" onClick={()=>{handledelete(paymentgatway.id)}}>
-                                                        <FaTrash />
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        ))
+
+                                                    <td className="px-4 py-3">
+                                                        <button className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition mr-2">
+                                                            <FaPen />
+                                                        </button>
+                                                        <button className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition" onClick={() => { handledelete(paymentgatway.id) }}>
+                                                            <FaTrash />
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            ))
                                         ) : (
                                             <tr>
                                                 <td colSpan={6} className="px-4 py-3 text-center">No data available </td>
                                             </tr>
                                         )
-                                    }
+                                        }
                                     </tbody>
                                 </table>
                             </div>

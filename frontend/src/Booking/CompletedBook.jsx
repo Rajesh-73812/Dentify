@@ -17,7 +17,7 @@ const CompletedBook = () => {
     const [sortConfig, setSortConfig] = useState({ key: '', direction: '' });
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
-    const status='Check_in'
+    const status = 'Check_in'
     useEffect(() => {
         const fetchBookings = async () => {
             try {
@@ -32,20 +32,27 @@ const CompletedBook = () => {
         };
         fetchBookings();
     }, []);
-// console.log(completed)
+    // console.log(completed)
+    // Search functionality
     const handleSearch = (event) => {
-        const searchValue = event.target.value.toLowerCase();
-        const filtered = completed.filter((complete) =>
-            complete.title.toLowerCase().includes(searchValue)
+        const querySearch = event.target.value.toLowerCase();
+        const filteredData = completed.filter(item =>
+            Object.values(item).some(value =>
+                typeof value === 'object' && value !== null
+                    ? Object.values(value).some(nestedValue =>
+                        String(nestedValue).toLowerCase().includes(querySearch)
+                    )
+                    : String(value).toLowerCase().includes(querySearch)
+            )
         );
-        setFilteredcompleted(filtered);
+        setFilteredcompleted(filteredData);
         setCurrentPage(1);
     };
 
     const sortData = (key) => {
-        handleSort(filteredcompleted,key,sortConfig,setSortConfig,setFilteredcompleted)
-      };
-    
+        handleSort(filteredcompleted, key, sortConfig, setSortConfig, setFilteredcompleted)
+    };
+
 
     const indexOfLast = currentPage * itemsPerPage;
     const indexOfFirst = indexOfLast - itemsPerPage;
@@ -76,16 +83,16 @@ const CompletedBook = () => {
     return (
         <div>
             <div className="h-screen flex">
-                
+
                 <div className="flex flex-1 flex-col bg-[#f7fbff]">
                     <Header />
                     <PendingBookHeader onSearch={handleSearch} />
                     <div className="py-6 px-6 h-full w-[1000px] overflow-scroll scrollbar-none">
-                    <div className="bg-white w-full rounded-xl border border-[#EAE5FF] py-4 px-3 overflow-x-auto scrollbar-none">
-                        <div className="relative sm:rounded-lg">
-                            <table className="min-w-full text-sm text-left text-gray-700">
-                                <thead className="bg-gray-50 text-xs uppercase font-medium text-gray-500">
-                                <tr>
+                        <div className="bg-white w-full rounded-xl border border-[#EAE5FF] py-4 px-3 overflow-x-auto scrollbar-none">
+                            <div className="relative sm:rounded-lg">
+                                <table className="min-w-full text-sm text-left text-gray-700">
+                                    <thead className="bg-gray-50 text-xs uppercase font-medium text-gray-500">
+                                        <tr>
                                             <th className="px-4 py-3 min-w-[130px]">
                                                 Sr. No
                                                 <div className="inline-flex items-center ml-2">
@@ -94,7 +101,7 @@ const CompletedBook = () => {
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[180px]">
-                                                Property Title 
+                                                Property Title
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className='cursor-pointer' onClick={() => sortData('prop_title')} />
                                                     <GoArrowDown className='cursor-pointer' onClick={() => sortData('prop_title')} />
@@ -111,63 +118,64 @@ const CompletedBook = () => {
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[250px]">
-                                              Property Total Day
+                                                Property Total Day
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className='cursor-pointer' onClick={() => sortData('total_day')} />
                                                     <GoArrowDown className='cursor-pointer' onClick={() => sortData('total_day')} />
                                                 </div>
                                             </th>
-                                            
+
                                             <th className="px-4 py-3 min-w-[150px]">
-                                              Action
+                                                Action
                                             </th>
-                                </tr>
-                                </thead>
-                                <tbody className="divide-y divide-gray-200">
-                                    {currentcompleted.length > 0 ? (
-                                        currentcompleted.map((completedList, index) => (
-                                        <tr key={index+1}>
-                                            <td className="px-4 py-3">{index + 1 + indexOfFirst}</td>
-                                            <td className="px-4 py-3">{completedList?.prop_title || 'N/A'}</td>
-                                            <td className="px-4 py-3">
-                                                {completedList.prop_img ? (
-                                                        <img src={completedList.prop_img} className="w-16 h-16 object-cover rounded-full" alt="Coupon" 
-                                                            onError={(e) => { e.target.src = 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg';
-                                                            }}
-                                                        />
-                                                    ) : (
-                                                        <img src="https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg" className="w-16 h-16 object-cover rounded-full" alt="Placeholder"  />
-                                                )}
-                                            </td>
-                                            <td className="px-4 py-3">{completedList?.prop_price || 'N/A'}</td>
-                                            <td className="px-4 py-3">{completedList?.total_day || 'N/A'}</td>
-                                            <td className="px-4 py-3">
-                                                    <span className='px-2 py-1 text-sm rounded-full bg-green-400 cursor-pointer text-white mr-2' onClick={() => openModal(completedList)}>View Details</span>
-                                            </td>
                                         </tr>
-                                    ))
-                                ) : (
-                                    <tr>
-                                        <td className="px-4 py-3 text-center" colSpan="6">
-                                            No data available
-                                        </td>
-                                    </tr>
-                                )
-                                    }
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody className="divide-y divide-gray-200">
+                                        {currentcompleted.length > 0 ? (
+                                            currentcompleted.map((completedList, index) => (
+                                                <tr key={index + 1}>
+                                                    <td className="px-4 py-3">{index + 1 + indexOfFirst}</td>
+                                                    <td className="px-4 py-3">{completedList?.prop_title || 'N/A'}</td>
+                                                    <td className="px-4 py-3">
+                                                        {completedList.prop_img ? (
+                                                            <img src={completedList.prop_img} className="w-16 h-16 object-cover rounded-full" alt="Coupon"
+                                                                onError={(e) => {
+                                                                    e.target.src = 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg';
+                                                                }}
+                                                            />
+                                                        ) : (
+                                                            <img src="https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg" className="w-16 h-16 object-cover rounded-full" alt="Placeholder" />
+                                                        )}
+                                                    </td>
+                                                    <td className="px-4 py-3">{completedList?.prop_price || 'N/A'}</td>
+                                                    <td className="px-4 py-3">{completedList?.total_day || 'N/A'}</td>
+                                                    <td className="px-4 py-3">
+                                                        <span className='px-2 py-1 text-sm rounded-full bg-green-400 cursor-pointer text-white mr-2' onClick={() => openModal(completedList)}>View Details</span>
+                                                    </td>
+                                                </tr>
+                                            ))
+                                        ) : (
+                                            <tr>
+                                                <td className="px-4 py-3 text-center" colSpan="6">
+                                                    No data available
+                                                </td>
+                                            </tr>
+                                        )
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                    </div>
-                    <div className="bottom-0 left-0 w-full bg-[#f7fbff] py-4 flex justify-between items-center">
-                        <span className="text-sm font-normal text-gray-500">
+                        <div className="bottom-0 left-0 w-full bg-[#f7fbff] py-4 flex justify-between items-center">
+                            <span className="text-sm font-normal text-gray-500">
                                 Showing <span className="font-semibold text-gray-900">{indexOfFirst + 1}</span> to <span className="font-semibold text-gray-900">{Math.min(indexOfLast, filteredcompleted.length)}</span> of <span className="font-semibold text-gray-900">{filteredcompleted.length}</span>
-                        </span>
-                        <ul className="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">
+                            </span>
+                            <ul className="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">
                                 <li>
                                     <button onClick={() => paginate(currentPage > 1 ? currentPage - 1 : 1)} className={`previous-button ${filteredcompleted.length === 0 ? 'cursor-not-allowed' : ''}`}
-                                         disabled={currentPage === 1 || filteredcompleted.length === 0}
-                                         title={filteredcompleted.length === 0 ? 'No data available' : ''}
-                                         >
+                                        disabled={currentPage === 1 || filteredcompleted.length === 0}
+                                        title={filteredcompleted.length === 0 ? 'No data available' : ''}
+                                    >
                                         <img src="/image/action/Left Arrow.svg" alt="Left" /> Previous
                                     </button>
                                 </li>
@@ -177,18 +185,18 @@ const CompletedBook = () => {
                                     </span>
                                 </li>
                                 <li>
-                                    <button onClick={() => paginate(currentPage < totalPages ? currentPage + 1 : totalPages)} 
-                                    className={`next-button ${filteredcompleted.length === 0 ? 'cursor-not-allowed' : ''}`} 
-                                    disabled={currentPage === totalPages || filteredcompleted.length === 0}
-                                    title={filteredcompleted.length === 0 ? 'No data available' : ''}
+                                    <button onClick={() => paginate(currentPage < totalPages ? currentPage + 1 : totalPages)}
+                                        className={`next-button ${filteredcompleted.length === 0 ? 'cursor-not-allowed' : ''}`}
+                                        disabled={currentPage === totalPages || filteredcompleted.length === 0}
+                                        title={filteredcompleted.length === 0 ? 'No data available' : ''}
                                     >
                                         Next <img src="/image/action/Right Arrow (1).svg" alt="Right" />
                                     </button>
                                 </li>
-                        </ul>
-                    </div>
-                    <OrderPreviewModal isOpen={isModalOpen} closeModal={closeModal}  />
-                    {isModalOpen2 && (
+                            </ul>
+                        </div>
+                        <OrderPreviewModal isOpen={isModalOpen} closeModal={closeModal} />
+                        {isModalOpen2 && (
                             <div className="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
                                 <div className="fixed inset-0 bg-gray-500/75 transition-opacity" aria-hidden="true"></div>
                                 <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
@@ -203,9 +211,9 @@ const CompletedBook = () => {
                                                     aria-label="Close"
                                                     title='Close'
                                                 >
-                                                    &times; 
+                                                    &times;
                                                 </button>
-                                                <form onSubmit={(e) => { e.preventDefault();  }}>
+                                                <form onSubmit={(e) => { e.preventDefault(); }}>
                                                     <div className="mb-4">
                                                         <label htmlFor="reason" className="block text-sm font-medium text-gray-700">Enter Reason:</label>
                                                         <input
@@ -214,7 +222,7 @@ const CompletedBook = () => {
                                                             name="reason"
                                                             placeholder="Type your reason here"
                                                             className="mt-3 block w-full rounded-md  shadow-sm "
-                                                            
+
                                                         />
                                                     </div>
                                                     <div className="flex ">

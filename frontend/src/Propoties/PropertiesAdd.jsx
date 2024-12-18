@@ -592,6 +592,25 @@ const PropertiesAdd = () => {
                         />
                       </div>
 
+                      {/* listing date */}
+                      <div>
+                        <label
+                          htmlFor="listing_date"
+                          className="text-sm font-medium float-left text-[12px] font-[Montserrat]"
+                        >
+                          Listing Date
+                        </label>
+                        <input
+                          type="date"
+                          id="listing_date"
+                          value={formData.listing_date}
+                          name="listing_date"
+                          className="border rounded-lg p-3 mt-1 w-full focus:ring-blue-500 focus:border-blue-500"
+                          placeholder="Date"
+                          onChange={handleChange}
+                        />
+                      </div>
+
                       <div className="md:col-span-2">
                         <label
                           htmlFor="description"
@@ -608,7 +627,7 @@ const PropertiesAdd = () => {
                           onChange={handleChange}
                         ></textarea>
                       </div>
-                      <div className="md:col-span-1">
+                      <div className="md:col-span-1 mb-7">
                         <label
                           htmlFor="description"
                           className="text-sm font-medium float-left text-[12px] font-[Montserrat]"

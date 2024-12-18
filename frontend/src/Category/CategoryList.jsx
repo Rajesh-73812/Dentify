@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
 import SidebarMenu from "../components/SideBar";
@@ -16,7 +15,7 @@ import { handleSort } from "../utils/sorting";
 const CategoryList = () => {
   const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
-  const [filteredcategories, setFilteredcategories] = useState([]);
+  const [filteredCategories, setFilteredCategories] = useState([]);
   const [sortConfig, setSortConfig] = useState({ key: "", direction: "" });
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
@@ -32,8 +31,7 @@ const CategoryList = () => {
 
         console.log("Fetched categories:", response.data);
         setCategories(response.data);
-        setFilteredcategories(response.data);
-
+        setFilteredCategories(response.data);
       } catch (error) {
         console.error("Error fetching categories:", error);
       }
@@ -53,35 +51,40 @@ const CategoryList = () => {
 
   // Handle search
   const handleSearch = (event) => {
-    searchFunction(event, categories, setFilteredcategories);
+    const searchQuery = event.target.value.toLowerCase();
+    const filteredData = categories.filter(category => {
+      Object.values(category).some(value =>
+        String(value).toLocaleLowerCase().includes(searchQuery)
+      )
+    });
+    setFilteredCategories(filteredData);
     setCurrentPage(1);
   };
 
   // Handle sorting
   const sortData = (key) => {
-    handleSort(filteredcategories, key, sortConfig, setSortConfig, setFilteredcategories);
+    handleSort(filteredCategories, key, sortConfig, setSortConfig, setFilteredCategories);
   };
 
   const indexOfLastCategory = currentPage * itemsPerPage;
   const indexOfFirstCategory = indexOfLastCategory - itemsPerPage;
-  const currentCategories = filteredcategories.slice(indexOfFirstCategory, indexOfLastCategory);
+  const currentCategories = filteredCategories.slice(indexOfFirstCategory, indexOfLastCategory);
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
-  const totalPages = Math.ceil(filteredcategories.length / itemsPerPage);
-
+  const totalPages = Math.ceil(filteredCategories.length / itemsPerPage);
 
   const handledelete = async (id) => {
     const success = await DeleteEntity('Category', id);
     if (success) {
       const updatedCategories = categories.filter((category) => category.id !== id);
       setCategories(updatedCategories);
-      setFilteredcategories(updatedCategories)
+      setFilteredCategories(updatedCategories);
     }
-  }
+  };
 
   // for update 
   const updateCategory = (id) => {
     navigate('/add-category', { state: { id: id } })
-  }
+  };
 
   return (
     <div>
@@ -128,66 +131,72 @@ const CategoryList = () => {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200">
-                    {currentCategories.map((category, index) => (
-                      <tr key={category.id}>
-                        <td className="px-4 py-3">{index + 1 + indexOfFirstCategory}</td>
-                        <td className="px-4 py-3">{category?.title || "N/A"}</td>
-                        <td className="px-4 py-3">
-                          {category.img && category.img.trim() !== '' ? (
-                            <img src={category.img} className="w-16 h-16 object-cover rounded-full" height={50} width={50} loading="lazy" alt="" onError={(e) => {
-                              if (e.target.src !== 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg') {
-                                e.target.src = 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg';
-                              }
-                            }} />
-                          ) : (
-                            <img src={'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg'} height={50} width={50} loading="lazy" alt="" />
-                          )}
-                        </td>
-                        <td className="px-4 py-3">
-                          <span className={`px-3 py-1 text-sm rounded-full ${category.status === 1 ? 'bg-green-500 text-white' : 'bg-gray-400 text-white'}`}>
-                            {category.status == 1 ? "publish" : "unpublish"}
-                          </span>
-                        </td>
-                        <td className="px-4 py-3">
-                          <button className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition mr-2" onClick={() => { updateCategory(category.id) }}>
-                            <FaPen />
-                          </button>
-                          <button className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition" onClick={() => { handledelete(category.id) }}>
-                            <FaTrash />
-                          </button>
-                        </td>
+                    {currentCategories.length > 0 ? (
+                      currentCategories.map((category, index) => (
+                        <tr key={category.id}>
+                          <td className="px-4 py-3">{index + 1 + indexOfFirstCategory}</td>
+                          <td className="px-4 py-3">{category?.title || "N/A"}</td>
+                          <td className="px-4 py-3">
+                            {category.img && category.img.trim() !== '' ? (
+                              <img src={category.img} className="w-16 h-16 object-cover rounded-full" height={50} width={50} loading="lazy" alt="" onError={(e) => {
+                                if (e.target.src !== 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg') {
+                                  e.target.src = 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg';
+                                }
+                              }} />
+                            ) : (
+                              <img src={'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg'} height={50} width={50} loading="lazy" alt="" />
+                            )}
+                          </td>
+                          <td className="px-4 py-3">
+                            <span className={`px-3 py-1 text-sm rounded-full ${category.status === 1 ? 'bg-green-500 text-white' : 'bg-gray-400 text-white'}`}>
+                              {category.status == 1 ? "publish" : "unpublish"}
+                            </span>
+                          </td>
+                          <td className="px-4 py-3">
+                            <button className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition mr-2" onClick={() => { updateCategory(category.id) }}>
+                              <FaPen />
+                            </button>
+                            <button className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition" onClick={() => { handledelete(category.id) }}>
+                              <FaTrash />
+                            </button>
+                          </td>
+                        </tr>
+                      ))
+                    ) : (
+                      <tr>
+                        <td colSpan="5" className="text-center py-4 text-gray-500">No categories found</td>
                       </tr>
-                    ))}
+                    )}
                   </tbody>
                 </table>
               </div>
             </div>
             <div className="bottom-0 left-0 w-full bg-[#f7fbff] py-4 flex justify-between items-center">
               <span className="text-sm font-normal text-gray-500">
-                Showing <span className="font-semibold text-gray-900">{indexOfFirstCategory + 1}</span> to <span className="font-semibold text-gray-900">{Math.min(indexOfLastCategory, filteredcategories.length)}</span> of <span className="font-semibold text-gray-900">{filteredcategories.length}</span>
+                Showing <span className="font-semibold text-gray-900">{indexOfFirstCategory + 1}</span> to <span className="font-semibold text-gray-900">{Math.min(indexOfLastCategory, filteredCategories.length)}</span> of <span className="font-semibold text-gray-900">{filteredCategories.length}</span>
               </span>
               <ul className="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">
                 <li>
                   <button
                     onClick={() => paginate(currentPage > 1 ? currentPage - 1 : 1)}
-                    className={`previous-button ${filteredcategories.length === 0 ? 'cursor-not-allowed' : ''}`}
-                    disabled={currentPage === 1 || filteredcategories.length === 0}
-                    title={filteredcategories.length === 0 ? 'No data available' : ''}
+                    className={`previous-button ${filteredCategories.length === 0 ? 'cursor-not-allowed' : ''}`}
+                    disabled={currentPage === 1 || filteredCategories.length === 0}
+                    title={filteredCategories.length === 0 ? 'No data available' : ''}
                   >
                     <img src="/image/action/Left Arrow.svg" alt="Left" /> Previous
                   </button>
                 </li>
                 <li>
                   <span className="current-page">
-                    Page {filteredcategories.length > 0 ? currentPage : 0} of {filteredcategories.length > 0 ? totalPages : 0}
+                    Page {filteredCategories.length > 0 ? currentPage : 0} of {filteredCategories.length > 0 ? totalPages : 0}
                   </span>
                 </li>
                 <li>
                   <button
                     onClick={() => paginate(currentPage < totalPages ? currentPage + 1 : totalPages)}
-                    className={`next-button ${filteredcategories.length === 0 ? 'cursor-not-allowed' : ''}`}
-                    disabled={currentPage === totalPages || filteredcategories.length === 0}
-                    title={filteredcategories.length === 0 ? 'No data available' : ''}
+                    className={`next-button ${filteredCategories.length === 0 ? 'cursor-not-allowed' : ''}`}
+                    disabled={currentPage === totalPages || filteredCategories.length === 0}
+                    title={filteredCategories.length === 0 ? 'No data available' : ''}
                   >
                     Next <img src="/image/action/Right Arrow (1).svg" alt="Right" />
                   </button>

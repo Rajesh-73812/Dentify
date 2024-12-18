@@ -3,8 +3,6 @@ import Header from '../components/Header';
 import CountryHeader from './CountryHeader';
 import { GoArrowDown, GoArrowUp } from 'react-icons/go';
 import { FaPen, FaTrash } from "react-icons/fa";
-import { searchFunction } from '../Entity/SearchEntity';
-import axios from 'axios';
 import { DeleteEntity } from '../utils/Delete';
 import { useNavigate } from 'react-router-dom';
 import { handleSort } from '../utils/sorting';
@@ -34,9 +32,15 @@ const CountryList = () => {
     };
 
     const handleSearch = (event) => {
-        searchFunction(event, countries, setFilteredCountries);
-        setCurrentPage(1);
-    };
+        const searchQuery = event.target.value.toLowerCase();
+        const filteredData = countries.filter(country =>
+            Object.values(country).some(value =>
+                String(value).toLocaleLowerCase().includes(searchQuery)
+            )
+        )
+        setFilteredCountries(filteredData)
+        setCurrentPage(1)
+    }
 
     // for sorting
     const sortData = (key) => {
@@ -109,39 +113,47 @@ const CountryList = () => {
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-gray-200">
-                                        {currentCountries.map((country, index) => (
-                                            <tr key={country.id}>
-                                                <td className="px-4 py-3">{index + 1 + indexOfFirst}</td>
-                                                <td className="px-4 py-3">{country?.title || "N/A"}</td>
-                                                <td className="px-4 py-3">
-                                                    {country.img && country.img.trim() !== '' ? (
-                                                        <img src={country.img} className="w-16 h-16 object-cover rounded-full" height={50} width={50} loading="lazy" alt="" onError={(e) => {
-                                                            if (e.target.src !== 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg') {
-                                                                e.target.src = 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg';
-                                                            }
-                                                        }} />
-                                                    ) : (
-                                                        <img src={'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg'} height={50} width={50} loading="lazy" alt="" />
-                                                    )}
-                                                </td>
-                                                <td className="px-4 py-3">{country?.totalProperties || 0}</td>
-                                                <td className="px-4 py-3">
-                                                    <span
-                                                        className={`px-3 py-1 text-sm rounded-full ${country.status === 1 ? 'bg-green-500 text-white' : 'bg-gray-400 text-white'}`}
-                                                    >
-                                                        {country.status === 1 ? "publish" : "unpublish"}
-                                                    </span>
-                                                </td>
-                                                <td className="px-4 py-3">
-                                                    <button className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition mr-2" onClick={() => { updateCountry(country.id) }}>
-                                                        <FaPen />
-                                                    </button>
-                                                    <button className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition" onClick={() => { handledelete(country.id) }}>
-                                                        <FaTrash />
-                                                    </button>
+                                        {filteredCountries.length === 0 ? (
+                                            <tr>
+                                                <td colSpan="6" className="text-center py-4">
+                                                    No countries found.
                                                 </td>
                                             </tr>
-                                        ))}
+                                        ) : (
+                                            currentCountries.map((country, index) => (
+                                                <tr key={country.id}>
+                                                    <td className="px-4 py-3">{index + 1 + indexOfFirst}</td>
+                                                    <td className="px-4 py-3">{country?.title || "N/A"}</td>
+                                                    <td className="px-4 py-3">
+                                                        {country.img && country.img.trim() !== '' ? (
+                                                            <img src={country.img} className="w-16 h-16 object-cover rounded-full" height={50} width={50} loading="lazy" alt="" onError={(e) => {
+                                                                if (e.target.src !== 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg') {
+                                                                    e.target.src = 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg';
+                                                                }
+                                                            }} />
+                                                        ) : (
+                                                            <img src={'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg'} height={50} width={50} loading="lazy" alt="" />
+                                                        )}
+                                                    </td>
+                                                    <td className="px-4 py-3">{country?.totalProperties || 0}</td>
+                                                    <td className="px-4 py-3">
+                                                        <span
+                                                            className={`px-3 py-1 text-sm rounded-full ${country.status === 1 ? 'bg-green-500 text-white' : 'bg-gray-400 text-white'}`}
+                                                        >
+                                                            {country.status === 1 ? "publish" : "unpublish"}
+                                                        </span>
+                                                    </td>
+                                                    <td className="px-4 py-3">
+                                                        <button className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition mr-2" onClick={() => { updateCountry(country.id) }}>
+                                                            <FaPen />
+                                                        </button>
+                                                        <button className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition" onClick={() => { handledelete(country.id) }}>
+                                                            <FaTrash />
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            ))
+                                        )}
                                     </tbody>
                                 </table>
                             </div>

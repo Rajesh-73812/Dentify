@@ -23,13 +23,13 @@ const UserList = () => {
 
     useEffect(() => {
         setIsLoading(true);
-    
+
         const timer = setTimeout(() => {
-          setIsLoading(false);
-        }, 1000); 
-    
+            setIsLoading(false);
+        }, 1000);
+
         return () => clearTimeout(timer);
-      }, [ setIsLoading]);
+    }, [setIsLoading]);
 
 
     useEffect(() => {
@@ -48,12 +48,24 @@ const UserList = () => {
     }, []);
 
 
+    // Search functionality
     const handleSearch = (event) => {
-        
+        const querySearch = event.target.value.toLowerCase();
+        const filteredData = user.filter(item =>
+            Object.values(item).some(value =>
+                typeof value === 'object' && value !== null
+                    ? Object.values(value).some(nestedValue =>
+                        String(nestedValue).toLowerCase().includes(querySearch)
+                    )
+                    : String(value).toLowerCase().includes(querySearch)
+            )
+        );
+        setFiltereduser(filteredData);
+        setCurrentPage(1);
     };
 
     const sortData = (key) => {
-        handleSort(filtereduser,key,sortConfig,setSortConfig,setFiltereduser)
+        handleSort(filtereduser, key, sortConfig, setSortConfig, setFiltereduser)
     };
 
     const indexOfLast = currentPage * itemsPerPage;
@@ -63,10 +75,10 @@ const UserList = () => {
     const totalPages = Math.ceil(filtereduser.length / itemsPerPage);
 
     // for delete
-    const handledelete=async(id)=>{
-        const success=await DeleteEntity('UserList',id)
-        if(success){
-            const updatedUserList=user.filter((user)=> user.id !== id)
+    const handledelete = async (id) => {
+        const success = await DeleteEntity('UserList', id)
+        if (success) {
+            const updatedUserList = user.filter((user) => user.id !== id)
             setuser(updatedUserList)
             setFiltereduser(updatedUserList)
         }
@@ -184,39 +196,35 @@ const UserList = () => {
                                     <tbody className="divide-y divide-gray-200">
                                         {currentuser.length > 0 ? (
                                             currentuser.map((userList, index) => (
-                                            <tr key={userList.id}>
-                                                <td className="px-4 py-3">{index + 1 + indexOfFirst}</td>
-                                                <td className="px-4 py-3">{userList?.name || "N/A"}</td>
-                                                <td className="px-4 py-3">{userList?.email || "N/A"}</td>
-                                                <td className="px-4 py-3">{userList?.mobile || "N/A"}</td>
-                                                <td className="px-4 py-3">{userList?.joinDate || "N/A"}</td>
-                                                <td className="px-4 py-3">
-                                                <span
-                                                    className={`px-3 py-1 text-sm rounded-full ${
-                                                        userList.status === 1 ? 'bg-green-500 text-white' : 'bg-gray-400 text-white'
-                                                            }`}
+                                                <tr key={userList.id}>
+                                                    <td className="px-4 py-3">{index + 1 + indexOfFirst}</td>
+                                                    <td className="px-4 py-3">{userList?.name || "N/A"}</td>
+                                                    <td className="px-4 py-3">{userList?.email || "N/A"}</td>
+                                                    <td className="px-4 py-3">{userList?.mobile || "N/A"}</td>
+                                                    <td className="px-4 py-3">{userList?.joinDate || "N/A"}</td>
+                                                    <td className="px-4 py-3">
+                                                        <span
+                                                            className={`px-3 py-1 text-sm rounded-full ${userList.status === 1 ? 'bg-green-500 text-white' : 'bg-gray-400 text-white'
+                                                                }`}
                                                         >
-                                                        {userList.status === 1 ? "publish":"unpublish"}
+                                                            {userList.status === 1 ? "publish" : "unpublish"}
                                                         </span>
-                                                </td>
-                                                <td className="px-4 py-3">{userList?.refercode || "N/A"}</td>
-                                                <td className="px-4 py-3">{userList?.parentCode || "N/A"}</td>
-                                                <td className="px-4 py-3">{userList?.wallet || "N/A"}</td>
-                                                <td className="px-4 py-3">{userList?.is_subscribe || "N/A"}</td>
-                                                <td className="px-4 py-3">{userList?.pack_id || "N/A"}</td>
-                                                <td className="px-4 py-3">{userList?.start_date || "N/A"}</td>
-                                                <td className="px-4 py-3">{userList?.end_date || "N/A"}</td>
-                                                <td className="px-4 py-3">
-                                                    <button className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition mr-2">
-                                                        <FaPen />
-                                                    </button>
-                                                    <NotificationContainer />
-                                                    <button className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition" onClick={()=>{handledelete(userList.id)}}>
-                                                        <FaTrash />
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        ))
+                                                    </td>
+                                                    <td className="px-4 py-3">{userList?.refercode || "N/A"}</td>
+                                                    <td className="px-4 py-3">{userList?.parentCode || "N/A"}</td>
+                                                    <td className="px-4 py-3">{userList?.wallet || "N/A"}</td>
+                                                    <td className="px-4 py-3">{userList?.is_subscribe || "N/A"}</td>
+                                                    <td className="px-4 py-3">{userList?.pack_id || "N/A"}</td>
+                                                    <td className="px-4 py-3">{userList?.start_date || "N/A"}</td>
+                                                    <td className="px-4 py-3">{userList?.end_date || "N/A"}</td>
+                                                    <td className="px-4 py-3">
+                                                        <NotificationContainer />
+                                                        <button className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition" onClick={() => { handledelete(userList.id) }}>
+                                                            <FaTrash />
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            ))
                                         ) : (
                                             <tr>
                                                 <td colSpan="10" className="text-center">
@@ -224,7 +232,7 @@ const UserList = () => {
                                                 </td>
                                             </tr>
                                         )
-                                    }
+                                        }
                                     </tbody>
                                 </table>
                             </div>
@@ -234,33 +242,33 @@ const UserList = () => {
                             <span className="text-sm font-normal text-gray-500">
                                 Showing <span className="font-semibold text-gray-900">{indexOfFirst + 1}</span> to <span className="font-semibold text-gray-900">{Math.min(indexOfLast, filtereduser.length)}</span> of <span className="font-semibold text-gray-900">{filtereduser.length}</span>
                             </span>
-                                <ul className="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">
-                                        <li>
-                                            <button 
-                                                onClick={() => paginate(currentPage > 1 ? currentPage - 1 : 1)} 
-                                                className={`previous-button ${filtereduser.length === 0 ? 'cursor-not-allowed' : ''}`} 
-                                                disabled={currentPage === 1 || filtereduser.length === 0} 
-                                                title={filtereduser.length === 0 ? 'No data available' : ''}
-                                            >
-                                                <img src="/image/action/Left Arrow.svg" alt="Left" /> Previous
-                                            </button>
-                                        </li>
-                                        <li>
-                                            <span className="current-page">
-                                                Page {filtereduser.length > 0 ? currentPage : 0} of {filtereduser.length > 0 ? totalPages : 0}
-                                            </span>
-                                        </li>
-                                        <li>
-                                            <button 
-                                                onClick={() => paginate(currentPage < totalPages ? currentPage + 1 : totalPages)} 
-                                                className={`next-button ${filtereduser.length === 0 ? 'cursor-not-allowed' : ''}`} 
-                                                disabled={currentPage === totalPages || filtereduser.length === 0} 
-                                                title={filtereduser.length === 0 ? 'No data available' : ''}
-                                            >
-                                                Next <img src="/image/action/Right Arrow (1).svg" alt="Right" />
-                                            </button>
-                                        </li>
-                                </ul>
+                            <ul className="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">
+                                <li>
+                                    <button
+                                        onClick={() => paginate(currentPage > 1 ? currentPage - 1 : 1)}
+                                        className={`previous-button ${filtereduser.length === 0 ? 'cursor-not-allowed' : ''}`}
+                                        disabled={currentPage === 1 || filtereduser.length === 0}
+                                        title={filtereduser.length === 0 ? 'No data available' : ''}
+                                    >
+                                        <img src="/image/action/Left Arrow.svg" alt="Left" /> Previous
+                                    </button>
+                                </li>
+                                <li>
+                                    <span className="current-page">
+                                        Page {filtereduser.length > 0 ? currentPage : 0} of {filtereduser.length > 0 ? totalPages : 0}
+                                    </span>
+                                </li>
+                                <li>
+                                    <button
+                                        onClick={() => paginate(currentPage < totalPages ? currentPage + 1 : totalPages)}
+                                        className={`next-button ${filtereduser.length === 0 ? 'cursor-not-allowed' : ''}`}
+                                        disabled={currentPage === totalPages || filtereduser.length === 0}
+                                        title={filtereduser.length === 0 ? 'No data available' : ''}
+                                    >
+                                        Next <img src="/image/action/Right Arrow (1).svg" alt="Right" />
+                                    </button>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
