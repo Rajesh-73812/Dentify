@@ -23,6 +23,8 @@ const CountryAdd = () => {
     status: 0,
   });
 
+  console.log(formData)
+
   useEffect(() => {
     setIsLoading(true);
     if (id) {

@@ -116,6 +116,15 @@ export const DeleteEntity = async (entity, id) => {
           await axios.delete(`${BASE_URL}/admin/delete/${id}?forceDelete=true`,{ withCredentials: true });
           break;
 
+        case "Property":
+          await axios.delete(
+            `${BASE_URL}/properties/delete/${id}?forceDelete=true`,
+            {
+              withCredentials: true,
+            }
+          );
+          break;
+
         default:
           throw new Error(`Unknown entity: ${entity}`);
       }

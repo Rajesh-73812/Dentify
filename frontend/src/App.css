@@ -161,7 +161,7 @@ input[type="search"]::-webkit-search-cancel-button {
 background-color: white;
 color: #439BFF !important;
 font-weight: 700 !important;
-margin: 0px 10px 0px 10px;
+margin: 0px 1px 0px 1px;
 border-radius: 5px;
 
 }
@@ -180,6 +180,7 @@ textarea:focus-visible {
 }
 
 
+
 .css-ewdv3l .sub-menu-item{
   background-color: #439BFF !important;
   color: white !important;
@@ -195,7 +196,6 @@ font-weight: 700 !important;
 .ps-menuitem-root >.ps-menu-button:hover {
   background-color: #439BFF !important;
   color: white !important;
- 
 }
 
 .css-dip3t8 {
@@ -205,6 +205,11 @@ font-weight: 700 !important;
 .sub-menu-item:hover{
   background-color: #439BFF !important;
   color: white !important;
+}
+
+.ps-menu-button:active{
+  background-color: white !important;
+  color: #439BFF !important;
 }
 
 

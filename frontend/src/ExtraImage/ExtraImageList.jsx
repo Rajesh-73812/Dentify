@@ -8,8 +8,10 @@ import Loader from "../common/Loader";
 import axios from "axios";
 import { handleSort } from "../utils/sorting";
 import { DeleteEntity } from "../utils/Delete";
+import { useNavigate } from "react-router-dom";
 
 const ExtraImageList = () => {
+    const navigate = useNavigate()
     const [extraImages, setExtraImages] = useState([]);
     const [filteredImages, setFilteredImages] = useState([]);
     const [sortConfig, setSortConfig] = useState({ key: "", direction: "" });
@@ -41,12 +43,12 @@ const ExtraImageList = () => {
 
     // for searching
     const handleSearch = (event) => {
-        
+
     };
 
     // for sorting
     const sortData = (key) => {
-        handleSort(filteredImages,key,sortConfig,setSortConfig,setFilteredImages)
+        handleSort(filteredImages, key, sortConfig, setSortConfig, setFilteredImages)
     };
 
     const indexOfLastImage = currentPage * itemsPerPage;
@@ -56,13 +58,17 @@ const ExtraImageList = () => {
     const totalPages = Math.ceil(filteredImages.length / itemsPerPage);
 
     // for delete
-    const handledelete=async(id)=>{
-        const success=await DeleteEntity('ExtraImages',id);
-        if(success){
-            const updatedExtraImage=extraImages.filter((extraImages)=> extraImages.id !==id);
+    const handledelete = async (id) => {
+        const success = await DeleteEntity('ExtraImages', id);
+        if (success) {
+            const updatedExtraImage = extraImages.filter((extraImages) => extraImages.id !== id);
             setExtraImages(updatedExtraImage)
             setFilteredImages(updatedExtraImage)
         }
+    }
+
+    const updateExtraImage = (id) => {
+        navigate("/create-extra-image", { state: { id: id } })
     }
 
     return (
@@ -83,36 +89,36 @@ const ExtraImageList = () => {
                                             <th className="px-4 py-3 min-w-[100px]">
                                                 Sr. No
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp  className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData("slno")}/>
-                                                    <GoArrowDown  className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData("slno")}/>
+                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData("slno")} />
+                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData("slno")} />
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[150px]">
                                                 Gallery Image
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp  className="text-gray-500 hover:text-gray-700 cursor-pointer"  onClick={() => sortData("name")}/>
-                                                    <GoArrowDown  className="text-gray-500 hover:text-gray-700 cursor-pointer"  onClick={() => sortData("name")}/>
+                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData("name")} />
+                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData("name")} />
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[150px]">
                                                 Property Title
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp  className="text-gray-500 hover:text-gray-700 cursor-pointer"    onClick={() => sortData("name")}/>
-                                                    <GoArrowDown  className="text-gray-500 hover:text-gray-700 cursor-pointer"    onClick={() => sortData("name")}/>
+                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData("name")} />
+                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData("name")} />
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[100px]">
                                                 Gallery Status
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp    className="text-gray-500 hover:text-gray-700 cursor-pointer"    onClick={() => sortData("totalProperties")}/>
-                                                    <GoArrowDown    className="text-gray-500 hover:text-gray-700 cursor-pointer"    onClick={() => sortData("totalProperties")}/>
+                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData("totalProperties")} />
+                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData("totalProperties")} />
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[100px]">
                                                 Action
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp    className="text-gray-500 hover:text-gray-700 cursor-pointer"    onClick={() => sortData("action")}/>
-                                                    <GoArrowDown    className="text-gray-500 hover:text-gray-700 cursor-pointer"    onClick={() => sortData("action")}/>
+                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData("action")} />
+                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData("action")} />
                                                 </div>
                                             </th>
                                         </tr>
@@ -120,63 +126,63 @@ const ExtraImageList = () => {
                                     <tbody className="divide-y divide-gray-200">
                                         {currentImages.length > 0 ? (
                                             currentImages.map((extraImage, index) => (
-                                            <tr key={extraImage.id}>
-                                                <td className="px-4 py-3">{index + 1 + indexOfFirstImage}</td>
-                                                <td className="px-4 py-3">
-  {extraImage.images && extraImage.images.length > 0 ? (
-    <div className="flex space-x-2">
-      {extraImage.images.map((image, index) => (
-        <img
-          key={index}
-          src={image.url}
-          className="w-16 h-16 object-cover rounded-full"
-          height={50}
-          width={50}
-          loading="lazy"
-          alt={`Image ${index + 1}`}
-          onError={(e) => {
-            if (
-              e.target.src !==
-              "https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg"
-            ) {
-              e.target.src =
-                "https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg";
-            }
-          }}
-        />
-      ))}
-    </div>
-  ) : (
-    <img
-      src={
-        "https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg"
-      }
-      height={50}
-      width={50}
-      loading="lazy"
-      alt="No images available"
-    />
-  )}
-</td>
+                                                <tr key={extraImage.id}>
+                                                    <td className="px-4 py-3">{index + 1 + indexOfFirstImage}</td>
+                                                    <td className="px-4 py-3">
+                                                        {extraImage.images && extraImage.images.length > 0 ? (
+                                                            <div className="flex space-x-2">
+                                                                {extraImage.images.map((image, index) => (
+                                                                    <img
+                                                                        key={index}
+                                                                        src={image.url}
+                                                                        className="w-16 h-16 object-cover rounded-full"
+                                                                        height={50}
+                                                                        width={50}
+                                                                        loading="lazy"
+                                                                        alt={`Image ${index + 1}`}
+                                                                        onError={(e) => {
+                                                                            if (
+                                                                                e.target.src !==
+                                                                                "https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg"
+                                                                            ) {
+                                                                                e.target.src =
+                                                                                    "https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg";
+                                                                            }
+                                                                        }}
+                                                                    />
+                                                                ))}
+                                                            </div>
+                                                        ) : (
+                                                            <img
+                                                                src={
+                                                                    "https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg"
+                                                                }
+                                                                height={50}
+                                                                width={50}
+                                                                loading="lazy"
+                                                                alt="No images available"
+                                                            />
+                                                        )}
+                                                    </td>
 
-                                                <td className="px-4 py-3">{extraImage?.Property?.title || "No Title"}</td>
+                                                    <td className="px-4 py-3">{extraImage?.Property?.title || "No Title"}</td>
 
-                                                <td className="px-4 py-3">
-                                                    <span className={`px-3 py-1 text-sm rounded-full ${extraImage.status === 1 ? "bg-green-500 text-white"  : "bg-gray-400 text-white"  }`}
-                                                    >
-                                                        {extraImage.status === 1  ? "Published"  : "Unpublished"}
-                                                    </span>
-                                                </td>
-                                                <td className="px-4 py-3">
-                                                    <button className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition mr-2">
-                                                        <FaPen />
-                                                    </button>
-                                                    <button className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition" onClick={()=>{handledelete(extraImage.id)}}>
-                                                        <FaTrash />
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        ))
+                                                    <td className="px-4 py-3">
+                                                        <span className={`px-3 py-1 text-sm rounded-full ${extraImage.status === 1 ? "bg-green-500 text-white" : "bg-gray-400 text-white"}`}
+                                                        >
+                                                            {extraImage.status === 1 ? "Published" : "Unpublished"}
+                                                        </span>
+                                                    </td>
+                                                    <td className="px-4 py-3">
+                                                        <button className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition mr-2" onClick={() => { updateExtraImage(extraImage.id) }}>
+                                                            <FaPen />
+                                                        </button>
+                                                        <button className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition" onClick={() => { handledelete(extraImage.id) }}>
+                                                            <FaTrash />
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            ))
                                         ) : (
                                             <tr>
                                                 <td colSpan="10" className="text-center">
@@ -184,7 +190,7 @@ const ExtraImageList = () => {
                                                 </td>
                                             </tr>
                                         )
-                                    }
+                                        }
                                     </tbody>
                                 </table>
                             </div>

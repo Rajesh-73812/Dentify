@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import SidebarMenu from "../components/SideBar";
 import axios from "axios";
 import ImageUploader from "../common/ImageUploader";
 import Select from 'react-select';
 
 const PropertiesAdd = () => {
+  const location = useLocation()
+  const id = location.state ? location.state.id : null;
   const [formData, setFormData] = useState({
-    id:0,
+    id: 0 || null,
     title: '',
     image: '',
     price: 0,
@@ -36,9 +38,52 @@ const PropertiesAdd = () => {
   const [countries, setCountries] = useState([]);
   const [categories, setCategories] = useState([]);
   const [facilities, setFacilities] = useState([]);
-
   const navigate = useNavigate();
-  
+
+  useEffect(() => {
+    if (id) {
+      getProperty();
+    }
+  }, []);
+
+  const getProperty = async () => {
+    try {
+      const response = await axios.get(`http://localhost:5000/properties/${id}`, {
+        withCredentials: true
+      })
+      const Property = response.data;
+      console.log(Property, "Property Data");
+      setFormData({
+        id,
+        title: Property.title,
+        image: Property.image,
+        price: Property.price,
+        status: Property.status,
+        address: Property.address,
+        facility: Property.facility,
+        description: Property.description,
+        beds: Property.beds,
+        bathroom: Property.bathroom,
+        sqrft: Property.sqrft,
+        rate: Property.rate,
+        ptype: Property.ptype,
+        latitude: Property.latitude,
+        longtitude: Property.longtitude,
+        mobile: Property.mobile,
+        city: Property.city,
+        listing_date: Property.listing_date,
+        add_user_id: Property.add_user_id,
+        rules: Property.rules,
+        country_id: Property.country_id,
+        plimit: Property.plimit,
+        is_sell: Property.is_sell,
+
+      })
+    } catch (error) {
+      console.error("Error fetching Property:", error);
+    }
+  }
+
   useEffect(() => {
     // Fetch countries
     axios.get('http://localhost:5000/countries/all')
@@ -65,39 +110,39 @@ const PropertiesAdd = () => {
 
 
 
-  const handleBlur = (e)=>{
+  const handleBlur = (e) => {
 
   }
 
-  const handleFocus = (e)=>{
+  const handleFocus = (e) => {
 
   }
 
-  
+
   const handleImageUploadSuccess = (imageUrl) => {
     setFormData((prevData) => ({
       ...prevData,
       image: imageUrl,
     }));
-    
+
   };
-  console.log(formData,"from formdata");
+  console.log(formData, "from formdata");
   const handleSubmit = async (e) => {
     e.preventDefault();
 
- 
-    console.log(formData,"from formdata");
+
+    console.log(formData, "from formdata");
     try {
       await axios.post('http://localhost:5000/properties/upsert',
         formData,
-          {
-        
-          withCredentials: true, 
-        
-      });
+        {
+
+          withCredentials: true,
+
+        });
       alert('Property submitted successfully');
       navigate("/property-list")
-      
+
     } catch (error) {
       console.error('Error submitting property:', error);
       alert('Error submitting property');
@@ -111,7 +156,7 @@ const PropertiesAdd = () => {
     <div>
       <div className="flex bg-[#f7fbff]">
         {/* Sidebar */}
-       
+
         <main className="flex-grow">
           <Header />
           <div className="container mx-auto">
@@ -186,7 +231,7 @@ const PropertiesAdd = () => {
                       />
                     </div>
 
-                   
+
 
                     {/* property price per night */}
                     <div className="flex flex-col">
@@ -327,40 +372,40 @@ const PropertiesAdd = () => {
 
                     {/* Select Property Facility */}
                     <div className="flex flex-col">
-  <label
-    htmlFor="facility"
-    className="text-sm font-medium text-start text-[12px] font-[Montserrat]"
-  >
-    Select Property Facility
-  </label>
+                      <label
+                        htmlFor="facility"
+                        className="text-sm font-medium text-start text-[12px] font-[Montserrat]"
+                      >
+                        Select Property Facility
+                      </label>
 
-  <Select
-    isMulti
-    name="facility"
-    value={facilities.filter((facility) =>
-      formData.facility.split(",").includes(facility.id.toString())
-    ).map(facility => ({ value: facility.id, label: facility.title }))}
+                      <Select
+                        isMulti
+                        name="facility"
+                        value={facilities.filter((facility) =>
+                          formData.facility.split(",").includes(facility.id.toString())
+                        ).map(facility => ({ value: facility.id, label: facility.title }))}
 
-    
-    options={facilities.map((facility) => ({
-      value: facility.id,
-      label: facility.title,
-    }))}
 
-    // Update formData when selection changes
-    onChange={(selectedOptions) => {
-      const selectedIds = selectedOptions.map((option) => option.value);
-      setFormData((prevData) => ({
-        ...prevData,
-        facility: selectedIds.join(","), // Store selected IDs as comma-separated string
-      }));
-    }}
+                        options={facilities.map((facility) => ({
+                          value: facility.id,
+                          label: facility.title,
+                        }))}
 
-    className="mt-1 block w-full text-sm border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-    classNamePrefix="select"
-    placeholder="Select Facilities"
-  />
-</div>
+                        // Update formData when selection changes
+                        onChange={(selectedOptions) => {
+                          const selectedIds = selectedOptions.map((option) => option.value);
+                          setFormData((prevData) => ({
+                            ...prevData,
+                            facility: selectedIds.join(","), // Store selected IDs as comma-separated string
+                          }));
+                        }}
+
+                        className="mt-1 block w-full text-sm border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                        classNamePrefix="select"
+                        placeholder="Select Facilities"
+                      />
+                    </div>
 
 
 
@@ -368,7 +413,7 @@ const PropertiesAdd = () => {
 
                   <div className="grid gap-6 w-full sm:grid-cols-1 md:grid-cols-3 mt-6">
                     {/* Property description */}
-                    
+
 
                     <div className="md:col-span-3 grid gap-6 sm:grid-cols-2 md:grid-cols-4">
                       {/* Total Beds */}
@@ -390,7 +435,7 @@ const PropertiesAdd = () => {
                         />
                       </div>
 
-                      {/* Total bathrooms */} 
+                      {/* Total bathrooms */}
                       <div>
                         <label
                           htmlFor="bathroom"
@@ -548,51 +593,54 @@ const PropertiesAdd = () => {
                       </div>
 
                       <div className="md:col-span-2">
-                      <label
-                        htmlFor="description"
-                        className="text-sm font-medium float-left text-[12px] font-[Montserrat]"
-                      >
-                        Property Description
-                      </label>
-                      <textarea
-                        id="description"
-                        name="description"
-                        value={formData.description}
-                        className="border rounded-lg p-3 mt-1 w-full resize-none h-64 focus:ring-blue-500 focus:border-blue-500"
-                        placeholder="Enter Property Description"
-                        onChange={handleChange}
-                      ></textarea>
-                    </div>
+                        <label
+                          htmlFor="description"
+                          className="text-sm font-medium float-left text-[12px] font-[Montserrat]"
+                        >
+                          Property Description
+                        </label>
+                        <textarea
+                          id="description"
+                          name="description"
+                          value={formData.description}
+                          className="border rounded-lg p-3 mt-1 w-full resize-none h-64 focus:ring-blue-500 focus:border-blue-500"
+                          placeholder="Enter Property Description"
+                          onChange={handleChange}
+                        ></textarea>
+                      </div>
                       <div className="md:col-span-1">
-                      <label
-                        htmlFor="description"
-                        className="text-sm font-medium float-left text-[12px] font-[Montserrat]"
-                      >
-                        Property Rules
-                      </label>
-                      <textarea
-                        id="description"
-                        name="rules"
-                        value={formData.rules}
-                        className="border rounded-lg p-3 mt-1 w-full resize-none h-64 focus:ring-blue-500 focus:border-blue-500"
-                        placeholder="Enter Property Rules"
-                        onChange={handleChange}
-                      ></textarea>
-                    </div>
-                      
-                      
+                        <label
+                          htmlFor="description"
+                          className="text-sm font-medium float-left text-[12px] font-[Montserrat]"
+                        >
+                          Property Rules
+                        </label>
+                        <textarea
+                          id="description"
+                          name="rules"
+                          value={formData.rules}
+                          className="border rounded-lg p-3 mt-1 w-full resize-none h-64 focus:ring-blue-500 focus:border-blue-500"
+                          placeholder="Enter Property Rules"
+                          onChange={handleChange}
+                        ></textarea>
+                      </div>
+
+
                     </div>
                   </div>
 
                   {/* Action Buttons */}
                   <div className="flex justify-start mt-6 gap-3">
-                    <button
+                    {/* <button
                       type="submit"
                       className=" py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 w-[150px] h-12 font-[Montserrat] font-bold"
                       style={{ borderRadius: "8px" }}
                     >
                       {" "}
                       Add Property{" "}
+                    </button> */}
+                    <button type="submit" className={`py-2 mt-6 float-start ${id ? 'bg-green-500 hover:bg-green-600' : 'bg-blue-500 hover:bg-blue-600'} text-white rounded-lg w-[150px] h-12 font-[Montserrat] font-bold`} style={{ borderRadius: '8px' }}   >
+                      {id ? 'Update Property' : 'Add  Property'}
                     </button>
                   </div>
                 </form>
