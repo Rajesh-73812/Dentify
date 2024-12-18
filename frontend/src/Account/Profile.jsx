@@ -13,18 +13,7 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 
 const Profile = () => {
-   
-
-  const handleFocus=()=>{
-
-  }
-
-
   const navigate = useNavigate()
-  const handleBlur=()=>{
-
-  }
-
   const location = useLocation();
   const { isLoading, setIsLoading } = useLoading();
   const [formData, setFormData] = useState({
@@ -55,8 +44,7 @@ const Profile = () => {
 
     useEffect(()=>{
       async function fetchData(){
-          try {
-                
+          try { 
               const response = await axios.get("http://localhost:5000/admin/userbytoken", {
                   withCredentials: true,  
                 });
@@ -66,12 +54,10 @@ const Profile = () => {
                   username:response.data.username,
                   password:response.data.password
                 })
-      
               console.log(response, "from response");
 
           } catch (error) {
               console.log(error)
-            
           }
         }
       fetchData();
@@ -88,27 +74,28 @@ const Profile = () => {
               withCredentials: true, 
             }
           );
-          NotificationManager.success("updated data successfully");
+          NotificationManager.removeAll();
+          NotificationManager.success("updated Profile successfully");
     } catch (error) {
+        NotificationManager.removeAll();
         NotificationManager.error("Error While Updating:", error);
     }
   };
+
   return (
     <div>
       {isLoading && <Loader />}
       <div className="flex bg-[#f7fbff]">
-    
-      
       <main className="flex-grow">
         <Header />
         <div className="container mx-auto">
           <div className="flex items-center mt-6  mb-4">
-          <div className="flex items-center mt-6  mb-4">
-                    <Link onClick={()=>{navigate(-1)}}  className="cursor-pointer ml-6">
-                    <ArrowBackIosNewIcon />
-                    </Link>
-                    <h2 className="text-lg font-semibold ml-4 " style={{color:'#000000',fontSize:'24px',fontFamily:'Montserrat'}}>Account Management</h2>
-                </div>
+            <div className="flex items-center mt-6  mb-4">
+              <Link onClick={()=>{navigate(-1)}}  className="cursor-pointer ml-6">
+                <ArrowBackIosNewIcon />
+              </Link>
+              <h2 className="text-lg font-semibold ml-4 header">Account Management</h2>
+            </div>
           </div>
 
           {/* Form Container */}
@@ -138,10 +125,9 @@ const Profile = () => {
 
                 {/* Action Buttons */}
                 <div className="flex justify-start mt-6 gap-3">
-                  <button  type="submit" className=" py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 w-[150px] h-12 font-[Montserrat] font-bold" style={{ borderRadius: "8px", }} >Edit Profile </button>
+                  <button  type="submit" className=" py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 w-[130px] h-12 font-[Montserrat] font-bold" style={{ borderRadius: "8px", }} >Edit Profile </button>
                 </div>
               </form>
-
             </div>
           </div>
         </div>

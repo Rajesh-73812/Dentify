@@ -73,7 +73,6 @@ const ApprovedBook = () => {
 
 
     const navigateApprove = async (id, newStatus) => {
-        alert(id, newStatus)
         try {
             const response = await axios.put(
                 `http://localhost:5000/bookings/status/${id}`,
@@ -82,12 +81,14 @@ const ApprovedBook = () => {
             );
 
             if (response.status === 200) {
+                NotificationManager.removeAll();
                 NotificationManager.success('Status updated successfully!');
                 setTimeout(() => {
                     navigate('/check-in-list');
                 }, 3000);
             }
         } catch (error) {
+            NotificationManager.removeAll();
             console.error('Error updating status:', error.response?.data || error.message);
             NotificationManager.error(error.response?.data?.error || 'Failed to update status. Please try again.');
         }
@@ -128,7 +129,7 @@ const ApprovedBook = () => {
                                                     <GoArrowDown className='cursor-pointer' onClick={() => sortData('prop_price')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[200px]">
+                                            <th className="px-4 py-3 min-w-[250px]">
                                                 Property Total Day
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className='cursor-pointer' onClick={() => sortData('total_day')} />
@@ -161,9 +162,9 @@ const ApprovedBook = () => {
                                                     <td className="px-4 py-3">{approve?.total_day || 'N/A'}</td>
                                                     <td className="px-4 py-3 d-flex">
                                                         <NotificationContainer />
-                                                        <span className='px-2 py-1 text-sm rounded-full bg-green-400 cursor-pointer text-white mr-2' onClick={() => openModal(approve)}>View Details</span>
+                                                        <span className='px-2 py-1 text-sm rounded-full bg-[#2dce89] cursor-pointer text-white mr-2' onClick={() => openModal(approve)}>View Details</span>
                                                         <span className=' px-2 py-1  text-sm rounded-full bg-cyan-400 cursor-pointer text-white mr-2' onClick={() => { navigateApprove(approve.id, 'Check_in') }}>Check In</span>
-                                                        <span className='px-2 py-1 text-sm rounded-full bg-red-400 cursor-pointer text-white mr-2' onClick={openModal2}>Cancelled</span>
+                                                        <span className='px-2 py-1 text-sm rounded-full bg-[#f5365c] cursor-pointer text-white mr-2' onClick={openModal2}>Cancelled</span>
                                                     </td>
                                                 </tr>
                                             ))

@@ -6,6 +6,9 @@ import { FaPen, FaTrash } from "react-icons/fa";
 // import { searchFunction } from '../Entity/SearchEntity';
 import PropotiesHeader from './PropotiesHeader';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { DeleteEntity } from '../utils/Delete';
+import { NotificationContainer } from 'react-notifications';
 
 const PropotiesList = () => {
     const [properties, setProperties] = useState([]);
@@ -13,6 +16,7 @@ const PropotiesList = () => {
     const [sortConfig, setSortConfig] = useState({ key: '', direction: '' });
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
+    const navigate = useNavigate()
 
     useEffect(() => {
         const fetchProperties = async () => {
@@ -63,7 +67,18 @@ const PropotiesList = () => {
         setCurrentPage(1);
     };
 
-    
+    const propertyUpdate = (id) => {
+        navigate("/create-property", { state: { id: id } })
+    }
+
+    const deleteProperty = async (id) => {
+        const success = await DeleteEntity('Property', id);
+        if (success) {
+            const updatedProperties = properties.filter((property) => property.id !== id);
+            setProperties(updatedProperties);
+            setFilteredProperties(updatedProperties)
+        }
+    }
 
     // Pagination calculations
     const indexOfLastItem = currentPage * itemsPerPage;
@@ -73,12 +88,12 @@ const PropotiesList = () => {
 
     // Change page
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
-    
+
     return (
         <div>
             <div className="h-screen flex">
                 {/* Sidebar */}
-               
+
 
                 <div className="flex flex-1 flex-col bg-[#f7fbff]">
                     {/* Header */}
@@ -87,7 +102,7 @@ const PropotiesList = () => {
                     <PropotiesHeader onSearch={handleSearch} />
                     {/* Card */}
                     <div className="py-6 px-6 h-full w-[1000px] overflow-scroll scrollbar-none">
-                        <div className="bg-white w-full rounded-xl border border-[#EAE5FF] py-4 px-3 overflow-x-auto scrollbar-none">
+                        <div className="bg-white w-full rounded-xl border border-[#EAE5FF] py-4 px-3 overflow-x-auto">
                             <div className="relative sm:rounded-lg">
                                 <table className="min-w-full text-sm text-left text-gray-700">
                                     <thead className="bg-gray-50 text-xs uppercase font-medium text-gray-500">
@@ -163,7 +178,7 @@ const PropotiesList = () => {
                                                     <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('propertyPrice')} />
                                                 </div>
                                             </th>
-                                            
+
                                             <th className="px-4 py-3 min-w-[200px]">
                                                 Mobile
                                                 <div className="inline-flex items-center ml-2">
@@ -244,28 +259,27 @@ const PropotiesList = () => {
                                                         <img src={'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg'} height={50} width={50} loading="lazy" alt="" />
                                                     )}
                                                 </td>
-                                                <td className="px-4 py-3">{property.title}</td>
-                                                <td className="px-4 py-3">{property.category.title}</td>
-                                                <td className="px-4 py-3">{property.description}</td>
-                                                <td className="px-4 py-3">{property.address}</td>
-                                                <td className="px-4 py-3">{property.city}</td>
-                                                <td className="px-4 py-3">{property.is_sell}</td>
-                                                <td className="px-4 py-3 flex flex-col">{property.facilities.map((item)=>{
-                                                    return (
+                                                <td className="px-4 py-3">{property.title || 'N/A'}</td>
+                                                <td className="px-4 py-3">{property.category?.title || 'N/A'}</td>
+                                                <td className="px-4 py-3">{property.description || 'N/A'}</td>
+                                                <td className="px-4 py-3">{property.address || 'N/A'}</td>
+                                                <td className="px-4 py-3">{property.city || 'N/A'}</td>
+                                                <td className="px-4 py-3">{property.is_sell || 'N/A'}</td>
+                                                <td className="px-4 py-3 flex flex-col">
+                                                    {property.facilities?.map((item) => (
                                                         <span className='bg-lime-100 font-bold p-1 m-1 flex justify-center ' key={item.id}>
                                                             {item.title}
                                                         </span>
-                                                    )
-                                                })}</td>
-                                                <td className="px-4 py-3">₹{property.price}</td>
-                                               
-                                                <td className="px-4 py-3">{property.mobile}</td>
-                                                <td className="px-4 py-3">{property.country.title}</td>
-                                                <td className="px-4 py-3">{property.add_user_id}</td>
-                                                <td className="px-4 py-3">{property.beds}</td>
-                                                <td className="px-4 py-3">{property.bathroom}</td>
-                                                <td className="px-4 py-3">{property.sqrft}</td>
-                                                <td className="px-4 py-3">{property.rate}</td>
+                                                    )) || 'N/A'}
+                                                </td>
+                                                <td className="px-4 py-3">₹{property.price || 'N/A'}</td>
+                                                <td className="px-4 py-3">{property.mobile || 'N/A'}</td>
+                                                <td className="px-4 py-3">{property.country?.title || 'N/A'}</td>
+                                                <td className="px-4 py-3">{property.add_user_id || 'N/A'}</td>
+                                                <td className="px-4 py-3">{property.beds || 'N/A'}</td>
+                                                <td className="px-4 py-3">{property.bathroom || 'N/A'}</td>
+                                                <td className="px-4 py-3">{property.sqrft || 'N/A'}</td>
+                                                <td className="px-4 py-3">{property.rate || 'N/A'}</td>
                                                 <td className="px-4 py-3">
                                                     <span
                                                         className={`px-3 py-1 text-sm rounded-full ${property.status === 1 ? 'bg-green-500 text-white' : 'bg-gray-400 text-white'}`}
@@ -274,16 +288,18 @@ const PropotiesList = () => {
                                                     </span>
                                                 </td>
                                                 <td className="px-4 py-3">
-                                                    <button className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition mr-2">
+                                                    <NotificationContainer />
+                                                    <button className="bg-[#2dce89] text-white p-2 rounded-full hover:bg-green-600 transition mr-2" onClick={() => propertyUpdate(property.id)}>
                                                         <FaPen />
                                                     </button>
-                                                    <button className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition">
+                                                    <button className="bg-[#f5365c] text-white p-2 rounded-full hover:bg-red-600 transition" onClick={() => deleteProperty(property.id)}>
                                                         <FaTrash />
                                                     </button>
                                                 </td>
                                             </tr>
                                         ))}
                                     </tbody>
+
                                 </table>
                             </div>
                         </div>

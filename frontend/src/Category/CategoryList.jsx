@@ -12,6 +12,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import Loader from '../common/Loader';
 import { DeleteEntity } from '../utils/Delete';
 import { handleSort } from "../utils/sorting";
+import { NotificationContainer, NotificationManager } from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 
 const CategoryList = () => {
   const navigate = useNavigate();
@@ -72,7 +74,7 @@ const CategoryList = () => {
   const handledelete = async (id) => {
     const success = await DeleteEntity('Category', id);
     if (success) {
-      const updatedCategories = categories.filter((item) => categories.id !== id);
+      const updatedCategories = categories.filter((category) => category.id !== id);
       setCategories(updatedCategories);
       setFilteredcategories(updatedCategories)
     }
@@ -81,8 +83,8 @@ const CategoryList = () => {
   // for update 
   const updateCategory = (id) => {
     navigate('/add-category', { state: { id: id } })
-
   }
+
   return (
     <div>
       {isLoading && <Loader />}
@@ -95,7 +97,7 @@ const CategoryList = () => {
           <CategoryHeader onSearch={handleSearch} />
           {/* Card */}
           <div className="py-6 px-6 h-full w-[1000px] overflow-scroll scrollbar-none">
-            <div className="bg-white w-full rounded-xl border border-[#EAE5FF] py-4 px-3 overflow-x-auto scrollbar-none">
+            <div className="bg-white  w-full rounded-xl border border-[#EAE5FF] py-4 px-3 overflow-x-auto scrollbar-none">
               <div className="relative sm:rounded-lg">
                 <table className="min-w-full text-sm text-left text-gray-700">
                   <thead className="bg-gray-50 text-xs uppercase font-medium text-gray-500">
@@ -149,10 +151,11 @@ const CategoryList = () => {
                           </span>
                         </td>
                         <td className="px-4 py-3">
-                          <button className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition mr-2" onClick={() => { updateCategory(category.id) }}>
+                          <NotificationContainer />
+                          <button className="bg-[#2dce89] text-white p-2 rounded-full hover:bg-green-600 transition mr-2" onClick={() => { updateCategory(category.id) }}>
                             <FaPen />
                           </button>
-                          <button className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition" onClick={() => { handledelete(category.id) }}>
+                          <button className="bg-[#f5365c] text-white p-2 rounded-full hover:bg-red-600 transition" onClick={() => { handledelete(category.id) }}>
                             <FaTrash />
                           </button>
                         </td>

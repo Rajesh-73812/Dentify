@@ -96,35 +96,48 @@ export const DeleteEntity = async (entity, id) => {
           break;
 
         case "Faq":
-          await axios.delete(`${BASE_URL}/faq/delete/${id}`, {
+          await axios.delete(`${BASE_URL}/faqs/delete/${id}`, {
             withCredentials: true,
           });
           break;
 
         case "UserList":
-          await axios.delete(`${BASE_URL}/faq/delete/${id}`, {
+          await axios.delete(`${BASE_URL}/users/user/delete/${id}`, {
             withCredentials: true,
           });
           break;
 
         case "Admin":
+          await axios.delete(`${BASE_URL}/admin/delete/${id}?forceDelete=true`,{ withCredentials: true });
+          break;
+
+
+        case "Role":
+          await axios.delete(`${BASE_URL}/admin/delete/${id}?forceDelete=true`,{ withCredentials: true });
+          break;
+
+        case "Property":
           await axios.delete(
-            `${BASE_URL}/admin/delete/${id}?forceDelete=true`,
-            { withCredentials: true }
+            `${BASE_URL}/properties/delete/${id}?forceDelete=true`,
+            {
+              withCredentials: true,
+            }
           );
           break;
 
         default:
           throw new Error(`Unknown entity: ${entity}`);
       }
-
+      NotificationManager.removeAll();
       NotificationManager.success(`${entity} deleted successfully!`);
       return true;
     } else {
+      NotificationManager.removeAll();
       NotificationManager.info(`${entity} deletion was canceled.`);
       return false;
     }
   } catch (error) {
+    NotificationManager.removeAll();
     console.error(error);
     NotificationManager.error(`Failed to delete ${entity}.`);
     throw error;

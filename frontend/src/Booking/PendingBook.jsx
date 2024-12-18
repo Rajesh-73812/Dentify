@@ -71,12 +71,14 @@ const PendingBook = () => {
         try {
             const response = await axios.put(`http://localhost:5000/bookings/status/${id}`, { status: newStatus }, { withCredentials: true });
             if (response.status === 200) {
+                NotificationManager.removeAll();
                 NotificationManager.success('Status updated successfully!');
                 setTimeout(() => {
                     navigate('/approved-book-list');
                 }, 4000);
             }
         } catch (error) {
+            NotificationManager.removeAll();
             console.error('Error updating status:', error.response?.data || error.message);
             NotificationManager.error(error.response?.data?.error || 'Failed to update status. Please try again.');
         }
@@ -121,7 +123,7 @@ const PendingBook = () => {
                                                 <GoArrowDown className='cursor-pointer' onClick={() => sortData('prop_price')} />
                                             </div>
                                         </th>
-                                        <th className="px-4 py-3 min-w-[200px]">
+                                        <th className="px-4 py-3 min-w-[250px]">
                                             Property Total Day
                                             <div className="inline-flex items-center ml-2">
                                                 <GoArrowUp className='cursor-pointer' onClick={() => sortData('total_day')} />
@@ -153,9 +155,9 @@ const PendingBook = () => {
                                                 <td className="px-4 py-3">{pendingList?.total_day || 'N/A'}</td>
                                                 <td className="px-4 py-3">
                                                     <NotificationContainer />
-                                                    <span className='px-2 py-1 text-sm rounded-full bg-green-400 cursor-pointer text-white mr-2' onClick={() => openModal(pendingList)}>View Details</span>
+                                                    <span className='px-2 py-1 text-sm rounded-full bg-[#2dce89] cursor-pointer text-white mr-2' onClick={() => openModal(pendingList)}>View Details</span>
                                                     <span className='px-2 py-1 text-sm rounded-full bg-cyan-400 cursor-pointer text-white mr-2' onClick={() => { navigateApprove(pendingList.id, 'Confirmed') }}>Confirmed</span>
-                                                    <span className='px-2 py-1 text-sm rounded-full bg-red-400 cursor-pointer text-white mr-2' onClick={openModal2}>Cancelled</span>
+                                                    <span className='px-2 py-1 text-sm rounded-full bg-[#f5365c] cursor-pointer text-white mr-2' onClick={openModal2}>Cancelled</span>
                                                 </td>
                                             </tr>
                                         ))

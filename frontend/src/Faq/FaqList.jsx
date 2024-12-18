@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import Header from '../components/Header';
 import { GoArrowDown, GoArrowUp } from 'react-icons/go';
-
 import { FaPen, FaTrash } from "react-icons/fa";
 import { searchFunction } from '../Entity/SearchEntity';
-
 import axios from 'axios';
 import FaqHeader from './FaqHeader';
 import { useNavigate } from 'react-router-dom';
@@ -47,8 +45,7 @@ const FaqList = () => {
     const currentfaq = filteredfaq.slice(indexOfFirstFaq, indexOfLastFaq);
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
     const totalPages = Math.ceil(filteredfaq.length / itemsPerPage);
-
-    // for update
+    
     const updateFAQ = (id) => {
         navigate('/create-faq', { state: { id: id } })
     }
@@ -126,11 +123,11 @@ const FaqList = () => {
                                                         </span>
                                                     </td>
                                                     <td className="px-4 py-3">
-                                                        <button className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition mr-2" onClick={() => { updateFAQ(faq.id) }}>
+                                                        <button className="bg-[#2dce89] text-white p-2 rounded-full hover:bg-green-600 transition mr-2" onClick={() => { updateFAQ(faq.id) }}>
                                                             <FaPen />
                                                         </button>
                                                         <NotificationContainer />
-                                                        <button className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition" onClick={() => { handledelete(faq.id) }}>
+                                                        <button className="bg-[#f5365c] text-white p-2 rounded-full hover:bg-red-600 transition" onClick={() => { handledelete(faq.id) }}>
                                                             <FaTrash />
                                                         </button>
                                                     </td>
