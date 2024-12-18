@@ -108,10 +108,12 @@ export const DeleteEntity = async (entity, id) => {
           break;
 
         case "Admin":
-          await axios.delete(
-            `${BASE_URL}/admin/delete/${id}?forceDelete=true`,
-            { withCredentials: true }
-          );
+          await axios.delete(`${BASE_URL}/admin/delete/${id}?forceDelete=true`,{ withCredentials: true });
+          break;
+
+
+        case "Role":
+          await axios.delete(`${BASE_URL}/admin/delete/${id}?forceDelete=true`,{ withCredentials: true });
           break;
 
         default:
