@@ -8,6 +8,7 @@ import PropotiesHeader from './PropotiesHeader';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { DeleteEntity } from '../utils/Delete';
+import { NotificationContainer } from 'react-notifications';
 
 const PropotiesList = () => {
     const [properties, setProperties] = useState([]);
@@ -287,10 +288,11 @@ const PropotiesList = () => {
                                                     </span>
                                                 </td>
                                                 <td className="px-4 py-3">
-                                                    <button className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition mr-2" onClick={() => propertyUpdate(property.id)}>
+                                                    <NotificationContainer />
+                                                    <button className="bg-[#2dce89] text-white p-2 rounded-full hover:bg-green-600 transition mr-2" onClick={() => propertyUpdate(property.id)}>
                                                         <FaPen />
                                                     </button>
-                                                    <button className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition" onClick={() => deleteProperty(property.id)}>
+                                                    <button className="bg-[#f5365c] text-white p-2 rounded-full hover:bg-red-600 transition" onClick={() => deleteProperty(property.id)}>
                                                         <FaTrash />
                                                     </button>
                                                 </td>

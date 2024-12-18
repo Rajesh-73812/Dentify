@@ -9,7 +9,9 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import Loader from '../common/Loader';
 import AdminHeader from './AdminHeader';
 import { DeleteEntity } from '../utils/Delete';
-
+import { NotificationContainer, NotificationManager } from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
+import Swal from 'sweetalert2';
 
 const AdminList = () => {
     const navigate = useNavigate();
@@ -44,8 +46,8 @@ const AdminList = () => {
             const response = await axios.get('http://localhost:5000/admin/all-admins', {
                 withCredentials: true,
             });
-            console.log('API Response:', response.data); // Debugging
-            const { admins } = response.data; // Extract admins array
+            console.log('API Response:', response.data);
+            const { admins } = response.data; 
             if (Array.isArray(admins)) {
                 setAdmins(admins);
                 setFilteredAdmins(admins);
@@ -57,22 +59,6 @@ const AdminList = () => {
         }
     };
 
-
-    // const handleDelete = async (adminId) => {
-    //     try {
-    //         await axios.delete(`http://localhost:5000/admin/delete/${adminId}?forceDelete=true`, {
-    //             withCredentials: true,
-    //         });
-    //         // setAdmins(admins.filter(admin => admin.id !== adminId));
-    //         const updatedAdmins = admins.filter(admin => admin.id !== adminId);
-    //         setAdmins(updatedAdmins);
-    //         setFilteredAdmins(updatedAdmins);
-    //         setShowDeleteModal(false);
-    //     } catch (error) {
-    //         console.error('Error deleting admin:', error);
-    //     }
-    // };
-
     const handleDelete = async (id) => {
         const success = await DeleteEntity('Admin', id);
         if (success) {
@@ -81,11 +67,6 @@ const AdminList = () => {
             setFilteredAdmins(updatedAdmins);
         }
     };
-
-    // const confirmDelete = (admin) => {
-    //     setAdminToDelete(admin);
-    //     setShowDeleteModal(true);
-    // };
 
     const confirmEdit = (admin) => {
         setAdminToEdit(admin);
@@ -107,7 +88,11 @@ const AdminList = () => {
             setAdmins(updatedAdmins);
             setFilteredAdmins(updatedAdmins);
             setShowEditModal(false);
+            NotificationManager.removeAll();
+            NotificationManager.success("Updated Successfully!");
         } catch (error) {
+            NotificationManager.removeAll();
+            NotificationManager.error("Failed to update admin");
             console.error('Error updating admin:', error);
         }
     };
@@ -121,19 +106,32 @@ const AdminList = () => {
             const response = await axios.post('http://localhost:5000/admin/register', addForm, {
                 withCredentials: true,
             });
-            // setAdmins([...admins, response.data.admin]);
+            console.log(response.status)
             const updatedAdmins = [...admins, response.data.admin];
             setAdmins(updatedAdmins);
             setFilteredAdmins(updatedAdmins);
             setShowAddModal(false);
+            NotificationManager.removeAll();
+            NotificationManager.success("Added successfully!");
         } catch (error) {
-            console.error('Error adding admin:', error);
+            NotificationManager.removeAll();
+    
+            if (error.response && error.response.status === 400) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'User Already Exists',
+                    text: 'This username is already taken. Please use a different username.',
+                });
+            } else {
+                NotificationManager.error("Failed to add admin");
+                console.error('Error adding admin:', error);
+            }
         }
     };
 
     const handleSearch = async (query) => {
         if (!query) {
-            setFilteredAdmins(admins); // Reset to full list if the search box is cleared
+            setFilteredAdmins(admins); 
             return;
         }
         try {
@@ -141,7 +139,7 @@ const AdminList = () => {
                 withCredentials: true,
             });
             setFilteredAdmins(response.data);
-            setCurrentPage(1); // Reset to the first page after search
+            setCurrentPage(1); 
         } catch (error) {
             console.error("Error searching admins:", error);
         }
@@ -157,8 +155,7 @@ const AdminList = () => {
 
     const indexOfLastAdmin = currentPage * adminsPerPage;
     const indexOfFirstAdmin = indexOfLastAdmin - adminsPerPage;
-    const currentAdmins = filteredAdmins.slice(indexOfFirstAdmin, indexOfLastAdmin); // Use filteredAdmins for slicing
-
+    const currentAdmins = filteredAdmins.slice(indexOfFirstAdmin, indexOfLastAdmin); 
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
     return (
         <div>
@@ -196,15 +193,16 @@ const AdminList = () => {
                                             currentAdmins.map((admin, index) => (
                                                 <tr key={admin.id}>
                                                     <td className="px-4 py-3">{indexOfFirstAdmin + index + 1}</td>
-                                                    <td className="px-4 py-3">{admin.username}</td>
-                                                    <td className="px-4 py-3">{admin.password}</td>
-                                                    <td className="px-4 py-3">{admin.userType}</td>
+                                                    <td className="px-4 py-3">{admin?.username || "N/A"}</td>
+                                                    <td className="px-4 py-3">{admin?.password || "N/A"}</td>
+                                                    <td className="px-4 py-3">{admin?.userType || "N/A"}</td>
                                                     <td className="px-4 py-3">
-                                                        <button variant="" className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition mr-2" onClick={() => confirmEdit(admin)}>
+                                                        <NotificationContainer />
+                                                        <button variant="" className="bg-[#2dce89] text-white p-2 rounded-full hover:bg-green-600 transition mr-2" onClick={() => confirmEdit(admin)}>
                                                             <FaPen />
                                                         </button>
                                                         <button
-                                                            className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition mr-2"
+                                                            className="bg-[#f5365c] text-white p-2 rounded-full hover:bg-red-600 transition mr-2"
                                                             onClick={() => { handleDelete(admin.id); }}
                                                         >
                                                             <FaTrash />

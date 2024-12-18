@@ -128,7 +128,7 @@ const GalleryAdd = () => {
             {/* <Link to="/rolesList" className="cursor-pointer ml-6">
               
             </Link> */}
-            <h2 className="text-lg font-semibold ml-4 " style={{color:'#000000',fontSize:'24px',fontFamily:'Montserrat'}}>Gallery Management</h2>
+            <h2 className="text-lg font-semibold ml-4 header" >Gallery Management</h2>
           </div>
 
           {/* Form Container */}

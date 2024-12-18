@@ -10,6 +10,7 @@ import Loader from '../common/Loader';
 import { handleSort } from '../utils/sorting';
 import { DeleteEntity } from '../utils/Delete';
 import { searchEntity } from '../utils/searchUtils';
+import { NotificationContainer } from 'react-notifications';
 
 const FacilityList = () => {
     const navigate=useNavigate()
@@ -163,10 +164,11 @@ const FacilityList = () => {
                                                     </span>
                                                 </td>
                                                 <td className="px-4 py-3">
-                                                    <button className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition mr-2" onClick={()=>{updateFacility(facility.id)}}>
+                                                    <NotificationContainer />
+                                                    <button className="bg-[#2dce89] text-white p-2 rounded-full hover:bg-green-600 transition mr-2" onClick={()=>{updateFacility(facility.id)}}>
                                                         <FaPen />
                                                     </button>
-                                                    <button className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition" onClick={()=>handledelete(facility.id)}>
+                                                    <button className="bg-[#f5365c] text-white p-2 rounded-full hover:bg-red-600 transition" onClick={()=>handledelete(facility.id)}>
                                                         <FaTrash />
                                                     </button>
                                                 </td>

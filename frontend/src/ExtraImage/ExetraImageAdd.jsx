@@ -4,19 +4,19 @@ import Header from '../components/Header';
 import axios from 'axios';
 import MultiImageUploader from '../common/MultipleImageUploader';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { NotificationManager } from 'react-notifications';
 
 const ExtraImageAdd = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const id = location.state ? location.state.id : null;
     const [properties, setProperties] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
     const [formData, setFormData] = useState({
         pid: '',
         status: '',
         img: []
     });
-
-    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         if (id) {
@@ -81,9 +81,18 @@ const ExtraImageAdd = () => {
             const response = await axios.post('http://localhost:5000/extra/upsert', formData, {
                 withCredentials: true,
             });
-            console.log('Extra image added successfully:', response.data);
-            alert('Extra image added successfully!');
+            // console.log('Extra image added successfully:', response.data);
+            if(response.status === 200 || response.status === 201){
+                NotificationManager.removeAll();
+                NotificationManager.success('Extra image added successfully!')
+                setTimeout(() => {
+                
+                }, 2000);
+            }
+            
         } catch (error) {
+            NotificationManager.removeAll();
+            NotificationManager.error('Error adding extra image')
             console.error('Error adding extra image:', error.response ? error.response.data : error.message);
         } finally {
             setIsLoading(false);

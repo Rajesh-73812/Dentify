@@ -7,10 +7,6 @@ import { generateToken, messaging } from "../Notification/firebase";
 import { onMessage } from "firebase/messaging";
 import toast, { Toaster } from "react-hot-toast";
 
-
-
-
-
 const Header = () => {
   const [notifications, setNotifications] = useState([]);
   const [notificationCount, setNotificationCount] = useState(0);

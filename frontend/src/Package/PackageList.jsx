@@ -7,6 +7,7 @@ import PackageHeader from './PackageHeader';
 import { useNavigate } from 'react-router-dom';
 import { DeleteEntity } from '../utils/Delete';
 import { handleSort } from '../utils/sorting';
+import { NotificationContainer } from 'react-notifications';
 
 const PackageList = () => {
     const navigate=useNavigate();
@@ -134,10 +135,11 @@ const PackageList = () => {
                                                     </span>
                                                 </td>
                                                 <td className="px-4 py-3">
-                                                    <button className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition mr-2" onClick={()=>{updatePackage(Package.id)}}>
+                                                    <NotificationContainer />
+                                                    <button className="bg-[#2dce89] text-white p-2 rounded-full hover:bg-green-600 transition mr-2" onClick={()=>{updatePackage(Package.id)}}>
                                                         <FaPen />
                                                     </button>
-                                                    <button className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition" onClick={()=>{handledelete(Package.id)}}>
+                                                    <button className="bg-[#f5365c] text-white p-2 rounded-full hover:bg-red-600 transition" onClick={()=>{handledelete(Package.id)}}>
                                                         <FaTrash />
                                                     </button>
                                                 </td>

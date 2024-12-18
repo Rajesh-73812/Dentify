@@ -10,6 +10,9 @@ import { useLocation } from 'react-router-dom';
 import Loader from '../common/Loader';
 import { handleSort } from '../utils/sorting';
 import { DeleteEntity } from '../utils/Delete';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faToggleOn, faToggleOff } from '@fortawesome/free-solid-svg-icons';
+import { NotificationContainer } from 'react-notifications';
 
 const PaymentGatewayList = () => {
    const [paymentGateway, setpaymentGateway] = useState([]);
@@ -96,18 +99,18 @@ const PaymentGatewayList = () => {
                                             <th className="px-4 py-3 min-w-[120px]">
                                                 Sr. No
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('slno')} />
-                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('slno')} />
+                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('id')} />
+                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('id')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[220px]">
+                                            <th className="px-4 py-3 min-w-[250px]">
                                                 PaymentGateway Name
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('title')} />
                                                     <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('title')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[240px]">
+                                            <th className="px-4 py-3 min-w-[250px]">
                                                 PaymentGateway SubTitle
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('subtitle')} />
@@ -115,21 +118,21 @@ const PaymentGatewayList = () => {
                                                 </div>
                                             </th>
 
-                                            <th className="px-4 py-3 min-w-[200px]">  PaymentGateway Image  </th>
-                                            <th className="px-4 py-3 min-w-[200px]">  PaymentGateway Status </th>
-                                            <th className="px-4 py-3 min-w-[150px]">  Show On Wallet  </th>
-                                            <th className="px-4 py-3 min-w-[200px]">  Show On Subscribe  </th>
-                                            <th className="px-4 py-3 min-w-[150px]"> Action </th>
+                                            <th className="px-4 py-1 min-w-[220px]">  PaymentGateway Image  </th>
+                                            <th className="px-4 py-1 min-w-[220px]">  Show On Wallet  </th>
+                                            <th className="px-4 py-1 min-w-[200px]">  Show On Subscribe  </th>
+                                            <th className="px-4 py-1 min-w-[220px]">  PaymentGateway Status </th>
+                                            <th className="px-4 py-1 min-w-[150px]"> Action </th>
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-gray-200">
                                         {currentpaymentGateway.length > 0 ? (
                                             currentpaymentGateway.map((paymentgatway, index) => (
                                             <tr key={paymentgatway.id}>
-                                                <td className="px-4 py-3">{index + 1 + indexOfFirstpaymentgatway}</td>
-                                                <td className="px-4 py-3">{paymentgatway.title}</td>
-                                                <td className="px-4 py-3">{paymentgatway.subtitle}</td>
-                                                <td className="px-4 py-3">
+                                                <td className="px-4 py-1">{index + 1 + indexOfFirstpaymentgatway}</td>
+                                                <td className="px-4 py-1">{paymentgatway?.title || "N/A"}</td>
+                                                <td className="px-4 py-1">{paymentgatway?.subtitle || "N/A"}</td>
+                                                <td className="px-4 py-1">
                                                     {paymentgatway.img && paymentgatway.img.trim() !== '' ? (
                                                         <img src={paymentgatway.img} className="w-16 h-16 object-cover rounded-full" height={50} width={50} loading="lazy" alt="" onError={(e) => {
                                                             if (e.target.src !== 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg') {
@@ -140,21 +143,34 @@ const PaymentGatewayList = () => {
                                                         <img src={'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg'} height={50} width={50} loading="lazy" alt="" />
                                                     )}
                                                 </td>
-                                                <td className="px-4 py-3"><span className={`px-3 py-1 text-sm rounded-full ${paymentgatway.status === 1 ? 'bg-green-500 text-white' : 'bg-gray-400 text-white'}`}>
-                                                        {paymentgatway.status === 1 ? "publish":"unpublish"}
-                                                    </span></td>
-                                                <td className="px-4 py-3"><span className={`px-3 py-1 text-sm rounded-full ${paymentgatway.p_show === 1 ? 'bg-green-500 text-white' : 'bg-gray-400 text-white'}`}>
-                                                        {paymentgatway.p_show === 1 ? "publish":"unpublish"}
-                                                    </span></td>
-                                                <td className="px-4 py-3"><span className={`px-3 py-1 text-sm rounded-full ${paymentgatway.s_show === 1 ? 'bg-green-500 text-white' : 'bg-gray-400 text-white'}`}>
-                                                        {paymentgatway.s_show === 1 ? "publish":"unpublish"}
-                                                    </span></td>
+                                                <td className={` px-4 py-1 `}>
+                                                    {paymentgatway.status === 1 ? 
+                                                        <FontAwesomeIcon className='h-7 w-16 ' style={{color:'#0064DC'}} icon={faToggleOn} /> 
+                                                        : 
+                                                        <FontAwesomeIcon className='h-7 w-16' style={{color:'#e9ecef'}} icon={faToggleOff} />
+                                                    }
+                                                </td>
+                                                <td className="px-4 py-1">
+                                                {paymentgatway.status === 1 ? 
+                                                        <FontAwesomeIcon className='h-7 w-16 ' style={{color:'#0064DC'}} icon={faToggleOn} /> 
+                                                        : 
+                                                        <FontAwesomeIcon className='h-7 w-16' style={{color:'#e9ecef'}} icon={faToggleOff} />
+                                                    }
+                                                </td>
+                                                <td className="px-4 py-1">
+                                                    {paymentgatway.s_show === 1 ? 
+                                                        <FontAwesomeIcon className='h-7 w-16 ' style={{color:'#0064DC'}} icon={faToggleOn} /> 
+                                                        : 
+                                                        <FontAwesomeIcon className='h-7 w-16' style={{color:'#e9ecef'}} icon={faToggleOff} />
+                                                    }
+                                                </td>
                                                 
-                                                <td className="px-4 py-3">
-                                                    <button className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition mr-2">
+                                                <td className="px-4 py-1">
+                                                    <NotificationContainer />
+                                                    <button className="bg-[#2dce89] text-white p-2 rounded-full hover:bg-green-600 transition mr-2">
                                                         <FaPen />
                                                     </button>
-                                                    <button className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition" onClick={()=>{handledelete(paymentgatway.id)}}>
+                                                    <button className="bg-[#f5365c] text-white p-2 rounded-full hover:bg-red-600 transition " onClick={()=>{handledelete(paymentgatway.id)}}>
                                                         <FaTrash />
                                                     </button>
                                                 </td>
@@ -176,17 +192,27 @@ const PaymentGatewayList = () => {
                             </span>
                             <ul className="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">
                                 <li>
-                                    <button onClick={() => paginate(currentPage > 1 ? currentPage - 1 : 1)} className="previous-button" disabled={currentPage === 1}>
+                                    <button
+                                        onClick={() => paginate(currentPage > 1 ? currentPage - 1 : 1)}
+                                        className={`previous-button ${filteredpaymentGateway.length === 0 ? 'cursor-not-allowed' : ''}`}
+                                        disabled={currentPage === 1 || filteredpaymentGateway.length === 0}
+                                        title={filteredpaymentGateway.length === 0 ? 'No data available' : ''}
+                                    >
                                         <img src="/image/action/Left Arrow.svg" alt="Left" /> Previous
                                     </button>
                                 </li>
                                 <li>
                                     <span className="current-page">
-                                        Page {currentPage} of {totalPages}
+                                        Page {filteredpaymentGateway.length > 0 ? currentPage : 0} of {filteredpaymentGateway.length > 0 ? totalPages : 0}
                                     </span>
                                 </li>
                                 <li>
-                                    <button onClick={() => paginate(currentPage < totalPages ? currentPage + 1 : totalPages)} className="next-button" disabled={currentPage === totalPages}>
+                                    <button
+                                        onClick={() => paginate(currentPage < totalPages ? currentPage + 1 : totalPages)}
+                                        className={`next-button ${filteredpaymentGateway.length === 0 ? 'cursor-not-allowed' : ''}`}
+                                        disabled={currentPage === totalPages || filteredpaymentGateway.length === 0}
+                                        title={filteredpaymentGateway.length === 0 ? 'No data available' : ''}
+                                    >
                                         Next <img src="/image/action/Right Arrow (1).svg" alt="Right" />
                                     </button>
                                 </li>
