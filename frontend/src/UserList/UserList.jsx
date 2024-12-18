@@ -9,6 +9,8 @@ import { handleSort } from '../utils/sorting';
 import { DeleteEntity } from '../utils/Delete';
 import { useLoading } from '../Context/LoadingContext';
 import Loader from '../common/Loader';
+import { NotificationContainer, NotificationManager } from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 
 const UserList = () => {
     const hasFetched = useRef(false);
@@ -208,6 +210,7 @@ const UserList = () => {
                                                     <button className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition mr-2">
                                                         <FaPen />
                                                     </button>
+                                                    <NotificationContainer />
                                                     <button className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition" onClick={()=>{handledelete(userList.id)}}>
                                                         <FaTrash />
                                                     </button>

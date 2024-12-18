@@ -181,12 +181,6 @@ const Header = () => {
             onClick={handleNotificationClick}
           >
 
-
-
-
-
-
-
             {showNotifications && (
               <div
                 ref={notificationRef}

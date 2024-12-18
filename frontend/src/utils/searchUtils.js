@@ -17,6 +17,11 @@ export const searchEntity = async (entity, query, setResults) => {
       case "Coupon":
         url = `${BASE_URL}/coupons/search?query=${query}`;
         break;
+
+        case "Facility":
+          url = `${BASE_URL}/facilities/all?search=${query}`;
+          break;
+      
       // Add more cases for other entities
       default:
         throw new Error("Unknown entity type");

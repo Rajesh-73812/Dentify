@@ -1,20 +1,22 @@
 import React, { useEffect, useState } from 'react'
 import Header from '../components/Header'
-
 import { Link, useNavigate } from 'react-router-dom'
 import SidebarMenu from '../components/SideBar'
-
 import axios from 'axios'
 import ImageUploader from '../common/ImageUploader';
 import { useLoading } from '../Context/LoadingContext';
 import { useLocation } from 'react-router-dom';
 import Loader from '../common/Loader';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import { NotificationContainer, NotificationManager } from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 
 const Settings = () => {
   const [formData, setFormData] = useState({id:'',  webname: '',weblogo:'',  timezone: '',  currency: '',  tax: '',  sms_type: '',  auth_key: '',  twilio_number: '',  auth_token: '',  acc_id: '',otp_id:'', otp_auth:'', show_property:'', one_key:'', one_hash:'', rcredit:'', rcredit:'',scredit:'', wlimit:''});
   const location = useLocation();
   const { isLoading, setIsLoading } = useLoading();
+  const navigate = useNavigate()
+
   useEffect(() => {
     const fetchSettings = async () => {
       try {
@@ -36,13 +38,6 @@ const Settings = () => {
 
     fetchSettings();
   }, []);
-
-
-  const navigate = useNavigate()
-
-
-
-
 
   useEffect(() => {
     setIsLoading(true);
@@ -85,10 +80,10 @@ const handleImageUploadSuccess = (imageUrl) => {
       );
       // console.log(response.data);
       if (response.status === 200) {
-        alert('Settings updated successfully');
+        NotificationManager.success('Settings updated successfully');
       }
     } catch (error) {
-      console.error(error);
+        NotificationManager.error(error);
     }
   };
 
@@ -292,6 +287,7 @@ const handleImageUploadSuccess = (imageUrl) => {
           </div>
         </div>
       </main>
+      <NotificationContainer />
     </div>
     </div>
   )
