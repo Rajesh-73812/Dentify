@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import Header from '../components/Header';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import SidebarMenu from '../components/SideBar';
 import axios from 'axios';
 import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css'; // Import the styles
+import 'react-quill/dist/quill.snow.css'; 
 import ImageUploader from '../common/ImageUploader';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
@@ -78,17 +77,12 @@ const PackageAdd = () => {
     console.log("Data to be sent to the server:", dataToSend);
   
     try {
-      const url = id 
-        ? `http://localhost:5000/packages/upsert` 
-        : `http://localhost:5000/packages/upsert`;
-  
-      const successMessage = id 
-        ? "Package updated successfully!" 
-        : "Package added successfully!";
-  
+      const url = id ? `http://localhost:5000/packages/upsert` : `http://localhost:5000/packages/upsert`;
+      const successMessage = id ? "Package updated successfully!" : "Package added successfully!";
       const response = await axios.post(url, dataToSend, { withCredentials: true });
   
       if (response.status === 200 || response.status === 201) {
+        NotificationManager.removeAll();
         NotificationManager.success(successMessage);
         setTimeout(() => {
           navigate("/package-list");
@@ -97,21 +91,15 @@ const PackageAdd = () => {
         NotificationManager.error("Something went wrong. Please try again.");
       }
     } catch (error) {
+      NotificationManager.removeAll();
       console.error("Error submitting Package:", error);
       NotificationManager.error("An error occurred while submitting the Package.");
     }
   };
   
-
   return (
     <div>
       <div className="flex bg-[#f7fbff]">
-
-      
-      
-      
-
-
         <main className="flex-grow">
           <Header />
           <div className="container mx-auto">

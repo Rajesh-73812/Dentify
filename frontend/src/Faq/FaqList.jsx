@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import Header from '../components/Header';
 import { GoArrowDown, GoArrowUp } from 'react-icons/go';
-
 import { FaPen, FaTrash } from "react-icons/fa";
 import { searchFunction } from '../Entity/SearchEntity';
-
 import axios from 'axios';
 import FaqHeader from './FaqHeader';
 import { useNavigate } from 'react-router-dom';
@@ -47,8 +45,7 @@ const FaqList = () => {
     const currentfaq = filteredfaq.slice(indexOfFirstFaq, indexOfLastFaq);
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
     const totalPages = Math.ceil(filteredfaq.length / itemsPerPage);
-
-    // for update
+    
     const updateFAQ = (id) => {
         navigate('/create-faq', { state: { id: id } })
     }

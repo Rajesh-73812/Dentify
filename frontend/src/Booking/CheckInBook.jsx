@@ -84,12 +84,14 @@ const CheckInBook = () => {
                 { withCredentials: true }
             );
             if (response.status === 200) {
+                NotificationManager.removeAll();
                 NotificationManager.success('Status updated successfully!');
                 setTimeout(() => {
                     navigate('/completed-list');
                 }, 3000);
             }
         } catch (error) {
+            NotificationManager.removeAll();
             console.error('Error updating status:', error.response?.data || error.message);
             NotificationManager.error(error.response?.data?.error || 'Failed to update status. Please try again.');
         }
@@ -130,7 +132,7 @@ const CheckInBook = () => {
                                              <GoArrowDown className='cursor-pointer' onClick={() => sortData('prop_price')} />
                                          </div>
                                     </th>
-                                    <th className="px-4 py-3 min-w-[200px]">
+                                    <th className="px-4 py-3 min-w-[250px]">
                                         Property Total Day
                                         <div className="inline-flex items-center ml-2">
                                             <GoArrowUp className='cursor-pointer' onClick={() => sortData('total_day')} />

@@ -102,7 +102,7 @@ const CancelledBook = () => {
                                                     <GoArrowDown className='cursor-pointer' onClick={() => sortData('prop_price')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[200px]">
+                                            <th className="px-4 py-3 min-w-[250px]">
                                                 Property Total Day
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className='cursor-pointer' onClick={() => sortData('total_day')} />

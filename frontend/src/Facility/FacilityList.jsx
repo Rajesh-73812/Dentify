@@ -5,19 +5,21 @@ import { FaPen,FaTrash } from "react-icons/fa";
 import FacilityHeader from './FacilityHeader';
 import axios from 'axios';
 import { useLoading } from '../Context/LoadingContext';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Loader from '../common/Loader';
 import { handleSort } from '../utils/sorting';
 import { DeleteEntity } from '../utils/Delete';
+import { searchEntity } from '../utils/searchUtils';
 
 const FacilityList = () => {
-   
+    const navigate=useNavigate()
     const [facility, setfacility] = useState([]);
     const [filterData, setFilterData] = useState(facility);
     const [filteredfacility, setFilteredfacility] = useState(facility);
     const [sortConfig, setSortConfig] = useState({ key: '', direction: '' });
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10; 
+    const [searchQuery, setSearchQuery] = useState("");
     const location = useLocation();
     const { isLoading, setIsLoading } = useLoading();
 
@@ -50,13 +52,24 @@ const FacilityList = () => {
 
     // for sorting
     const sortData = (key) => {
-        handleSort(filterData,key,sortConfig,setSortConfig,setFilterData)
+        handleSort(filteredfacility,key,sortConfig,setSortConfig,setFilteredfacility)
     };
 
-    // for searching
     const handleSearch = (event) => {
+        const query = event.target.value;
+        setSearchQuery(query);
+    
+        if (query.trim() !== "") {
+            searchEntity("Facility", query, (results) => {
+                setFilteredfacility(results); 
+                setCurrentPage(1); // Reset pagination
+            });
+        } else {
+            setFilteredfacility(facility);
+            setCurrentPage(1); // Reset pagination
+        }
     };
-
+    
     // Calculate paginated facility
     const indexOfLast = currentPage * itemsPerPage;
     const indexOfFirst = indexOfLast - itemsPerPage;
@@ -64,14 +77,20 @@ const FacilityList = () => {
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
     const totalPages = Math.ceil(filteredfacility.length / itemsPerPage);
 
-    const handledelete=async(id)=>{
-        const success=await DeleteEntity('Facility',id);
-        if(success){
-            const updatedFacility=facility.filter((facility)=> facility.id !==id);
-            setfacility(updatedFacility);
-            setFilterData(updatedFacility);
+    const handledelete = async (id) => {
+        const success = await DeleteEntity('Facility', id);
+        if (success) {
+          const updatedFacility = facility.filter((item) => item.id !== id);
+          setfacility(updatedFacility);
+          setFilterData(updatedFacility);
+          setFilteredfacility(updatedFacility);
         }
-    }
+      };
+      
+     // for update
+     const updateFacility=(id)=>{
+        navigate('/create-facility',{state:{id:id}})
+    }   
 
     return (
         <div>
@@ -100,16 +119,12 @@ const FacilityList = () => {
                                             <th className="px-4 py-3 min-w-[150px]">
                                                 Facility Title 
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('name')} />
-                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('name')} />
+                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('title')} />
+                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('title')} />
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[150px]">
                                                 Facility Image
-                                                <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('name')} />
-                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('name')} />
-                                                </div>
                                             </th>
                                             
                                             <th className="px-4 py-3 min-w-[100px]">
@@ -121,10 +136,6 @@ const FacilityList = () => {
                                             </th>
                                             <th className="px-4 py-3 min-w-[100px]">
                                                 Action
-                                                <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('action')} />
-                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('action')} />
-                                                </div>
                                             </th>
                                         </tr>
                                     </thead>
@@ -133,7 +144,7 @@ const FacilityList = () => {
                                             currentfacility.map((facility, index) => (
                                             <tr key={facility.id}>
                                                 <td className="px-4 py-3">{index + 1 + indexOfFirst}</td>
-                                                <td className="px-4 py-3">{facility.title}</td>
+                                                <td className="px-4 py-3">{facility?.title || "N/A"}</td>
                                                 <td className="px-4 py-3">
                                                     {facility.img && facility.img.trim() !== '' ? (
                                                         <img src={facility.img} className="w-16 h-16 object-cover rounded-full" height={50} width={50} loading="lazy" alt="" onError={(e) => {
@@ -152,7 +163,7 @@ const FacilityList = () => {
                                                     </span>
                                                 </td>
                                                 <td className="px-4 py-3">
-                                                    <button className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition mr-2">
+                                                    <button className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition mr-2" onClick={()=>{updateFacility(facility.id)}}>
                                                         <FaPen />
                                                     </button>
                                                     <button className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition" onClick={()=>handledelete(facility.id)}>
@@ -173,27 +184,38 @@ const FacilityList = () => {
                                 </table>
                             </div>
                         </div>
+                        {/* for pagination */}
                         <div className="bottom-0 left-0 w-full bg-[#f7fbff] py-4 flex justify-between items-center">
                             <span className="text-sm font-normal text-gray-500">
                                 Showing <span className="font-semibold text-gray-900">{indexOfFirst + 1}</span> to <span className="font-semibold text-gray-900">{Math.min(indexOfLast, filteredfacility.length)}</span> of <span className="font-semibold text-gray-900">{filteredfacility.length}</span>
                             </span>
-                            <ul className="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">
-                                <li>
-                                    <button onClick={() => paginate(currentPage > 1 ? currentPage - 1 : 1)} className="previous-button" disabled={currentPage === 1}>
-                                        <img src="/image/action/Left Arrow.svg" alt="Left" /> Previous
-                                    </button>
-                                </li>
-                                <li>
-                                    <span className="current-page">
-                                        Page {currentPage} of {totalPages}
-                                    </span>
-                                </li>
-                                <li>
-                                    <button onClick={() => paginate(currentPage < totalPages ? currentPage + 1 : totalPages)} className="next-button" disabled={currentPage === totalPages}>
-                                        Next <img src="/image/action/Right Arrow (1).svg" alt="Right" />
-                                    </button>
-                                </li>
-                            </ul>
+                                <ul className="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">
+                                        <li>
+                                            <button 
+                                                onClick={() => paginate(currentPage > 1 ? currentPage - 1 : 1)} 
+                                                className={`previous-button ${filteredfacility.length === 0 ? 'cursor-not-allowed' : ''}`} 
+                                                disabled={currentPage === 1 || filteredfacility.length === 0} 
+                                                title={filteredfacility.length === 0 ? 'No data available' : ''}
+                                            >
+                                                <img src="/image/action/Left Arrow.svg" alt="Left" /> Previous
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <span className="current-page">
+                                                Page {filteredfacility.length > 0 ? currentPage : 0} of {filteredfacility.length > 0 ? totalPages : 0}
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <button 
+                                                onClick={() => paginate(currentPage < totalPages ? currentPage + 1 : totalPages)} 
+                                                className={`next-button ${filteredfacility.length === 0 ? 'cursor-not-allowed' : ''}`} 
+                                                disabled={currentPage === totalPages || filteredfacility.length === 0} 
+                                                title={filteredfacility.length === 0 ? 'No data available' : ''}
+                                            >
+                                                Next <img src="/image/action/Right Arrow (1).svg" alt="Right" />
+                                            </button>
+                                        </li>
+                                </ul>
                         </div>
                     </div>
                 </div>

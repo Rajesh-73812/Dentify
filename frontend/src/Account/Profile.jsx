@@ -13,18 +13,7 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 
 const Profile = () => {
-   
-
-  const handleFocus=()=>{
-
-  }
-
-
   const navigate = useNavigate()
-  const handleBlur=()=>{
-
-  }
-
   const location = useLocation();
   const { isLoading, setIsLoading } = useLoading();
   const [formData, setFormData] = useState({
@@ -97,8 +86,6 @@ const Profile = () => {
     <div>
       {isLoading && <Loader />}
       <div className="flex bg-[#f7fbff]">
-    
-      
       <main className="flex-grow">
         <Header />
         <div className="container mx-auto">
@@ -138,7 +125,7 @@ const Profile = () => {
 
                 {/* Action Buttons */}
                 <div className="flex justify-start mt-6 gap-3">
-                  <button  type="submit" className=" py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 w-[150px] h-12 font-[Montserrat] font-bold" style={{ borderRadius: "8px", }} >Edit Profile </button>
+                  <button  type="submit" className=" py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 w-[130px] h-12 font-[Montserrat] font-bold" style={{ borderRadius: "8px", }} >Edit Profile </button>
                 </div>
               </form>
 
