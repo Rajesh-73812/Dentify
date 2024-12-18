@@ -22,6 +22,7 @@ import { GoHome } from "react-icons/go";
 import { IoLayersOutline } from "react-icons/io5";
 import KeyboardArrowRightOutlinedIcon from '@mui/icons-material/KeyboardArrowRightOutlined';
 import AdminPanelSettingsOutlinedIcon from '@mui/icons-material/AdminPanelSettingsOutlined';
+import ManageAccountsOutlinedIcon from '@mui/icons-material/ManageAccountsOutlined';
 import axios from "axios";
 import Loader from "../common/Loader";
 
@@ -194,7 +195,7 @@ const SidebarMenu = () => {
             </SubMenu>
 
             {/* Facility */}
-            <SubMenu label="Facility" icon={<MdOutlineBluetooth />}>
+            <SubMenu label="Facility" icon={<ManageAccountsOutlinedIcon />}>
               <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
                 active={location.pathname === "/create-facility"}
                 onClick={() => navigate("/create-facility")}
@@ -317,18 +318,18 @@ const SidebarMenu = () => {
         </SubMenu> */}
 
             {/* faq */}
-            <SubMenu label="Faq " icon={<IoCheckboxOutline />}>
+            <SubMenu label="FAQ's " icon={<IoCheckboxOutline />}>
               <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
                 active={location.pathname === "/create-faq"}
                 onClick={() => navigate("/create-faq")}
               >
-                Add Faq
+                Add FAQ's
               </MenuItem>
               <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
                 active={location.pathname === "/faq-list"}
                 onClick={() => navigate("/faq-list")}
               >
-                List Faq
+                List FAQ's
               </MenuItem>
             </SubMenu>
 
@@ -361,7 +362,7 @@ const SidebarMenu = () => {
               active={location.pathname === "/settings"} icon={<LuSettings2 />}
               onClick={() => navigate("/settings")}
             >
-              Setting
+              Settings
             </MenuItem>
 
             {/*  role change */}

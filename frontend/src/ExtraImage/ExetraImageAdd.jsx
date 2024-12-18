@@ -3,20 +3,44 @@ import Loader from '../common/Loader';
 import Header from '../components/Header';
 import axios from 'axios';
 import MultiImageUploader from '../common/MultipleImageUploader';
-
-
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const ExtraImageAdd = () => {
+    const navigate = useNavigate();
+    const location = useLocation();
+    const id = location.state ? location.state.id : null;
     const [properties, setProperties] = useState([]);
     const [formData, setFormData] = useState({
         pid: '',
         status: '',
         img: []
     });
-    
+
     const [isLoading, setIsLoading] = useState(false);
 
-    
+    useEffect(() => {
+        if (id) {
+            getExtraImage()
+        }
+    }, []);
+
+    const getExtraImage = async () => {
+        try {
+            const response = await axios.get(`http://localhost:5000/extra/${id}`, {
+                withCredentials: true
+            })
+            const ExtraImage = response.data;
+            setFormData({
+                id,
+                pid: ExtraImage.pid,
+                img: ExtraImage.img,
+                status: ExtraImage.status
+            })
+        } catch (error) {
+            console.error("Error fetching Extra Images ", error);
+        }
+    }
+
     useEffect(() => {
         const fetchProperties = async () => {
             try {
@@ -34,37 +58,31 @@ const ExtraImageAdd = () => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        
-            setFormData((prevFormData) => ({
-                ...prevFormData,
-                [name]: value
-            }));
-        
+
+        setFormData((prevFormData) => ({
+            ...prevFormData,
+            [name]: value
+        }));
     };
 
-    
-
-      const handleImageUploadSuccess = (imageUrls) => {
+    const handleImageUploadSuccess = (imageUrls) => {
         setFormData((prevData) => ({
             ...prevData,
             img: [...prevData.img, ...imageUrls]
         }));
     };
-    
+
     console.log(formData, "from form data");
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsLoading(true);
         try {
-            
-
-              
             const response = await axios.post('http://localhost:5000/extra/upsert', formData, {
                 withCredentials: true,
             });
             console.log('Extra image added successfully:', response.data);
-            alert('Extra image added successfully!'); 
+            alert('Extra image added successfully!');
         } catch (error) {
             console.error('Error adding extra image:', error.response ? error.response.data : error.message);
         } finally {
@@ -76,7 +94,6 @@ const ExtraImageAdd = () => {
         <div>
             {isLoading && <Loader />}
             <div className="flex bg-[#f7fbff]">
-
                 <main className="flex-grow">
                     <Header />
                     <div className="container mx-auto">
@@ -96,7 +113,7 @@ const ExtraImageAdd = () => {
                                                     <option key={property.id} value={property.id}>{property.title}</option>
                                                 ))}
                                             </select>
-                                            
+
                                         </div>
                                     </div>
                                     <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-1 mt-6">

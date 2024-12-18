@@ -72,7 +72,7 @@ const CategoryList = () => {
   const handledelete = async (id) => {
     const success = await DeleteEntity('Category', id);
     if (success) {
-      const updatedCategories = categories.filter((item) => categories.id !== id);
+      const updatedCategories = categories.filter((category) => category.id !== id);
       setCategories(updatedCategories);
       setFilteredcategories(updatedCategories)
     }
@@ -81,8 +81,8 @@ const CategoryList = () => {
   // for update 
   const updateCategory = (id) => {
     navigate('/add-category', { state: { id: id } })
-
   }
+
   return (
     <div>
       {isLoading && <Loader />}
