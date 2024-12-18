@@ -174,9 +174,9 @@ const ApprovedBook = () => {
                                                     <td className="px-4 py-3">{approve?.total_day || 'N/A'}</td>
                                                     <td className="px-4 py-3 d-flex">
                                                         <NotificationContainer />
-                                                        <span className='px-2 py-1 text-sm rounded-full bg-green-400 cursor-pointer text-white mr-2' onClick={() => openModal(approve)}>View Details</span>
+                                                        <span className='px-2 py-1 text-sm rounded-full bg-[#2dce89] cursor-pointer text-white mr-2' onClick={() => openModal(approve)}>View Details</span>
                                                         <span className=' px-2 py-1  text-sm rounded-full bg-cyan-400 cursor-pointer text-white mr-2' onClick={() => { navigateApprove(approve.id, 'Check_in') }}>Check In</span>
-                                                        <span className='px-2 py-1 text-sm rounded-full bg-red-400 cursor-pointer text-white mr-2' onClick={openModal2}>Cancelled</span>
+                                                        <span className='px-2 py-1 text-sm rounded-full bg-[#f5365c] cursor-pointer text-white mr-2' onClick={openModal2}>Cancelled</span>
                                                     </td>
                                                 </tr>
                                             ))

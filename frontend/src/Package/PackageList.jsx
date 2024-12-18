@@ -7,6 +7,7 @@ import PackageHeader from './PackageHeader';
 import { useNavigate } from 'react-router-dom';
 import { DeleteEntity } from '../utils/Delete';
 import { handleSort } from '../utils/sorting';
+import { NotificationContainer } from 'react-notifications';
 
 const PackageList = () => {
     const navigate = useNavigate();
@@ -131,6 +132,7 @@ const PackageList = () => {
                                                             alt={Package.title || "N/A"}
                                                             className="w-16 h-16 object-cover rounded-full"
                                                         // onError={(e) => (e.target.src = 'fallback-image.jpg')}
+
                                                         />
                                                     </td>
                                                     <td className="px-4 py-3">{Package?.day || "N/A"}</td>
@@ -152,6 +154,7 @@ const PackageList = () => {
                                                     </td>
                                                 </tr>
                                             ))
+
                                         ) : (
                                             <tr>
                                                 <td colSpan="10" className="text-center">

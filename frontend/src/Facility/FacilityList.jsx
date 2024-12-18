@@ -10,6 +10,7 @@ import Loader from '../common/Loader';
 import { handleSort } from '../utils/sorting';
 import { DeleteEntity } from '../utils/Delete';
 import { searchEntity } from '../utils/searchUtils';
+import { NotificationContainer } from 'react-notifications';
 
 const FacilityList = () => {
     const navigate = useNavigate()
@@ -139,6 +140,7 @@ const FacilityList = () => {
                                     <tbody className="divide-y divide-gray-200">
                                         {currentfacility.length > 0 ? (
                                             currentfacility.map((facility, index) => (
+
                                                 <tr key={facility.id}>
                                                     <td className="px-4 py-3">{index + 1 + indexOfFirst}</td>
                                                     <td className="px-4 py-3">{facility?.title || "N/A"}</td>
@@ -169,6 +171,7 @@ const FacilityList = () => {
                                                     </td>
                                                 </tr>
                                             ))
+
                                         ) : (
                                             <tr>
                                                 <td colSpan="10" className="text-center">

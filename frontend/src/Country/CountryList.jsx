@@ -7,6 +7,8 @@ import { DeleteEntity } from '../utils/Delete';
 import { useNavigate } from 'react-router-dom';
 import { handleSort } from '../utils/sorting';
 import api from '../utils/api';
+import { NotificationContainer, NotificationManager } from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 
 const CountryList = () => {
     const navigate = useNavigate();
@@ -113,10 +115,12 @@ const CountryList = () => {
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-gray-200">
+
                                         {filteredCountries.length === 0 ? (
                                             <tr>
                                                 <td colSpan="6" className="text-center py-4">
                                                     No countries found.
+
                                                 </td>
                                             </tr>
                                         ) : (

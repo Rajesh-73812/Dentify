@@ -8,6 +8,7 @@ import PropotiesHeader from './PropotiesHeader';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { DeleteEntity } from '../utils/Delete';
+import { NotificationContainer } from 'react-notifications';
 
 const PropotiesList = () => {
     const [properties, setProperties] = useState([]);
@@ -298,6 +299,7 @@ const PropotiesList = () => {
                                                         >
                                                             {property.status === 1 ? "publish" : "unpublish"}
                                                         </span>
+
                                                     </td>
                                                     <td className="px-4 py-3">
                                                         <button className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition mr-2" onClick={() => propertyUpdate(property.id)}>
@@ -313,6 +315,7 @@ const PropotiesList = () => {
                                             <tr>
                                                 <td colSpan="20" className="text-center py-4">
                                                     No properties found.
+
                                                 </td>
                                             </tr>
                                         )}

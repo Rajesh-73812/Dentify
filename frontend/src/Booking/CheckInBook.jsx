@@ -112,6 +112,7 @@ const CheckInBook = () => {
                     <Header />
                     <PendingBookHeader onSearch={handleSearch} />
                     <div className="py-6 px-6 h-full w-[1000px] overflow-scroll scrollbar-none">
+
                         <div className="bg-white w-full rounded-xl border border-[#EAE5FF] py-4 px-3 overflow-x-auto scrollbar-none">
                             <div className="relative sm:rounded-lg">
                                 <table className="min-w-full text-sm text-left text-gray-700">
@@ -148,6 +149,7 @@ const CheckInBook = () => {
                                             </th>
 
                                             <th className="px-4 py-3 min-w-[350px]">Action</th>
+
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-gray-200">

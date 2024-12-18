@@ -157,10 +157,10 @@ const GalleryList = () => {
                                                     </span>
                                                 </td>
                                                 <td className="px-4 py-3">
-                                                    <button className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition mr-2" onClick={()=>{updateGallery(gallery.id)}}>
+                                                    <button className="bg-[#2dce89] text-white p-2 rounded-full hover:bg-green-600 transition mr-2" onClick={()=>{updateGallery(gallery.id)}}>
                                                         <FaPen />
                                                     </button>
-                                                    <button className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition" onClick={()=>{handledelete(gallery.id)}}>
+                                                    <button className="bg-[#f5365c] text-white p-2 rounded-full hover:bg-red-600 transition" onClick={()=>{handledelete(gallery.id)}}>
                                                         <FaTrash />
                                                     </button>
                                                 </td>

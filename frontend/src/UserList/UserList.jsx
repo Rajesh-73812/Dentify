@@ -11,6 +11,8 @@ import { useLoading } from '../Context/LoadingContext';
 import Loader from '../common/Loader';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faToggleOn, faToggleOff } from '@fortawesome/free-solid-svg-icons';
 
 const UserList = () => {
     const hasFetched = useRef(false);
@@ -76,14 +78,26 @@ const UserList = () => {
 
     // for delete
     const handledelete = async (id) => {
-        const success = await DeleteEntity('UserList', id)
-        if (success) {
-            const updatedUserList = user.filter((user) => user.id !== id)
-            setuser(updatedUserList)
-            setFiltereduser(updatedUserList)
+
+        try {
+            const success = await DeleteEntity('UserList', id);
+    
+            if (success) {
+                setuser((prevUserList) => {
+                    const updatedUserList = prevUserList.filter((user) => user.id !== id);
+                    setFiltereduser(updatedUserList); // Update filtered users
+                    return updatedUserList;
+                });
+            } else {
+                console.error("Failed to delete the user.");
+            }
+        } catch (error) {
+            console.error("Error while deleting user:", error);
+
         }
-    }
-    console.log(currentuser)
+    };
+    
+
     return (
         <div>
             {isLoading && <Loader />}
@@ -134,10 +148,6 @@ const UserList = () => {
                                             </th>
                                             <th className="px-4 py-3 min-w-[150px]">
                                                 Status
-                                                <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('status')} />
-                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('status')} />
-                                                </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[150px]">
                                                 Refer Code
@@ -162,10 +172,6 @@ const UserList = () => {
                                             </th>
                                             <th className="px-4 py-3 min-w-[180px]">
                                                 IsSubscribe
-                                                <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('is_subscribe')} />
-                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('is_subscribe')} />
-                                                </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[180px]">
                                                 Package  Name
@@ -196,35 +202,41 @@ const UserList = () => {
                                     <tbody className="divide-y divide-gray-200">
                                         {currentuser.length > 0 ? (
                                             currentuser.map((userList, index) => (
-                                                <tr key={userList.id}>
-                                                    <td className="px-4 py-3">{index + 1 + indexOfFirst}</td>
-                                                    <td className="px-4 py-3">{userList?.name || "N/A"}</td>
-                                                    <td className="px-4 py-3">{userList?.email || "N/A"}</td>
-                                                    <td className="px-4 py-3">{userList?.mobile || "N/A"}</td>
-                                                    <td className="px-4 py-3">{userList?.joinDate || "N/A"}</td>
-                                                    <td className="px-4 py-3">
-                                                        <span
-                                                            className={`px-3 py-1 text-sm rounded-full ${userList.status === 1 ? 'bg-green-500 text-white' : 'bg-gray-400 text-white'
-                                                                }`}
-                                                        >
-                                                            {userList.status === 1 ? "publish" : "unpublish"}
-                                                        </span>
-                                                    </td>
-                                                    <td className="px-4 py-3">{userList?.refercode || "N/A"}</td>
-                                                    <td className="px-4 py-3">{userList?.parentCode || "N/A"}</td>
-                                                    <td className="px-4 py-3">{userList?.wallet || "N/A"}</td>
-                                                    <td className="px-4 py-3">{userList?.is_subscribe || "N/A"}</td>
-                                                    <td className="px-4 py-3">{userList?.pack_id || "N/A"}</td>
-                                                    <td className="px-4 py-3">{userList?.start_date || "N/A"}</td>
-                                                    <td className="px-4 py-3">{userList?.end_date || "N/A"}</td>
-                                                    <td className="px-4 py-3">
-                                                        <NotificationContainer />
-                                                        <button className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition" onClick={() => { handledelete(userList.id) }}>
-                                                            <FaTrash />
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                            ))
+
+                                            <tr key={userList.id}>
+                                                <td className="px-4 py-2">{index + 1 + indexOfFirst}</td>
+                                                <td className="px-4 py-2">{userList?.name || "N/A"}</td>
+                                                <td className="px-4 py-2">{userList?.email || "N/A"}</td>
+                                                <td className="px-4 py-2">{userList?.mobile || "N/A"}</td>
+                                                <td className="px-4 py-2">{userList?.reg_date.split("T")[0] || "N/A"}</td>
+                                                <td className="px-4 py-2">
+                                                    {userList.status === 1 ? 
+                                                        <FontAwesomeIcon className='h-7 w-16 ' style={{color:'#0064DC'}} icon={faToggleOn} />  :  <FontAwesomeIcon className='h-7 w-16' style={{color:'#e9ecef'}} icon={faToggleOff} />
+                                                    }
+                                                </td>
+                                                <td className="px-4 py-2">{userList?.refercode || "N/A"}</td>
+                                                <td className="px-4 py-2">{userList?.parentcode || "N/A"}</td>
+                                                <td className="px-4 py-2">{userList?.wallet || "N/A"}</td>
+                                                <td className="px-4 py-2">
+                                                    {userList.is_subscribe === 1 ? 
+                                                        <FontAwesomeIcon className='h-7 w-16 ' style={{color:'#0064DC'}} icon={faToggleOn} />  :  <FontAwesomeIcon className='h-7 w-16' style={{color:'#e9ecef'}} icon={faToggleOff} />
+                                                    }
+                                                </td>
+                                                <td className="px-4 py-2">{userList?.pack_id || "N/A"}</td>
+                                                <td className="px-4 py-2">{userList?.start_date || "N/A"}</td>
+                                                <td className="px-4 py-2">{userList?.end_date || "N/A"}</td>
+                                                <td className="px-4 py-2">
+                                                    <button className="bg-[#2dce89] text-white p-2 rounded-full hover:bg-green-600 transition mr-2">
+                                                        <FaPen />
+                                                    </button>
+                                                    <NotificationContainer />
+                                                    <button className="bg-[#f5365c] text-white p-2 rounded-full hover:bg-red-600 transition" onClick={()=>{handledelete(userList.id)}}>
+                                                        <FaTrash />
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        ))
+
                                         ) : (
                                             <tr>
                                                 <td colSpan="10" className="text-center">

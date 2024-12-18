@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Sidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
 import { useNavigate, useLocation } from "react-router-dom";
 import { RiHome6Line } from "react-icons/ri";
@@ -26,47 +26,68 @@ import ManageAccountsOutlinedIcon from '@mui/icons-material/ManageAccountsOutlin
 import axios from "axios";
 import Loader from "../common/Loader";
 
-
-
 const SidebarMenu = () => {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 1024);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsLargeScreen(window.innerWidth >= 1024);
+      if (window.innerWidth >= 1024) {
+        setIsSidebarOpen(true);
+      } else {
+        setIsSidebarOpen(false);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen((prev) => !prev);
+  };
+  const toggleSidebar1 = () => {
+    setIsSidebarOpen(false);
+  };
+
   const location = useLocation();
-  const [loading, setloading] = useState(false)
 
   const logout = async () => {
-    setloading(true)
+    setLoading(true);
     try {
-      const response = await axios.post(`http://localhost:5000/admin/logout`, {}, { withCredentials: true });
-      // console.log(response.data);
+      await axios.post(`http://localhost:5000/admin/logout`, {}, { withCredentials: true });
       setTimeout(() => {
-
-        setloading(false);
+        setLoading(false);
         navigate("/");
-
       }, 2000);
     } catch (error) {
       console.error("Error during logout:", error.response?.data || error.message);
     }
   };
 
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-
-  const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen);
-  };
-
   return (
-
     <div className="flex">
       {loading && <Loader />}
-      <button
-        className="lg:hidden fixed top-4 left-4 z-50 bg-gray-800 text-white p-2 rounded-full"
-        onClick={toggleSidebar}
-      >
-        <RxHamburgerMenu size={24} />
-      </button>
 
-      <Sidebar collapsed={!isSidebarOpen} width="250px" style={{ overflowY: 'auto', height: '100vh' }}>
+      
+      {!isLargeScreen && (
+        <button
+          className="fixed top-4 left-4 z-50  text-[] p-2 rounded-full lg:hidden"
+          onClick={toggleSidebar}
+        >
+          <RxHamburgerMenu size={24} />
+        </button>
+      )}
+      {/* Sidebar */}
+      <div
+        className={`fixed top-0 left-0 h-full bg-white  transform ${
+          isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+        } transition-transform duration-300 z-40 lg:relative lg:translate-x-0 lg:shadow-none`}
+      >
+        <Sidebar   width="250px" style={{ overflowY: 'auto', height: '100vh' }}>
         <div className="h-[80px] bg-white flex justify-center items-center gap-2" >
           <img src="/image/Frame 1984078701.png" alt="Logo" className="h-[40px] w-[40px]" />
           <div className="flex flex-col">
@@ -81,7 +102,12 @@ const SidebarMenu = () => {
             {/* dashBoard */}
             <MenuItem icon={<RiHome6Line />}
               active={location.pathname === "/dashboard"}
-              onClick={() => navigate("/dashboard")}
+              onClick={() => {
+                navigate("/dashboard");
+                toggleSidebar1();
+              }}
+              
+              
             >
               Dashboard
             </MenuItem>
@@ -90,13 +116,22 @@ const SidebarMenu = () => {
             <SubMenu label="Country" active={location.pathname === "/add-country" || location.pathname === "/country-list"} icon={<IoLocationOutline />}>
               <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
 
-                onClick={() => navigate("/add-country")}
+                
+                onClick={() => {
+                  navigate("/add-country");
+                  toggleSidebar1();
+                }}
+
               >
                 Add Country
               </MenuItem>
               <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
 
-                onClick={() => navigate("/country-list")}
+                
+                onClick={() =>{
+                   navigate("/country-list");
+                   toggleSidebar1();}} 
+
               >
                 List Country
               </MenuItem>
@@ -106,13 +141,21 @@ const SidebarMenu = () => {
             <SubMenu label="Category" active={location.pathname === "/add-category" || location.pathname === "/category-list"} icon={<RxHamburgerMenu />}>
               <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
 
-                onClick={() => navigate("/add-category")}
+                
+                onClick={() => {navigate("/add-category");
+                  toggleSidebar1();
+                }}
+
               >
                 Add Category
               </MenuItem>
               <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
 
-                onClick={() => navigate("/category-list")}
+                
+                onClick={() => {navigate("/category-list");
+                  toggleSidebar1();
+                }}
+
               >
                 List Category
               </MenuItem>
@@ -122,13 +165,21 @@ const SidebarMenu = () => {
             <SubMenu label="Coupon" active={location.pathname === "/add-cuppon" || location.pathname === "/cuppon-list"} icon={<TbSquareRoundedPercentage />}>
               <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
 
-                onClick={() => navigate("/add-cuppon")}
+               
+                onClick={() => {navigate("/add-cuppon");
+                  toggleSidebar1();
+                }}
+
               >
                 Add Coupon
               </MenuItem>
               <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
 
-                onClick={() => navigate("/cuppon-list")}
+                
+                onClick={() => {navigate("/cuppon-list");
+                  toggleSidebar1();
+                }}
+
               >
                 List Coupon
               </MenuItem>
@@ -137,7 +188,9 @@ const SidebarMenu = () => {
             {/* payment gateway */}
             <MenuItem icon={<CiWallet />}
               active={location.pathname === "/payment-list"}
-              onClick={() => navigate("/payment-list")}
+              onClick={() => {navigate("/payment-list");
+                toggleSidebar1();
+              }}
             >
               Payment Gateway
             </MenuItem>
@@ -166,13 +219,21 @@ const SidebarMenu = () => {
             <SubMenu label="Properties" active={location.pathname === "/create-property" || location.pathname === "/property-list"} icon={<GoHome />}>
               <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
 
-                onClick={() => navigate("/create-property")}
+                
+                onClick={() => {navigate("/create-property");
+                  toggleSidebar1();
+                }}
+
               >
                 Add  Properties
               </MenuItem>
               <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
 
-                onClick={() => navigate("/property-list")}
+                
+                onClick={() => {navigate("/property-list")
+                  toggleSidebar1();
+                }}
+
               >
                 List Properties
               </MenuItem>
@@ -182,13 +243,21 @@ const SidebarMenu = () => {
             <SubMenu label="Extra Images" active={location.pathname === "/create-extra-image" || location.pathname === "/extra-image-list"} icon={<CiImageOn />}>
               <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
 
-                onClick={() => navigate("/create-extra-image")}
+                
+                onClick={() => {navigate("/create-extra-image");
+                  toggleSidebar1();
+                }}
+
               >
                 Add Extra Images
               </MenuItem>
               <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
 
-                onClick={() => navigate("/extra-image-list")}
+                
+                onClick={() => {navigate("/extra-image-list");
+                  toggleSidebar1();
+                }}
+
               >
                 List Extra Images
               </MenuItem>
@@ -200,13 +269,21 @@ const SidebarMenu = () => {
 
               <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
 
-                onClick={() => navigate("/create-facility")}
+               
+                onClick={() => {navigate("/create-facility");
+                  toggleSidebar1();
+                }}
+
               >
                 Add Facility
               </MenuItem>
               <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
 
-                onClick={() => navigate("/facility-list")}
+                
+                onClick={() => {navigate("/facility-list");
+                  toggleSidebar1();
+                }}
+
               >
                 List Facility
               </MenuItem>
@@ -248,13 +325,21 @@ const SidebarMenu = () => {
             <SubMenu label="Package " active={location.pathname === "/create-package" || location.pathname === "/package-list"} icon={<IoLayersOutline />}>
               <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
 
-                onClick={() => navigate("/create-package")}
+                
+                onClick={() => {navigate("/create-package");
+                  toggleSidebar1();
+                }}
+
               >
                 Add Package
               </MenuItem>
               <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
 
-                onClick={() => navigate("/package-list")}
+                
+                onClick={() => {navigate("/package-list");
+                  toggleSidebar1();
+                }}
+
               >
                 List Package
               </MenuItem>
@@ -265,7 +350,11 @@ const SidebarMenu = () => {
               {/* Pending Booking */}
               <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
 
-                onClick={() => navigate("/pending-book-list")}
+               
+                onClick={() => {navigate("/pending-book-list");
+                  toggleSidebar1();
+                }}
+
               >
                 Pending Booking
               </MenuItem>
@@ -273,7 +362,11 @@ const SidebarMenu = () => {
               {/*  Approved Booking */}
               <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
 
-                onClick={() => navigate("/approved-book-list")}
+               
+                onClick={() =>{ navigate("/approved-book-list");
+                  toggleSidebar1();
+                }}
+
               >
                 Approved Booking
               </MenuItem>
@@ -281,7 +374,11 @@ const SidebarMenu = () => {
               {/* Check In Booking */}
               <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
 
-                onClick={() => navigate("/check-in-list")}
+                
+                onClick={() => {navigate("/check-in-list");
+                  toggleSidebar1();
+                }}
+
               >
                 Check In Booking
               </MenuItem>
@@ -289,7 +386,11 @@ const SidebarMenu = () => {
               {/* Completed Booking */}
               <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
 
-                onClick={() => navigate("/completed-list")}
+                
+                onClick={() => {navigate("/completed-list");
+                  toggleSidebar1();
+                }}
+
               >
                 Completed Booking
               </MenuItem>
@@ -297,7 +398,11 @@ const SidebarMenu = () => {
               {/* Cancelled Booking */}
               <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
 
-                onClick={() => navigate("/cancelled-list")}
+                
+                onClick={() => {navigate("/cancelled-list");
+                  toggleSidebar1();
+                }}
+
               >
                 Cancelled Booking
               </MenuItem>
@@ -325,13 +430,17 @@ const SidebarMenu = () => {
 
               <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
                 // active={location.pathname === "/create-faq"}
-                onClick={() => navigate("/create-faq")}
+                onClick={() => {navigate("/create-faq");
+                  toggleSidebar1();
+                }}
               >
                 Add FAQ's
               </MenuItem>
               <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
                 // active={location.pathname === "/faq-list"}
-                onClick={() => navigate("/faq-list")}
+                onClick={() => {navigate("/faq-list");
+                  toggleSidebar1();
+                }}
               >
                 List FAQ's
               </MenuItem>
@@ -340,7 +449,9 @@ const SidebarMenu = () => {
             {/* userlist */}
             <MenuItem
               active={location.pathname === "/user-list"} icon={<PiUsersBold />}
-              onClick={() => navigate("/user-list")}
+              onClick={() => {navigate("/user-list");
+                toggleSidebar1();
+              }}
             >
               User List
             </MenuItem>
@@ -348,7 +459,9 @@ const SidebarMenu = () => {
             {/* account */}
             <MenuItem
               active={location.pathname === "/profile"} icon={<TiUserOutline />}
-              onClick={() => navigate("/profile")}
+              onClick={() => {navigate("/profile");
+                toggleSidebar1();
+              }}
             >
               Account
             </MenuItem>
@@ -356,7 +469,9 @@ const SidebarMenu = () => {
             {/* admin */}
             <MenuItem
               active={location.pathname === "/admin"} icon={<AdminPanelSettingsOutlinedIcon />}
-              onClick={() => navigate("/admin")}
+              onClick={() => {navigate("/admin");
+                toggleSidebar1();
+              }}
             >
               Admin
             </MenuItem>
@@ -364,7 +479,9 @@ const SidebarMenu = () => {
             {/* settings */}
             <MenuItem
               active={location.pathname === "/settings"} icon={<LuSettings2 />}
-              onClick={() => navigate("/settings")}
+              onClick={() => {navigate("/settings");
+                toggleSidebar1();
+              }}
             >
               Settings
             </MenuItem>
@@ -372,7 +489,9 @@ const SidebarMenu = () => {
             {/*  role change */}
             <MenuItem
               active={location.pathname === "/role"} icon={<LuSettings2 />}
-              onClick={() => navigate("/role")}
+              onClick={() => {navigate("/role");
+                toggleSidebar1();
+              }}
             >
               Role Request
             </MenuItem>
@@ -388,6 +507,15 @@ const SidebarMenu = () => {
           </Menu>
         </div>
       </Sidebar>
+      </div>
+
+      {/* Overlay for Small Screens */}
+      {!isLargeScreen && isSidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 z-30"
+          onClick={toggleSidebar}
+        ></div>
+      )}
     </div>
   );
 };

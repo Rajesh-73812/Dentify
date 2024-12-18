@@ -80,9 +80,11 @@ const handleImageUploadSuccess = (imageUrl) => {
       );
       // console.log(response.data);
       if (response.status === 200) {
+        NotificationManager.removeAll();
         NotificationManager.success('Settings updated successfully');
       }
     } catch (error) {
+        NotificationManager.removeAll();
         NotificationManager.error(error);
     }
   };
@@ -103,7 +105,7 @@ const handleImageUploadSuccess = (imageUrl) => {
                     <Link onClick={()=>{navigate(-1)}}  className="cursor-pointer ml-6">
                     <ArrowBackIosNewIcon />
                     </Link>
-                    <h2 className="text-lg font-semibold ml-4 " style={{color:'#000000',fontSize:'24px',fontFamily:'Montserrat'}}>Settings Management</h2>
+                    <h2 className="text-lg font-semibold ml-4 header" >Settings Management</h2>
                 </div>
           </div>
 

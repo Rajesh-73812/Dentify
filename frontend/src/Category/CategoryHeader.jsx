@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 const CategoryHeader = ({ onSearch }) => {
 
     const navigate = useNavigate()
+
     return (
         <div>
             <div className="bg-[#f7fbff] p-6 w-[1000px]">
@@ -20,6 +21,7 @@ const CategoryHeader = ({ onSearch }) => {
                             <input type="search" placeholder="Search" className="outline-none text-sm placeholder-gray-600 px-3 py-2 rounded-l-lg font-[Montserrat] h-9 w-[300px]" style={{ borderRadius: '8px 0 0 8px' }} onChange={onSearch} />
                             <img src="/image/action/search-normal.svg" alt="Search" className="w-9 h-5 text-[#131313]" />
                         </div>
+
 
                     </div>
                 </div>

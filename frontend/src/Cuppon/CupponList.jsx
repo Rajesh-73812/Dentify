@@ -9,6 +9,7 @@ import CupponHeader from './CupponHeader';
 import { DeleteEntity } from '../utils/Delete';
 import axios from 'axios';
 import { handleSort } from '../utils/sorting';
+import { NotificationContainer } from 'react-notifications';
 
 const CupponList = () => {
     const navigate = useNavigate();
@@ -129,7 +130,7 @@ const CupponList = () => {
                                                             <img src="https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg" className="w-16 h-16 object-cover rounded-full" alt="Placeholder" />
                                                         )}
                                                     </td>
-                                                    <td className="px-4 py-3">{cuppon?.cdate || "N/A"}</td>
+                                                    <td className="px-4 py-3">{cuppon?.cdate.split(" ")[0] || "N/A"}</td>
                                                     <td className="px-4 py-3">{cuppon?.min_amt || "N/A"}</td>
                                                     <td className="px-4 py-3">{cuppon?.c_value || "N/A"}</td>
                                                     <td className="px-4 py-3">
@@ -140,12 +141,15 @@ const CupponList = () => {
                                                         </span>
                                                     </td>
                                                     <td className="px-4 py-3">
-                                                        <button className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition mr-2" onClick={() => { updateCuppon(cuppon.id) }}>
+
+                                                        <NotificationContainer />
+                                                        <button className="bg-[#2dce89] text-white p-2 rounded-full hover:bg-green-600 transition mr-2" onClick={()=>{updateCuppon(cuppon.id)}}>
                                                             <FaPen />
                                                         </button>
-                                                        <button className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition" onClick={() => { handledelete(cuppon.id) }}>
-                                                            <FaTrash />
-                                                        </button>
+                                                        <button className="bg-[#f5365c] text-white p-2 rounded-full hover:bg-red-600 transition" onClick={()=>{handledelete(cuppon.id)}}>
+                                                        <FaTrash />
+                                                    </button>
+
                                                     </td>
                                                 </tr>
                                             ))

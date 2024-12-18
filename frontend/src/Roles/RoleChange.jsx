@@ -7,61 +7,55 @@ import axios from 'axios';
 import { DeleteEntity } from '../utils/Delete';
 import { useNavigate } from 'react-router-dom';
 import { handleSort } from '../utils/sorting';
-import CountryHeader from '../Country/CountryHeader';
 import RoleHeader from './RoleHeader';
 
 const RoleChange = () => {
   const navigate=useNavigate();
-  const [countries, setCountries] = useState([]);
-  const [filteredCountries, setFilteredCountries] = useState([]);
+  const [role, setrole] = useState([]);
+  const [filteredrole, setFilteredrole] = useState([]);
   const [sortConfig, setSortConfig] = useState({ key: '', direction: '' });
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
   useEffect(() => {
-      fetchCountries();
+      fetchrole();
   }, []);
 
-  const fetchCountries = async () => {
+  const fetchrole = async () => {
       try {
-          const response = await axios.get("http://localhost:5000/countries/all");
+          const response = await axios.get("http://localhost:5000/rollrequest/all");
           console.log(response.data)
-          setCountries(response.data);
-          setFilteredCountries(response.data); 
+          setrole(response.data);
+          setFilteredrole(response.data); 
       } catch (error) {
-          console.error("Error fetching countries:", error);
+          console.error("Error fetching role:", error);
       }
   };
 
   const handleSearch = (event) => {
-      searchFunction(event, countries, setFilteredCountries);
+      searchFunction(event, role, setFilteredrole);
       setCurrentPage(1);
   };
 
   // for sorting
   const sortData = (key) => {
-      handleSort(filteredCountries, key, sortConfig, setSortConfig, setFilteredCountries);
+      handleSort(filteredrole, key, sortConfig, setSortConfig, setFilteredrole);
     };
   
   const indexOfLast = currentPage * itemsPerPage;
   const indexOfFirst = indexOfLast - itemsPerPage;
-  const currentCountries = filteredCountries.slice(indexOfFirst, indexOfLast);
+  const currentrole = filteredrole.slice(indexOfFirst, indexOfLast);
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
-  const totalPages = Math.ceil(filteredCountries.length / itemsPerPage);
+  const totalPages = Math.ceil(filteredrole.length / itemsPerPage);
 
   const handledelete = async (id) => {
-      const success = await DeleteEntity("Country", id);
+      const success = await DeleteEntity("Role", id);
       if (success) {
-          const updatedCountries = countries.filter((country) => country.id !== id);
-          setCountries(updatedCountries);
-          setFilteredCountries(updatedCountries);
+          const updatedrole = role.filter((country) => country.id !== id);
+          setrole(updatedrole);
+          setFilteredrole(updatedrole);
       }
   };
-
-  // for update
-  const updateCountry=(id)=>{
-      navigate('/add-country',{state:{id:id}})
-  }
 
   return (
     <div>
@@ -84,59 +78,36 @@ const RoleChange = () => {
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[150px]">
-                                                Country Title Name
+                                                Request Role
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('title')} />
-                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('title')} />
+                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('requested_role')} />
+                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('requested_role')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[150px]">Country Image</th>
-                                            <th className="px-4 py-3 min-w-[100px]">
-                                                Total Properties
+                                            <th className="px-4 py-3 min-w-[130px]">
+                                                 Status
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('totalProperties')} />
-                                                    <GoArrowDown className='cursor-pointer'  onClick={() => sortData('totalProperties')} />
-                                                </div>
-                                            </th>
-                                            <th className="px-4 py-3 min-w-[100px]">
-                                                Country Status
-                                                <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('totalProperties')} />
-                                                    <GoArrowDown className='cursor-pointer'  onClick={() => sortData('totalProperties')} />
+                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('status')} />
+                                                    <GoArrowDown className='cursor-pointer'  onClick={() => sortData('status')} />
                                                 </div>
                                                 </th>
-                                            <th className="px-4 py-3 min-w-[100px]">Action</th>
+                                            <th className="px-4 py-3 min-w-[150px]">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-gray-200">
-                                        {currentCountries.map((country, index) => (
-                                            <tr key={country.id}>
+                                        {currentrole.map((role, index) => (
+                                            <tr key={role.id}>
                                                 <td className="px-4 py-3">{index + 1 + indexOfFirst}</td>
-                                                <td className="px-4 py-3">{country?.title || "N/A"}</td>
-                                                <td className="px-4 py-3">
-                                                    {country.img && country.img.trim() !== '' ? (
-                                                        <img src={country.img} className="w-16 h-16 object-cover rounded-full" height={50} width={50} loading="lazy" alt="" onError={(e) => {
-                                                            if (e.target.src !== 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg') {
-                                                                e.target.src = 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg';
-                                                            }
-                                                        }} />
-                                                    ) : (
-                                                        <img src={'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg'} height={50} width={50} loading="lazy" alt="" />
-                                                    )}
-                                                </td>
-                                                <td className="px-4 py-3">{country?.totalProperties || 0}</td>
+                                                <td className="px-4 py-3">{role?.requested_role || "N/A"}</td>
                                                 <td className="px-4 py-3">
                                                     <span
-                                                        className={`px-3 py-1 text-sm rounded-full ${country.status === 1 ? 'bg-green-500 text-white' : 'bg-gray-400 text-white'}`}
+                                                        className={`px-3 py-1 text-sm rounded-full ${role.status === "pending" ? 'bg-yellow-500 text-white' : 'bg-gray-400 text-white'}`}
                                                     >
-                                                        {country.status === 1 ? "publish" : "unpublish"}
+                                                        {role.status === "pending" ? "pending" : "approved"}
                                                     </span>
                                                 </td>
                                                 <td className="px-4 py-3">
-                                                    <button className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition mr-2" onClick={()=>{updateCountry(country.id)}}>
-                                                        <FaPen />
-                                                    </button>
-                                                    <button className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition" onClick={()=>{handledelete(country.id)}}>
+                                                    <button className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition " onClick={()=>{handledelete(role.id)}}>
                                                         <FaTrash />
                                                     </button>
                                                 </td>
@@ -148,30 +119,30 @@ const RoleChange = () => {
                         </div>
                         <div className="bottom-0 left-0 w-full bg-[#f7fbff] py-4 flex justify-between items-center">
                             <span className="text-sm font-normal text-gray-500">
-                                Showing <span className="font-semibold text-gray-900">{indexOfFirst + 1}</span> to <span className="font-semibold text-gray-900">{Math.min(indexOfLast, filteredCountries.length)}</span> of <span className="font-semibold text-gray-900">{filteredCountries.length}</span>
+                                Showing <span className="font-semibold text-gray-900">{indexOfFirst + 1}</span> to <span className="font-semibold text-gray-900">{Math.min(indexOfLast, filteredrole.length)}</span> of <span className="font-semibold text-gray-900">{filteredrole.length}</span>
                             </span>
                             <ul className="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">
                                     <li>
                                         <button 
                                             onClick={() => paginate(currentPage > 1 ? currentPage - 1 : 1)} 
-                                            className={`previous-button ${filteredCountries.length === 0 ? 'cursor-not-allowed' : ''}`} 
-                                            disabled={currentPage === 1 || filteredCountries.length === 0} 
-                                            title={filteredCountries.length === 0 ? 'No data available' : ''}
+                                            className={`previous-button ${filteredrole.length === 0 ? 'cursor-not-allowed' : ''}`} 
+                                            disabled={currentPage === 1 || filteredrole.length === 0} 
+                                            title={filteredrole.length === 0 ? 'No data available' : ''}
                                         >
                                             <img src="/image/action/Left Arrow.svg" alt="Left" /> Previous
                                         </button>
                                     </li>
                                     <li>
                                         <span className="current-page">
-                                            Page {filteredCountries.length > 0 ? currentPage : 0} of {filteredCountries.length > 0 ? totalPages : 0}
+                                            Page {filteredrole.length > 0 ? currentPage : 0} of {filteredrole.length > 0 ? totalPages : 0}
                                         </span>
                                     </li>
                                     <li>
                                         <button 
                                             onClick={() => paginate(currentPage < totalPages ? currentPage + 1 : totalPages)} 
-                                            className={`next-button ${filteredCountries.length === 0 ? 'cursor-not-allowed' : ''}`} 
-                                            disabled={currentPage === totalPages || filteredCountries.length === 0} 
-                                            title={filteredCountries.length === 0 ? 'No data available' : ''}
+                                            className={`next-button ${filteredrole.length === 0 ? 'cursor-not-allowed' : ''}`} 
+                                            disabled={currentPage === totalPages || filteredrole.length === 0} 
+                                            title={filteredrole.length === 0 ? 'No data available' : ''}
                                         >
                                             Next <img src="/image/action/Right Arrow (1).svg" alt="Right" />
                                         </button>

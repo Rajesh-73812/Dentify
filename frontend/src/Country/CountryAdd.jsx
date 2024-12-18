@@ -15,15 +15,12 @@ const CountryAdd = () => {
   const location = useLocation()
   const id = location.state ? location.state.id : null;
   const { isLoading, setIsLoading } = useLoading();
-  const [image, setImage] = useState(null);
   const [formData, setFormData] = useState({
     id: id || null,
     title: "",
     img: "",
     status: 0,
   });
-
-  console.log(formData)
 
   useEffect(() => {
     setIsLoading(true);
@@ -72,9 +69,7 @@ const CountryAdd = () => {
     e.preventDefault();
 
     try {
-      const apiEndpoint = id
-        ? `http://localhost:5000/countries/upsert`
-        : `http://localhost:5000/countries/upsert`;
+      const apiEndpoint = id  ? `http://localhost:5000/countries/upsert`  : `http://localhost:5000/countries/upsert`;
 
       const method = id ? "post" : "post";
 
@@ -82,12 +77,17 @@ const CountryAdd = () => {
         withCredentials: true,
       });
 
-      const successMessage = id
-        ? "Country updated successfully!"
-        : "Country added successfully!";
-      NotificationManager.success(successMessage);
-      navigate("/country-list");
+      const successMessage = id ? "Country updated successfully!" : "Country added successfully!";
+      if(response.status === 200 || response.status === 201){
+        NotificationManager.removeAll();
+        NotificationManager.success(successMessage);
+        setTimeout(() => {
+          navigate("/country-list");
+        }, 2000);
+      }
+      
     } catch (error) {
+      NotificationManager.removeAll();
       console.error("Error submitting country data:", error);
       NotificationManager.error("An error occurred. Please try again.");
     }

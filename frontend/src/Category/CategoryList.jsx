@@ -11,6 +11,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import Loader from '../common/Loader';
 import { DeleteEntity } from '../utils/Delete';
 import { handleSort } from "../utils/sorting";
+import { NotificationContainer, NotificationManager } from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 
 const CategoryList = () => {
   const navigate = useNavigate();
@@ -98,7 +100,7 @@ const CategoryList = () => {
           <CategoryHeader onSearch={handleSearch} />
           {/* Card */}
           <div className="py-6 px-6 h-full w-[1000px] overflow-scroll scrollbar-none">
-            <div className="bg-white w-full rounded-xl border border-[#EAE5FF] py-4 px-3 overflow-x-auto scrollbar-none">
+            <div className="bg-white  w-full rounded-xl border border-[#EAE5FF] py-4 px-3 overflow-x-auto scrollbar-none">
               <div className="relative sm:rounded-lg">
                 <table className="min-w-full text-sm text-left text-gray-700">
                   <thead className="bg-gray-50 text-xs uppercase font-medium text-gray-500">
@@ -131,6 +133,7 @@ const CategoryList = () => {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200">
+
                     {currentCategories.length > 0 ? (
                       currentCategories.map((category, index) => (
                         <tr key={category.id}>
@@ -165,6 +168,7 @@ const CategoryList = () => {
                     ) : (
                       <tr>
                         <td colSpan="5" className="text-center py-4 text-gray-500">No categories found</td>
+
                       </tr>
                     )}
                   </tbody>

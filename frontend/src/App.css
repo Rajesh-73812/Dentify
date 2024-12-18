@@ -172,7 +172,7 @@ textarea:focus-visible {
 }
 
 .css-1wvake5 {
-  width: 260px !important;
+  min-width: 260px !important;
 }
 
 .css-13cymwt-control {
@@ -212,4 +212,9 @@ font-weight: 700 !important;
   color: #439BFF !important;
 }
 
-
+/* header */
+.header{
+  color: #000000;
+  font-size: 24px;
+  font-family: Montserrat;
+}
