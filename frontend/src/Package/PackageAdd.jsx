@@ -3,17 +3,17 @@ import Header from '../components/Header';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css'; 
+import 'react-quill/dist/quill.snow.css';
 import ImageUploader from '../common/ImageUploader';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 
 const PackageAdd = () => {
   const navigate = useNavigate();
-  const location=useLocation();
-  const id=location.state ? location.state.id : null;
+  const location = useLocation();
+  const id = location.state ? location.state.id : null;
   const [formData, setFormData] = useState({
-    id : id || null,
+    id: id || null,
     title: '',
     day: '',
     price: '',
@@ -24,25 +24,32 @@ const PackageAdd = () => {
 
   useEffect(() => {
     if (id) {
-      getPackage(id);
+      getPackage(id).then(() => {
+        console.log("Updated Form Data:", formData);
+      });
     }
   }, [id]);
 
   const getPackage = async (id) => {
     try {
-        const response = await axios.get(`http://localhost:5000/packages/${id}`);
-        console.log(response.data)
-        const packages = response.data;
-        setFormData({
-            id, 
-            title: packages.title,
-            status: packages.status,
-            description: packages.description,
-            day: packages.day,
-            price: packages.price,
-        });
+      const response = await axios.get(`http://localhost:5000/packages/${id}`, {
+        withCredentials: true,
+      });
+      const packages = response.data;
+      console.log(packages, "Packages Data");
+
+      setFormData((prevData) => ({
+        ...prevData,
+        id: packages.id || id,
+        title: packages.title || '',
+        status: packages.status || 0,
+        description: packages.description || '',
+        day: packages.day || '',
+        price: packages.price || '',
+        img: packages.image || '', // Ensure the key matches the API response
+      }));
     } catch (error) {
-        console.error("Error fetching Page:", error);
+      console.error("Error fetching Package:", error);
     }
   };
 
@@ -65,22 +72,22 @@ const PackageAdd = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-      const plainTextDescription = new DOMParser()
+    const plainTextDescription = new DOMParser()
       .parseFromString(formData.description, 'text/html')
       .body.innerText;
-  
+
     const dataToSend = {
       ...formData,
-      description: plainTextDescription, 
+      description: plainTextDescription,
     };
-  
+
     console.log("Data to be sent to the server:", dataToSend);
-  
+
     try {
       const url = id ? `http://localhost:5000/packages/upsert` : `http://localhost:5000/packages/upsert`;
       const successMessage = id ? "Package updated successfully!" : "Package added successfully!";
       const response = await axios.post(url, dataToSend, { withCredentials: true });
-  
+
       if (response.status === 200 || response.status === 201) {
         NotificationManager.removeAll();
         NotificationManager.success(successMessage);
@@ -96,7 +103,7 @@ const PackageAdd = () => {
       NotificationManager.error("An error occurred while submitting the Package.");
     }
   };
-  
+
   return (
     <div>
       <div className="flex bg-[#f7fbff]">
@@ -196,8 +203,10 @@ const PackageAdd = () => {
                     <ReactQuill
                       value={formData.description}
                       onChange={(value) =>
-                        setFormData({ ...formData, description: value })
-                      }
+                        setFormData((prevData) => ({
+                          ...prevData,
+                          description: value,
+                        }))}
                       required
                       className="border rounded-lg mt-1 w-full h-40"
                     />
@@ -248,12 +257,8 @@ const PackageAdd = () => {
 
                   {/* Submit Button */}
                   <div className="flex justify-start mt-6 gap-3">
-                    <button
-                      type="submit"
-                      className="py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 w-[150px] h-12 font-[Montserrat] font-bold"
-                      style={{ borderRadius: '8px' }}
-                    >
-                      Add Package
+                    <button type="submit" className={`py-2 mt-6 float-start ${id ? 'bg-green-500 hover:bg-green-600' : 'bg-blue-500 hover:bg-blue-600'} text-white rounded-lg w-[150px] h-12 font-[Montserrat] font-bold`} style={{ borderRadius: '8px' }}   >
+                      {id ? 'Update Package' : 'Add Package'}
                     </button>
                   </div>
                 </form>

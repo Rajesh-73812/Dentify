@@ -36,9 +36,21 @@ const ApprovedBook = () => {
         };
         fetchingApprovedList();
     }, []);
-    // console.log(countries)
-    const handleSearch = (event) => {
 
+    // Search functionality
+    const handleSearch = (event) => {
+        const querySearch = event.target.value.toLowerCase();
+        const filteredData = approve.filter(item =>
+            Object.values(item).some(value =>
+                typeof value === 'object' && value !== null
+                    ? Object.values(value).some(nestedValue =>
+                        String(nestedValue).toLowerCase().includes(querySearch)
+                    )
+                    : String(value).toLowerCase().includes(querySearch)
+            )
+        );
+        setfilteredApprove(filteredData);
+        setCurrentPage(1);
     };
 
     const sortData = (key) => {

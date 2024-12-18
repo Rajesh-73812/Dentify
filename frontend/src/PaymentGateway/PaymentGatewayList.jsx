@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Header from '../components/Header';
 import { GoArrowDown, GoArrowUp } from 'react-icons/go';
-import { FaPen,FaTrash } from "react-icons/fa";
+import { FaPen, FaTrash } from "react-icons/fa";
 import { searchFunction } from '../Entity/SearchEntity';
 import PaymentGatewayHeader from './PaymentGatewayHeader';
 import axios from 'axios';
@@ -15,11 +15,11 @@ import { faToggleOn, faToggleOff } from '@fortawesome/free-solid-svg-icons';
 import { NotificationContainer } from 'react-notifications';
 
 const PaymentGatewayList = () => {
-   const [paymentGateway, setpaymentGateway] = useState([]);
+    const [paymentGateway, setpaymentGateway] = useState([]);
     const [filteredpaymentGateway, setFilteredpaymentGateway] = useState(paymentGateway);
     const [sortConfig, setSortConfig] = useState({ key: '', direction: '' });
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 10; 
+    const itemsPerPage = 10;
     const location = useLocation();
     const { isLoading, setIsLoading } = useLoading();
 
@@ -31,7 +31,7 @@ const PaymentGatewayList = () => {
                 });
                 console.log("API Response:", response.data);
                 setpaymentGateway(response.data);
-                setFilteredpaymentGateway(response.data); 
+                setFilteredpaymentGateway(response.data);
             } catch (error) {
                 console.error("API Error:", error);
             }
@@ -39,26 +39,32 @@ const PaymentGatewayList = () => {
         fetchData();
     }, []);
 
-  useEffect(() => {
-    setIsLoading(true);
+    useEffect(() => {
+        setIsLoading(true);
 
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 1000); 
+        const timer = setTimeout(() => {
+            setIsLoading(false);
+        }, 1000);
 
-    return () => clearTimeout(timer);
-  }, [location, setIsLoading]);
+        return () => clearTimeout(timer);
+    }, [location, setIsLoading]);
 
-    // for searching
     const handleSearch = (event) => {
-        searchFunction(event, paymentGateway, setFilteredpaymentGateway);
-        setCurrentPage(1); 
+        const searchQuery = event.target.value.toLowerCase();
+        const filteredResults = paymentGateway.filter(gateway =>
+            Object.values(gateway).some(value =>
+                String(value).toLocaleLowerCase().includes(searchQuery)
+            )
+        );
+        setFilteredpaymentGateway(filteredResults);
+        setCurrentPage(1);
     };
+
 
     // for sorting
     const sortData = (key) => {
         handleSort(filteredpaymentGateway, key, sortConfig, setSortConfig, setFilteredpaymentGateway);
-      };
+    };
 
     // Calculate paginated paymentGateway
     const indexOfLastpaymentgatway = currentPage * itemsPerPage;
@@ -69,10 +75,10 @@ const PaymentGatewayList = () => {
 
 
     // for delete
-    const handledelete=async(id)=>{
-        const success=await DeleteEntity('PaymentGateWay',id);
-        if(success){
-            const updatedPaymentGateWay=paymentGateway.filter((item)=> paymentGateway.id !== id);
+    const handledelete = async (id) => {
+        const success = await DeleteEntity('PaymentGateWay', id);
+        if (success) {
+            const updatedPaymentGateWay = paymentGateway.filter((item) => paymentGateway.id !== id);
             setpaymentGateway(updatedPaymentGateWay);
             setFilteredpaymentGateway(updatedPaymentGateWay)
         }
@@ -128,6 +134,7 @@ const PaymentGatewayList = () => {
                                     <tbody className="divide-y divide-gray-200">
                                         {currentpaymentGateway.length > 0 ? (
                                             currentpaymentGateway.map((paymentgatway, index) => (
+
                                             <tr key={paymentgatway.id}>
                                                 <td className="px-4 py-1">{index + 1 + indexOfFirstpaymentgatway}</td>
                                                 <td className="px-4 py-1">{paymentgatway?.title || "N/A"}</td>
@@ -176,12 +183,13 @@ const PaymentGatewayList = () => {
                                                 </td>
                                             </tr>
                                         ))
+
                                         ) : (
                                             <tr>
                                                 <td colSpan={6} className="px-4 py-3 text-center">No data available </td>
                                             </tr>
                                         )
-                                    }
+                                        }
                                     </tbody>
                                 </table>
                             </div>

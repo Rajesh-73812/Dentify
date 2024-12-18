@@ -21,10 +21,8 @@ const AdminList = () => {
     const location = useLocation();
     const [admins, setAdmins] = useState([]);
     const [filteredAdmins, setFilteredAdmins] = useState([]);
-    const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [showEditModal, setShowEditModal] = useState(false);
     const [showAddModal, setShowAddModal] = useState(false);
-    const [adminToDelete, setAdminToDelete] = useState(null);
     const [adminToEdit, setAdminToEdit] = useState(null);
     const [editForm, setEditForm] = useState({
         username: '',
@@ -129,20 +127,22 @@ const AdminList = () => {
         }
     };
 
-    const handleSearch = async (query) => {
-        if (!query) {
-            setFilteredAdmins(admins); 
-            return;
-        }
-        try {
-            const response = await axios.get(`http://localhost:5000/admin/search?username=${query}`, {
-                withCredentials: true,
-            });
-            setFilteredAdmins(response.data);
-            setCurrentPage(1); 
-        } catch (error) {
-            console.error("Error searching admins:", error);
-        }
+
+    // Search functionality
+    const handleSearch = (event) => {
+        const querySearch = event.target.value.toLowerCase();
+        const filteredData = admins.filter(item =>
+            Object.values(item).some(value =>
+                typeof value === 'object' && value !== null
+                    ? Object.values(value).some(nestedValue =>
+                        String(nestedValue).toLowerCase().includes(querySearch)
+                    )
+                    : String(value).toLowerCase().includes(querySearch)
+            )
+        );
+        setFilteredAdmins(filteredData);
+        setCurrentPage(1);
+
     };
 
     useEffect(() => {
@@ -246,24 +246,6 @@ const AdminList = () => {
                         </div>
 
                     </div>
-
-                    {/* Delete Confirmation Modal */}
-                    <Modal show={showDeleteModal} onHide={() => setShowDeleteModal(false)}>
-                        <Modal.Header closeButton>
-                            <Modal.Title>Confirm Delete</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                            Are you sure you want to delete {adminToDelete?.username}?
-                        </Modal.Body>
-                        <Modal.Footer>
-                            <Button variant="secondary" onClick={() => setShowDeleteModal(false)}>
-                                Cancel
-                            </Button>
-                            <Button variant="danger" onClick={() => handleDelete(adminToDelete?.id)}>
-                                Delete
-                            </Button>
-                        </Modal.Footer>
-                    </Modal>
 
                     {/* Edit Admin Modal */}
                     <Modal show={showEditModal} onHide={() => setShowEditModal(false)}>

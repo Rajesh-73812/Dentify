@@ -102,9 +102,12 @@ export const DeleteEntity = async (entity, id) => {
           break;
 
         case "UserList":
-          await axios.delete(`${BASE_URL}/users/user/delete/${id}`, {
-            withCredentials: true,
-          });
+          await axios.delete(
+            `${BASE_URL}/users/user/delete/${id}?forceDelete=true`,
+            {
+              withCredentials: true,
+            }
+          );
           break;
 
         case "Admin":

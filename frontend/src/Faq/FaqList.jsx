@@ -33,7 +33,20 @@ const FaqList = () => {
         fetchfaq();
     }, []);
 
+    // Search functionality
     const handleSearch = (event) => {
+        const querySearch = event.target.value.toLowerCase();
+        const filteredData = faq.filter(item =>
+            Object.values(item).some(value =>
+                typeof value === 'object' && value !== null
+                    ? Object.values(value).some(nestedValue =>
+                        String(nestedValue).toLowerCase().includes(querySearch)
+                    )
+                    : String(value).toLowerCase().includes(querySearch)
+            )
+        );
+        setFilteredfaq(filteredData);
+        setCurrentPage(1);
     };
 
     const sortData = (key) => {
@@ -45,7 +58,7 @@ const FaqList = () => {
     const currentfaq = filteredfaq.slice(indexOfFirstFaq, indexOfLastFaq);
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
     const totalPages = Math.ceil(filteredfaq.length / itemsPerPage);
-    
+
     const updateFAQ = (id) => {
         navigate('/create-faq', { state: { id: id } })
     }
@@ -103,7 +116,7 @@ const FaqList = () => {
                                             <th className="px-4 py-3 min-w-[150px]">
 
                                                 Action
-                                              
+
                                             </th>
                                         </tr>
                                     </thead>
@@ -150,33 +163,33 @@ const FaqList = () => {
                             <span className="text-sm font-normal text-gray-500">
                                 Showing <span className="font-semibold text-gray-900">{indexOfFirstFaq + 1}</span> to <span className="font-semibold text-gray-900">{Math.min(indexOfLastFaq, filteredfaq.length)}</span> of <span className="font-semibold text-gray-900">{filteredfaq.length}</span>
                             </span>
-                                <ul className="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">
-                                        <li>
-                                            <button 
-                                                onClick={() => paginate(currentPage > 1 ? currentPage - 1 : 1)} 
-                                                className={`previous-button ${filteredfaq.length === 0 ? 'cursor-not-allowed' : ''}`} 
-                                                disabled={currentPage === 1 || filteredfaq.length === 0} 
-                                                title={filteredfaq.length === 0 ? 'No data available' : ''}
-                                            >
-                                                <img src="/image/action/Left Arrow.svg" alt="Left" /> Previous
-                                            </button>
-                                        </li>
-                                        <li>
-                                            <span className="current-page">
-                                                Page {filteredfaq.length > 0 ? currentPage : 0} of {filteredfaq.length > 0 ? totalPages : 0}
-                                            </span>
-                                        </li>
-                                        <li>
-                                            <button 
-                                                onClick={() => paginate(currentPage < totalPages ? currentPage + 1 : totalPages)} 
-                                                className={`next-button ${filteredfaq.length === 0 ? 'cursor-not-allowed' : ''}`} 
-                                                disabled={currentPage === totalPages || filteredfaq.length === 0} 
-                                                title={filteredfaq.length === 0 ? 'No data available' : ''}
-                                            >
-                                                Next <img src="/image/action/Right Arrow (1).svg" alt="Right" />
-                                            </button>
-                                        </li>
-                                </ul>
+                            <ul className="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">
+                                <li>
+                                    <button
+                                        onClick={() => paginate(currentPage > 1 ? currentPage - 1 : 1)}
+                                        className={`previous-button ${filteredfaq.length === 0 ? 'cursor-not-allowed' : ''}`}
+                                        disabled={currentPage === 1 || filteredfaq.length === 0}
+                                        title={filteredfaq.length === 0 ? 'No data available' : ''}
+                                    >
+                                        <img src="/image/action/Left Arrow.svg" alt="Left" /> Previous
+                                    </button>
+                                </li>
+                                <li>
+                                    <span className="current-page">
+                                        Page {filteredfaq.length > 0 ? currentPage : 0} of {filteredfaq.length > 0 ? totalPages : 0}
+                                    </span>
+                                </li>
+                                <li>
+                                    <button
+                                        onClick={() => paginate(currentPage < totalPages ? currentPage + 1 : totalPages)}
+                                        className={`next-button ${filteredfaq.length === 0 ? 'cursor-not-allowed' : ''}`}
+                                        disabled={currentPage === totalPages || filteredfaq.length === 0}
+                                        title={filteredfaq.length === 0 ? 'No data available' : ''}
+                                    >
+                                        Next <img src="/image/action/Right Arrow (1).svg" alt="Right" />
+                                    </button>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>

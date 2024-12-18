@@ -39,7 +39,11 @@ const PropotiesList = () => {
         const query = event.target.value.toLowerCase();
         const filteredData = properties.filter(property =>
             Object.values(property).some(value =>
-                String(value).toLowerCase().includes(query)
+                typeof value === 'object' && value !== null
+                    ? Object.values(value).some(nestedValue =>
+                        String(nestedValue).toLowerCase().includes(query)
+                    )
+                    : String(value).toLowerCase().includes(query)
             )
         );
         setFilteredProperties(filteredData);
@@ -157,6 +161,13 @@ const PropotiesList = () => {
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[150px]">
+                                                Listing Date
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('listing_date')} />
+                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('listing_date')} />
+                                                </div>
+                                            </th>
+                                            <th className="px-4 py-3 min-w-[150px]">
                                                 Is_Sell
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('is_sell')} />
@@ -245,59 +256,69 @@ const PropotiesList = () => {
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-gray-200">
-                                        {currentProperties.map((property, index) => (
-                                            <tr key={property.id}>
-                                                <td className="px-4 py-3">{index + 1 + indexOfFirstItem}</td>
-                                                <td className="px-4 py-3">
-                                                    {property.image && property.image.trim() !== '' ? (
-                                                        <img src={property.image} className="w-16 h-16 object-cover rounded-full" height={50} width={50} loading="lazy" alt="" onError={(e) => {
-                                                            if (e.target.src !== 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg') {
-                                                                e.target.src = 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg';
-                                                            }
-                                                        }} />
-                                                    ) : (
-                                                        <img src={'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg'} height={50} width={50} loading="lazy" alt="" />
-                                                    )}
-                                                </td>
-                                                <td className="px-4 py-3">{property.title || 'N/A'}</td>
-                                                <td className="px-4 py-3">{property.category?.title || 'N/A'}</td>
-                                                <td className="px-4 py-3">{property.description || 'N/A'}</td>
-                                                <td className="px-4 py-3">{property.address || 'N/A'}</td>
-                                                <td className="px-4 py-3">{property.city || 'N/A'}</td>
-                                                <td className="px-4 py-3">{property.is_sell || 'N/A'}</td>
-                                                <td className="px-4 py-3 flex flex-col">
-                                                    {property.facilities?.map((item) => (
-                                                        <span className='bg-lime-100 font-bold p-1 m-1 flex justify-center ' key={item.id}>
-                                                            {item.title}
+                                        {currentProperties.length > 0 ? (
+                                            currentProperties.map((property, index) => (
+                                                <tr key={property.id}>
+                                                    <td className="px-4 py-3">{index + 1 + indexOfFirstItem}</td>
+                                                    <td className="px-4 py-3">
+                                                        {property.image && property.image.trim() !== '' ? (
+                                                            <img src={property.image} className="w-16 h-16 object-cover rounded-full" height={50} width={50} loading="lazy" alt="" onError={(e) => {
+                                                                if (e.target.src !== 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg') {
+                                                                    e.target.src = 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg';
+                                                                }
+                                                            }} />
+                                                        ) : (
+                                                            <img src={'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg'} height={50} width={50} loading="lazy" alt="" />
+                                                        )}
+                                                    </td>
+                                                    <td className="px-4 py-3">{property.title || 'N/A'}</td>
+                                                    <td className="px-4 py-3">{property.category?.title || 'N/A'}</td>
+                                                    <td className="px-4 py-3">{property.description || 'N/A'}</td>
+                                                    <td className="px-4 py-3">{property.address || 'N/A'}</td>
+                                                    <td className="px-4 py-3">{property.city || 'N/A'}</td>
+                                                    <td className="px-4 py-3">{property.listing_date || 'N/A'}</td>
+                                                    <td className="px-4 py-3">{property.is_sell || 'N/A'}</td>
+                                                    <td className="px-4 py-3 flex flex-col">
+                                                        {property.facilities?.map((item) => (
+                                                            <span className='bg-lime-100 font-bold p-1 m-1 flex justify-center' key={item.id}>
+                                                                {item.title}
+                                                            </span>
+                                                        )) || 'N/A'}
+                                                    </td>
+                                                    <td className="px-4 py-3">₹{property.price || 'N/A'}</td>
+                                                    <td className="px-4 py-3">{property.mobile || 'N/A'}</td>
+                                                    <td className="px-4 py-3">{property.country?.title || 'N/A'}</td>
+                                                    <td className="px-4 py-3">{property.add_user_id || 'N/A'}</td>
+                                                    <td className="px-4 py-3">{property.beds || 'N/A'}</td>
+                                                    <td className="px-4 py-3">{property.bathroom || 'N/A'}</td>
+                                                    <td className="px-4 py-3">{property.sqrft || 'N/A'}</td>
+                                                    <td className="px-4 py-3">{property.rate || 'N/A'}</td>
+                                                    <td className="px-4 py-3">
+                                                        <span
+                                                            className={`px-3 py-1 text-sm rounded-full ${property.status === 1 ? 'bg-green-500 text-white' : 'bg-gray-400 text-white'}`}
+                                                        >
+                                                            {property.status === 1 ? "publish" : "unpublish"}
                                                         </span>
-                                                    )) || 'N/A'}
-                                                </td>
-                                                <td className="px-4 py-3">₹{property.price || 'N/A'}</td>
-                                                <td className="px-4 py-3">{property.mobile || 'N/A'}</td>
-                                                <td className="px-4 py-3">{property.country?.title || 'N/A'}</td>
-                                                <td className="px-4 py-3">{property.add_user_id || 'N/A'}</td>
-                                                <td className="px-4 py-3">{property.beds || 'N/A'}</td>
-                                                <td className="px-4 py-3">{property.bathroom || 'N/A'}</td>
-                                                <td className="px-4 py-3">{property.sqrft || 'N/A'}</td>
-                                                <td className="px-4 py-3">{property.rate || 'N/A'}</td>
-                                                <td className="px-4 py-3">
-                                                    <span
-                                                        className={`px-3 py-1 text-sm rounded-full ${property.status === 1 ? 'bg-green-500 text-white' : 'bg-gray-400 text-white'}`}
-                                                    >
-                                                        {property.status === 1 ? "publish" : "unpublish"}
-                                                    </span>
-                                                </td>
-                                                <td className="px-4 py-3">
-                                                    <NotificationContainer />
-                                                    <button className="bg-[#2dce89] text-white p-2 rounded-full hover:bg-green-600 transition mr-2" onClick={() => propertyUpdate(property.id)}>
-                                                        <FaPen />
-                                                    </button>
-                                                    <button className="bg-[#f5365c] text-white p-2 rounded-full hover:bg-red-600 transition" onClick={() => deleteProperty(property.id)}>
-                                                        <FaTrash />
-                                                    </button>
+
+                                                    </td>
+                                                    <td className="px-4 py-3">
+                                                        <button className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition mr-2" onClick={() => propertyUpdate(property.id)}>
+                                                            <FaPen />
+                                                        </button>
+                                                        <button className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition" onClick={() => deleteProperty(property.id)}>
+                                                            <FaTrash />
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            ))
+                                        ) : (
+                                            <tr>
+                                                <td colSpan="20" className="text-center py-4">
+                                                    No properties found.
+
                                                 </td>
                                             </tr>
-                                        ))}
+                                        )}
                                     </tbody>
 
                                 </table>

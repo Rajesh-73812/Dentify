@@ -13,6 +13,7 @@ const ExtraImageAdd = () => {
     const [properties, setProperties] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [formData, setFormData] = useState({
+        id:id || null,
         pid: '',
         status: '',
         img: []
@@ -30,12 +31,14 @@ const ExtraImageAdd = () => {
                 withCredentials: true
             })
             const ExtraImage = response.data;
+            console.log(ExtraImage, "from extra imageds")
             setFormData({
                 id,
                 pid: ExtraImage.pid,
-                img: ExtraImage.img,
+                img: ExtraImage.images,
                 status: ExtraImage.status
             })
+            console.log(ExtraImage)
         } catch (error) {
             console.error("Error fetching Extra Images ", error);
         }
@@ -68,9 +71,13 @@ const ExtraImageAdd = () => {
     const handleImageUploadSuccess = (imageUrls) => {
         setFormData((prevData) => ({
             ...prevData,
-            img: [...prevData.img, ...imageUrls]
+            img: [
+                ...prevData.img, 
+                ...imageUrls.map((url) => ({ url })) 
+            ]
         }));
     };
+    
 
     console.log(formData, "from form data");
 
@@ -116,7 +123,7 @@ const ExtraImageAdd = () => {
                                         {/* Select Property */}
                                         <div className="flex flex-col">
                                             <label htmlFor="pid" className="text-sm font-medium text-start text-[12px] font-[Montserrat]">Select Property</label>
-                                            <select name="pid" id="pid" className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm" onChange={handleChange} required>
+                                            <select name="pid" id="pid" value={formData.pid} className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm" onChange={handleChange} required>
                                                 <option value="" disabled selected>Select Property</option>
                                                 {properties.map((property) => (
                                                     <option key={property.id} value={property.id}>{property.title}</option>
@@ -130,6 +137,22 @@ const ExtraImageAdd = () => {
                                         <div className="flex flex-col">
                                             <label htmlFor="img" className="text-sm font-medium text-start text-[12px] font-[Montserrat]">Property Image</label>
                                             <MultiImageUploader onUploadSuccess={handleImageUploadSuccess} />
+                                            {formData.img && (
+                                                <div className="mt-4 flex gap-3">
+                                                    {
+                                                        formData.img.map((item) => (
+                                                            <div>
+                                                                <img
+                                                                    src={item.url}
+                                                                    alt="Uploaded Preview"
+                                                                    className="w-32 h-32 object-cover rounded"
+                                                                />
+                                                            </div>
+                                                        ))
+                                                    }
+
+                                                </div>
+                                            )}
                                         </div>
                                     </div>
                                     <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-1 mt-6">
@@ -145,7 +168,7 @@ const ExtraImageAdd = () => {
                                         {/* Property Image Status */}
                                         <div className="flex flex-col">
                                             <label htmlFor="status" className="text-sm font-medium text-start text-[12px] font-[Montserrat]">Property Image Status</label>
-                                            <select name="status" id="status" className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm" onChange={handleChange} required>
+                                            <select name="status" id="status" value={formData.status} className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm" onChange={handleChange} required>
                                                 <option value="" disabled selected>Select Status</option>
                                                 <option value={1}>Publish</option>
                                                 <option value={0}>Unpublish</option>
@@ -153,9 +176,9 @@ const ExtraImageAdd = () => {
                                         </div>
                                     </div>
                                     {/* Action Buttons */}
-                                    <div className="flex justify-start mt-6 gap-3">
-                                        <button type="submit" className="py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 w-[150px] h-12 font-[Montserrat] font-bold" style={{ borderRadius: "8px" }}>Add Extra Image</button>
-                                    </div>
+                                    <button type="submit" className={`py-2 mt-6 float-start ${id ? 'bg-green-500 hover:bg-green-600' : 'bg-blue-500 hover:bg-blue-600'} text-white rounded-lg w-[150px] h-12 font-[Montserrat] font-bold`} style={{ borderRadius: '8px' }}   >
+                                        {id ? 'Update Extra Image' : 'Add Extra Image'}
+                                    </button>
                                 </form>
                             </div>
                         </div>
