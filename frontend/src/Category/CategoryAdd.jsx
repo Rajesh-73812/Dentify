@@ -16,7 +16,6 @@ const CategoryAdd = () => {
   const id = location.state ? location.state.id : null;
   console.log(id, "form id")
   const { isLoading, setIsLoading } = useLoading();
-  const [image, setImage] = useState(null);
   const [formData, setFormData] = useState({
     id: id || null,
     title: '',
@@ -27,7 +26,7 @@ const CategoryAdd = () => {
     if (id) {
       getCategory()
     }
-  }, [])
+  }, [id])
 
   const getCategory = async () => {
     try {
@@ -74,22 +73,15 @@ const CategoryAdd = () => {
 
   };
 
-  const handleFocus = () => {
-
-  }
-
-  const handleBlur = () => {
-
-  }
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
+    // console.log("Form submitted:", formData);
     const url = `http://localhost:5000/categories/upsert`;
     const successMessage = id ? 'Category Updated Succesfully!' : 'Category Added Successfully!'
     try {
       const response = await axios.post(url, formData, { withCredentials: true });
       if (response.status === 200 || response.status === 201) {
+        NotificationManager.removeAll();
         NotificationManager.success(successMessage)
         setTimeout(() => {
           navigate("/category-list");
@@ -99,6 +91,7 @@ const CategoryAdd = () => {
       }
 
     } catch (error) {
+      NotificationManager.removeAll();
       console.error("Error submitting Category:", error);
       NotificationManager.error("Error submitting Category:", error);
     }
@@ -108,8 +101,6 @@ const CategoryAdd = () => {
       {isLoading && <Loader />}
       <div className="flex bg-[#f7fbff]">
         {/* Sidebar */}
-
-
         <main className="flex-grow">
           <Header />
           <div className="container mx-auto">
@@ -121,16 +112,14 @@ const CategoryAdd = () => {
             </div>
 
             {/* Form Container */}
-            <div className="h-full px-6 max-w-5xl" style={{ paddingTop: '24px' }}>
-              <div className="bg-white h-[70vh] w-full rounded-xl border border-[#EAE5FF] py-4 px-6 overflow-y-auto scrollbar-none">
+            <div className="h-full px-6 max-w-5xl " style={{ paddingTop: '24px' }}>
+              <div className="bg-white h-[67vh] w-full rounded-xl border border-[#EAE5FF] py-4 px-6 overflow-y-auto scrollbar-none">
                 <form onSubmit={handleSubmit} className="mt-4">
                   <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-1  mt-6">
                     {/* category name */}
                     <div className="flex flex-col">
                       <label htmlFor="category_name" className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> Category name </label>
                       <input id="category_name" name="title" value={formData.title} type="text" required className="border rounded-lg p-3 mt-1 w-full h-14" style={{ borderRadius: '8px', border: '1px solid #EAEAFF' }}
-                        onFocus={() => handleFocus('category_name')}
-                        onBlur={() => handleBlur('category_name')}
                         onChange={handleChange}
                         placeholder="Enter Category Title"
                       />

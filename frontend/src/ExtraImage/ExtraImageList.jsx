@@ -9,6 +9,7 @@ import axios from "axios";
 import { handleSort } from "../utils/sorting";
 import { DeleteEntity } from "../utils/Delete";
 import { useNavigate } from "react-router-dom";
+import { NotificationContainer } from "react-notifications";
 
 const ExtraImageList = () => {
     const navigate = useNavigate()
@@ -68,6 +69,9 @@ const ExtraImageList = () => {
     }
 
     const updateExtraImage = (id) => {
+        if(!id){
+            return;
+        }
         navigate("/create-extra-image", { state: { id: id } })
     }
 
@@ -95,10 +99,6 @@ const ExtraImageList = () => {
                                             </th>
                                             <th className="px-4 py-3 min-w-[150px]">
                                                 Gallery Image
-                                                <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData("name")} />
-                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData("name")} />
-                                                </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[150px]">
                                                 Property Title
@@ -109,17 +109,9 @@ const ExtraImageList = () => {
                                             </th>
                                             <th className="px-4 py-3 min-w-[100px]">
                                                 Gallery Status
-                                                <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData("totalProperties")} />
-                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData("totalProperties")} />
-                                                </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[100px]">
                                                 Action
-                                                <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData("action")} />
-                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData("action")} />
-                                                </div>
                                             </th>
                                         </tr>
                                     </thead>
@@ -164,9 +156,7 @@ const ExtraImageList = () => {
                                                             />
                                                         )}
                                                     </td>
-
                                                     <td className="px-4 py-3">{extraImage?.Property?.title || "No Title"}</td>
-
                                                     <td className="px-4 py-3">
                                                         <span className={`px-3 py-1 text-sm rounded-full ${extraImage.status === 1 ? "bg-green-500 text-white" : "bg-gray-400 text-white"}`}
                                                         >
@@ -174,10 +164,11 @@ const ExtraImageList = () => {
                                                         </span>
                                                     </td>
                                                     <td className="px-4 py-3">
-                                                        <button className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition mr-2" onClick={() => { updateExtraImage(extraImage.id) }}>
+                                                        <NotificationContainer />
+                                                        <button className="bg-[#2dce89] text-white p-2 rounded-full hover:bg-green-600 transition mr-2" onClick={() => { updateExtraImage(extraImage.id) }}>
                                                             <FaPen />
                                                         </button>
-                                                        <button className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition" onClick={() => { handledelete(extraImage.id) }}>
+                                                        <button className="bg-[#f5365c] text-white p-2 rounded-full hover:bg-red-600 transition" onClick={() => { handledelete(extraImage.id) }}>
                                                             <FaTrash />
                                                         </button>
                                                     </td>
@@ -197,49 +188,32 @@ const ExtraImageList = () => {
                         </div>
                         <div className="bottom-0 left-0 w-full bg-[#f7fbff] py-4 flex justify-between items-center">
                             <span className="text-sm font-normal text-gray-500">
-                                Showing{" "}
-                                <span className="font-semibold text-gray-900">
-                                    {indexOfFirstImage + 1}
-                                </span>{" "}
-                                to{" "}
-                                <span className="font-semibold text-gray-900">
-                                    {Math.min(indexOfLastImage, filteredImages.length)}
-                                </span>{" "}
-                                of{" "}
-                                <span className="font-semibold text-gray-900">
-                                    {filteredImages.length}
-                                </span>
+                                Showing <span className="font-semibold text-gray-900">{indexOfFirstImage + 1}</span> to <span className="font-semibold text-gray-900">{Math.min(indexOfLastImage, filteredImages.length)}</span> of <span className="font-semibold text-gray-900">{filteredImages.length}</span>
                             </span>
                             <ul className="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">
                                 <li>
                                     <button
-                                        onClick={() =>
-                                            paginate(currentPage > 1 ? currentPage - 1 : 1)
-                                        }
-                                        className="previous-button"
-                                        disabled={currentPage === 1}
+                                        onClick={() => paginate(currentPage > 1 ? currentPage - 1 : 1)}
+                                        className={`previous-button ${filteredImages.length === 0 ? 'cursor-not-allowed' : ''}`}
+                                        disabled={currentPage === 1 || filteredImages.length === 0}
+                                        title={filteredImages.length === 0 ? 'No data available' : ''}
                                     >
-                                        <img src="/image/action/Left Arrow.svg" alt="Left" />{" "}
-                                        Previous
+                                        <img src="/image/action/Left Arrow.svg" alt="Left" /> Previous
                                     </button>
                                 </li>
                                 <li>
                                     <span className="current-page">
-                                        Page {currentPage} of {totalPages}
+                                        Page {filteredImages.length > 0 ? currentPage : 0} of {filteredImages.length > 0 ? totalPages : 0}
                                     </span>
                                 </li>
                                 <li>
                                     <button
-                                        onClick={() =>
-                                            paginate(
-                                                currentPage < totalPages ? currentPage + 1 : totalPages
-                                            )
-                                        }
-                                        className="next-button"
-                                        disabled={currentPage === totalPages}
+                                        onClick={() => paginate(currentPage < totalPages ? currentPage + 1 : totalPages)}
+                                        className={`next-button ${filteredImages.length === 0 ? 'cursor-not-allowed' : ''}`}
+                                        disabled={currentPage === totalPages || filteredImages.length === 0}
+                                        title={filteredImages.length === 0 ? 'No data available' : ''}
                                     >
-                                        Next{" "}
-                                        <img src="/image/action/Right Arrow (1).svg" alt="Right" />
+                                        Next <img src="/image/action/Right Arrow (1).svg" alt="Right" />
                                     </button>
                                 </li>
                             </ul>

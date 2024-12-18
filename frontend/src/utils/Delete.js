@@ -108,10 +108,12 @@ export const DeleteEntity = async (entity, id) => {
           break;
 
         case "Admin":
-          await axios.delete(
-            `${BASE_URL}/admin/delete/${id}?forceDelete=true`,
-            { withCredentials: true }
-          );
+          await axios.delete(`${BASE_URL}/admin/delete/${id}?forceDelete=true`,{ withCredentials: true });
+          break;
+
+
+        case "Role":
+          await axios.delete(`${BASE_URL}/admin/delete/${id}?forceDelete=true`,{ withCredentials: true });
           break;
 
         case "Property":
@@ -126,14 +128,16 @@ export const DeleteEntity = async (entity, id) => {
         default:
           throw new Error(`Unknown entity: ${entity}`);
       }
-
+      NotificationManager.removeAll();
       NotificationManager.success(`${entity} deleted successfully!`);
       return true;
     } else {
+      NotificationManager.removeAll();
       NotificationManager.info(`${entity} deletion was canceled.`);
       return false;
     }
   } catch (error) {
+    NotificationManager.removeAll();
     console.error(error);
     NotificationManager.error(`Failed to delete ${entity}.`);
     throw error;

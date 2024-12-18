@@ -170,7 +170,7 @@ const DashboardCard = () => {
                     <div className="px-4">
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                             {cards.map((card, index) => (
-                                <div key={index} className="bg-white rounded-lg shadow-md p-4 flex items-center gap-4">
+                                <div key={index} className="bg-white rounded-lg shadow-md p-4  flex items-center gap-4 max-w-xs w-full">
                                     <div className="bg-[#F2F6FE] p-3 rounded-lg flex items-center justify-center w-14 h-14">
                                         {card.card_logoIcon}
                                     </div>

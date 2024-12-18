@@ -25,12 +25,14 @@ const CupponAdd = () => {
   const getCuppon = async (id) => {
     try {
       const response = await axios.get(`http://localhost:5000/coupons/${id}`)
-      // console.log(response.data)
+      console.log(response.data)
       const cuppon = response.data
+      const formattedDate = cuppon.cdate ? cuppon.cdate.split(" ")[0].split("-").reverse().join("-") : "";
+      console.log(formattedDate)
       setFormData({
         id,
         c_img: cuppon.c_img,
-        cdate: cuppon.cdate,
+        cdate: formattedDate,
         c_desc: cuppon.c_desc,
         c_title: cuppon.c_title,
         c_value: cuppon.c_value,
@@ -55,13 +57,6 @@ const CupponAdd = () => {
     }));
   }
 
-  const handleFocus = () => {
-
-  }
-
-  const handleBlur = () => {
-
-  }
   // random cuppon generation
   const makeEightDigitRand = () => {
 
@@ -103,6 +98,7 @@ const CupponAdd = () => {
     try {
       const response = await axios.post(url, formData, { withCredentials: true });
       if (response.status === 200 || response.status === 201) {
+        NotificationManager.removeAll();
         NotificationManager.success(successMessage)
         setTimeout(() => {
           navigate('/cuppon-list')
@@ -111,6 +107,7 @@ const CupponAdd = () => {
         throw new Error('Unexpected server response')
       }
     } catch (error) {
+      NotificationManager.removeAll();
       console.error("Error submitting Category:", error);
       NotificationManager.error("Error submitting Category:", error);
     }
@@ -154,9 +151,7 @@ const CupponAdd = () => {
                     {/* cuppon expiarydate*/}
                     <div className="flex flex-col">
                       <label htmlFor="cdate" className="text-sm font-medium text-start text-[12px] font-[Montserrat]">Cuppon Expiary Date</label>
-                      <input id="cdate" value={formData.cdate} onChange={handleChange} name="cdate" type="date" required className="border rounded-lg p-3 mt-1 w-full h-14" style={{ borderRadius: '8px', border: '1px solid #EAEAFF' }}
-                        onFocus={() => handleFocus('cdate')}
-                        onBlur={() => handleBlur('cdate')}
+                      <input id="cdate" value={formData.cdate.split(" ")[0].replace(/^(\d{4})-(\d{2})-(\d{2})$/, '$3/$2/$1')} onChange={handleChange} name="cdate" type="date" required className="border rounded-lg p-3 mt-1 w-full h-14" style={{ borderRadius: '8px', border: '1px solid #EAEAFF' }}
                       />
                     </div>
 
@@ -164,8 +159,6 @@ const CupponAdd = () => {
                     <div className="flex flex-col">
                       <label htmlFor="c_title" className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> Cuppon code </label>
                       <input id="c_title" name="c_title" type="text" required className="border rounded-lg p-3 mt-1 w-full h-14" style={{ borderRadius: '8px', border: '1px solid #EAEAFF' }}
-                        onFocus={() => handleFocus('c_title')}
-                        onBlur={() => handleBlur('c_title')}
                         value={formData.c_title}
                         onChange={handleChange}
                         placeholder="Enter Cuppon code"
@@ -182,8 +175,6 @@ const CupponAdd = () => {
                     <div className="flex flex-col">
                       <label htmlFor="ctitle" className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> Cuppon Title </label>
                       <input id="ctitle" value={formData.ctitle} onChange={handleChange} name="ctitle" type="text" required className="border rounded-lg p-3 mt-1 w-full h-14" style={{ borderRadius: '8px', border: '1px solid #EAEAFF' }}
-                        onFocus={() => handleFocus('ctitle')}
-                        onBlur={() => handleBlur('ctitle')}
                         placeholder="Enter Cuppon title"
                       />
                     </div>
@@ -191,8 +182,6 @@ const CupponAdd = () => {
                     <div className="flex flex-col">
                       <label htmlFor="subtitle" className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> Cuppon Sub Title </label>
                       <input id="subtitle" value={formData.subtitle} name="subtitle" type="text" required className="border rounded-lg p-3 mt-1 w-full h-14" style={{ borderRadius: '8px', border: '1px solid #EAEAFF' }}
-                        onFocus={() => handleFocus('subtitle')}
-                        onBlur={() => handleBlur('subtitle')}
                         onChange={handleChange}
                         placeholder="Enter Cuppon subtitle"
                       />
@@ -212,8 +201,6 @@ const CupponAdd = () => {
                     <div className="flex flex-col">
                       <label htmlFor="min_amt" className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> Cuppon Min Order Amount </label>
                       <input id="min_amt" name="min_amt" value={formData.min_amt} type="text" required className="border rounded-lg p-3 mt-1 w-full h-14" style={{ borderRadius: '8px', border: '1px solid #EAEAFF' }}
-                        onFocus={() => handleFocus('min_amt')}
-                        onBlur={() => handleBlur('min_amt')}
                         onChange={handleChange}
 
                       />
@@ -224,8 +211,6 @@ const CupponAdd = () => {
                     <div className="flex flex-col">
                       <label htmlFor="c_value" className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> Coupon Value </label>
                       <input id="c_value" name="c_value" value={formData.c_value} type="text" required className="border rounded-lg p-3 mt-1 " style={{ borderRadius: '8px', border: '1px solid #EAEAFF' }}
-                        onFocus={() => handleFocus('c_value')}
-                        onBlur={() => handleBlur('c_value')}
                         onChange={handleChange}
 
                       />
@@ -235,8 +220,6 @@ const CupponAdd = () => {
                     <div className="flex flex-col">
                       <label htmlFor="c_desc" className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> Coupon Description </label>
                       <textarea id="c_desc" value={formData.c_desc} name="c_desc" type="text" required className="border rounded-lg p-3 mt-1 w-full h-14" style={{ borderRadius: '8px', border: '1px solid #EAEAFF' }}
-                        onFocus={() => handleFocus('c_desc')}
-                        onBlur={() => handleBlur('c_desc')}
                         onChange={handleChange}
                       ></textarea>
                     </div>
