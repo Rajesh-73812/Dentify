@@ -86,15 +86,15 @@ const SidebarMenu = () => {
             </MenuItem>
 
             {/* country */}
-            <SubMenu label="Country" icon={<IoLocationOutline />}>
+            <SubMenu label="Country" active={location.pathname === "/add-country" || location.pathname === "/country-list"} icon={<IoLocationOutline />}>
               <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
-                active={location.pathname === "/add-country"}
+                
                 onClick={() => navigate("/add-country")}
               >
                 Add Country
               </MenuItem>
               <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
-                active={location.pathname === "/country-list"}
+                
                 onClick={() => navigate("/country-list")}
               >
                 List Country
@@ -102,15 +102,15 @@ const SidebarMenu = () => {
             </SubMenu>
 
             {/* category */}
-            <SubMenu label="Category" icon={<RxHamburgerMenu />}>
+            <SubMenu label="Category" active={location.pathname === "/add-category" || location.pathname === "/category-list"} icon={<RxHamburgerMenu />}>
               <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
-                active={location.pathname === "/add-category"}
+                
                 onClick={() => navigate("/add-category")}
               >
                 Add Category
               </MenuItem>
               <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
-                active={location.pathname === "/category-list"}
+                
                 onClick={() => navigate("/category-list")}
               >
                 List Category
@@ -118,15 +118,15 @@ const SidebarMenu = () => {
             </SubMenu>
 
             {/* cuppon */}
-            <SubMenu label="Coupon" icon={<TbSquareRoundedPercentage />}>
+            <SubMenu label="Coupon" active={location.pathname === "/add-cuppon" || location.pathname === "/cuppon-list"} icon={<TbSquareRoundedPercentage />}>
               <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
-                active={location.pathname === "/add-cuppon"}
+               
                 onClick={() => navigate("/add-cuppon")}
               >
                 Add Coupon
               </MenuItem>
               <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
-                active={location.pathname === "/cuppon-list"}
+                
                 onClick={() => navigate("/cuppon-list")}
               >
                 List Coupon
@@ -162,15 +162,15 @@ const SidebarMenu = () => {
           </MenuItem> */}
 
             {/* propoties */}
-            <SubMenu label="Properties" icon={<GoHome />}>
+            <SubMenu label="Properties" active={location.pathname === "/create-property" || location.pathname === "/property-list"} icon={<GoHome />}>
               <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
-                active={location.pathname === "/create-property"}
+                
                 onClick={() => navigate("/create-property")}
               >
                 Add  Properties
               </MenuItem>
               <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
-                active={location.pathname === "/property-list"}
+                
                 onClick={() => navigate("/property-list")}
               >
                 List Properties
@@ -178,15 +178,15 @@ const SidebarMenu = () => {
             </SubMenu>
 
             {/* Extra Images */}
-            <SubMenu label="Extra Images" icon={<CiImageOn />}>
+            <SubMenu label="Extra Images" active={location.pathname === "/create-extra-image" || location.pathname === "/extra-image-list"} icon={<CiImageOn />}>
               <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
-                active={location.pathname === "/create-extra-image"}
+                
                 onClick={() => navigate("/create-extra-image")}
               >
                 Add Extra Images
               </MenuItem>
               <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
-                active={location.pathname === "/extra-image-list"}
+                
                 onClick={() => navigate("/extra-image-list")}
               >
                 List Extra Images
@@ -194,15 +194,15 @@ const SidebarMenu = () => {
             </SubMenu>
 
             {/* Facility */}
-            <SubMenu label="Facility" icon={<MdOutlineBluetooth />}>
+            <SubMenu label="Facility" active={location.pathname === "/create-facility" || location.pathname === "/facility-list"} icon={<MdOutlineBluetooth />}>
               <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
-                active={location.pathname === "/create-facility"}
+               
                 onClick={() => navigate("/create-facility")}
               >
                 Add Facility
               </MenuItem>
               <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
-                active={location.pathname === "/facility-list"}
+                
                 onClick={() => navigate("/facility-list")}
               >
                 List Facility
@@ -242,15 +242,15 @@ const SidebarMenu = () => {
         </SubMenu> */}
 
             {/* package */}
-            <SubMenu label="Package " icon={<IoLayersOutline />}>
+            <SubMenu label="Package " active={location.pathname === "/create-package" || location.pathname === "/package-list"} icon={<IoLayersOutline />}>
               <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
-                active={location.pathname === "/create-package"}
+                
                 onClick={() => navigate("/create-package")}
               >
                 Add Package
               </MenuItem>
               <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
-                active={location.pathname === "/package-list"}
+                
                 onClick={() => navigate("/package-list")}
               >
                 List Package
@@ -258,10 +258,10 @@ const SidebarMenu = () => {
             </SubMenu>
 
             {/* Booking */}
-            <SubMenu label="Booking " icon={<CgCalendarDates />}>
+            <SubMenu label="Booking " active={location.pathname === "/pending-book-list" || location.pathname === "/approved-book-list" || location.pathname === "/check-in-list" || location.pathname === "/completed-list" || location.pathname === "/cancelled-list"} icon={<CgCalendarDates />}>
               {/* Pending Booking */}
               <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
-                active={location.pathname === "/pending-book-list"}
+               
                 onClick={() => navigate("/pending-book-list")}
               >
                 Pending Booking
@@ -269,7 +269,7 @@ const SidebarMenu = () => {
 
               {/*  Approved Booking */}
               <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
-                active={location.pathname === "/approved-book-list"}
+               
                 onClick={() => navigate("/approved-book-list")}
               >
                 Approved Booking
@@ -277,7 +277,7 @@ const SidebarMenu = () => {
 
               {/* Check In Booking */}
               <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
-                active={location.pathname === "/check-in-list"}
+                
                 onClick={() => navigate("/check-in-list")}
               >
                 Check In Booking
@@ -285,7 +285,7 @@ const SidebarMenu = () => {
 
               {/* Completed Booking */}
               <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
-                active={location.pathname === "/completed-list"}
+                
                 onClick={() => navigate("/completed-list")}
               >
                 Completed Booking
@@ -293,7 +293,7 @@ const SidebarMenu = () => {
 
               {/* Cancelled Booking */}
               <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
-                active={location.pathname === "/cancelled-list"}
+                
                 onClick={() => navigate("/cancelled-list")}
               >
                 Cancelled Booking
@@ -317,15 +317,15 @@ const SidebarMenu = () => {
         </SubMenu> */}
 
             {/* faq */}
-            <SubMenu label="Faq " icon={<IoCheckboxOutline />}>
+            <SubMenu label="Faq " active={location.pathname === "/create-faq" || location.pathname === "/faq-list"} icon={<IoCheckboxOutline />}>
               <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
-                active={location.pathname === "/create-faq"}
+                // active={location.pathname === "/create-faq"}
                 onClick={() => navigate("/create-faq")}
               >
                 Add Faq
               </MenuItem>
               <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
-                active={location.pathname === "/faq-list"}
+                // active={location.pathname === "/faq-list"}
                 onClick={() => navigate("/faq-list")}
               >
                 List Faq
