@@ -156,98 +156,91 @@ const Header = () => {
 
 
   return (
-    <div className="bg-white h-[65px] sm:h-[80px] p-6 flex items-center justify-between relative">
-      <div>
-        <Toaster position="top-right" />
+    <div className="bg-white h-[65px] sm:h-[80px] px-4 py-4 sm:px-6 flex items-center justify-between relative">
+  
+
+  {loading && (
+    <div className="absolute inset-0 flex items-center justify-center bg-opacity-50 bg-gray-100 z-50">
+      <span className="loader"></span>
+    </div>
+  )}
+
+  {/* Title Section */}
+  <div className="flex items-center gap-2.5">
+    <span className="text-lg sm:text-2xl font-bold">Dashboard</span>
+  </div>
+  <div>
+    <Toaster position="top-right" />
+  </div>
+  {/* Icons Section */}
+  <div className="flex items-center gap-2">
+    {/* Notification Icon */}
+    <div className="relative">
+      <div
+        className="bg-[#f7fbff] rounded-full w-8 h-8 sm:w-11 sm:h-11 flex items-center justify-center cursor-pointer"
+        onClick={handleNotificationClick}
+      >
+        <NotificationIcon />
       </div>
-      {loading && (
-        <div className="absolute inset-0 flex items-center justify-center bg-opacity-50 bg-gray-100 z-50">
-          <span className="loader"></span>
+
+      {showNotifications && (
+        <div
+          ref={notificationRef}
+          className="absolute top-12 right-0 w-[220px] bg-white border border-gray-300 rounded-lg shadow-lg z-10 transition-all duration-300"
+        >
+          {isPopupVisible && (
+            <div className="notification-popup">
+              <p>{notifications[0]?.message}</p>
+            </div>
+          )}
         </div>
       )}
-
-      {/* Title Section */}
-      <div className="flex items-center gap-2.5">
-        <span className="text-2xl font-bold">Dashboard</span>
-      </div>
-
-      {/* Icons Section */}
-      <div className="flex items-center gap-2">
-        {/* Notification Icon */}
-        <div className="relative">
-
-          <div
-            className="bg-[#f7fbff] rounded-full size-8 sm:size-11 flex items-center justify-center cursor-pointer"
-            onClick={handleNotificationClick}
-          >
-
-
-
-
-
-
-
-            {showNotifications && (
-              <div
-                ref={notificationRef}
-                className="absolute top-12 right-0 w-[220px] bg-white border border-gray-300 rounded-lg shadow-lg z-10 transition-all duration-300"
-              >
-
-                {isPopupVisible && (
-                  <div className="notification-popup">
-                    <p>{notifications[0]?.message}</p>
-                  </div>
-                )}
-
-
-              </div>)}
-        
-
-        {/* Profile Icon with Smooth Hover Card */}
-            <div
-              className="relative"
-              onMouseEnter={() => setIsHovered(true)}
-              onMouseLeave={() => setIsHovered(false)}
-            >
-              <div className="bg-[#f7fbff] rounded-full size-8 sm:size-11 flex items-center justify-center cursor-pointer">
-                <ProfileIcon />
-              </div>
-
-              {showCard && (
-                <div
-                  className={`absolute top-12 right-0 w-[220px] bg-white border border-gray-300 rounded-lg shadow-lg z-10 transition-all duration-300`}
-                >
-                  <ul className="py-2 divide-y divide-gray-200">
-                    <li
-                      className="px-4 py-3 flex items-center gap-3 hover:bg-gray-100 cursor-pointer"
-                      onClick={() => {
-                        navigation("profile");
-                      }}
-                    >
-                      <FaUser className="text-gray-500" /> <span>Account</span>
-                    </li>
-                    <li
-                      className="px-4 py-3 flex items-center gap-3 hover:bg-gray-100 cursor-pointer"
-                      onClick={logout}
-                    >
-                      <FaSignOutAlt className="text-gray-500" /> <span>Logout</span>
-                    </li>
-                    <li
-                      className="px-4 py-3 flex items-center gap-3 hover:bg-gray-100 cursor-pointer"
-                      onClick={() => {
-                        navigation("settings");
-                      }}
-                    >
-                      <FaCog className="text-gray-500" /> <span>Settings</span>
-                    </li>
-                  </ul>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
+
+    {/* Profile Icon with Smooth Hover Card */}
+    <div
+      className="relative"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <div className="bg-[#f7fbff] rounded-full w-8 h-8 sm:w-11 sm:h-11 flex items-center justify-center cursor-pointer">
+        <ProfileIcon />
+      </div>
+
+      {showCard && (
+        <div
+          className="absolute top-12 right-0 w-[220px] bg-white border border-gray-300 rounded-lg shadow-lg z-10 transition-all duration-300"
+        >
+          <ul className="py-2 divide-y divide-gray-200">
+            <li
+              className="px-4 py-3 flex items-center gap-3 hover:bg-gray-100 cursor-pointer"
+              onClick={() => {
+                navigation("profile");
+              }}
+            >
+              <FaUser className="text-gray-500" /> <span>Account</span>
+            </li>
+            <li
+              className="px-4 py-3 flex items-center gap-3 hover:bg-gray-100 cursor-pointer"
+              onClick={logout}
+            >
+              <FaSignOutAlt className="text-gray-500" /> <span>Logout</span>
+            </li>
+            <li
+              className="px-4 py-3 flex items-center gap-3 hover:bg-gray-100 cursor-pointer"
+              onClick={() => {
+                navigation("settings");
+              }}
+            >
+              <FaCog className="text-gray-500" /> <span>Settings</span>
+            </li>
+          </ul>
+        </div>
+      )}
+    </div>
+  </div>
+</div>
+
   );
 };
 
