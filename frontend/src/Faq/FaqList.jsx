@@ -10,6 +10,7 @@ import { DeleteEntity } from '../utils/Delete';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 import { handleSort } from '../utils/sorting';
+import api from '../utils/api';
 
 const FaqList = () => {
     const navigate = useNavigate();
@@ -22,7 +23,7 @@ const FaqList = () => {
     useEffect(() => {
         const fetchfaq = async () => {
             try {
-                const response = await axios.get("http://localhost:5000/faqs/all");
+                const response = await api.get("/faqs/all");
                 console.log(response.data)
                 setfaq(response.data);
                 setFilteredfaq(response.data);

@@ -9,6 +9,7 @@ import Loader from "../common/Loader";
 import ImageUploader from "../common/ImageUploader";
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
+import api from "../utils/api";
 
 const CountryAdd = () => {
   const navigate = useNavigate();
@@ -35,7 +36,7 @@ const CountryAdd = () => {
 
   const getCountry = async (id) => {
     try {
-      const response = await axios.get(`http://localhost:5000/countries/${id}`);
+      const response = await api.get(`/countries/${id}`);
       const country = response.data;
       setFormData({
         id: country.id,

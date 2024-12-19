@@ -5,6 +5,7 @@ import axios from 'axios';
 import MultiImageUploader from '../common/MultipleImageUploader';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { NotificationManager } from 'react-notifications';
+import api from '../utils/api';
 
 const ExtraImageAdd = () => {
     const navigate = useNavigate();
@@ -27,9 +28,9 @@ const ExtraImageAdd = () => {
 
     const getExtraImage = async () => {
         try {
-            const response = await axios.get(`http://localhost:5000/extra/${id}`, {
-                withCredentials: true
-            })
+            const response = await api.get(`/extra/${id}`
+                
+            )
             const ExtraImage = response.data;
             console.log(ExtraImage, "from extra imageds")
             setFormData({
@@ -47,9 +48,7 @@ const ExtraImageAdd = () => {
     useEffect(() => {
         const fetchProperties = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/properties', {
-                    withCredentials: true,
-                });
+                const response = await api.get('/properties', );
                 setProperties(response.data);
             } catch (error) {
                 console.error('Error fetching properties:', error.response ? error.response.data : error.message);
@@ -85,9 +84,7 @@ const ExtraImageAdd = () => {
         e.preventDefault();
         setIsLoading(true);
         try {
-            const response = await axios.post('http://localhost:5000/extra/upsert', formData, {
-                withCredentials: true,
-            });
+            const response = await api.post('/extra/upsert', formData, );
             // console.log('Extra image added successfully:', response.data);
             if(response.status === 200 || response.status === 201){
                 NotificationManager.removeAll();

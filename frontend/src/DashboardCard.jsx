@@ -17,34 +17,35 @@ import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import CardGiftcardOutlinedIcon from '@mui/icons-material/CardGiftcardOutlined';
 import ManageAccountsOutlinedIcon from '@mui/icons-material/ManageAccountsOutlined';
 import axios from "axios";
+import api from "./utils/api";
 
 const DashboardCard = () => {
     const [dataCounts, setDataCounts] = useState({});
 
     const endpoints = [
-        { key: "countryCount", url: "http://localhost:5000/countries/count" },
-        { key: "categoryCount", url: "http://localhost:5000/categories/count" },
-        { key: "couponCount", url: "http://localhost:5000/coupons/count" },
-        { key: "paymentCount", url: "http://localhost:5000/payment-methods/count" },
-        { key: "propertyCount", url: "http://localhost:5000/properties/count" },
-        { key: "facilityCount", url: "http://localhost:5000/facilities/count" },
-        { key: "galleryCatCount", url: "http://localhost:5000/galleryCategories/count" },
-        { key: "galleryCount", url: "http://localhost:5000/galleries/count" },
-        { key: "bookedCount", url: "http://localhost:5000/bookings/count?status=Booked" },
-        { key: "confirmedCount", url: "http://localhost:5000/bookings/count?status=Confirmed" },
-        { key: "checkInCount", url: "http://localhost:5000/bookings/count?status=Check_in" },
-        { key: "completedCount", url: "http://localhost:5000/bookings/count?status=Completed" },
-        { key: "extraImagesCount", url: "http://localhost:5000/extra/count" },
-        { key: "packageCount", url: "http://localhost:5000/packages/count" },
-        { key: "usersCount", url: "http://localhost:5000/users/user/count" },
-        { key: "enquiryCount", url: "http://localhost:5000/enquiries/count" },
-        { key: "faqsCount", url: "http://localhost:5000/faqs/count" },
+        { key: "countryCount", url: "/countries/count" },
+        { key: "categoryCount", url: "/categories/count" },
+        { key: "couponCount", url: "/coupons/count" },
+        { key: "paymentCount", url: "/payment-methods/count" },
+        { key: "propertyCount", url: "/properties/count" },
+        { key: "facilityCount", url: "/facilities/count" },
+        { key: "galleryCatCount", url: "/galleryCategories/count" },
+        { key: "galleryCount", url: "/galleries/count" },
+        { key: "bookedCount", url: "/bookings/count?status=Booked" },
+        { key: "confirmedCount", url: "/bookings/count?status=Confirmed" },
+        { key: "checkInCount", url: "/bookings/count?status=Check_in" },
+        { key: "completedCount", url: "/bookings/count?status=Completed" },
+        { key: "extraImagesCount", url: "/extra/count" },
+        { key: "packageCount", url: "/packages/count" },
+        { key: "usersCount", url: "/users/user/count" },
+        { key: "enquiryCount", url: "/enquiries/count" },
+        { key: "faqsCount", url: "/faqs/count" },
     ];
 
     useEffect(() => {
         const fetchCounts = async () => {
             try {
-                const requests = endpoints.map(endpoint => axios.get(endpoint.url, { withCredentials: true }));
+                const requests = endpoints.map(endpoint => api.get(endpoint.url));
                 const responses = await Promise.all(requests);
                 const counts = responses.reduce((acc, response, index) => {
                     acc[endpoints[index].key] = response.data.count || 0;
