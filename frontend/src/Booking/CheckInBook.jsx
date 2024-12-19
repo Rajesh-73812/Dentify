@@ -148,7 +148,7 @@ const CheckInBook = () => {
                                                 </div>
                                             </th>
 
-                                            <th className="px-4 py-3 min-w-[350px]">Action</th>
+                                            <th className="px-4 py-3 min-w-[250px]">Action</th>
 
                                         </tr>
                                     </thead>
@@ -156,9 +156,9 @@ const CheckInBook = () => {
                                         {currentcheckIn.length > 0 ? (
                                             currentcheckIn.map((checkIn, index) => (
                                                 <tr key={index + 1}>
-                                                    <td className="px-4 py-3">{index + 1 + indexOfFirst}</td>
-                                                    <td className="px-4 py-3">{checkIn?.prop_title || 'N/A'}</td>
-                                                    <td className="px-4 py-3">
+                                                    <td className="px-4 py-1">{index + 1 + indexOfFirst}</td>
+                                                    <td className="px-4 py-1">{checkIn?.prop_title || 'N/A'}</td>
+                                                    <td className="px-4 py-1">
                                                         {checkIn.prop_img ? (
                                                             <img src={checkIn.prop_img} className="w-16 h-16 object-cover rounded-full" alt="Coupon"
                                                                 onError={(e) => {
@@ -169,18 +169,18 @@ const CheckInBook = () => {
                                                             <img src="https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg" className="w-16 h-16 object-cover rounded-full" alt="Placeholder" />
                                                         )}
                                                     </td>
-                                                    <td className="px-4 py-3">{checkIn?.prop_price || 'N/A'}</td>
-                                                    <td className="px-4 py-3">{checkIn?.total_day || 'N/A'}</td>
-                                                    <td className="px-4 py-3">
+                                                    <td className="px-4 py-1">{checkIn?.prop_price || 'N/A'}</td>
+                                                    <td className="px-4 py-1">{checkIn?.total_day || 'N/A'}</td>
+                                                    <td className="px-4 py-1">
                                                         <NotificationContainer />
-                                                        <span className='px-3 py-1 text-sm rounded-full bg-green-400 cursor-pointer text-white mr-2' onClick={() => openModal(checkIn)}>View Details</span>
-                                                        <span className=' px-3 py-1 text-sm rounded-full bg-cyan-400 cursor-pointer text-white mr-2' onClick={() => { navigateApprove(checkIn.id, 'Completed') }}>Check Out</span>
+                                                        <span className='px-2 py-1 text-sm rounded-full bg-green-400 cursor-pointer text-white mr-2' onClick={() => openModal(checkIn)}>View Details</span>
+                                                        <span className=' px-2 py-1 text-sm rounded-full bg-cyan-400 cursor-pointer text-white mr-2' onClick={() => { navigateApprove(checkIn.id, 'Completed') }}>Check Out</span>
                                                     </td>
                                                 </tr>
                                             ))
                                         ) : (
                                             <tr>
-                                                <td className="px-4 py-3 text-center" colSpan="6">
+                                                <td className="px-4 py-1 text-center" colSpan="6">
                                                     No data available
                                                 </td>
                                             </tr>

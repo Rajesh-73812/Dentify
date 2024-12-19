@@ -211,15 +211,19 @@ const UserList = () => {
                                                 <td className="px-4 py-2">{userList?.reg_date.split("T")[0] || "N/A"}</td>
                                                 <td className="px-4 py-2">
                                                     {userList.status === 1 ? 
-                                                        <FontAwesomeIcon className='h-7 w-16 ' style={{color:'#0064DC'}} icon={faToggleOn} />  :  <FontAwesomeIcon className='h-7 w-16' style={{color:'#e9ecef'}} icon={faToggleOff} />
+                                                        <FontAwesomeIcon className='h-7 w-16 ' style={{color:'#0064DC'}} icon={faToggleOn} /> 
+                                                        : 
+                                                        <FontAwesomeIcon className='h-7 w-16' style={{color:'#e9ecef'}} icon={faToggleOff} />
                                                     }
                                                 </td>
                                                 <td className="px-4 py-2">{userList?.refercode || "N/A"}</td>
                                                 <td className="px-4 py-2">{userList?.parentcode || "N/A"}</td>
                                                 <td className="px-4 py-2">{userList?.wallet || "N/A"}</td>
                                                 <td className="px-4 py-2">
-                                                    {userList.is_subscribe === 1 ? 
-                                                        <FontAwesomeIcon className='h-7 w-16 ' style={{color:'#0064DC'}} icon={faToggleOn} />  :  <FontAwesomeIcon className='h-7 w-16' style={{color:'#e9ecef'}} icon={faToggleOff} />
+                                                    {userList.status === 1 ? 
+                                                        <FontAwesomeIcon className='h-7 w-16 ' style={{color:'#0064DC'}} icon={faToggleOn} /> 
+                                                        : 
+                                                        <FontAwesomeIcon className='h-7 w-16' style={{color:'#e9ecef'}} icon={faToggleOff} />
                                                     }
                                                 </td>
                                                 <td className="px-4 py-2">{userList?.pack_id || "N/A"}</td>

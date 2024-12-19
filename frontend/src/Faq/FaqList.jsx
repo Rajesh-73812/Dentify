@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import Header from '../components/Header';
 import { GoArrowDown, GoArrowUp } from 'react-icons/go';
 import { FaPen, FaTrash } from "react-icons/fa";
-import { searchFunction } from '../Entity/SearchEntity';
 import axios from 'axios';
 import FaqHeader from './FaqHeader';
 import { useNavigate } from 'react-router-dom';
@@ -10,6 +9,8 @@ import { DeleteEntity } from '../utils/Delete';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 import { handleSort } from '../utils/sorting';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faToggleOff, faToggleOn } from "@fortawesome/free-solid-svg-icons";
 
 const FaqList = () => {
     const navigate = useNavigate();
@@ -108,10 +109,6 @@ const FaqList = () => {
                                             </th>
                                             <th className="px-4 py-3 min-w-[150px]">
                                                 Status
-                                                <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('status')} />
-                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('status')} />
-                                                </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[150px]">
 
@@ -124,22 +121,23 @@ const FaqList = () => {
                                         {currentfaq.length > 0 ? (
                                             currentfaq.map((faq, index) => (
                                                 <tr key={faq.id}>
-                                                    <td className="px-4 py-3">{index + 1 + indexOfFirstFaq}</td>
-                                                    <td className="px-4 py-3">{faq?.question || "N/A"}</td>
+                                                    <td className="px-4 py-1">{index + 1 + indexOfFirstFaq}</td>
+                                                    <td className="px-4 py-1">{faq?.question || "N/A"}</td>
 
-                                                    <td className="px-4 py-3">{faq?.answer || "N/A"}</td>
-                                                    <td className="px-4 py-3">
-                                                        <span
-                                                            className={`px-3 py-1 text-sm rounded-full ${faq.status === 1 ? 'bg-green-500 text-white' : 'bg-gray-400 text-white'}`}
-                                                        >
-                                                            {faq.status === 1 ? "publish" : "unpublish"}
-                                                        </span>
+                                                    <td className="px-4 py-1">{faq?.answer || "N/A"}</td>
+                                                    <td className="px-4 py-1">
+                                                    {faq.status === 1 ? 
+                                                        <FontAwesomeIcon className='h-7 w-16 ' style={{color:'#0064DC'}} icon={faToggleOn} /> 
+                                                        : 
+                                                        <FontAwesomeIcon className='h-7 w-16' style={{color:'#e9ecef'}} icon={faToggleOff} />
+                                                    }
                                                     </td>
-                                                    <td className="px-4 py-3">
+                                                    <td className="px-4 py-1">
+                                                        <NotificationContainer />
                                                         <button className="bg-[#2dce89] text-white p-2 rounded-full hover:bg-green-600 transition mr-2" onClick={() => { updateFAQ(faq.id) }}>
                                                             <FaPen />
                                                         </button>
-                                                        <NotificationContainer />
+                                                        
                                                         <button className="bg-[#f5365c] text-white p-2 rounded-full hover:bg-red-600 transition" onClick={() => { handledelete(faq.id) }}>
                                                             <FaTrash />
                                                         </button>

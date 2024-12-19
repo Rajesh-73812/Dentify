@@ -9,8 +9,9 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import Loader from '../common/Loader';
 import { handleSort } from '../utils/sorting';
 import { DeleteEntity } from '../utils/Delete';
-import { searchEntity } from '../utils/searchUtils';
 import { NotificationContainer } from 'react-notifications';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faToggleOff, faToggleOn } from "@fortawesome/free-solid-svg-icons";
 
 const FacilityList = () => {
     const navigate = useNavigate()
@@ -127,10 +128,6 @@ const FacilityList = () => {
 
                                             <th className="px-4 py-3 min-w-[100px]">
                                                 Facility Status
-                                                <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('status')} />
-                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('status')} />
-                                                </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[100px]">
                                                 Action
@@ -157,11 +154,14 @@ const FacilityList = () => {
                                                     </td>
 
                                                     <td className="px-4 py-3">
-                                                        <span className={`px-3 py-1 text-sm rounded-full ${facility.status === 1 ? 'bg-green-500 text-white' : 'bg-gray-400 text-white'}`}>
-                                                            {facility.status === 1 ? "publish" : "unpublish"}
-                                                        </span>
+                                                    {facility.status === 1 ? 
+                                                        <FontAwesomeIcon className='h-7 w-16 ' style={{color:'#0064DC'}} icon={faToggleOn} /> 
+                                                        : 
+                                                        <FontAwesomeIcon className='h-7 w-16' style={{color:'#e9ecef'}} icon={faToggleOff} />
+                                                    }
                                                     </td>
                                                     <td className="px-4 py-3">
+                                                        <NotificationContainer />
                                                         <button className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition mr-2" onClick={() => { updateFacility(facility.id) }}>
                                                             <FaPen />
                                                         </button>

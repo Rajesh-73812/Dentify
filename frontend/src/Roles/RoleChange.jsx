@@ -70,49 +70,76 @@ const RoleChange = () => {
                                 <table className="min-w-full text-sm text-left text-gray-700">
                                     <thead className="bg-gray-50 text-xs uppercase font-medium text-gray-500">
                                         <tr>
-                                            <th className="px-4 py-3 min-w-[100px]">
+                                            <th className="px-4 py-3 min-w-[120px]">
                                                 Sr. No
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('slno')} />
-                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('slno')} />
+                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('id')} />
+                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('id')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[150px]">
+                                            <th className="px-4 py-3 min-w-[120px]">
+                                                Name
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('requested_role')} />
+                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('requested_role')} />
+                                                </div>
+                                            </th>
+                                            <th className="px-4 py-3 min-w-[100px]">
+                                                Email
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('requested_role')} />
+                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('requested_role')} />
+                                                </div>
+                                            </th>
+                                            <th className="px-4 py-3 min-w-[120px]">
+                                                 Role
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('requested_role')} />
+                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('requested_role')} />
+                                                </div>
+                                            </th>
+                                            <th className="px-4 py-3 min-w-[180px]">
                                                 Request Role
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className='cursor-pointer' onClick={() => sortData('requested_role')} />
                                                     <GoArrowDown className='cursor-pointer' onClick={() => sortData('requested_role')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[130px]">
+                                            <th className="px-4 py-3 min-w-[100px]">
                                                  Status
-                                                <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('status')} />
-                                                    <GoArrowDown className='cursor-pointer'  onClick={() => sortData('status')} />
-                                                </div>
-                                                </th>
+                                            </th>
                                             <th className="px-4 py-3 min-w-[150px]">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-gray-200">
-                                        {currentrole.map((role, index) => (
+                                        {currentrole.length > 0 ? (
+                                            currentrole.map((role, index) => (
                                             <tr key={role.id}>
-                                                <td className="px-4 py-3">{index + 1 + indexOfFirst}</td>
-                                                <td className="px-4 py-3">{role?.requested_role || "N/A"}</td>
-                                                <td className="px-4 py-3">
+                                                <td className="px-4 py-2">{index + 1 + indexOfFirst}</td>
+                                                <td className="px-4 py-2">{role.user?.name|| "N/A"}</td>
+                                                <td className="px-4 py-2">{role.user?.email || "N/A"}</td>
+                                                <td className="px-4 py-2">{role.user?.role|| "N/A"}</td>
+                                                <td className="px-4 py-2">{role?.requested_role || "N/A"}</td>
+                                                <td className="px-4 py-2">
                                                     <span
-                                                        className={`px-3 py-1 text-sm rounded-full ${role.status === "pending" ? 'bg-yellow-500 text-white' : 'bg-gray-400 text-white'}`}
+                                                        className={`px-2 py-1 text-sm rounded-full ${role.status === "pending" ? 'bg-yellow-500 text-white' : 'bg-green-400 text-white'}`}
                                                     >
-                                                        {role.status === "pending" ? "pending" : "approved"}
+                                                        {role.status === "pending" ? "Accept" : "approved"}
                                                     </span>
                                                 </td>
-                                                <td className="px-4 py-3">
+                                                <td className="px-4 py-2">
                                                     <button className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition " onClick={()=>{handledelete(role.id)}}>
                                                         <FaTrash />
                                                     </button>
                                                 </td>
                                             </tr>
-                                        ))}
+                                        ))
+                                    ) : (
+                                        <tr>
+                                            <td colSpan={4} className="px-4 py-3 text-center text-gray">No Data available</td>
+                                        </tr>
+                                    )
+                                    }
                                     </tbody>
                                 </table>
                             </div>
