@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import Header from '../components/Header';
 import { GoArrowDown, GoArrowUp } from 'react-icons/go';
 import { FaPen, FaTrash } from "react-icons/fa";
-import { searchFunction } from '../Entity/SearchEntity';
 import PaymentGatewayHeader from './PaymentGatewayHeader';
 import axios from 'axios';
 import { useLoading } from '../Context/LoadingContext';

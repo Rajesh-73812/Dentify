@@ -8,6 +8,8 @@ import { useNavigate } from 'react-router-dom';
 import { DeleteEntity } from '../utils/Delete';
 import { handleSort } from '../utils/sorting';
 import { NotificationContainer } from 'react-notifications';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faToggleOff, faToggleOn } from "@fortawesome/free-solid-svg-icons";
 
 const PackageList = () => {
     const navigate = useNavigate();
@@ -79,7 +81,7 @@ const PackageList = () => {
                                 <table className="min-w-full text-sm text-left text-gray-700">
                                     <thead className="bg-gray-50 text-xs uppercase font-medium text-gray-500">
                                         <tr>
-                                            <th className="px-4 py-3 min-w-[150px]">
+                                            <th className="px-4 py-3 min-w-[130px]">
                                                 Sr. No
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className='cursor-pointer' onClick={() => sortData('slno')} />
@@ -112,10 +114,6 @@ const PackageList = () => {
                                             </th>
                                             <th className="px-4 py-3 min-w-[150px]">
                                                 Status
-                                                <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('status')} />
-                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('status')} />
-                                                </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[150px]"> Action  </th>
                                         </tr>
@@ -124,9 +122,9 @@ const PackageList = () => {
                                         {currentpackages.length > 0 ? (
                                             currentpackages.map((Package, index) => (
                                                 <tr key={Package.id}>
-                                                    <td className="px-4 py-3">{index + 1 + indexOfFirstPackage}</td>
-                                                    <td className="px-4 py-3">{Package?.title || "N/A"}</td>
-                                                    <td className="px-4 py-3">
+                                                    <td className="px-4 py-1">{index + 1 + indexOfFirstPackage}</td>
+                                                    <td className="px-4 py-1">{Package?.title || "N/A"}</td>
+                                                    <td className="px-4 py-1">
                                                         <img
                                                             src={Package.image || 'fallback-image.jpg'}
                                                             alt={Package.title || "N/A"}
@@ -135,16 +133,17 @@ const PackageList = () => {
 
                                                         />
                                                     </td>
-                                                    <td className="px-4 py-3">{Package?.day || "N/A"}</td>
-                                                    <td className="px-4 py-3">{Package?.price || "N/A"}</td>
-                                                    <td className="px-4 py-3">
-                                                        <span
-                                                            className={`px-3 py-1 text-sm rounded-full ${Package.status === 1 ? 'bg-green-500 text-white' : 'bg-gray-400 text-white'}`}
-                                                        >
-                                                            {Package.status === 1 ? "publish" : "unpublish"}
-                                                        </span>
+                                                    <td className="px-4 py-1">{Package?.day || "N/A"}</td>
+                                                    <td className="px-4 py-1">{Package?.price || "N/A"}</td>
+                                                    <td className="px-4 py-1">
+                                                    {Package.status === 1 ? 
+                                                        <FontAwesomeIcon className='h-7 w-16 ' style={{color:'#0064DC'}} icon={faToggleOn} /> 
+                                                        : 
+                                                        <FontAwesomeIcon className='h-7 w-16' style={{color:'#e9ecef'}} icon={faToggleOff} />
+                                                    }
                                                     </td>
-                                                    <td className="px-4 py-3">
+                                                    <td className="px-4 py-1">
+                                                        <NotificationContainer />
                                                         <button className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition mr-2" onClick={() => { updatePackage(Package.id) }}>
                                                             <FaPen />
                                                         </button>

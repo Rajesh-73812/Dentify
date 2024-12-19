@@ -130,7 +130,7 @@ const CompletedBook = () => {
 
                                 </tr>
                                 </thead>
-                                
+
                                     <tbody className="divide-y divide-gray-200">
                                         {currentcompleted.length > 0 ? (
                                             currentcompleted.map((completedList, index) => (

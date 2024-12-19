@@ -3,14 +3,18 @@ import Header from "../components/Header";
 import ExtraImageHeader from "./ExtraImageHeader";
 import { GoArrowDown, GoArrowUp } from "react-icons/go";
 import { FaPen, FaTrash } from "react-icons/fa";
-import { searchFunction } from "../Entity/SearchEntity";
 import Loader from "../common/Loader";
 import axios from "axios";
 import { handleSort } from "../utils/sorting";
 import { DeleteEntity } from "../utils/Delete";
 import { useNavigate } from "react-router-dom";
 import { NotificationContainer } from "react-notifications";
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faToggleOff, faToggleOn } from "@fortawesome/free-solid-svg-icons";
+
 import api from "../utils/api";
+
 
 const ExtraImageList = () => {
     const navigate = useNavigate()
@@ -168,10 +172,11 @@ const ExtraImageList = () => {
                                                     </td>
                                                     <td className="px-4 py-3">{extraImage?.Property?.title || "No Title"}</td>
                                                     <td className="px-4 py-3">
-                                                        <span className={`px-3 py-1 text-sm rounded-full ${extraImage.status === 1 ? "bg-green-500 text-white" : "bg-gray-400 text-white"}`}
-                                                        >
-                                                            {extraImage.status === 1 ? "Published" : "Unpublished"}
-                                                        </span>
+                                                    {extraImage.status === 1 ? 
+                                                        <FontAwesomeIcon className='h-7 w-16 ' style={{color:'#0064DC'}} icon={faToggleOn} /> 
+                                                        : 
+                                                        <FontAwesomeIcon className='h-7 w-16' style={{color:'#e9ecef'}} icon={faToggleOff} />
+                                                    }
                                                     </td>
                                                     <td className="px-4 py-3">
                                                         <NotificationContainer />
