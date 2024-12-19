@@ -74,7 +74,7 @@ const CupponList = () => {
 
     // for dalete
     const handledelete = async (id) => {
-        const success = await DeleteEntity('Cuppon', id)
+        const success = await DeleteEntity('Coupon', id)
         if (success) {
             const updatedCuppon = cuppons.filter((cuppons) => cuppons.id !== id);
             setcuppons(updatedCuppon);
@@ -103,16 +103,65 @@ const CupponList = () => {
                                 <table className="min-w-full text-sm text-left text-gray-700">
                                     <thead className="bg-gray-50 text-xs uppercase font-medium text-gray-500">
                                         <tr>
-                                            {['slno', 'title', 'subtitle', 'code', 'image', 'expiredDate', 'minAmount', 'discount', 'status'].map((key) => (
-                                                <th key={key} className="px-4 py-3 min-w-[150px]">
-                                                    {key.charAt(0).toUpperCase() + key.slice(1)}
-                                                    <div className="inline-flex items-center ml-2">
-                                                        <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData(key)} />
-                                                        <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData(key)} />
-                                                    </div>
-                                                </th>
-                                            ))}
-                                            <th className="px-4 py-3 min-w-[150px]">Action</th>
+                                            <th className="px-4 py-3 min-w-[130px]">
+                                                Sr. No
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('slno')} />
+                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('slno')} />
+                                                </div>
+                                            </th>
+                                            <th className="px-4 py-3 min-w-[150px]">
+                                            title
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('ctitle')} />
+                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('ctitle')} />
+                                                </div>
+                                            </th>
+                                            <th className="px-4 py-3 min-w-[150px]">
+                                            subtitle
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('subtitle')} />
+                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('subtitle')} />
+                                                </div>
+                                            </th>
+                                            <th className="px-4 py-3 min-w-[150px]">
+                                            code
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('c_title')} />
+                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('c_title')} />
+                                                </div>
+                                            </th>
+                                            <th className="px-4 py-3 min-w-[150px]">
+                                            image
+                                            </th>
+                                            <th className="px-4 py-3 min-w-[180px]">
+                                            expiredDate
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('cdate')} />
+                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('cdate')} />
+                                                </div>
+                                            </th>
+                                            <th className="px-4 py-3 min-w-[180px]">
+                                            minAmount
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('min_amt')} />
+                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('min_amt')} />
+                                                </div>
+                                            </th>
+                                            <th className="px-4 py-3 min-w-[150px]">
+                                            discount
+                                                <div className="inline-flex items-center ml-2">
+                                                     <GoArrowUp className='cursor-pointer' onClick={() => sortData('c_value')} />
+                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('c_value')} />
+                                                </div>
+                                            </th>
+                                            <th className="px-4 py-3 min-w-[150px]">
+                                                Status
+                                            </th>
+                                            <th className="px-4 py-3 min-w-[150px]">
+                                                Action
+                                            </th>
+                                                                                   
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-gray-200">
@@ -137,9 +186,9 @@ const CupponList = () => {
                                                     <td className="px-4 py-3">{cuppon?.c_value || "N/A"}</td>
                                                     <td className="px-4 py-3">
                                                         {cuppon.status === 1 ? 
-                                                            <FontAwesomeIcon className='h-7 w-16 ' style={{color:'#0064DC'}} icon={faToggleOn} /> 
+                                                            <FontAwesomeIcon className='h-7 w-16  cursor-pointer' style={{color:'#0064DC'}} icon={faToggleOn} /> 
                                                             : 
-                                                            <FontAwesomeIcon className='h-7 w-16' style={{color:'#e9ecef'}} icon={faToggleOff} />
+                                                            <FontAwesomeIcon className='h-7 w-16 cursor-pointer' style={{color:'#e9ecef'}} icon={faToggleOff} />
                                                         }
                                                     </td>
                                                     <td className="px-4 py-3">

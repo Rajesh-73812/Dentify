@@ -8,6 +8,7 @@ import { useLocation } from 'react-router-dom';
 import Loader from '../common/Loader';
 import { NotificationManager, NotificationContainer } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 const CupponAdd = () => {
   const location = useLocation();
@@ -122,10 +123,10 @@ const CupponAdd = () => {
           <Header />
           <div className="container mx-auto">
             <div className="flex items-center mt-6  mb-4">
-              {/* <Link to="/rolesList" className="cursor-pointer ml-6">
-              
-            </Link> */}
-              <h2 className="text-lg font-semibold ml-4 " style={{ color: '#000000', fontSize: '24px', fontFamily: 'Montserrat' }}>Cuppon Management</h2>
+              <Link onClick={() => { navigate(-1) }} className="cursor-pointer ml-6">
+                <ArrowBackIosNewIcon />
+              </Link>
+              <h2 className="text-lg font-semibold ml-4 " style={{ color: '#000000', fontSize: '24px', fontFamily: 'Montserrat' }}>Coupon Management</h2>
             </div>
 
             {/* Form Container */}
@@ -135,7 +136,7 @@ const CupponAdd = () => {
                   <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-4 mt-6">
                     {/* cuppon image*/}
                     <div className="flex flex-col">
-                      <label htmlFor="cupponimage" className="text-sm font-medium text-start text-[12px] font-[Montserrat]">Cuppon Image</label>
+                      <label htmlFor="cupponimage" className="text-sm font-medium text-start text-[12px] font-[Montserrat]">Coupon Image</label>
                       <ImageUploader onUploadSuccess={handleImageUploadSuccess} />
                       {formData.c_img && (
                         <div className="mt-4">
@@ -150,14 +151,14 @@ const CupponAdd = () => {
 
                     {/* cuppon expiarydate*/}
                     <div className="flex flex-col">
-                      <label htmlFor="cdate" className="text-sm font-medium text-start text-[12px] font-[Montserrat]">Cuppon Expiary Date</label>
+                      <label htmlFor="cdate" className="text-sm font-medium text-start text-[12px] font-[Montserrat]">Coupon Expiary Date</label>
                       <input id="cdate" value={formData.cdate.split(" ")[0].replace(/^(\d{4})-(\d{2})-(\d{2})$/, '$3/$2/$1')} onChange={handleChange} name="cdate" type="date" required className="border rounded-lg p-3 mt-1 w-full h-14" style={{ borderRadius: '8px', border: '1px solid #EAEAFF' }}
                       />
                     </div>
 
                     {/* cuppon code */}
                     <div className="flex flex-col">
-                      <label htmlFor="c_title" className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> Cuppon code </label>
+                      <label htmlFor="c_title" className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> Coupon code </label>
                       <input id="c_title" name="c_title" type="text" required className="border rounded-lg p-3 mt-1 w-full h-14" style={{ borderRadius: '8px', border: '1px solid #EAEAFF' }}
                         value={formData.c_title}
                         onChange={handleChange}
@@ -173,14 +174,14 @@ const CupponAdd = () => {
                   <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-4  mt-6">
                     {/* cuppon title */}
                     <div className="flex flex-col">
-                      <label htmlFor="ctitle" className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> Cuppon Title </label>
+                      <label htmlFor="ctitle" className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> Coupon Title </label>
                       <input id="ctitle" value={formData.ctitle} onChange={handleChange} name="ctitle" type="text" required className="border rounded-lg p-3 mt-1 w-full h-14" style={{ borderRadius: '8px', border: '1px solid #EAEAFF' }}
                         placeholder="Enter Cuppon title"
                       />
                     </div>
                     {/* cuppon subtitle */}
                     <div className="flex flex-col">
-                      <label htmlFor="subtitle" className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> Cuppon Sub Title </label>
+                      <label htmlFor="subtitle" className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> Coupon Sub Title </label>
                       <input id="subtitle" value={formData.subtitle} name="subtitle" type="text" required className="border rounded-lg p-3 mt-1 w-full h-14" style={{ borderRadius: '8px', border: '1px solid #EAEAFF' }}
                         onChange={handleChange}
                         placeholder="Enter Cuppon subtitle"
@@ -199,7 +200,7 @@ const CupponAdd = () => {
 
                     {/* cuppon min order amount */}
                     <div className="flex flex-col">
-                      <label htmlFor="min_amt" className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> Cuppon Min Order Amount </label>
+                      <label htmlFor="min_amt" className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> Coupon Min Order Amount </label>
                       <input id="min_amt" name="min_amt" value={formData.min_amt} type="text" required className="border rounded-lg p-3 mt-1 w-full h-14" style={{ borderRadius: '8px', border: '1px solid #EAEAFF' }}
                         onChange={handleChange}
 
@@ -227,7 +228,7 @@ const CupponAdd = () => {
 
                   {/* Action Buttons */}
                   <div className="flex justify-start mt-6 gap-3">
-                    <button type="submit" className={` py-2 ${id ? 'bg-green-500 hover:bg-green-600' : 'bg-blue-500 hover:bg-blue-600'} text-white rounded-lg  w-[150px] h-12 font-[Montserrat] font-bold`} style={{ borderRadius: "8px", }} > {id ? 'Update Cuppon' : 'Add Cuppon'} </button>
+                    <button type="submit" className={` py-2 ${id ? 'bg-green-500 hover:bg-green-600' : 'bg-blue-500 hover:bg-blue-600'} text-white rounded-lg  w-[150px] h-12 font-[Montserrat] font-bold`} style={{ borderRadius: "8px", }} > {id ? 'Update Coupon' : 'Add Coupon'} </button>
                   </div>
                 </form>
               </div>

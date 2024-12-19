@@ -5,6 +5,7 @@ import SidebarMenu from "../components/SideBar";
 import axios from "axios";
 import ImageUploader from "../common/ImageUploader";
 import Select from 'react-select';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 const PropertiesAdd = () => {
   const location = useLocation()
@@ -161,9 +162,9 @@ const PropertiesAdd = () => {
           <Header />
           <div className="container mx-auto">
             <div className="flex items-center mt-6  mb-4">
-              {/* <Link to="/rolesList" className="cursor-pointer ml-6">
-              
-            </Link> */}
+            <Link onClick={() => { navigate(-1) }} className="cursor-pointer ml-6">
+                <ArrowBackIosNewIcon />
+              </Link>
               <h2
                 className="text-lg font-semibold ml-4 "
                 style={{

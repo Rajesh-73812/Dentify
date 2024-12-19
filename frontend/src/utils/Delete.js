@@ -29,7 +29,7 @@ export const DeleteEntity = async (entity, id) => {
           });
           break;
 
-        case "Cuppon":
+        case "Coupon":
           await axios.delete(`${BASE_URL}/coupons/delete/${id}`, {
             withCredentials: true,
           });
@@ -116,7 +116,8 @@ export const DeleteEntity = async (entity, id) => {
 
 
         case "Role":
-          await axios.delete(`${BASE_URL}/admin/delete/${id}?forceDelete=true`,{ withCredentials: true });
+          // alert(id)
+          await axios.delete(`${BASE_URL}/rollrequest/delete/${id}?forceDelete=true`,{ withCredentials: true });
           break;
 
         case "Property":

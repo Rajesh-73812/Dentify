@@ -49,7 +49,7 @@ const Header = () => {
 
       // Update state with new notifications
       setNotifications(newNotifications);
-      setNotificationCount(newNotifications.length);
+      setNotificationCount((prevCount) => prevCount + newNotifications.length);
 
       // Display the most recent notification using react-hot-toast
       if (newNotifications.length > 0) {

@@ -48,6 +48,14 @@ export const StatusEntity = async (entityType, id, currentStatus, setData, data)
                 url = `${BASE_URL}/api/status/${id}`;
                 break;
 
+            case 'RoleChange':
+                url = `${BASE_URL}/api/status/${id}`;
+                break;
+
+            case 'Role':
+                url = `${BASE_URL}/api/status/${id}`;
+                break;
+
             default:
                 throw new Error('Invalid entity type');
         }

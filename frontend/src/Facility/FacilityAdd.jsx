@@ -8,6 +8,7 @@ import { useLocation } from 'react-router-dom';
 import Loader from '../common/Loader';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 const FacilityAdd = () => {
   const location=useLocation()
@@ -107,9 +108,9 @@ const FacilityAdd = () => {
         <Header />
         <div className="container mx-auto">
           <div className="flex items-center mt-6  mb-4">
-            {/* <Link to="/rolesList" className="cursor-pointer ml-6">
-              
-            </Link> */}
+            <Link onClick={() => { navigate(-1) }} className="cursor-pointer ml-6">
+                <ArrowBackIosNewIcon />
+              </Link>
             <h2 className="text-lg font-semibold ml-4 header" >Facility Management</h2>
           </div>
 

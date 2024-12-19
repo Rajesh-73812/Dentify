@@ -3,8 +3,9 @@ import Loader from '../common/Loader';
 import Header from '../components/Header';
 import axios from 'axios';
 import MultiImageUploader from '../common/MultipleImageUploader';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { NotificationManager } from 'react-notifications';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 const ExtraImageAdd = () => {
     const navigate = useNavigate();
@@ -93,7 +94,7 @@ const ExtraImageAdd = () => {
                 NotificationManager.removeAll();
                 NotificationManager.success('Extra image added successfully!')
                 setTimeout(() => {
-                
+                    navigate("/extra-image-list")
                 }, 2000);
             }
             
@@ -114,6 +115,9 @@ const ExtraImageAdd = () => {
                     <Header />
                     <div className="container mx-auto">
                         <div className="flex items-center mt-6 mb-4">
+                            <Link onClick={() => { navigate(-1) }} className="cursor-pointer ml-6">
+                                <ArrowBackIosNewIcon /> 
+                            </Link>
                             <h2 className="text-lg font-semibold ml-4" style={{ color: '#000000', fontSize: '24px', fontFamily: 'Montserrat' }}>Extra Image Management</h2>
                         </div>
                         <div className="h-full px-6 max-w-5xl" style={{ paddingTop: '24px' }}>
