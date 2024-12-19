@@ -6,6 +6,7 @@ import PendingBookHeader from './PendingBookHeader';
 import 'jspdf-autotable';
 import OrderPreviewModal from './OrderPreviewModal';
 import { handleSort } from '../utils/sorting';
+import api from '../utils/api';
 
 const CancelledBook = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -21,9 +22,8 @@ const CancelledBook = () => {
     useEffect(() => {
         const fetchBookings = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/bookings/status/${status}`, {
-                    withCredentials: true,
-                });
+                const response = await api.get(`/bookings/status/${status}`      
+                );
                 //   console.log(response.data)
                 setcancelled(response.data);
                 setFilteredcancelled(response.data);
@@ -130,9 +130,9 @@ const CancelledBook = () => {
                                         {currentcancelled.length > 0 ? (
                                             currentcancelled.map((cancellList, index) => (
                                                 <tr key={index + 1}>
-                                                    <td className="px-4 py-3">{index + 1 + indexOfFirst}</td>
-                                                    <td className="px-4 py-3">{cancellList.prop_title || 'N/A'}</td>
-                                                    <td className="px-4 py-3">
+                                                    <td className="px-4 py-1">{index + 1 + indexOfFirst}</td>
+                                                    <td className="px-4 py-1">{cancellList.prop_title || 'N/A'}</td>
+                                                    <td className="px-4 py-1">
                                                         {cancellList.prop_img ? (
                                                             <img src={cancellList.prop_img} className="w-16 h-16 object-cover rounded-full" alt="Coupon"
                                                                 onError={(e) => {
@@ -143,9 +143,9 @@ const CancelledBook = () => {
                                                             <img src="https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg" className="w-16 h-16 object-cover rounded-full" alt="Placeholder" />
                                                         )}
                                                     </td>
-                                                    <td className="px-4 py-3">{cancellList?.prop_price || 'N/A'}</td>
-                                                    <td className="px-4 py-3">{cancellList?.total_day || 'N/A'}</td>
-                                                    <td className="px-4 py-3">
+                                                    <td className="px-4 py-1">{cancellList?.prop_price || 'N/A'}</td>
+                                                    <td className="px-4 py-1">{cancellList?.total_day || 'N/A'}</td>
+                                                    <td className="px-4 py-1">
                                                         <span className='px-2 py-1 text-sm rounded-full bg-[#2dce89] cursor-pointer text-white mr-2' onClick={() => openModal(cancellList)}>View Details</span>
                                                     </td>
                                                 </tr>

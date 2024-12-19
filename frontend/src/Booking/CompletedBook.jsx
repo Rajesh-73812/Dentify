@@ -7,6 +7,7 @@ import PendingBookHeader from './PendingBookHeader';
 import 'jspdf-autotable';
 import OrderPreviewModal from './OrderPreviewModal';
 import { handleSort } from '../utils/sorting';
+import api from '../utils/api';
 
 const CompletedBook = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -21,9 +22,7 @@ const CompletedBook = () => {
     useEffect(() => {
         const fetchBookings = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/bookings/status/${status}`, {
-                    withCredentials: true,
-                });
+                const response = await api.get(`/bookings/status/${status}`, );
                 setcompleted(response.data);
                 setFilteredcompleted(response.data);
             } catch (error) {
@@ -129,8 +128,9 @@ const CompletedBook = () => {
                                                 Action
                                             </th>
 
-                                        </tr>
-                                    </thead>
+                                </tr>
+                                </thead>
+
 
                                     <tbody className="divide-y divide-gray-200">
                                         {currentcompleted.length > 0 ? (

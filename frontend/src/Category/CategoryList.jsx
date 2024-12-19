@@ -14,6 +14,13 @@ import { handleSort } from "../utils/sorting";
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faToggleOff, faToggleOn } from "@fortawesome/free-solid-svg-icons";
+import { StatusEntity } from "../utils/Status";
+
+import api from "../utils/api";
+
+
 const CategoryList = () => {
   const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
@@ -27,9 +34,7 @@ const CategoryList = () => {
   useEffect(() => {
     async function fetchCategories() {
       try {
-        const response = await axios.get("http://localhost:5000/categories/all", {
-          withCredentials: true,
-        });
+        const response = await api.get("/categories/all");
 
         console.log("Fetched categories:", response.data);
         setCategories(response.data);
@@ -93,6 +98,24 @@ const CategoryList = () => {
     navigate('/add-category', { state: { id: id } })
   };
 
+  const toggleStatus = async (id, currentStatus) => {
+    try {
+      const newStatus = currentStatus === 1 ? 0 : 1;
+      const success = await StatusEntity('Category', id, currentStatus, setFilteredCategories, filteredCategories);
+  
+      if (success) {
+        setCategories((prevCategories) =>
+          prevCategories.map((category) =>
+            category.id === id ? { ...category, status: newStatus } : category
+          )
+        );
+      }
+    } catch (error) {
+      console.error("Error toggling status:", error);
+    }
+  };
+  
+
   return (
     <div>
       {isLoading && <Loader />}
@@ -117,7 +140,7 @@ const CategoryList = () => {
                           <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('slno')} />
                         </div>
                       </th>
-                      <th className="px-4 py-3 min-w-[150px]">
+                      <th className="px-4 py-3 min-w-[130px]">
                         Category Title
                         <div className="inline-flex items-center ml-2">
                           <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('title')} />
@@ -129,10 +152,6 @@ const CategoryList = () => {
                       </th>
                       <th className="px-4 py-3 min-w-[100px]">
                         Category Status
-                        <div className="inline-flex items-center ml-2">
-                          <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('status')} />
-                          <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('status')} />
-                        </div>
                       </th>
                       <th className="px-4 py-3 min-w-[100px]">Action</th>
                     </tr>
@@ -156,11 +175,24 @@ const CategoryList = () => {
                             )}
                           </td>
                           <td className="px-4 py-3">
-                            <span className={`px-3 py-1 text-sm rounded-full ${category.status === 1 ? 'bg-green-500 text-white' : 'bg-gray-400 text-white'}`}>
-                              {category.status == 1 ? "publish" : "unpublish"}
-                            </span>
+                            {category.status === 1 ? (
+                              <FontAwesomeIcon
+                                className="h-7 w-16 cursor-pointer"
+                                style={{ color: '#0064DC' }}
+                                icon={faToggleOn}
+                                onClick={() => toggleStatus(category.id, category.status)} // Call toggleStatus here
+                              />
+                            ) : (
+                              <FontAwesomeIcon
+                                className="h-7 w-16 cursor-pointer"
+                                style={{ color: '#e9ecef' }}
+                                icon={faToggleOff}
+                                onClick={() => toggleStatus(category.id, category.status)} // Call toggleStatus here
+                              />
+                            )}
                           </td>
                           <td className="px-4 py-3">
+                            <NotificationContainer />
                             <button className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition mr-2" onClick={() => { updateCategory(category.id) }}>
                               <FaPen />
                             </button>

@@ -13,6 +13,7 @@ import { NotificationContainer, NotificationManager } from 'react-notifications'
 import 'react-notifications/lib/notifications.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faToggleOn, faToggleOff } from '@fortawesome/free-solid-svg-icons';
+import api from '../utils/api';
 
 const UserList = () => {
     const hasFetched = useRef(false);
@@ -37,7 +38,7 @@ const UserList = () => {
     useEffect(() => {
         async function userlist() {
             try {
-                const response = await axios.get("http://localhost:5000/users/user/getalluser");
+                const response = await api.get("/users/user/getalluser");
                 console.log(response.data);
                 setuser(response.data);
                 setFiltereduser(response.data);
@@ -244,8 +245,11 @@ const UserList = () => {
                                                     <td className="px-4 py-2">{userList?.reg_date.split("T")[0] || "N/A"}</td>
                                                     {/* <td className="px-4 py-2">
                                                     {userList.status === 1 ? 
-                                                        <FontAwesomeIcon className='h-7 w-16 ' style={{color:'#0064DC'}} icon={faToggleOn} />  :  <FontAwesomeIcon className='h-7 w-16' style={{color:'#e9ecef'}} icon={faToggleOff} />
+                                                        <FontAwesomeIcon className='h-7 w-16 ' style={{color:'#0064DC'}} icon={faToggleOn} /> 
+                                                        : 
+                                                        <FontAwesomeIcon className='h-7 w-16' style={{color:'#e9ecef'}} icon={faToggleOff} />
                                                     }
+
                                                 </td> */}
                                                     <td className="px-4 py-2">
                                                         <FontAwesomeIcon
@@ -285,6 +289,7 @@ const UserList = () => {
                                                     </td>
                                                 </tr>
                                             ))
+
 
                                         ) : (
                                             <tr>

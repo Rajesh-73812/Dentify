@@ -11,6 +11,12 @@ import axios from 'axios';
 import { handleSort } from '../utils/sorting';
 import { NotificationContainer } from 'react-notifications';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faToggleOff, faToggleOn } from "@fortawesome/free-solid-svg-icons";
+
+import api from '../utils/api';
+
+
 const CupponList = () => {
     const navigate = useNavigate();
     const [cuppons, setcuppons] = useState([]);
@@ -24,9 +30,9 @@ const CupponList = () => {
     useEffect(() => {
         async function fetchData() {
             try {
-                const response = await axios.get("http://localhost:5000/coupons/all", {
-                    withCredentials: true,
-                });
+                const response = await api.get("/coupons/all",{
+                    withCredentials: true, 
+                } );
                 console.log("API Response:", response.data);
                 setcuppons(response.data);
                 setFilteredcuppons(response.data);
@@ -134,11 +140,11 @@ const CupponList = () => {
                                                     <td className="px-4 py-3">{cuppon?.min_amt || "N/A"}</td>
                                                     <td className="px-4 py-3">{cuppon?.c_value || "N/A"}</td>
                                                     <td className="px-4 py-3">
-                                                        <span
-                                                            className={`px-3 py-1 text-sm rounded-full ${cuppon.status === 1 ? 'bg-green-500 text-white' : 'bg-gray-400 text-white'}`}
-                                                        >
-                                                            {cuppon.status === 1 ? "publish" : "unpublish"}
-                                                        </span>
+                                                        {cuppon.status === 1 ? 
+                                                            <FontAwesomeIcon className='h-7 w-16 ' style={{color:'#0064DC'}} icon={faToggleOn} /> 
+                                                            : 
+                                                            <FontAwesomeIcon className='h-7 w-16' style={{color:'#e9ecef'}} icon={faToggleOff} />
+                                                        }
                                                     </td>
                                                     <td className="px-4 py-3">
 

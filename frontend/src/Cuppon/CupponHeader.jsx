@@ -3,7 +3,9 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import { Link, useNavigate } from 'react-router-dom';
 
 const CupponHeader = ({ onSearch }) => {
+
     const navigate = useNavigate()
+
 
     return (
         <div>

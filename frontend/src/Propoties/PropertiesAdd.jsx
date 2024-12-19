@@ -5,6 +5,7 @@ import SidebarMenu from "../components/SideBar";
 import axios from "axios";
 import ImageUploader from "../common/ImageUploader";
 import Select from 'react-select';
+import api from "../utils/api";
 
 const PropertiesAdd = () => {
   const location = useLocation()
@@ -48,9 +49,7 @@ const PropertiesAdd = () => {
 
   const getProperty = async () => {
     try {
-      const response = await axios.get(`http://localhost:5000/properties/${id}`, {
-        withCredentials: true
-      })
+      const response = await api.get(`/properties/${id}`)
       const Property = response.data;
       console.log(Property, "Property Data");
       setFormData({
@@ -86,16 +85,16 @@ const PropertiesAdd = () => {
 
   useEffect(() => {
     // Fetch countries
-    axios.get('http://localhost:5000/countries/all')
+    api.get('/countries/all')
       .then(response => setCountries(response.data))
       .catch(error => console.error('Error fetching countries:', error));
 
     // Fetch categories
-    axios.get('http://localhost:5000/categories/all')
+    api.get('/categories/all')
       .then(response => setCategories(response.data))
       .catch(error => console.error('Error fetching categories:', error));
 
-    axios.get('http://localhost:5000/facilities/all')
+    api.get('/facilities/all')
       .then(response => setFacilities(response.data))
       .catch(error => console.error('Error fetching facilities:', error));
   }, []);
@@ -133,13 +132,9 @@ const PropertiesAdd = () => {
 
     console.log(formData, "from formdata");
     try {
-      await axios.post('http://localhost:5000/properties/upsert',
+      await api.post('/properties/upsert',
         formData,
-        {
-
-          withCredentials: true,
-
-        });
+       );
       alert('Property submitted successfully');
       navigate("/property-list")
 

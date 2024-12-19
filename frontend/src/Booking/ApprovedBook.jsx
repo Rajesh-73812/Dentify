@@ -9,6 +9,7 @@ import OrderPreviewModal from './OrderPreviewModal';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 import { handleSort } from '../utils/sorting'
+import api from '../utils/api';
 
 const ApprovedBook = () => {
     const navigate = useNavigate();
@@ -25,9 +26,7 @@ const ApprovedBook = () => {
     useEffect(() => {
         const fetchingApprovedList = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/bookings/status/${status}`, {
-                    withCredentials: true,
-                });
+                const response = await api.get(`/bookings/status/${status}`);
                 setapprove(response.data);
                 setfilteredApprove(response.data);
             } catch (error) {
@@ -86,10 +85,9 @@ const ApprovedBook = () => {
 
     const navigateApprove = async (id, newStatus) => {
         try {
-            const response = await axios.put(
-                `http://localhost:5000/bookings/status/${id}`,
+            const response = await api.put(
+                `/bookings/status/${id}`,
                 { status: newStatus },
-                { withCredentials: true }
             );
 
             if (response.status === 200) {
@@ -156,9 +154,9 @@ const ApprovedBook = () => {
                                         {currentApprove.length > 0 ? (
                                             currentApprove.map((approve, index) => (
                                                 <tr key={index + 1}>
-                                                    <td className="px-4 py-3">{index + 1 + indexOfFirst}</td>
-                                                    <td className="px-4 py-3">{approve?.prop_title || 'N/A'}</td>
-                                                    <td className="px-4 py-3">
+                                                    <td className="px-4 py-1">{index + 1 + indexOfFirst}</td>
+                                                    <td className="px-4 py-1">{approve?.prop_title || 'N/A'}</td>
+                                                    <td className="px-4 py-1">
                                                         {approve.prop_img ? (
                                                             <img src={approve.prop_img} className="w-16 h-16 object-cover rounded-full" alt="Coupon"
                                                                 onError={(e) => {
@@ -170,9 +168,9 @@ const ApprovedBook = () => {
                                                         )}
 
                                                     </td>
-                                                    <td className="px-4 py-3">{approve?.prop_price || 'N/A'}</td>
-                                                    <td className="px-4 py-3">{approve?.total_day || 'N/A'}</td>
-                                                    <td className="px-4 py-3 d-flex">
+                                                    <td className="px-4 py-1">{approve?.prop_price || 'N/A'}</td>
+                                                    <td className="px-4 py-1">{approve?.total_day || 'N/A'}</td>
+                                                    <td className="px-4 py-1 d-flex">
                                                         <NotificationContainer />
                                                         <span className='px-2 py-1 text-sm rounded-full bg-[#2dce89] cursor-pointer text-white mr-2' onClick={() => openModal(approve)}>View Details</span>
                                                         <span className=' px-2 py-1  text-sm rounded-full bg-cyan-400 cursor-pointer text-white mr-2' onClick={() => { navigateApprove(approve.id, 'Check_in') }}>Check In</span>
