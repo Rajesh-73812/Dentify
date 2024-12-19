@@ -6,6 +6,7 @@ import axios from "axios";
 import { generateToken, messaging } from "../Notification/firebase";
 import { onMessage } from "firebase/messaging";
 import toast, { Toaster } from "react-hot-toast";
+import api from "../utils/api";
 
 const Header = () => {
   const [notifications, setNotifications] = useState([]);
@@ -42,9 +43,7 @@ const Header = () => {
 
   const fetchNotifications = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/notifications", {
-        withCredentials: true,
-      });
+      const response = await api.get("/notifications");
       const newNotifications = response.data;
 
       // Update state with new notifications
@@ -91,10 +90,9 @@ const Header = () => {
   const logout = async () => {
     setLoading(true);
     try {
-      await axios.post(
-        `http://localhost:5000/admin/logout`,
+      await api.post(
+        `/admin/logout`,
         {},
-        { withCredentials: true }
       );
       setTimeout(() => {
         navigate("/");

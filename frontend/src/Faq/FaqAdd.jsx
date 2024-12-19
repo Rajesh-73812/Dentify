@@ -4,6 +4,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
+import api from '../utils/api';
 
 const FaqAdd = () => {
   const location=useLocation();
@@ -27,7 +28,7 @@ const FaqAdd = () => {
 
   const getFAQ = async (id) => {
     try {
-        const response = await axios.get(`http://localhost:5000/faqs/${id}`);
+        const response = await api.get(`/faqs/${id}`);
         const faq = response.data;
         setFormData({
             id, 

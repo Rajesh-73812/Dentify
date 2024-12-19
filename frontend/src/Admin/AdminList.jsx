@@ -12,6 +12,7 @@ import { DeleteEntity } from '../utils/Delete';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 import Swal from 'sweetalert2';
+import api from '../utils/api';
 
 const AdminList = () => {
     const navigate = useNavigate();
@@ -41,9 +42,7 @@ const AdminList = () => {
 
     const fetchAdmins = async () => {
         try {
-            const response = await axios.get('http://localhost:5000/admin/all-admins', {
-                withCredentials: true,
-            });
+            const response = await api.get('/admin/all-admins');
             console.log('API Response:', response.data);
             const { admins } = response.data; 
             if (Array.isArray(admins)) {
@@ -78,9 +77,9 @@ const AdminList = () => {
 
     const handleUpdate = async (adminId) => {
         try {
-            await axios.put(`http://localhost:5000/admin/update/${adminId}`, editForm, {
-                withCredentials: true,
-            });
+            await api.put(`/admin/update/${adminId}`, editForm, 
+                
+            );
             // setAdmins(admins.map(admin => admin.id === adminId ? { ...admin, ...editForm } : admin));
             const updatedAdmins = admins.map(admin => admin.id === adminId ? { ...admin, ...editForm } : admin);
             setAdmins(updatedAdmins);
@@ -101,9 +100,7 @@ const AdminList = () => {
 
     const handleAdd = async () => {
         try {
-            const response = await axios.post('http://localhost:5000/admin/register', addForm, {
-                withCredentials: true,
-            });
+            const response = await api.post('/admin/register', addForm);
             console.log(response.status)
             const updatedAdmins = [...admins, response.data.admin];
             setAdmins(updatedAdmins);

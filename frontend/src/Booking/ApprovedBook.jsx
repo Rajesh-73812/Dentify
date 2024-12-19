@@ -9,6 +9,7 @@ import OrderPreviewModal from './OrderPreviewModal';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 import { handleSort } from '../utils/sorting'
+import api from '../utils/api';
 
 const ApprovedBook = () => {
     const navigate = useNavigate();
@@ -25,9 +26,7 @@ const ApprovedBook = () => {
     useEffect(() => {
         const fetchingApprovedList = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/bookings/status/${status}`, {
-                    withCredentials: true,
-                });
+                const response = await api.get(`/bookings/status/${status}`);
                 setapprove(response.data);
                 setfilteredApprove(response.data);
             } catch (error) {
@@ -86,10 +85,9 @@ const ApprovedBook = () => {
 
     const navigateApprove = async (id, newStatus) => {
         try {
-            const response = await axios.put(
-                `http://localhost:5000/bookings/status/${id}`,
+            const response = await api.put(
+                `/bookings/status/${id}`,
                 { status: newStatus },
-                { withCredentials: true }
             );
 
             if (response.status === 200) {

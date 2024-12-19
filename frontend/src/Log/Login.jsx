@@ -5,6 +5,7 @@ import axios from "axios";
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
+import api from '../utils/api';
 
 const Login = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -28,14 +29,13 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        "http://localhost:5000/admin/login",
+      const response = await api.post(
+        "/admin/login",
         formData,
-        { withCredentials: true }
       );
       console.log(response.data)
       NotificationManager.success("Admin logged in successfully!");
-      // navigate('/dashboard');
+      
       setTimeout(() => {
 
         navigate("/dashboard");

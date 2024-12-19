@@ -9,6 +9,7 @@ import { useLocation } from 'react-router-dom';
 import Loader from '../common/Loader';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
+import api from '../utils/api';
 
 const CategoryAdd = () => {
   const navigate = useNavigate();
@@ -30,9 +31,7 @@ const CategoryAdd = () => {
 
   const getCategory = async () => {
     try {
-      const response = await axios.get(`http://localhost:5000/categories/${id}`, {
-        withCredentials: true
-      })
+      const response = await api.get(`/categories/${id}`)
       const Category = response.data;
       console.log(response.data)
       setFormData({

@@ -13,6 +13,7 @@ import { DeleteEntity } from '../utils/Delete';
 import { handleSort } from "../utils/sorting";
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
+import api from "../utils/api";
 
 const CategoryList = () => {
   const navigate = useNavigate();
@@ -27,9 +28,7 @@ const CategoryList = () => {
   useEffect(() => {
     async function fetchCategories() {
       try {
-        const response = await axios.get("http://localhost:5000/categories/all", {
-          withCredentials: true,
-        });
+        const response = await api.get("/categories/all");
 
         console.log("Fetched categories:", response.data);
         setCategories(response.data);

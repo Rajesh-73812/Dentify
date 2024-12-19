@@ -8,6 +8,7 @@ import { DeleteEntity } from '../utils/Delete';
 import { useNavigate } from 'react-router-dom';
 import { handleSort } from '../utils/sorting';
 import RoleHeader from './RoleHeader';
+import api from '../utils/api';
 
 const RoleChange = () => {
   const navigate=useNavigate();
@@ -23,7 +24,7 @@ const RoleChange = () => {
 
   const fetchrole = async () => {
       try {
-          const response = await axios.get("http://localhost:5000/rollrequest/all");
+          const response = await api.get("/rollrequest/all");
           console.log(response.data)
           setrole(response.data);
           setFilteredrole(response.data); 

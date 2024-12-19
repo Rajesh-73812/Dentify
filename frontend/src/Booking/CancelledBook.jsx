@@ -6,6 +6,7 @@ import PendingBookHeader from './PendingBookHeader';
 import 'jspdf-autotable';
 import OrderPreviewModal from './OrderPreviewModal';
 import { handleSort } from '../utils/sorting';
+import api from '../utils/api';
 
 const CancelledBook = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -21,9 +22,8 @@ const CancelledBook = () => {
     useEffect(() => {
         const fetchBookings = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/bookings/status/${status}`, {
-                    withCredentials: true,
-                });
+                const response = await api.get(`/bookings/status/${status}`      
+                );
                 //   console.log(response.data)
                 setcancelled(response.data);
                 setFilteredcancelled(response.data);

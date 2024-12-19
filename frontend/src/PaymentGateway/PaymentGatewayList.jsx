@@ -13,6 +13,7 @@ import { DeleteEntity } from '../utils/Delete';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faToggleOn, faToggleOff } from '@fortawesome/free-solid-svg-icons';
 import { NotificationContainer } from 'react-notifications';
+import api from '../utils/api';
 
 const PaymentGatewayList = () => {
     const [paymentGateway, setpaymentGateway] = useState([]);
@@ -26,9 +27,7 @@ const PaymentGatewayList = () => {
     useEffect(() => {
         async function fetchData() {
             try {
-                const response = await axios.get("http://localhost:5000/payment-methods/", {
-                    withCredentials: true,
-                });
+                const response = await api.get("/payment-methods/", );
                 console.log("API Response:", response.data);
                 setpaymentGateway(response.data);
                 setFilteredpaymentGateway(response.data);
