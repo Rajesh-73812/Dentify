@@ -8,6 +8,7 @@ import { useLocation } from 'react-router-dom';
 import Loader from '../common/Loader';
 import { NotificationManager, NotificationContainer } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
+import api from '../utils/api';
 
 const CupponAdd = () => {
   const location = useLocation();
@@ -24,7 +25,7 @@ const CupponAdd = () => {
 
   const getCuppon = async (id) => {
     try {
-      const response = await axios.get(`http://localhost:5000/coupons/${id}`)
+      const response = await api.get(`/coupons/${id}`)
       console.log(response.data)
       const cuppon = response.data
       const formattedDate = cuppon.cdate ? cuppon.cdate.split(" ")[0].split("-").reverse().join("-") : "";

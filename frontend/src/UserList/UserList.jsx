@@ -13,6 +13,7 @@ import { NotificationContainer, NotificationManager } from 'react-notifications'
 import 'react-notifications/lib/notifications.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faToggleOn, faToggleOff } from '@fortawesome/free-solid-svg-icons';
+import api from '../utils/api';
 
 const UserList = () => {
     const hasFetched = useRef(false);
@@ -37,7 +38,7 @@ const UserList = () => {
     useEffect(() => {
         async function userlist() {
             try {
-                const response = await axios.get("http://localhost:5000/users/user/getalluser");
+                const response = await api.get("/users/user/getalluser");
                 console.log(response.data);
                 setuser(response.data);
                 setFiltereduser(response.data);

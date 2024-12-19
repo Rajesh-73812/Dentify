@@ -9,8 +9,12 @@ import { handleSort } from "../utils/sorting";
 import { DeleteEntity } from "../utils/Delete";
 import { useNavigate } from "react-router-dom";
 import { NotificationContainer } from "react-notifications";
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faToggleOff, faToggleOn } from "@fortawesome/free-solid-svg-icons";
+
+import api from "../utils/api";
+
 
 const ExtraImageList = () => {
     const navigate = useNavigate()
@@ -25,9 +29,7 @@ const ExtraImageList = () => {
         const fetchExtraImages = async () => {
             setIsLoading(true);
             try {
-                const response = await axios.get("http://localhost:5000/extra", {
-                    withCredentials: true,
-                });
+                const response = await api.get("/extra");
                 console.log(response.data);
                 setExtraImages(response.data);
                 setFilteredImages(response.data);

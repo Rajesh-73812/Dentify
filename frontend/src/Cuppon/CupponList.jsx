@@ -10,8 +10,12 @@ import { DeleteEntity } from '../utils/Delete';
 import axios from 'axios';
 import { handleSort } from '../utils/sorting';
 import { NotificationContainer } from 'react-notifications';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faToggleOff, faToggleOn } from "@fortawesome/free-solid-svg-icons";
+
+import api from '../utils/api';
+
 
 const CupponList = () => {
     const navigate = useNavigate();
@@ -26,9 +30,9 @@ const CupponList = () => {
     useEffect(() => {
         async function fetchData() {
             try {
-                const response = await axios.get("http://localhost:5000/coupons/all", {
-                    withCredentials: true,
-                });
+                const response = await api.get("/coupons/all",{
+                    withCredentials: true, 
+                } );
                 console.log("API Response:", response.data);
                 setcuppons(response.data);
                 setFilteredcuppons(response.data);
