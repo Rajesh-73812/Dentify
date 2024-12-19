@@ -81,7 +81,7 @@ const UserList = () => {
 
         try {
             const success = await DeleteEntity('UserList', id);
-    
+
             if (success) {
                 setuser((prevUserList) => {
                     const updatedUserList = prevUserList.filter((user) => user.id !== id);
@@ -96,7 +96,40 @@ const UserList = () => {
 
         }
     };
-    
+
+    const handleToggleChange = async (id, field, currentValue) => {
+        const newValue = currentValue === 1 ? 0 : 1;
+
+        try {
+            const response = await axios.put(`http://localhost:5000/users/user/toggle-update`, {
+                id,
+                field,
+                value: newValue, // Ensure this matches the backend
+            });
+
+            if (response.status === 200) {
+                // Update state
+                setuser((prevUsers) =>
+                    prevUsers.map((user) =>
+                        user.id === id ? { ...user, [field]: newValue } : user
+                    )
+                );
+
+                setFiltereduser((prevFilteredUsers) =>
+                    prevFilteredUsers.map((user) =>
+                        user.id === id ? { ...user, [field]: newValue } : user
+                    )
+                );
+
+                NotificationManager.success('Status updated successfully!');
+            } else {
+                NotificationManager.error('Failed to update status.');
+            }
+        } catch (error) {
+            console.error('Error updating toggle:', error);
+            NotificationManager.error('Error updating toggle.');
+        }
+    };
 
     return (
         <div>
@@ -203,39 +236,55 @@ const UserList = () => {
                                         {currentuser.length > 0 ? (
                                             currentuser.map((userList, index) => (
 
-                                            <tr key={userList.id}>
-                                                <td className="px-4 py-2">{index + 1 + indexOfFirst}</td>
-                                                <td className="px-4 py-2">{userList?.name || "N/A"}</td>
-                                                <td className="px-4 py-2">{userList?.email || "N/A"}</td>
-                                                <td className="px-4 py-2">{userList?.mobile || "N/A"}</td>
-                                                <td className="px-4 py-2">{userList?.reg_date.split("T")[0] || "N/A"}</td>
-                                                <td className="px-4 py-2">
+                                                <tr key={userList.id}>
+                                                    <td className="px-4 py-2">{index + 1 + indexOfFirst}</td>
+                                                    <td className="px-4 py-2">{userList?.name || "N/A"}</td>
+                                                    <td className="px-4 py-2">{userList?.email || "N/A"}</td>
+                                                    <td className="px-4 py-2">{userList?.mobile || "N/A"}</td>
+                                                    <td className="px-4 py-2">{userList?.reg_date.split("T")[0] || "N/A"}</td>
+                                                    {/* <td className="px-4 py-2">
                                                     {userList.status === 1 ? 
                                                         <FontAwesomeIcon className='h-7 w-16 ' style={{color:'#0064DC'}} icon={faToggleOn} />  :  <FontAwesomeIcon className='h-7 w-16' style={{color:'#e9ecef'}} icon={faToggleOff} />
                                                     }
-                                                </td>
-                                                <td className="px-4 py-2">{userList?.refercode || "N/A"}</td>
-                                                <td className="px-4 py-2">{userList?.parentcode || "N/A"}</td>
-                                                <td className="px-4 py-2">{userList?.wallet || "N/A"}</td>
-                                                <td className="px-4 py-2">
-                                                    {userList.is_subscribe === 1 ? 
-                                                        <FontAwesomeIcon className='h-7 w-16 ' style={{color:'#0064DC'}} icon={faToggleOn} />  :  <FontAwesomeIcon className='h-7 w-16' style={{color:'#e9ecef'}} icon={faToggleOff} />
-                                                    }
-                                                </td>
-                                                <td className="px-4 py-2">{userList?.pack_id || "N/A"}</td>
-                                                <td className="px-4 py-2">{userList?.start_date || "N/A"}</td>
-                                                <td className="px-4 py-2">{userList?.end_date || "N/A"}</td>
-                                                <td className="px-4 py-2">
-                                                    <button className="bg-[#2dce89] text-white p-2 rounded-full hover:bg-green-600 transition mr-2">
-                                                        <FaPen />
-                                                    </button>
-                                                    <NotificationContainer />
-                                                    <button className="bg-[#f5365c] text-white p-2 rounded-full hover:bg-red-600 transition" onClick={()=>{handledelete(userList.id)}}>
-                                                        <FaTrash />
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        ))
+                                                </td> */}
+                                                    <td className="px-4 py-2">
+                                                        <FontAwesomeIcon
+                                                            className="h-7 w-16"
+                                                            style={{ color: userList.status === 1 ? '#0064DC' : '#e9ecef' }}
+                                                            icon={userList.status === 1 ? faToggleOn : faToggleOff}
+                                                            onClick={() => handleToggleChange(userList.id, 'status', userList.status)}
+                                                        />
+                                                    </td>
+                                                    <td className="px-4 py-2">{userList?.refercode || "N/A"}</td>
+                                                    <td className="px-4 py-2">{userList?.parentcode || "N/A"}</td>
+                                                    <td className="px-4 py-2">{userList?.wallet || "N/A"}</td>
+                                                    {/* <td className="px-4 py-2">
+                                                        {userList.is_subscribe === 1 ?
+                                                            <FontAwesomeIcon className='h-7 w-16 ' style={{ color: '#0064DC' }} icon={faToggleOn} /> : <FontAwesomeIcon className='h-7 w-16' style={{ color: '#e9ecef' }} icon={faToggleOff} />
+                                                        }
+                                                    </td> */}
+                                                    <td className="px-4 py-2">
+                                                        <FontAwesomeIcon
+                                                            className="h-7 w-16"
+                                                            style={{ color: userList.is_subscribe === 1 ? '#0064DC' : '#e9ecef' }}
+                                                            icon={userList.is_subscribe === 1 ? faToggleOn : faToggleOff}
+                                                            onClick={() => handleToggleChange(userList.id, 'is_subscribe', userList.is_subscribe)}
+                                                        />
+                                                    </td>
+                                                    <td className="px-4 py-2">{userList?.pack_id || "N/A"}</td>
+                                                    <td className="px-4 py-2">{userList?.start_date || "N/A"}</td>
+                                                    <td className="px-4 py-2">{userList?.end_date || "N/A"}</td>
+                                                    <td className="px-4 py-2">
+                                                        <button className="bg-[#2dce89] text-white p-2 rounded-full hover:bg-green-600 transition mr-2">
+                                                            <FaPen />
+                                                        </button>
+                                                        <NotificationContainer />
+                                                        <button className="bg-[#f5365c] text-white p-2 rounded-full hover:bg-red-600 transition" onClick={() => { handledelete(userList.id) }}>
+                                                            <FaTrash />
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            ))
 
                                         ) : (
                                             <tr>
