@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Header from '../components/Header'
 import { GoArrowDown, GoArrowUp } from 'react-icons/go';
-import { FaPen,FaTrash } from "react-icons/fa";
+import { FaPen, FaTrash } from "react-icons/fa";
 import { searchFunction } from '../Entity/SearchEntity';
 import axios from 'axios';
 import { DeleteEntity } from '../utils/Delete';
@@ -11,16 +11,34 @@ import RoleHeader from './RoleHeader';
 import api from '../utils/api';
 
 const RoleChange = () => {
-  const navigate=useNavigate();
-  const [role, setrole] = useState([]);
-  const [filteredrole, setFilteredrole] = useState([]);
-  const [sortConfig, setSortConfig] = useState({ key: '', direction: '' });
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
+    const navigate = useNavigate();
+    const [role, setrole] = useState([]);
+    const [filteredrole, setFilteredrole] = useState([]);
+    const [sortConfig, setSortConfig] = useState({ key: '', direction: '' });
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 10;
 
-  useEffect(() => {
-      fetchrole();
-  }, []);
+    useEffect(() => {
+        fetchrole();
+    }, []);
+
+
+
+    // Search functionality
+    const handleSearch = (event) => {
+        const querySearch = event.target.value.toLowerCase();
+        const filteredData = role.filter(item =>
+            Object.values(item).some(value =>
+                typeof value === 'object' && value !== null
+                    ? Object.values(value).some(nestedValue =>
+                        String(nestedValue).toLowerCase().includes(querySearch)
+                    )
+                    : String(value).toLowerCase().includes(querySearch)
+            )
+        );
+        setFilteredrole(filteredData);
+        setCurrentPage(1);
+    };
 
   const fetchrole = async () => {
       try {
@@ -33,35 +51,31 @@ const RoleChange = () => {
       }
   };
 
-  const handleSearch = (event) => {
-      searchFunction(event, role, setFilteredrole);
-      setCurrentPage(1);
-  };
 
-  // for sorting
-  const sortData = (key) => {
-      handleSort(filteredrole, key, sortConfig, setSortConfig, setFilteredrole);
+    // for sorting
+    const sortData = (key) => {
+        handleSort(filteredrole, key, sortConfig, setSortConfig, setFilteredrole);
     };
-  
-  const indexOfLast = currentPage * itemsPerPage;
-  const indexOfFirst = indexOfLast - itemsPerPage;
-  const currentrole = filteredrole.slice(indexOfFirst, indexOfLast);
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
-  const totalPages = Math.ceil(filteredrole.length / itemsPerPage);
 
-  const handledelete = async (id) => {
-      const success = await DeleteEntity("Role", id);
-      if (success) {
-          const updatedrole = role.filter((country) => country.id !== id);
-          setrole(updatedrole);
-          setFilteredrole(updatedrole);
-      }
-  };
+    const indexOfLast = currentPage * itemsPerPage;
+    const indexOfFirst = indexOfLast - itemsPerPage;
+    const currentrole = filteredrole.slice(indexOfFirst, indexOfLast);
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+    const totalPages = Math.ceil(filteredrole.length / itemsPerPage);
 
-  return (
-    <div>
-      <div className="h-screen flex">
-                
+    const handledelete = async (id) => {
+        const success = await DeleteEntity("Role", id);
+        if (success) {
+            const updatedrole = role.filter((country) => country.id !== id);
+            setrole(updatedrole);
+            setFilteredrole(updatedrole);
+        }
+    };
+
+    return (
+        <div>
+            <div className="h-screen flex">
+
                 <div className="flex flex-1 flex-col bg-[#f7fbff]">
                     <Header />
                     <RoleHeader onSearch={handleSearch} />
@@ -85,6 +99,7 @@ const RoleChange = () => {
                                                     <GoArrowDown className='cursor-pointer' onClick={() => sortData('requested_role')} />
                                                 </div>
                                             </th>
+
                                             <th className="px-4 py-3 min-w-[100px]">
                                                 Email
                                                 <div className="inline-flex items-center ml-2">
@@ -109,6 +124,7 @@ const RoleChange = () => {
                                             <th className="px-4 py-3 min-w-[100px]">
                                                  Status
                                             </th>
+
                                             <th className="px-4 py-3 min-w-[150px]">Action</th>
                                         </tr>
                                     </thead>
@@ -128,8 +144,10 @@ const RoleChange = () => {
                                                         {role.status === "pending" ? "Accept" : "approved"}
                                                     </span>
                                                 </td>
+
                                                 <td className="px-4 py-2">
                                                     <button className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition " onClick={()=>{handledelete(role.id)}}>
+
                                                         <FaTrash />
                                                     </button>
                                                 </td>
@@ -150,38 +168,38 @@ const RoleChange = () => {
                                 Showing <span className="font-semibold text-gray-900">{indexOfFirst + 1}</span> to <span className="font-semibold text-gray-900">{Math.min(indexOfLast, filteredrole.length)}</span> of <span className="font-semibold text-gray-900">{filteredrole.length}</span>
                             </span>
                             <ul className="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">
-                                    <li>
-                                        <button 
-                                            onClick={() => paginate(currentPage > 1 ? currentPage - 1 : 1)} 
-                                            className={`previous-button ${filteredrole.length === 0 ? 'cursor-not-allowed' : ''}`} 
-                                            disabled={currentPage === 1 || filteredrole.length === 0} 
-                                            title={filteredrole.length === 0 ? 'No data available' : ''}
-                                        >
-                                            <img src="/image/action/Left Arrow.svg" alt="Left" /> Previous
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <span className="current-page">
-                                            Page {filteredrole.length > 0 ? currentPage : 0} of {filteredrole.length > 0 ? totalPages : 0}
-                                        </span>
-                                    </li>
-                                    <li>
-                                        <button 
-                                            onClick={() => paginate(currentPage < totalPages ? currentPage + 1 : totalPages)} 
-                                            className={`next-button ${filteredrole.length === 0 ? 'cursor-not-allowed' : ''}`} 
-                                            disabled={currentPage === totalPages || filteredrole.length === 0} 
-                                            title={filteredrole.length === 0 ? 'No data available' : ''}
-                                        >
-                                            Next <img src="/image/action/Right Arrow (1).svg" alt="Right" />
-                                        </button>
-                                    </li>
+                                <li>
+                                    <button
+                                        onClick={() => paginate(currentPage > 1 ? currentPage - 1 : 1)}
+                                        className={`previous-button ${filteredrole.length === 0 ? 'cursor-not-allowed' : ''}`}
+                                        disabled={currentPage === 1 || filteredrole.length === 0}
+                                        title={filteredrole.length === 0 ? 'No data available' : ''}
+                                    >
+                                        <img src="/image/action/Left Arrow.svg" alt="Left" /> Previous
+                                    </button>
+                                </li>
+                                <li>
+                                    <span className="current-page">
+                                        Page {filteredrole.length > 0 ? currentPage : 0} of {filteredrole.length > 0 ? totalPages : 0}
+                                    </span>
+                                </li>
+                                <li>
+                                    <button
+                                        onClick={() => paginate(currentPage < totalPages ? currentPage + 1 : totalPages)}
+                                        className={`next-button ${filteredrole.length === 0 ? 'cursor-not-allowed' : ''}`}
+                                        disabled={currentPage === totalPages || filteredrole.length === 0}
+                                        title={filteredrole.length === 0 ? 'No data available' : ''}
+                                    >
+                                        Next <img src="/image/action/Right Arrow (1).svg" alt="Right" />
+                                    </button>
+                                </li>
                             </ul>
                         </div>
                     </div>
                 </div>
             </div>
-    </div>
-  )
+        </div>
+    )
 }
 
 export default RoleChange
