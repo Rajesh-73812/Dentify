@@ -9,6 +9,7 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 const PageAdd = () => {
   const location=useLocation();
@@ -81,41 +82,34 @@ const PageAdd = () => {
         const response = await axios.post(url, dataToSend, { withCredentials: true });
 
         if (response.status === 200 || response.status === 201) {
+          NotificationManager.removeAll()
             NotificationManager.success(successMessage);
             setTimeout(() => {
                 navigate("/page-list");
             }, 2000);
         } else {
+            NotificationManager.removeAll()
             NotificationManager.error("Something went wrong. Please try again.");
         }
     } catch (error) {
+        NotificationManager.removeAll()
         console.error("Error submitting Page:", error);
         NotificationManager.error("An error occurred while submitting the Page.");
     }
   };
 
-
-  const handleFocus=()=>{
-
-  }
-
-  const handleBlur=()=>{
-
-  }
-
   return (
     <div>
       <div className="flex bg-[#f7fbff]">
       {/* Sidebar */}
-     
       
       <main className="flex-grow">
         <Header />
         <div className="container mx-auto">
           <div className="flex items-center mt-6  mb-4">
-            {/* <Link to="/rolesList" className="cursor-pointer ml-6">
-              
-            </Link> */}
+          <Link onClick={() => { navigate(-1) }} className="cursor-pointer ml-6">
+                <ArrowBackIosNewIcon />
+              </Link>
             <h2 className="text-lg font-semibold ml-4 header" >Page Management</h2>
           </div>
 
@@ -128,8 +122,6 @@ const PageAdd = () => {
                   <div className="flex flex-col">
                       <label  htmlFor="ctitle"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> Page name </label>
                       <input id="ctitle" value={formData.ctitle} onChange={handleChange} name="ctitle" type="text" required className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}}
-                        onFocus={() => handleFocus('ctitle')}
-                        onBlur={() => handleBlur('ctitle')}
                         placeholder="Enter Page Title"
                       />
                     </div>
@@ -164,7 +156,6 @@ const PageAdd = () => {
                   <ToastContainer />
                 </div>
               </form>
-
             </div>
           </div>
         </div>

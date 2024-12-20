@@ -5,9 +5,15 @@ import SidebarMenu from "../components/SideBar";
 import axios from "axios";
 import ImageUploader from "../common/ImageUploader";
 import Select from 'react-select';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import api from "../utils/api";
+const [selectedOption, setSelectedOption] = useState(null);
 
 const PropertiesAdd = () => {
+  const [countries, setCountries] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [facilities, setFacilities] = useState([]);
+  const navigate = useNavigate();
   const location = useLocation()
   const id = location.state ? location.state.id : null;
   const [formData, setFormData] = useState({
@@ -35,11 +41,6 @@ const PropertiesAdd = () => {
     plimit: 0,
     is_sell: 0
   });
-
-  const [countries, setCountries] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [facilities, setFacilities] = useState([]);
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (id) {
@@ -108,16 +109,6 @@ const PropertiesAdd = () => {
   };
 
 
-
-  const handleBlur = (e) => {
-
-  }
-
-  const handleFocus = (e) => {
-
-  }
-
-
   const handleImageUploadSuccess = (imageUrl) => {
     setFormData((prevData) => ({
       ...prevData,
@@ -144,9 +135,6 @@ const PropertiesAdd = () => {
     }
   };
 
-  const [selectedOption, setSelectedOption] = useState(null);
-
-
   return (
     <div>
       <div className="flex bg-[#f7fbff]">
@@ -156,9 +144,9 @@ const PropertiesAdd = () => {
           <Header />
           <div className="container mx-auto">
             <div className="flex items-center mt-6  mb-4">
-              {/* <Link to="/rolesList" className="cursor-pointer ml-6">
-              
-            </Link> */}
+            <Link onClick={() => { navigate(-1) }} className="cursor-pointer ml-6">
+                <ArrowBackIosNewIcon />
+              </Link>
               <h2
                 className="text-lg font-semibold ml-4 "
                 style={{
@@ -206,8 +194,6 @@ const PropertiesAdd = () => {
                           borderRadius: "8px",
                           border: "1px solid #EAEAFF",
                         }}
-                        onFocus={() => handleFocus("title")}
-                        onBlur={() => handleBlur("title")}
                         onChange={handleChange}
                         placeholder="Enter property title"
                       />
@@ -248,8 +234,6 @@ const PropertiesAdd = () => {
                           borderRadius: "8px",
                           border: "1px solid #EAEAFF",
                         }}
-                        onFocus={() => handleFocus("PropertyPricePerNight")}
-                        onBlur={() => handleBlur("PropertyPricePerNight")}
                         onChange={handleChange}
                         placeholder="Enter  Price Per Night"
                       />
@@ -329,10 +313,6 @@ const PropertiesAdd = () => {
                           borderRadius: "8px",
                           border: "1px solid #EAEAFF",
                         }}
-                        onFocus={() =>
-                          handleFocus("PropertyTotalPersonAllowed")
-                        }
-                        onBlur={() => handleBlur("PropertyTotalPersonAllowed")}
                         placeholder="Enter Person Limit "
                       />
                     </div>
@@ -645,14 +625,6 @@ const PropertiesAdd = () => {
 
                   {/* Action Buttons */}
                   <div className="flex justify-start mt-6 gap-3">
-                    {/* <button
-                      type="submit"
-                      className=" py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 w-[150px] h-12 font-[Montserrat] font-bold"
-                      style={{ borderRadius: "8px" }}
-                    >
-                      {" "}
-                      Add Property{" "}
-                    </button> */}
                     <button type="submit" className={`py-2 mt-6 float-start ${id ? 'bg-green-500 hover:bg-green-600' : 'bg-blue-500 hover:bg-blue-600'} text-white rounded-lg w-[150px] h-12 font-[Montserrat] font-bold`} style={{ borderRadius: '8px' }}   >
                       {id ? 'Update Property' : 'Add  Property'}
                     </button>
