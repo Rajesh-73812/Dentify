@@ -17,6 +17,7 @@ const PropertiesAdd = () => {
   const location = useLocation()
   const [selectedOption, setSelectedOption] = useState(null);
   const id = location.state ? location.state.id : null;
+  const [selectedOption, setSelectedOption] = useState(null);
   const [formData, setFormData] = useState({
     id: 0 || null,
     title: '',

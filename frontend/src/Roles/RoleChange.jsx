@@ -31,6 +31,7 @@ const RoleChange = () => {
 
 
 
+
     // Search functionality
     const handleSearch = (event) => {
         const querySearch = event.target.value.toLowerCase();
@@ -144,6 +145,7 @@ const RoleChange = () => {
                                     <tbody className="divide-y divide-gray-200">
                                         {currentrole.length > 0 ? (
                                             currentrole.map((role, index) => (
+
                                                 <tr key={role.id}>
                                                     <td className="px-4 py-2">{index + 1 + indexOfFirst}</td>
                                                     <td className="px-4 py-2">{role.user?.name || "N/A"}</td>
@@ -178,6 +180,7 @@ const RoleChange = () => {
                                         ) : (
                                             <tr>
                                                 <td colSpan={4} className="px-4 py-3 text-center text-gray">No Data available</td>
+
                                             </tr>
                                         )
                                         }

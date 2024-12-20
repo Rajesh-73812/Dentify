@@ -25,6 +25,7 @@ import AdminPanelSettingsOutlinedIcon from '@mui/icons-material/AdminPanelSettin
 import ManageAccountsOutlinedIcon from '@mui/icons-material/ManageAccountsOutlined';
 import axios from "axios";
 import Loader from "../common/Loader";
+import  api from "../utils/api"
 
 const SidebarMenu = () => {
   const navigate = useNavigate();
@@ -68,6 +69,28 @@ const SidebarMenu = () => {
     }
   };
 
+  const[formData, setFormData]= useState({weblogo:"",webname:""});
+
+  useEffect(() => {
+    const fetchSettings = async () => {
+      try {
+        const response = await api.get("/settings");
+
+        if (response.status === 200) {
+          const settingsData = response.data;
+          setFormData({
+          weblogo:settingsData.weblogo,
+          webname:settingsData.webname
+          });
+        }
+      } catch (error) {
+        console.error("Error fetching settings:", error.response?.data || error.message);
+      }
+    };
+
+    fetchSettings();
+  }, []);
+
   return (
     <div className="flex">
       {loading && <Loader />}
@@ -89,9 +112,9 @@ const SidebarMenu = () => {
       >
         <Sidebar   width="250px" style={{ overflowY: 'auto', height: '100vh' }}>
         <div className="h-[80px] bg-white flex justify-center items-center gap-2" >
-          <img src="/image/Frame 1984078701.png" alt="Logo" className="h-[40px] w-[40px]" />
+          <img src={formData.weblogo} alt="Logo" className="h-[40px] w-[40px]" />
           <div className="flex flex-col">
-            <span className=" text-2xl  ">SERVOSTAY</span>
+            <span className=" text-2xl  ">{formData.webname}</span>
             <span className=" text-[10px] ml-2 text-slate-500 font-[italic] italic ">A Home away from Home</span>
           </div>
 
