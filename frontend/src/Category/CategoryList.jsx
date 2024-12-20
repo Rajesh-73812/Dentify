@@ -114,7 +114,6 @@ const CategoryList = () => {
       console.error("Error toggling status:", error);
     }
   };
-  
 
   return (
     <div>

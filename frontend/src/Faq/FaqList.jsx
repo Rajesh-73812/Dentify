@@ -131,9 +131,9 @@ const FaqList = () => {
                                                     <td className="px-4 py-1">{faq?.answer || "N/A"}</td>
                                                     <td className="px-4 py-1">
                                                     {faq.status === 1 ? 
-                                                        <FontAwesomeIcon className='h-7 w-16 ' style={{color:'#0064DC'}} icon={faToggleOn} /> 
+                                                        <FontAwesomeIcon className='h-7 w-16  cursor-pointer' style={{color:'#0064DC'}} icon={faToggleOn} /> 
                                                         : 
-                                                        <FontAwesomeIcon className='h-7 w-16' style={{color:'#e9ecef'}} icon={faToggleOff} />
+                                                        <FontAwesomeIcon className='h-7 w-16 cursor-pointer' style={{color:'#e9ecef'}} icon={faToggleOff} />
                                                     }
                                                     </td>
                                                     <td className="px-4 py-1">

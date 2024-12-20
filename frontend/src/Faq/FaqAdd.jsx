@@ -4,6 +4,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import api from '../utils/api';
 
 const FaqAdd = () => {
@@ -84,10 +85,10 @@ const handleSubmit = async (e) => {
         <Header />
         <div className="container mx-auto">
           <div className="flex items-center mt-6  mb-4">
-            {/* <Link to="/rolesList" className="cursor-pointer ml-6">
-              
-            </Link> */}
-            <h2 className="text-lg font-semibold ml-4 header" >Faq Management</h2>
+          <Link onClick={() => { navigate(-1) }} className="cursor-pointer ml-6">
+                <ArrowBackIosNewIcon />
+              </Link>
+            <h2 className="text-lg font-semibold ml-4 header" >FAQ's Management</h2>
           </div>
 
           {/* Form Container */}
@@ -97,7 +98,7 @@ const handleSubmit = async (e) => {
                 <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-1  mt-6">
                   {/* faq question */}
                   <div className="flex flex-col">
-                      <label  htmlFor="question"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> Faq Question </label>
+                      <label  htmlFor="question"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> FAQ's Question </label>
                       <input id="question" value={formData.question} onChange={handleChange} name="question" type="text" required className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}} placeholder="Enter question "  />
                   </div>
                 </div>
@@ -105,14 +106,14 @@ const handleSubmit = async (e) => {
                 <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-1  mt-6">
                   {/* faq answer */}
                   <div className="flex flex-col">
-                      <label  htmlFor="answer"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> Faq Answer </label>
+                      <label  htmlFor="answer"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> FAQ's Answer </label>
                       <input id="answer" value={formData.answer} onChange={handleChange} name="answer" type="text" required className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}}  placeholder="Enter Anwer " />
                     </div>
                 </div>
                 <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-1 mt-6">
                   {/* page Status */}
                   <div className="flex flex-col">
-                    <label  htmlFor="status"   className="text-sm font-medium text-start text-[12px] font-[Montserrat]" >Faq  Status </label>
+                    <label  htmlFor="status"   className="text-sm font-medium text-start text-[12px] font-[Montserrat]" >FAQ's  Status </label>
                     <select  name="status"  id="status" value={formData.status} onChange={handleChange} className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm"  >
                       <option value="" disabled selected>Select Status</option>
                       <option value={1}>Publish</option>
@@ -123,10 +124,9 @@ const handleSubmit = async (e) => {
 
                 {/* Action Buttons */}
                 <div className="flex justify-start mt-6 gap-3">
-                  <button  type="submit" className={`py-2 ${id ? 'bg-green-500 hover:bg-green-600' : 'bg-blue-500 hover:bg-blue-600'} text-white rounded-lg hover:bg-blue-600 w-[150px] h-12 font-[Montserrat] font-bold`} style={{ borderRadius: "8px", }} > {id ? 'Update Faq' : 'Add Faq'}</button>
+                  <button  type="submit" className={`py-2 ${id ? 'bg-green-500 hover:bg-green-600' : 'bg-blue-500 hover:bg-blue-600'} text-white rounded-lg hover:bg-blue-600 w-[150px] h-12 font-[Montserrat] font-bold`} style={{ borderRadius: "8px", }} > {id ? "Update FAQ's" : "Add FAQ's"}</button>
                 </div>
               </form>
-
             </div>
           </div>
         </div>

@@ -8,6 +8,19 @@ import { DeleteEntity } from '../utils/Delete';
 import { useNavigate } from 'react-router-dom';
 import { handleSort } from '../utils/sorting';
 import RoleHeader from './RoleHeader';
+<<<<<<< HEAD
+import { StatusEntity } from '../utils/Status';
+import { NotificationContainer } from 'react-notifications';
+import { useLoading } from '../Context/LoadingContext';
+
+const RoleChange = () => {
+  const navigate=useNavigate();
+  const [role, setrole] = useState([]);
+  const [filteredrole, setFilteredrole] = useState([]);
+  const [sortConfig, setSortConfig] = useState({ key: '', direction: '' });
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+  const { isLoading, setIsLoading } = useLoading();
 import api from '../utils/api';
 
 const RoleChange = () => {
@@ -51,7 +64,6 @@ const RoleChange = () => {
       }
   };
 
-
     // for sorting
     const sortData = (key) => {
         handleSort(filteredrole, key, sortConfig, setSortConfig, setFilteredrole);
@@ -75,7 +87,6 @@ const RoleChange = () => {
     return (
         <div>
             <div className="h-screen flex">
-
                 <div className="flex flex-1 flex-col bg-[#f7fbff]">
                     <Header />
                     <RoleHeader onSearch={handleSearch} />
@@ -95,23 +106,23 @@ const RoleChange = () => {
                                             <th className="px-4 py-3 min-w-[120px]">
                                                 Name
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('requested_role')} />
-                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('requested_role')} />
+                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('user.name')} />
+                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('user.name')} />
                                                 </div>
                                             </th>
 
                                             <th className="px-4 py-3 min-w-[100px]">
                                                 Email
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('requested_role')} />
-                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('requested_role')} />
+                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('email')} />
+                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('email')} />
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[120px]">
                                                  Role
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('requested_role')} />
-                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('requested_role')} />
+                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('role')} />
+                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('role')} />
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[180px]">
@@ -136,16 +147,25 @@ const RoleChange = () => {
                                                 <td className="px-4 py-2">{role.user?.name|| "N/A"}</td>
                                                 <td className="px-4 py-2">{role.user?.email || "N/A"}</td>
                                                 <td className="px-4 py-2">{role.user?.role|| "N/A"}</td>
-                                                <td className="px-4 py-2">{role?.requested_role || "N/A"}</td>
                                                 <td className="px-4 py-2">
                                                     <span
-                                                        className={`px-2 py-1 text-sm rounded-full ${role.status === "pending" ? 'bg-yellow-500 text-white' : 'bg-green-400 text-white'}`}
+                                                        className={`px-2 py-1 text-sm rounded-full ${role.requested_role === "guest" ? 'bg-blue-500 text-white' : 'bg-green-400 text-white'}`}
+                                                        
                                                     >
-                                                        {role.status === "pending" ? "Accept" : "approved"}
+                                                        {role.requested_role === "guest" ? "Guest" : "Host"}
                                                     </span>
                                                 </td>
 
                                                 <td className="px-4 py-2">
+                                                    <span
+                                                        className={`px-2 py-1 cursor-pointer text-sm rounded-full ${role.status === "pending" ? 'bg-yellow-500 text-white' : 'bg-green-400 text-white'}`}
+                                                        onClick={()=>{toggleStatus(role.id,role.status)}}
+                                                    >
+                                                        {role.status === "pending" ? "Accept" : "Approved"}
+                                                    </span>
+                                                </td>
+                                                <td className="px-4 py-2">
+                                                    <NotificationContainer />
                                                     <button className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition " onClick={()=>{handledelete(role.id)}}>
 
                                                         <FaTrash />
