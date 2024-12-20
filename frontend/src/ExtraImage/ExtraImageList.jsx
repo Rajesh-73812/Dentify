@@ -14,6 +14,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faToggleOff, faToggleOn } from "@fortawesome/free-solid-svg-icons";
 
 import api from "../utils/api";
+import { StatusEntity } from "../utils/Status";
 
 
 const ExtraImageList = () => {
@@ -83,11 +84,25 @@ const ExtraImageList = () => {
     }
 
     const updateExtraImage = (id) => {
-        if(!id){
+        if (!id) {
             return;
         }
         navigate("/create-extra-image", { state: { id: id } })
     }
+
+    const handleToggleChange = async (id, currentStatus, field) => {
+        console.log(`Toggling ${field} for ID: ${id} with current status: ${currentStatus}`);
+        if (!id || currentStatus === undefined) {
+            console.error(`Invalid arguments: ID=${id}, currentStatus=${currentStatus}`);
+            return;
+        }
+
+        try {
+            await StatusEntity("ExtraImage", id, currentStatus, setFilteredImages, filteredImages, field);
+        } catch (error) {
+            console.error("Error toggling image status:", error);
+        }
+    };
 
     return (
         <div>
@@ -107,22 +122,30 @@ const ExtraImageList = () => {
                                             <th className="px-4 py-3 min-w-[100px]">
                                                 Sr. No
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData("slno")} />
-                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData("slno")} />
+                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData("id")} />
+                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData("id")} />
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[150px]">
-                                                Gallery Image
+                                                Image
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData("image")} />
+                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData("image")} />
+                                                </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[150px]">
                                                 Property Title
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData("name")} />
-                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData("name")} />
+                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData("title")} />
+                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData("title")} />
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[100px]">
-                                                Gallery Status
+                                                Status
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData("status")} />
+                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData("status")} />
+                                                </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[100px]">
                                                 Action
@@ -130,18 +153,18 @@ const ExtraImageList = () => {
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-gray-200">
-                                        {currentImages.length > 0 ? (
-                                            currentImages.map((extraImage, index) => (
-                                                <tr key={extraImage.id}>
-                                                    <td className="px-4 py-3">{index + 1 + indexOfFirstImage}</td>
-                                                    <td className="px-4 py-3">
+                                        {filteredImages.length > 0 ? (
+                                            filteredImages.map((extraImage, index) => (
+                                                <tr key={extraImage.id} className="h-[70px]">
+                                                    <td className="px-4 py-1">{index + 1 + indexOfFirstImage}</td>
+                                                    <td className="px-4 py-1">
                                                         {extraImage.images && extraImage.images.length > 0 ? (
                                                             <div className="flex space-x-2">
                                                                 {extraImage.images.map((image, index) => (
                                                                     <img
                                                                         key={index}
                                                                         src={image.url}
-                                                                        className="w-16 h-16 object-cover rounded-full"
+                                                                        className="w-10 h-10 object-cover rounded-full"
                                                                         height={50}
                                                                         width={50}
                                                                         loading="lazy"
@@ -170,15 +193,16 @@ const ExtraImageList = () => {
                                                             />
                                                         )}
                                                     </td>
-                                                    <td className="px-4 py-3">{extraImage?.Property?.title || "No Title"}</td>
-                                                    <td className="px-4 py-3">
-                                                    {extraImage.status === 1 ? 
-                                                        <FontAwesomeIcon className='h-7 w-16  cursor-pointer' style={{color:'#0064DC'}} icon={faToggleOn} /> 
-                                                        : 
-                                                        <FontAwesomeIcon className='h-7 w-16 cursor-pointer' style={{color:'#e9ecef'}} icon={faToggleOff} />
-                                                    }
+                                                    <td className="px-4 py-1">{extraImage?.Property?.title || "No Title"}</td>
+                                                    <td>
+                                                        <FontAwesomeIcon
+                                                            className="h-7 w-16 cursor-pointer"
+                                                            style={{ color: extraImage.status === 1 ? "#0064DC" : "#e9ecef" }}
+                                                            icon={extraImage.status === 1 ? faToggleOn : faToggleOff}
+                                                            onClick={() => handleToggleChange(extraImage.id, extraImage.status, "status")}
+                                                        />
                                                     </td>
-                                                    <td className="px-4 py-3">
+                                                    <td className="px-4 py-1">
                                                         <NotificationContainer />
                                                         <button className="bg-[#2dce89] text-white p-2 rounded-full hover:bg-green-600 transition mr-2" onClick={() => { updateExtraImage(extraImage.id) }}>
                                                             <FaPen />

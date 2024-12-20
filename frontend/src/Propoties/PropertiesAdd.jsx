@@ -7,7 +7,7 @@ import ImageUploader from "../common/ImageUploader";
 import Select from 'react-select';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import api from "../utils/api";
-const [selectedOption, setSelectedOption] = useState(null);
+
 
 const PropertiesAdd = () => {
   const [countries, setCountries] = useState([]);
@@ -15,6 +15,7 @@ const PropertiesAdd = () => {
   const [facilities, setFacilities] = useState([]);
   const navigate = useNavigate();
   const location = useLocation()
+  const [selectedOption, setSelectedOption] = useState(null);
   const id = location.state ? location.state.id : null;
   const [formData, setFormData] = useState({
     id: 0 || null,
@@ -125,7 +126,7 @@ const PropertiesAdd = () => {
     try {
       await api.post('/properties/upsert',
         formData,
-       );
+      );
       alert('Property submitted successfully');
       navigate("/property-list")
 
@@ -144,7 +145,7 @@ const PropertiesAdd = () => {
           <Header />
           <div className="container mx-auto">
             <div className="flex items-center mt-6  mb-4">
-            <Link onClick={() => { navigate(-1) }} className="cursor-pointer ml-6">
+              <Link onClick={() => { navigate(-1) }} className="cursor-pointer ml-6">
                 <ArrowBackIosNewIcon />
               </Link>
               <h2
@@ -338,8 +339,7 @@ const PropertiesAdd = () => {
                           borderRadius: "8px",
                           border: "1px solid #EAEAFF",
                         }}
-                        onFocus={() => handleFocus("address")}
-                        onBlur={() => handleBlur("address")}
+
                         onChange={handleChange}
                         placeholder="Enter Property Address "
                       />
@@ -379,7 +379,7 @@ const PropertiesAdd = () => {
                         className="mt-1 block w-full text-sm  border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                         classNamePrefix="select"
                         placeholder="Select Facilities"
-                        styles={{maxHeight:"40px"}}
+                        styles={{ maxHeight: "40px" }}
                       />
                     </div>
 

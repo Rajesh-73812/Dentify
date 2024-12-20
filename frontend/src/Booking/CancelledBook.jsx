@@ -22,7 +22,7 @@ const CancelledBook = () => {
     useEffect(() => {
         const fetchBookings = async () => {
             try {
-                const response = await api.get(`/bookings/status/${status}`      
+                const response = await api.get(`/bookings/status/${status}`
                 );
                 //   console.log(response.data)
                 setcancelled(response.data);
@@ -96,8 +96,8 @@ const CancelledBook = () => {
                                             <th className="px-4 py-3 min-w-[130px]">
                                                 Sr. No
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('slno')} />
-                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('slno')} />
+                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('id')} />
+                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('id')} />
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[180px]">
@@ -107,7 +107,12 @@ const CancelledBook = () => {
                                                     <GoArrowDown className='cursor-pointer' onClick={() => sortData('prop_title')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[180px]">Property Image</th>
+                                            <th className="px-4 py-3 min-w-[200px]">Property Image
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('prop_img')} />
+                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('prop_img')} />
+                                                </div>
+                                            </th>
                                             <th className="px-4 py-3 min-w-[180px]">
                                                 Property Price
                                                 <div className="inline-flex items-center ml-2">
@@ -129,12 +134,12 @@ const CancelledBook = () => {
                                     <tbody className="divide-y divide-gray-200">
                                         {currentcancelled.length > 0 ? (
                                             currentcancelled.map((cancellList, index) => (
-                                                <tr key={index + 1}>
+                                                <tr key={index + 1} className='h-[70px]'>
                                                     <td className="px-4 py-1">{index + 1 + indexOfFirst}</td>
                                                     <td className="px-4 py-1">{cancellList.prop_title || 'N/A'}</td>
                                                     <td className="px-4 py-1">
                                                         {cancellList.prop_img ? (
-                                                            <img src={cancellList.prop_img} className="w-16 h-16 object-cover rounded-full" alt="Coupon"
+                                                            <img src={cancellList.prop_img} className="w-10 h-10 object-cover rounded-full" alt="Coupon"
                                                                 onError={(e) => {
                                                                     e.target.src = 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg';
                                                                 }}
@@ -152,7 +157,7 @@ const CancelledBook = () => {
                                             ))
                                         ) : (
                                             <tr>
-                                                <td className="px-4 py-3 text-center" colSpan="6">
+                                                <td className="px-4 py-1 text-center" colSpan="6">
                                                     No data available
                                                 </td>
                                             </tr>
