@@ -13,6 +13,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faToggleOn, faToggleOff } from '@fortawesome/free-solid-svg-icons';
 import { NotificationContainer } from 'react-notifications';
 import api from '../utils/api';
+import { StatusEntity } from '../utils/Status';
 
 const PaymentGatewayList = () => {
     const [paymentGateway, setpaymentGateway] = useState([]);
@@ -26,7 +27,7 @@ const PaymentGatewayList = () => {
     useEffect(() => {
         async function fetchData() {
             try {
-                const response = await api.get("/payment-methods/", );
+                const response = await api.get("/payment-methods/",);
                 console.log("API Response:", response.data);
                 setpaymentGateway(response.data);
                 setFilteredpaymentGateway(response.data);
@@ -81,6 +82,16 @@ const PaymentGatewayList = () => {
             setFilteredpaymentGateway(updatedPaymentGateWay)
         }
     }
+
+    const handleToggleChange = async (id, currentStatus, field) => {
+        try {
+            console.log(`Toggling ${field} for ID: ${id} with current status: ${currentStatus}`);
+            await StatusEntity("Payment", id, currentStatus, setFilteredpaymentGateway, filteredpaymentGateway, field);
+        } catch (error) {
+            console.error("Error toggling payment status:", error);
+        }
+    };
+
 
     return (
         <div>
@@ -148,28 +159,9 @@ const PaymentGatewayList = () => {
                                                             <img src={'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg'} height={50} width={50} loading="lazy" alt="" />
                                                         )}
                                                     </td>
-                                                    <td className={` px-4 py-1 `}>
-                                                        {paymentgatway.status === 1 ?
-                                                            <FontAwesomeIcon className='h-7 w-16 ' style={{ color: '#0064DC' }} icon={faToggleOn} />
-                                                            :
-                                                            <FontAwesomeIcon className='h-7 w-16' style={{ color: '#e9ecef' }} icon={faToggleOff} />
-                                                        }
-                                                    </td>
-                                                    <td className="px-4 py-1">
-                                                        {paymentgatway.status === 1 ?
-                                                            <FontAwesomeIcon className='h-7 w-16 ' style={{ color: '#0064DC' }} icon={faToggleOn} />
-                                                            :
-                                                            <FontAwesomeIcon className='h-7 w-16' style={{ color: '#e9ecef' }} icon={faToggleOff} />
-                                                        }
-                                                    </td>
-                                                    <td className="px-4 py-1">
-                                                        {paymentgatway.s_show === 1 ?
-                                                            <FontAwesomeIcon className='h-7 w-16 ' style={{ color: '#0064DC' }} icon={faToggleOn} />
-                                                            :
-                                                            <FontAwesomeIcon className='h-7 w-16' style={{ color: '#e9ecef' }} icon={faToggleOff} />
-                                                        }
-                                                    </td>
-
+                                                    <td className="px-4 py-2"> <FontAwesomeIcon className="h-7 w-16" style={{ color: paymentGateway.status === 1 ? "#0064DC" : "#e9ecef" }} icon={paymentGateway.status === 1 ? faToggleOn : faToggleOff} onClick={() => handleToggleChange(paymentGateway.id, paymentGateway.status, "status")} /> </td>
+                                                    <td className="px-4 py-2"> <FontAwesomeIcon className="h-7 w-16" style={{ color: paymentGateway.p_show === 1 ? "#0064DC" : "#e9ecef" }} icon={paymentGateway.p_show === 1 ? faToggleOn : faToggleOff} onClick={() => handleToggleChange(paymentGateway.id, paymentGateway.p_show, "p_show")} /> </td>
+                                                    <td className="px-4 py-2"> <FontAwesomeIcon className="h-7 w-16" style={{ color: paymentGateway.s_show === 1 ? "#0064DC" : "#e9ecef" }} icon={paymentGateway.s_show === 1 ? faToggleOn : faToggleOff} onClick={() => handleToggleChange(paymentGateway.id, paymentGateway.s_show, "s_show")} /> </td>
                                                     <td className="px-4 py-1">
                                                         <NotificationContainer />
                                                         <button className="bg-[#2dce89] text-white p-2 rounded-full hover:bg-green-600 transition mr-2">
