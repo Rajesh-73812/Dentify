@@ -61,103 +61,103 @@ const DashboardCard = () => {
 
     const cards = [
         {
-            card_logoIcon: <IoLocationOutline className="text-blue-500" />,
+            card_logoIcon: <IoLocationOutline className="text-[#045D78]" />,
             card_title: "Total Country",
             card_desc: "Number of countries",
             card_data_value: dataCounts.countryCount,
         },
         {
-            card_logoIcon: <GiHamburgerMenu className="text-blue-500" />,
+            card_logoIcon: <GiHamburgerMenu className="text-[#045D78]" />,
             card_title: "Total Categories",
             card_desc: "Number of Categories",
             card_data_value: dataCounts.categoryCount,
         },
         {
-            card_logoIcon: <CardGiftcardOutlinedIcon className="text-blue-500" />,
+            card_logoIcon: <CardGiftcardOutlinedIcon className="text-[#045D78]" />,
             card_title: "Total Coupons",
             card_desc: "Number of Coupons",
             card_data_value: dataCounts.couponCount,
         },
         {
-            card_logoIcon: <BsCurrencyDollar className="text-blue-500" />,
+            card_logoIcon: <BsCurrencyDollar className="text-[#045D78]" />,
             card_title: "Total Payment Methods",
             card_desc: "Number of Payment Methods",
             card_data_value: dataCounts.paymentCount,
         },
         {
-            card_logoIcon: <HomeOutlinedIcon className="text-blue-500" />,
+            card_logoIcon: <HomeOutlinedIcon className="text-[#045D78]" />,
             card_title: "Total Properties",
             card_desc: "Number of Properties",
             card_data_value: dataCounts.propertyCount,
         },
         {
-            card_logoIcon: <ManageAccountsOutlinedIcon className="text-blue-500" />,
+            card_logoIcon: <ManageAccountsOutlinedIcon className="text-[#045D78]" />,
             card_title: "Total Facilities",
             card_desc: "Number of Facilities",
             card_data_value: dataCounts.facilityCount,
         },
         {
-            card_logoIcon: <FaRegFolder className="text-blue-500" />,
+            card_logoIcon: <FaRegFolder className="text-[#045D78]" />,
             card_title: "Total Gallery Categories",
             card_desc: "Number of Gallery Categories",
             card_data_value: dataCounts.galleryCatCount,
         },
         {
-            card_logoIcon: <MdOutlineCameraAlt className="text-blue-500" />,
+            card_logoIcon: <MdOutlineCameraAlt className="text-[#045D78]" />,
             card_title: "Total Gallery",
             card_desc: "Number of Galleries",
             card_data_value: dataCounts.galleryCount,
         },
         {
-            card_logoIcon: <MdOutlineCalendarToday className="text-blue-500" />,
+            card_logoIcon: <MdOutlineCalendarToday className="text-[#045D78]" />,
             card_title: "Total Bookings",
             card_desc: "Number of Bookings",
             card_data_value: dataCounts.bookedCount,
         },
         {
-            card_logoIcon: <LuCheckSquare className="text-blue-500" />,
+            card_logoIcon: <LuCheckSquare className="text-[#045D78]" />,
             card_title: "Total Confirmed Bookings",
             card_desc: "Number of Confirmed Bookings",
             card_data_value: dataCounts.confirmedCount,
         },
         {
-            card_logoIcon: <IoEyeOutline className="text-blue-500" />,
+            card_logoIcon: <IoEyeOutline className="text-[#045D78]" />,
             card_title: "Total Check-In",
             card_desc: "Number of Check-In",
             card_data_value: dataCounts.checkInCount,
         },
         {
-            card_logoIcon: <BsCheck2Circle className="text-blue-500" />,
+            card_logoIcon: <BsCheck2Circle className="text-[#045D78]" />,
             card_title: "Total Completed Bookings",
             card_desc: "Number of Completed Bookings",
             card_data_value: dataCounts.completedCount,
         },
         {
-            card_logoIcon: <PermMediaOutlinedIcon className="text-blue-500" />,
+            card_logoIcon: <PermMediaOutlinedIcon className="text-[#045D78]" />,
             card_title: "Total Extra Images",
             card_desc: "Number of Extra Images",
             card_data_value: dataCounts.extraImagesCount,
         },
         {
-            card_logoIcon: <LocalOfferOutlinedIcon className="text-blue-500" />,
+            card_logoIcon: <LocalOfferOutlinedIcon className="text-[#045D78]" />,
             card_title: "Total Packages",
             card_desc: "Number of Packages",
             card_data_value: dataCounts.packageCount,
         },
         {
-            card_logoIcon: <PiUsersBold className="text-blue-500" />,
+            card_logoIcon: <PiUsersBold className="text-[#045D78]" />,
             card_title: "Total Users",
             card_desc: "Number of Users",
             card_data_value: dataCounts.usersCount,
         },
         {
-            card_logoIcon: <MdQuestionMark className="text-blue-500" />,
+            card_logoIcon: <MdQuestionMark className="text-[#045D78]" />,
             card_title: "Total Enquiries",
             card_desc: "Number of Enquiries",
             card_data_value: dataCounts.enquiryCount,
         },
         {
-            card_logoIcon: <ThumbUpAltOutlinedIcon className="text-blue-500" />,
+            card_logoIcon: <ThumbUpAltOutlinedIcon className="text-[#045D78]" />,
             card_title: "Total FAQ's",
             card_desc: "Number of FAQ's",
             card_data_value: dataCounts.faqsCount,
@@ -176,7 +176,7 @@ const DashboardCard = () => {
                                         {card.card_logoIcon}
                                     </div>
                                     <div>
-                                        <p className="text-2xl font-bold text-[#6B6B6B] mt-2">
+                                        <p className="text-2xl font-bold text-[#045D78] mt-2">
                                             {card.card_data_value ?? 0}
                                         </p>
                                         <h4 className="text-[18px] text-[#25064C] leading-none">

@@ -72,7 +72,7 @@ const Login = () => {
           }}
         >
           <h2 className="auth-head">Welcome Back</h2>
-          <p className="text-[#439BFF] float-left mb-[38px] ml-[5px] mt-[10px] leading-[26px]">
+          <p className="text-[#045D78] float-left mb-[38px] ml-[5px] mt-[10px] leading-[26px]">
             Please Login to your Account
           </p>
 
@@ -84,7 +84,7 @@ const Login = () => {
                 id="username"
                 name="username"
                 value={formData.username}
-                className="w-full px-3 py-2 border border-[#B0B0B0] rounded-md focus:outline-none focus:ring-2 focus:ring-[#439BFF] placeholder:font-[poppins] placeholder:text-[14px] placeholder:text-[#25064C]"
+                className="w-full px-3 py-2 border border-[#B0B0B0] rounded-md focus:outline-none focus:ring-2 focus:ring-[#045D78] placeholder:font-[poppins] placeholder:text-[14px] placeholder:text-[#25064C]"
                 placeholder="UserName"
               />
             </div>
@@ -96,7 +96,7 @@ const Login = () => {
                 id="password"
                 name="password"
                 value={formData.password}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#439BFF] placeholder:font-[poppins] placeholder:text-[14px] placeholder:text-[#25064C]"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#045D78] placeholder:font-[poppins] placeholder:text-[14px] placeholder:text-[#25064C]"
                 placeholder="Password"
               />
               <span
@@ -123,7 +123,7 @@ const Login = () => {
             <div>
               <button
                 type="submit"
-                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#439BFF] mt-14 font-[poppins]"
+                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#045D78] mt-14 font-[poppins]"
               >
                 Login
               </button>

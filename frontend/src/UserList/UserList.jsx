@@ -220,6 +220,14 @@ const UserList = () => {
                                                     <td className="px-4 py-2">{userList?.mobile || "N/A"}</td>
                                                     <td className="px-4 py-2">{userList?.reg_date.split("T")[0] || "N/A"}</td>
 
+                                                    {/* <td className="px-4 py-2">
+                                                    {userList.status === 1 ? 
+                                                        <FontAwesomeIcon className='h-7 w-16 cursor-pointer' style={{color:'#0064DC'}} icon={faToggleOn} /> 
+                                                        : 
+                                                        <FontAwesomeIcon className='h-7 w-16 cursor-pointer' style={{color:'#e9ecef'}} icon={faToggleOff} />
+                                                    }
+
+
                                                     <td className="px-4 py-2">
                                                         <FontAwesomeIcon
                                                             className="h-7 w-16"

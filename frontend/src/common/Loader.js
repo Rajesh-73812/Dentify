@@ -12,7 +12,7 @@ const Loader = () => {
       `}</style> */}
 
 <RingLoader
-  color="#439BFF"
+  color="#045D78"
   speedMultiplier={1}
 />
     </div>

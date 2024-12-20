@@ -144,6 +144,7 @@ const PaymentGatewayList = () => {
                                         {currentpaymentGateway.length > 0 ? (
                                             currentpaymentGateway.map((paymentgatway, index) => (
 
+
                                                 <tr key={paymentgatway.id}>
                                                     <td className="px-4 py-1">{index + 1 + indexOfFirstpaymentgatway}</td>
                                                     <td className="px-4 py-1">{paymentgatway?.title || "N/A"}</td>
@@ -173,6 +174,7 @@ const PaymentGatewayList = () => {
                                                     </td>
                                                 </tr>
                                             ))
+
 
                                         ) : (
                                             <tr>
