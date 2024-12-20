@@ -116,7 +116,7 @@ const Profile = () => {
                   {/* country name */}
                   <div className="flex flex-col">
                       <label  htmlFor="Password"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> Password </label>
-                      <input id="Password" name="password" value={formData.password} type="text" required className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}}
+                      <input id="Password" name="password" value={formData.password} type="password" required className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}}
                         onChange={handleChange}
                         placeholder="********************************"
                       />
