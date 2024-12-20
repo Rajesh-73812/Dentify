@@ -9,6 +9,7 @@ import OrderPreviewModal from './OrderPreviewModal';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 import { handleSort, sortData } from '../utils/sorting'
+import api from '../utils/api';
 
 const CheckInBook = () => {
     const navigate = useNavigate();
@@ -25,9 +26,7 @@ const CheckInBook = () => {
     useEffect(() => {
         const fetchBookings = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/bookings/status/${status}`, {
-                    withCredentials: true,
-                });
+                const response = await api.get(`/bookings/status/${status}` );
                 setcheckIn(response.data);
                 setFilteredcheckIn(response.data);
             } catch (error) {

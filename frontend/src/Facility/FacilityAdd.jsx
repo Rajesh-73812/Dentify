@@ -9,6 +9,7 @@ import Loader from '../common/Loader';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import api from '../utils/api'
 
 const FacilityAdd = () => {
   const location=useLocation()
@@ -25,7 +26,7 @@ const FacilityAdd = () => {
 
   const fetchFacility=async(id)=>{
     try {
-      const response = await axios.get(`http://localhost:5000/facilities/${id}`);
+      const response = await api.get(`/facilities/${id}`);
       const facility=response.data
       setFormData({
         id,
@@ -72,13 +73,11 @@ const FacilityAdd = () => {
 
     try {
       const apiEndpoint = id
-        ? `http://localhost:5000/facilities/upsert`
-        : `http://localhost:5000/facilities/upsert`;
+        ? `${api}/facilities/upsert`
+        : `${api}/facilities/upsert`;
 
       const method = id ? "post" : "post";
-      const response = await axios[method](apiEndpoint, formData, {
-        withCredentials: true,
-      });
+      const response = await api.post('/facilities/upsert',formData);
 
       const successMessage = id
         ? "facility updated successfully!"

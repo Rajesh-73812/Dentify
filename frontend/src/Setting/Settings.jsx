@@ -10,6 +10,7 @@ import Loader from '../common/Loader';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
+import api from '../utils/api'
 
 const Settings = () => {
   const [formData, setFormData] = useState({id:'',  webname: '',weblogo:'',  timezone: '',  currency: '',  tax: '',  sms_type: '',  auth_key: '',  twilio_number: '',  auth_token: '',  acc_id: '',otp_id:'', otp_auth:'', show_property:'', one_key:'', one_hash:'', rcredit:'', rcredit:'',scredit:'', wlimit:''});
@@ -20,9 +21,7 @@ const Settings = () => {
   useEffect(() => {
     const fetchSettings = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/settings", {
-          withCredentials: true,
-        });
+        const response = await api.get("/settings");
 
         if (response.status === 200) {
           const settingsData = response.data;

@@ -10,8 +10,12 @@ import Loader from '../common/Loader';
 import { handleSort } from '../utils/sorting';
 import { DeleteEntity } from '../utils/Delete';
 import { NotificationContainer } from 'react-notifications';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faToggleOff, faToggleOn } from "@fortawesome/free-solid-svg-icons";
+
+import api from '../utils/api';
+
 
 const FacilityList = () => {
     const navigate = useNavigate()
@@ -28,9 +32,7 @@ const FacilityList = () => {
     useEffect(() => {
         async function fetchData() {
             try {
-                const response = await axios.get("http://localhost:5000/facilities/all", {
-                    withCredentials: true,
-                });
+                const response = await api.get("/facilities/all", );
                 console.log("API Response:", response.data);
                 setfacility(response.data);
                 setFilterData(response.data);

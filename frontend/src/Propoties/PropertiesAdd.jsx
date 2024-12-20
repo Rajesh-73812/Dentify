@@ -6,8 +6,14 @@ import axios from "axios";
 import ImageUploader from "../common/ImageUploader";
 import Select from 'react-select';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import api from "../utils/api";
+const [selectedOption, setSelectedOption] = useState(null);
 
 const PropertiesAdd = () => {
+  const [countries, setCountries] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [facilities, setFacilities] = useState([]);
+  const navigate = useNavigate();
   const location = useLocation()
   const id = location.state ? location.state.id : null;
   const [formData, setFormData] = useState({
@@ -36,11 +42,6 @@ const PropertiesAdd = () => {
     is_sell: 0
   });
 
-  const [countries, setCountries] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [facilities, setFacilities] = useState([]);
-  const navigate = useNavigate();
-
   useEffect(() => {
     if (id) {
       getProperty();
@@ -49,9 +50,7 @@ const PropertiesAdd = () => {
 
   const getProperty = async () => {
     try {
-      const response = await axios.get(`http://localhost:5000/properties/${id}`, {
-        withCredentials: true
-      })
+      const response = await api.get(`/properties/${id}`)
       const Property = response.data;
       console.log(Property, "Property Data");
       setFormData({
@@ -87,16 +86,16 @@ const PropertiesAdd = () => {
 
   useEffect(() => {
     // Fetch countries
-    axios.get('http://localhost:5000/countries/all')
+    api.get('/countries/all')
       .then(response => setCountries(response.data))
       .catch(error => console.error('Error fetching countries:', error));
 
     // Fetch categories
-    axios.get('http://localhost:5000/categories/all')
+    api.get('/categories/all')
       .then(response => setCategories(response.data))
       .catch(error => console.error('Error fetching categories:', error));
 
-    axios.get('http://localhost:5000/facilities/all')
+    api.get('/facilities/all')
       .then(response => setFacilities(response.data))
       .catch(error => console.error('Error fetching facilities:', error));
   }, []);
@@ -108,16 +107,6 @@ const PropertiesAdd = () => {
       [name]: value
     }));
   };
-
-
-
-  const handleBlur = (e) => {
-
-  }
-
-  const handleFocus = (e) => {
-
-  }
 
 
   const handleImageUploadSuccess = (imageUrl) => {
@@ -134,13 +123,9 @@ const PropertiesAdd = () => {
 
     console.log(formData, "from formdata");
     try {
-      await axios.post('http://localhost:5000/properties/upsert',
+      await api.post('/properties/upsert',
         formData,
-        {
-
-          withCredentials: true,
-
-        });
+       );
       alert('Property submitted successfully');
       navigate("/property-list")
 
@@ -149,9 +134,6 @@ const PropertiesAdd = () => {
       alert('Error submitting property');
     }
   };
-
-  const [selectedOption, setSelectedOption] = useState(null);
-
 
   return (
     <div>
@@ -212,8 +194,6 @@ const PropertiesAdd = () => {
                           borderRadius: "8px",
                           border: "1px solid #EAEAFF",
                         }}
-                        onFocus={() => handleFocus("title")}
-                        onBlur={() => handleBlur("title")}
                         onChange={handleChange}
                         placeholder="Enter property title"
                       />
@@ -254,8 +234,6 @@ const PropertiesAdd = () => {
                           borderRadius: "8px",
                           border: "1px solid #EAEAFF",
                         }}
-                        onFocus={() => handleFocus("PropertyPricePerNight")}
-                        onBlur={() => handleBlur("PropertyPricePerNight")}
                         onChange={handleChange}
                         placeholder="Enter  Price Per Night"
                       />
@@ -335,10 +313,6 @@ const PropertiesAdd = () => {
                           borderRadius: "8px",
                           border: "1px solid #EAEAFF",
                         }}
-                        onFocus={() =>
-                          handleFocus("PropertyTotalPersonAllowed")
-                        }
-                        onBlur={() => handleBlur("PropertyTotalPersonAllowed")}
                         placeholder="Enter Person Limit "
                       />
                     </div>
@@ -651,14 +625,6 @@ const PropertiesAdd = () => {
 
                   {/* Action Buttons */}
                   <div className="flex justify-start mt-6 gap-3">
-                    {/* <button
-                      type="submit"
-                      className=" py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 w-[150px] h-12 font-[Montserrat] font-bold"
-                      style={{ borderRadius: "8px" }}
-                    >
-                      {" "}
-                      Add Property{" "}
-                    </button> */}
                     <button type="submit" className={`py-2 mt-6 float-start ${id ? 'bg-green-500 hover:bg-green-600' : 'bg-blue-500 hover:bg-blue-600'} text-white rounded-lg w-[150px] h-12 font-[Montserrat] font-bold`} style={{ borderRadius: '8px' }}   >
                       {id ? 'Update Property' : 'Add  Property'}
                     </button>

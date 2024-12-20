@@ -9,6 +9,7 @@ import OrderPreviewModal from './OrderPreviewModal';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 import { handleSort } from '../utils/sorting'
+import api from '../utils/api';
 
 const PendingBook = () => {
     const navigate = useNavigate();
@@ -25,9 +26,7 @@ const PendingBook = () => {
     useEffect(() => {
         const fetchBookings = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/bookings/status/${status}`, {
-                    withCredentials: true,
-                });
+                const response = await api.get(`/bookings/status/${status}`, );
                 // console.log(response.data)
                 setpending(response.data);
                 setFilteredpending(response.data);
