@@ -8,20 +8,11 @@ import { DeleteEntity } from '../utils/Delete';
 import { useNavigate } from 'react-router-dom';
 import { handleSort } from '../utils/sorting';
 import RoleHeader from './RoleHeader';
-<<<<<<< HEAD
 import { StatusEntity } from '../utils/Status';
 import { NotificationContainer } from 'react-notifications';
 import { useLoading } from '../Context/LoadingContext';
-
-const RoleChange = () => {
-  const navigate=useNavigate();
-  const [role, setrole] = useState([]);
-  const [filteredrole, setFilteredrole] = useState([]);
-  const [sortConfig, setSortConfig] = useState({ key: '', direction: '' });
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
-  const { isLoading, setIsLoading } = useLoading();
 import api from '../utils/api';
+import Swal from 'sweetalert2';
 
 const RoleChange = () => {
     const navigate = useNavigate();
@@ -84,9 +75,41 @@ const RoleChange = () => {
         }
     };
 
+    const toggleStatus = async (id, currentStatus) => {
+        // Calculate the new status
+        const newStatus = currentStatus === 'approved' ? 'pending' : 'approved';
+      
+        const result = await Swal.fire({
+          title: 'Are You Sure to Change Status',
+          text: `Current status: ${currentStatus}`,
+          icon: 'question',
+          showCancelButton: true,
+          confirmButtonText: 'Accept',
+          cancelButtonText: 'Cancel',
+          reverseButtons: true,
+        });
+      
+        if (result.isConfirmed) {
+          try {
+            const response = await api.patch(`/rollrequest/status/${id}`, {
+              status: newStatus, // Only send status; requested_role is handled by backend
+            });
+      
+            Swal.fire('Success!', response.data.message, 'success');
+            fetchrole(); // Refresh the list to reflect changes
+          } catch (error) {
+            console.error('Error updating role change request:', error);
+            Swal.fire('Error', 'Failed to update role change request.', 'error');
+          }
+        }
+      };
+      
+    
+    
     return (
         <div>
             <div className="h-screen flex">
+
                 <div className="flex flex-1 flex-col bg-[#f7fbff]">
                     <Header />
                     <RoleHeader onSearch={handleSearch} />
@@ -158,10 +181,10 @@ const RoleChange = () => {
 
                                                 <td className="px-4 py-2">
                                                     <span
-                                                        className={`px-2 py-1 cursor-pointer text-sm rounded-full ${role.status === "pending" ? 'bg-yellow-500 text-white' : 'bg-green-400 text-white'}`}
+                                                        className={`px-2 py-1 cursor-pointer text-sm rounded-full ${role.requested_role === "host" ? 'bg-red-500 text-white' : 'bg-green-400 text-white'}`}
                                                         onClick={()=>{toggleStatus(role.id,role.status)}}
                                                     >
-                                                        {role.status === "pending" ? "Accept" : "Approved"}
+                                                        {role.requested_role === "host" ? "Decline" : "Accept"}
                                                     </span>
                                                 </td>
                                                 <td className="px-4 py-2">

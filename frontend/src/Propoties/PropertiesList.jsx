@@ -7,12 +7,9 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { DeleteEntity } from '../utils/Delete';
 import { NotificationContainer } from 'react-notifications';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faToggleOff, faToggleOn } from "@fortawesome/free-solid-svg-icons";
-
 import api from '../utils/api';
-
 
 const PropotiesList = () => {
     const [properties, setProperties] = useState([]);

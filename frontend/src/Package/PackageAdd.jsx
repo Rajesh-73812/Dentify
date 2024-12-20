@@ -129,7 +129,7 @@ const PackageAdd = () => {
 
             <div className="h-full px-6 max-w-5xl" style={{ paddingTop: '24px' }}>
               <div
-                className="bg-white h-[70vh] w-full rounded-xl border border-[#EAE5FF] py-4 px-6 overflow-y-auto"
+                className="bg-white h-[67vh] w-full rounded-xl border border-[#EAE5FF] py-4 px-6 overflow-y-auto"
                 style={{ scrollbarWidth: 'none' }}
               >
                 <form onSubmit={handleSubmit} className="mt-4">

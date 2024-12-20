@@ -61,7 +61,6 @@ const CupponAdd = () => {
 
   // random cuppon generation
   const makeEightDigitRand = () => {
-
     let result = '';
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
     const charactersLength = characters.length;
@@ -132,7 +131,7 @@ const CupponAdd = () => {
 
             {/* Form Container */}
             <div className="h-full px-6 max-w-5xl" style={{ paddingTop: '24px' }}>
-              <div className="bg-white h-[70vh] w-full rounded-xl border border-[#EAE5FF] py-4 px-6 overflow-y-auto scrollbar-none">
+              <div className="bg-white h-[67vh] w-full rounded-xl border border-[#EAE5FF] py-4 px-6 overflow-y-auto scrollbar-none">
                 <form onSubmit={handleSubmit} className="mt-4">
                   <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-4 mt-6">
                     {/* cuppon image*/}

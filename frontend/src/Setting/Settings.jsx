@@ -101,11 +101,11 @@ const handleImageUploadSuccess = (imageUrl) => {
               
             </Link> */}
             <div className="flex items-center mt-6  mb-4">
-                    <Link onClick={()=>{navigate(-1)}}  className="cursor-pointer ml-6">
-                    <ArrowBackIosNewIcon />
-                    </Link>
-                    <h2 className="text-lg font-semibold ml-4 header" >Settings Management</h2>
-                </div>
+              <Link onClick={()=>{navigate(-1)}}  className="cursor-pointer ml-6">
+                <ArrowBackIosNewIcon />
+              </Link>
+              <h2 className="text-lg font-semibold ml-4 header" >Settings Management</h2>
+            </div>
           </div>
 
           {/* Form Container */}

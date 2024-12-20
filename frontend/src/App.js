@@ -45,6 +45,7 @@ import PrivateRoute from "./Context/PrivateRoute.js";
 import RoleChange from "./Roles/RoleChange.jsx";
 
 import AdminList from "./Admin/AdminList.jsx";
+import ErrorBoundary from "./ErrorBoundary.jsx";
 
 // Layout component for common sidebar
 const LayoutWithSidebar = ({ children }) => (
@@ -69,6 +70,7 @@ function App() {
   
   return (
     <div className="App">
+      <ErrorBoundary>
       <BrowserRouter>
         <AuthProvider>
           <Routes>
@@ -387,6 +389,7 @@ function App() {
           </Routes>
         </AuthProvider>
       </BrowserRouter>
+      </ErrorBoundary>
     </div>
   );
 }

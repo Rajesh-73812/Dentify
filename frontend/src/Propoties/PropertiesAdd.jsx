@@ -7,9 +7,9 @@ import ImageUploader from "../common/ImageUploader";
 import Select from 'react-select';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import api from "../utils/api";
-const [selectedOption, setSelectedOption] = useState(null);
 
 const PropertiesAdd = () => {
+  const [selectedOption, setSelectedOption] = useState(null);
   const [countries, setCountries] = useState([]);
   const [categories, setCategories] = useState([]);
   const [facilities, setFacilities] = useState([]);
@@ -165,7 +165,7 @@ const PropertiesAdd = () => {
               style={{ paddingTop: "24px" }}
             >
               <div
-                className="bg-white h-[70vh] w-full rounded-xl border border-[#EAE5FF] py-4 px-6"
+                className="bg-white h-[67vh] w-full rounded-xl border border-[#EAE5FF] py-4 px-6"
                 style={{
                   maxHeight: "calc(100vh - 100px)",
                   overflowY: "auto",
@@ -338,8 +338,6 @@ const PropertiesAdd = () => {
                           borderRadius: "8px",
                           border: "1px solid #EAEAFF",
                         }}
-                        onFocus={() => handleFocus("address")}
-                        onBlur={() => handleBlur("address")}
                         onChange={handleChange}
                         placeholder="Enter Property Address "
                       />
