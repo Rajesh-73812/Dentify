@@ -255,7 +255,7 @@ const PropertiesAdd = () => {
                         value={formData.country_id}
                         onChange={handleChange}
                         id="country_id"
-                        className="mt-1 block w-full p-4  bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm"
+                        className="mt-1 block w-full   bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm"
                       >
                         <option value={0} disabled selected>
                           Select Country
@@ -283,7 +283,7 @@ const PropertiesAdd = () => {
                         value={formData.status}
                         onChange={handleChange}
                         id="propertySellOrRent"
-                        className="mt-1 block w-full p-4  bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm"
+                        className="mt-1 block w-full   bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm"
                       >
                         <option value="" disabled selected>
                           Select Staus
@@ -376,9 +376,10 @@ const PropertiesAdd = () => {
                           }));
                         }}
 
-                        className="mt-1 block w-full text-sm border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                        className="mt-1 block w-full text-sm  border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                         classNamePrefix="select"
                         placeholder="Select Facilities"
+                        styles={{maxHeight:"40px"}}
                       />
                     </div>
 
@@ -479,7 +480,7 @@ const PropertiesAdd = () => {
                           name="ptype"
                           id="ptype"
                           value={formData.ptype}
-                          className="mt-1 block w-full p-4 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm"
+                          className="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm"
                           onChange={handleChange}
                         >
                           <option value="">Select Property Type</option>
@@ -586,7 +587,7 @@ const PropertiesAdd = () => {
                         />
                       </div>
 
-                      <div className="md:col-span-2">
+                      <div className="md:col-span-1">
                         <label
                           htmlFor="description"
                           className="text-sm font-medium float-left text-[12px] font-[Montserrat]"

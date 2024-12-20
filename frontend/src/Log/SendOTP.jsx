@@ -47,7 +47,7 @@ const SendOTP = () => {
       <div className="flex items-center justify-center bg-white p-6">
         <div  className="w-full max-w-md bg-white rounded-xl p-8" style={{boxShadow: `0px 2px 5px 0px #0000001A, 0px 10px 10px 0px #00000017, 0px 22px 13px 0px #0000000D, 0px 39px 15px 0px #00000003, 0px 60px 17px 0px #00000000`,  }} >
           <h2 className="auth-head" > OTP Verification </h2>
-          <p  className="text-[#439BFF] font-[poppins] text-[13px] float-left leading[25px] mb-[30px] mt-[5px]" > Please enter 6-digits OTP sent to your ****sk.galfar.com </p>
+          <p  className="text-[#045D78] font-[poppins] text-[13px] float-left leading[25px] mb-[30px] mt-[5px]" > Please enter 6-digits OTP sent to your ****sk.galfar.com </p>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="mb-2" >
@@ -58,16 +58,16 @@ const SendOTP = () => {
                   ref={(el) => (inputRefs.current[index] = el)}
                   id="email"
                   required
-                  className="w-[45px] me-3  px-3 py-2 border border-[#0F2047] rounded-md focus:outline-none focus:ring-2 focus:ring-[#439BFF] placeholder:font-[poppins] placeholder:text-[14px] placeholder:text-[#25064C]"
+                  className="w-[45px] me-3  px-3 py-2 border border-[#0F2047] rounded-md focus:outline-none focus:ring-2 focus:ring-[#045D78] placeholder:font-[poppins] placeholder:text-[14px] placeholder:text-[#25064C]"
                   placeholder=" _"
                 />
               ))}
             </div>
 
             <div>
-              <button  type="submit"  className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#439BFF] mt-12 font-[poppins]" >Verify</button>
+              <button  type="submit"  className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#045D78] mt-12 font-[poppins]" >Verify</button>
             </div>
-            <div className="font-[poppins] text-[#439BFF]">
+            <div className="font-[poppins] text-[#045D78]">
               Didn't Get OTP?{" "}
               <span className="font-medium text-[#0F2047] mx-2"> Re-Send</span>{" "}
               <span className="font-medium text-[12px] text-[#808080]">
