@@ -92,13 +92,14 @@ const CupponList = () => {
         navigate('/add-cuppon', { state: { id: id } })
     }
 
-    const handleToggleChange = async (id, currentStatus) => {
+    const handleToggleChange = async (id, currentStatus, field) => {
         try {
-            await StatusEntity("Coupon", id, currentStatus, setFilteredcuppons, filteredcuppons);
+            await StatusEntity("Coupon", id, currentStatus, setFilteredcuppons, filteredcuppons, field);
         } catch (error) {
             console.error(error);
         }
     };
+
     return (
         <div>
             {isLoading && <Loader />}
@@ -115,88 +116,96 @@ const CupponList = () => {
                                 <table className="min-w-full text-sm text-left text-gray-700">
                                     <thead className="bg-gray-50 text-xs uppercase font-medium text-gray-500">
                                         <tr>
-                                            <th className="px-4 py-3 min-w-[130px]">
+                                            <th className="px-4 py-3 min-w-[120px]">
                                                 Sr. No
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('slno')} />
-                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('slno')} />
+                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('id')} />
+                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('id')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[150px]">
-                                            title
+                                            <th className="px-4 py-3 min-w-[120px]">
+                                                title
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className='cursor-pointer' onClick={() => sortData('ctitle')} />
                                                     <GoArrowDown className='cursor-pointer' onClick={() => sortData('ctitle')} />
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[150px]">
-                                            subtitle
+                                                subtitle
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className='cursor-pointer' onClick={() => sortData('subtitle')} />
                                                     <GoArrowDown className='cursor-pointer' onClick={() => sortData('subtitle')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[150px]">
-                                            code
+                                            <th className="px-4 py-3 min-w-[100px]">
+                                                code
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className='cursor-pointer' onClick={() => sortData('c_title')} />
                                                     <GoArrowDown className='cursor-pointer' onClick={() => sortData('c_title')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[150px]">
-                                            image
+                                            <th className="px-4 py-3 min-w-[120px]">
+                                                image
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('c_img')} />
+                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('c_img')} />
+                                                </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[180px]">
-                                            expiredDate
+                                            <th className="px-4 py-3 min-w-[160px]">
+                                                expiredDate
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className='cursor-pointer' onClick={() => sortData('cdate')} />
                                                     <GoArrowDown className='cursor-pointer' onClick={() => sortData('cdate')} />
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[180px]">
-                                            minAmount
+                                                minAmount
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className='cursor-pointer' onClick={() => sortData('min_amt')} />
                                                     <GoArrowDown className='cursor-pointer' onClick={() => sortData('min_amt')} />
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[150px]">
-                                            discount
+                                                discount
                                                 <div className="inline-flex items-center ml-2">
-                                                     <GoArrowUp className='cursor-pointer' onClick={() => sortData('c_value')} />
+                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('c_value')} />
                                                     <GoArrowDown className='cursor-pointer' onClick={() => sortData('c_value')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[150px]">
+                                            <th className="px-4 py-3 min-w-[140px]">
                                                 Status
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('status')} />
+                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('status')} />
+                                                </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[150px]">
+                                            <th className="px-4 py-3 min-w-[120px]">
                                                 Action
                                             </th>
-                                                                                   
+
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-gray-200">
                                         {currentcuppons.length > 0 ? (
                                             currentcuppons.map((cuppon, index) => (
-                                                <tr key={cuppon.id}>
-                                                    <td className="px-4 py-3">{index + 1 + indexOfFirst}</td>
-                                                    <td className="px-4 py-3">{cuppon?.ctitle || "N/A"}</td>
-                                                    <td className="px-4 py-3">{cuppon?.subtitle || "N/A"}</td>
-                                                    <td className="px-4 py-3">{cuppon?.c_title || "N/A"}</td>
-                                                    <td className="px-4 py-3">
+                                                <tr key={cuppon.id} className='h-[70px]'>
+                                                    <td className="px-4 py-1">{index + 1 + indexOfFirst}</td>
+                                                    <td className="px-4 py-1">{cuppon?.ctitle || "N/A"}</td>
+                                                    <td className="px-4 py-1">{cuppon?.subtitle || "N/A"}</td>
+                                                    <td className="px-4 py-1">{cuppon?.c_title || "N/A"}</td>
+                                                    <td className="px-4 py-1">
                                                         {cuppon.c_img ? (
-                                                            <img src={cuppon.c_img} className="w-16 h-16 object-cover rounded-full" alt="Coupon"
+                                                            <img src={cuppon.c_img} className="w-10 h-10 object-cover rounded-full" alt="Coupon"
                                                                 onError={(e) => { e.target.src = 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg'; }}
                                                             />
                                                         ) : (
                                                             <img src="https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg" className="w-16 h-16 object-cover rounded-full" alt="Placeholder" />
                                                         )}
                                                     </td>
-                                                    <td className="px-4 py-3">{cuppon?.cdate.split(" ")[0] || "N/A"}</td>
-                                                    <td className="px-4 py-3">{cuppon?.min_amt || "N/A"}</td>
-                                                    <td className="px-4 py-3">{cuppon?.c_value || "N/A"}</td>
-                                                    <td className="px-4 py-3">
+                                                    <td className="px-4 py-1">{cuppon?.cdate.split(" ")[0] || "N/A"}</td>
+                                                    <td className="px-4 py-1">{cuppon?.min_amt || "N/A"}</td>
+                                                    <td className="px-4 py-1">{cuppon?.c_value || "N/A"}</td>
+                                                    <td className="px-4 py-1">
 
                                                         <FontAwesomeIcon
                                                             className="h-7 w-16"

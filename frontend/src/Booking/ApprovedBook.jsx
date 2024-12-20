@@ -120,8 +120,8 @@ const ApprovedBook = () => {
                                             <th className="px-4 py-3 min-w-[130px]">
                                                 Sr. No
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('slno')} />
-                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('slno')} />
+                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('id')} />
+                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('id')} />
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[180px]">
@@ -153,12 +153,12 @@ const ApprovedBook = () => {
                                     <tbody className="divide-y divide-gray-200">
                                         {currentApprove.length > 0 ? (
                                             currentApprove.map((approve, index) => (
-                                                <tr key={index + 1}>
+                                                <tr key={index + 1} className='h-[70px]'>
                                                     <td className="px-4 py-1">{index + 1 + indexOfFirst}</td>
                                                     <td className="px-4 py-1">{approve?.prop_title || 'N/A'}</td>
                                                     <td className="px-4 py-1">
                                                         {approve.prop_img ? (
-                                                            <img src={approve.prop_img} className="w-16 h-16 object-cover rounded-full" alt="Coupon"
+                                                            <img src={approve.prop_img} className="w-10 h-10 object-cover rounded-full" alt="Coupon"
                                                                 onError={(e) => {
                                                                     e.target.src = 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg';
                                                                 }}

@@ -22,7 +22,7 @@ const CompletedBook = () => {
     useEffect(() => {
         const fetchBookings = async () => {
             try {
-                const response = await api.get(`/bookings/status/${status}`, );
+                const response = await api.get(`/bookings/status/${status}`,);
                 setcompleted(response.data);
                 setFilteredcompleted(response.data);
             } catch (error) {
@@ -95,8 +95,8 @@ const CompletedBook = () => {
                                             <th className="px-4 py-3 min-w-[130px]">
                                                 Sr. No
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('slno')} />
-                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('slno')} />
+                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('id')} />
+                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('id')} />
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[180px]">
@@ -106,8 +106,12 @@ const CompletedBook = () => {
                                                     <GoArrowDown className='cursor-pointer' onClick={() => sortData('prop_title')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[180px]">
+                                            <th className="px-4 py-3 min-w-[200px]">
                                                 Property Image
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('prop_img')} />
+                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('prop_img')} />
+                                                </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[180px]">
                                                 Property Price
@@ -128,19 +132,19 @@ const CompletedBook = () => {
                                                 Action
                                             </th>
 
-                                </tr>
-                                </thead>
+                                        </tr>
+                                    </thead>
 
 
                                     <tbody className="divide-y divide-gray-200">
                                         {currentcompleted.length > 0 ? (
                                             currentcompleted.map((completedList, index) => (
-                                                <tr key={index + 1}>
-                                                    <td className="px-4 py-3">{index + 1 + indexOfFirst}</td>
-                                                    <td className="px-4 py-3">{completedList?.prop_title || 'N/A'}</td>
-                                                    <td className="px-4 py-3">
+                                                <tr key={index + 1} className='h-[70px]'>
+                                                    <td className="px-4 py-1">{index + 1 + indexOfFirst}</td>
+                                                    <td className="px-4 py-1">{completedList?.prop_title || 'N/A'}</td>
+                                                    <td className="px-4 py-1">
                                                         {completedList.prop_img ? (
-                                                            <img src={completedList.prop_img} className="w-16 h-16 object-cover rounded-full" alt="Coupon"
+                                                            <img src={completedList.prop_img} className="w-10 h-10 object-cover rounded-full" alt="Coupon"
                                                                 onError={(e) => {
                                                                     e.target.src = 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg';
                                                                 }}
@@ -149,16 +153,16 @@ const CompletedBook = () => {
                                                             <img src="https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg" className="w-16 h-16 object-cover rounded-full" alt="Placeholder" />
                                                         )}
                                                     </td>
-                                                    <td className="px-4 py-3">{completedList?.prop_price || 'N/A'}</td>
-                                                    <td className="px-4 py-3">{completedList?.total_day || 'N/A'}</td>
-                                                    <td className="px-4 py-3">
+                                                    <td className="px-4 py-1">{completedList?.prop_price || 'N/A'}</td>
+                                                    <td className="px-4 py-1">{completedList?.total_day || 'N/A'}</td>
+                                                    <td className="px-4 py-1">
                                                         <span className='px-2 py-1 text-sm rounded-full bg-green-400 cursor-pointer text-white mr-2' onClick={() => openModal(completedList)}>View Details</span>
                                                     </td>
                                                 </tr>
                                             ))
                                         ) : (
                                             <tr>
-                                                <td className="px-4 py-3 text-center" colSpan="6">
+                                                <td className="px-4 py-1 text-center" colSpan="6">
                                                     No data available
                                                 </td>
                                             </tr>

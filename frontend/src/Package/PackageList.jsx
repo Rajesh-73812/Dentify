@@ -10,6 +10,7 @@ import { handleSort } from '../utils/sorting';
 import { NotificationContainer } from 'react-notifications';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faToggleOff, faToggleOn } from "@fortawesome/free-solid-svg-icons";
+import { StatusEntity } from '../utils/Status';
 
 const PackageList = () => {
     const navigate = useNavigate();
@@ -68,6 +69,21 @@ const PackageList = () => {
             setFilteredpackages(updatedPackage);
         }
     };
+
+    const handleToggleChange = async (id, currentStatus, field) => {
+        console.log(`Toggling ${field} for ID: ${id} with current status: ${currentStatus}`);
+        if (!id || currentStatus === undefined) {
+            console.error(`Invalid arguments: ID=${id}, currentStatus=${currentStatus}`);
+            return;
+        }
+
+        try {
+            await StatusEntity("Package", id, currentStatus, setFilteredpackages, filteredpackages, field);
+        } catch (error) {
+            console.error("Error toggling payment status:", error);
+        }
+    };
+
     return (
         <div>
             <div className="h-screen flex">
@@ -84,8 +100,8 @@ const PackageList = () => {
                                             <th className="px-4 py-3 min-w-[130px]">
                                                 Sr. No
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('slno')} />
-                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('slno')} />
+                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('id')} />
+                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('id')} />
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[180px]">
@@ -97,6 +113,10 @@ const PackageList = () => {
                                             </th>
                                             <th className="px-4 py-3 min-w-[180px]">
                                                 Package Image
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('image')} />
+                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('image')} />
+                                                </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[180px]">
                                                 Package Day
@@ -114,33 +134,38 @@ const PackageList = () => {
                                             </th>
                                             <th className="px-4 py-3 min-w-[150px]">
                                                 Status
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('status')} />
+                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('status')} />
+                                                </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[150px]"> Action  </th>
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-gray-200">
-                                        {currentpackages.length > 0 ? (
-                                            currentpackages.map((Package, index) => (
-                                                <tr key={Package.id}>
+                                        {filteredpackages.length > 0 ? (
+                                            filteredpackages.map((Package, index) => (
+                                                <tr key={Package.id} className='h-[70px]'>
                                                     <td className="px-4 py-1">{index + 1 + indexOfFirstPackage}</td>
                                                     <td className="px-4 py-1">{Package?.title || "N/A"}</td>
                                                     <td className="px-4 py-1">
                                                         <img
                                                             src={Package.image || 'fallback-image.jpg'}
                                                             alt={Package.title || "N/A"}
-                                                            className="w-16 h-16 object-cover rounded-full"
+                                                            className="w-10 h-10 object-cover rounded-full"
                                                         // onError={(e) => (e.target.src = 'fallback-image.jpg')}
 
                                                         />
                                                     </td>
                                                     <td className="px-4 py-1">{Package?.day || "N/A"}</td>
                                                     <td className="px-4 py-1">{Package?.price || "N/A"}</td>
-                                                    <td className="px-4 py-1">
-                                                    {Package.status === 1 ? 
-                                                        <FontAwesomeIcon className='h-7 w-16  cursor-pointer' style={{color:'#0064DC'}} icon={faToggleOn} /> 
-                                                        : 
-                                                        <FontAwesomeIcon className='h-7 w-16 cursor-pointer' style={{color:'#e9ecef'}} icon={faToggleOff} />
-                                                    }
+                                                    <td>
+                                                        <FontAwesomeIcon
+                                                            className="h-7 w-16 cursor-pointer"
+                                                            style={{ color: Package.status === 1 ? "#0064DC" : "#e9ecef" }}
+                                                            icon={Package.status === 1 ? faToggleOn : faToggleOff}
+                                                            onClick={() => handleToggleChange(Package.id, Package.status, "status")}
+                                                        />
                                                     </td>
                                                     <td className="px-4 py-1">
                                                         <NotificationContainer />
