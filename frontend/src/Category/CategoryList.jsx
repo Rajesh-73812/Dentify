@@ -13,13 +13,10 @@ import { DeleteEntity } from '../utils/Delete';
 import { handleSort } from "../utils/sorting";
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faToggleOff, faToggleOn } from "@fortawesome/free-solid-svg-icons";
 import { StatusEntity } from "../utils/Status";
-
 import api from "../utils/api";
-
 
 const CategoryList = () => {
   const navigate = useNavigate();

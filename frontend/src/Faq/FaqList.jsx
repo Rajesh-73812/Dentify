@@ -28,7 +28,7 @@ const FaqList = () => {
     useEffect(() => {
         const fetchfaq = async () => {
             try {
-                const response = await api.get("/faqs/all");
+                const response =  api.get("/faqs/all");
                 console.log(response.data)
                 setfaq(response.data);
                 setFilteredfaq(response.data);

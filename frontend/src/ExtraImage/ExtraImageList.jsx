@@ -116,6 +116,7 @@ const ExtraImageList = () => {
                     <div className="py-6 px-6 h-full w-[1000px] overflow-scroll scrollbar-none">
                         <div className="bg-white w-full rounded-xl border border-[#EAE5FF] py-4 px-3 overflow-x-auto scrollbar-none">
                             <div className="relative sm:rounded-lg">
+                            
                                 <table className="min-w-full text-sm text-left text-gray-700">
                                     <thead className="bg-gray-50 text-xs uppercase font-medium text-gray-500">
                                         <tr>
@@ -225,6 +226,7 @@ const ExtraImageList = () => {
                                 </table>
                             </div>
                         </div>
+                        
                         <div className="bottom-0 left-0 w-full bg-[#f7fbff] py-4 flex justify-between items-center">
                             <span className="text-sm font-normal text-gray-500">
                                 Showing <span className="font-semibold text-gray-900">{indexOfFirstImage + 1}</span> to <span className="font-semibold text-gray-900">{Math.min(indexOfLastImage, filteredImages.length)}</span> of <span className="font-semibold text-gray-900">{filteredImages.length}</span>

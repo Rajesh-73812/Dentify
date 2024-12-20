@@ -115,7 +115,7 @@ const FacilityAdd = () => {
 
           {/* Form Container */}
           <div className="h-full px-6 max-w-5xl" style={{paddingTop:'24px'}}> 
-            <div className="bg-white h-[70vh] w-full rounded-xl border border-[#EAE5FF] py-4 px-6 overflow-y-auto scrollbar-none" >
+            <div className="bg-white h-[67vh] w-full rounded-xl border border-[#EAE5FF] py-4 px-6 overflow-y-auto scrollbar-none" >
               {/* <p className='text-left font-bold font-[Montserrat]' >Create Service</p> */}
               <form  onSubmit={handleSubmit} className="mt-4">
                 <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-1  mt-6">

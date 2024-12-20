@@ -222,6 +222,7 @@ const UserList = () => {
                                                     <td className="px-4 py-2">{userList?.email || "N/A"}</td>
                                                     <td className="px-4 py-2">{userList?.mobile || "N/A"}</td>
 
+
                                                     <td className="px-4 py-2">{userList?.reg_date?.split("T")[0] || "N/A"}</td>
 
                                                     <td className="px-4 py-2">

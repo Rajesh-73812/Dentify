@@ -13,13 +13,16 @@ import { NotificationContainer, NotificationManager } from 'react-notifications'
 import 'react-notifications/lib/notifications.css';
 import Swal from 'sweetalert2';
 import api from '../utils/api';
+
 import { handleSort } from '../utils/sorting';
 import { GoArrowDown, GoArrowUp } from 'react-icons/go';
+
 
 const AdminList = () => {
     const navigate = useNavigate();
     const [currentPage, setCurrentPage] = useState(1);
-    const adminsPerPage = 5;
+    const adminsPerPage = 10;
+    const [sortConfig, setSortConfig] = useState({ key: "", direction: "" });
     const { isLoading, setIsLoading } = useLoading();
     const location = useLocation();
     const [admins, setAdmins] = useState([]);
@@ -161,6 +164,12 @@ const AdminList = () => {
     const indexOfFirstAdmin = indexOfLastAdmin - adminsPerPage;
     const currentAdmins = filteredAdmins.slice(indexOfFirstAdmin, indexOfLastAdmin);
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+    // for sorting
+    const sortData = (key) => {
+        handleSort(filteredAdmins, key, sortConfig, setSortConfig, setFilteredAdmins);
+    };
+
     return (
         <div>
             {isLoading && <Loader />}
@@ -177,15 +186,19 @@ const AdminList = () => {
                                             <th className="px-2 py-3 min-w-[100px]">
                                                 Sr. No
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('id')} />
-                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('id')} />
+
+                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('id')} />
+                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('id')} />
+
                                                 </div>
                                             </th>
                                             <th className="px-2 py-3 min-w-[100px]">
                                                 Username
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('username')} />
-                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('username')} />
+
+                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('username')} />
+                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('username')} />
+
                                                 </div>
                                             </th>
                                             <th className="px-2 py-3 min-w-[100px]">
@@ -199,8 +212,10 @@ const AdminList = () => {
                                             <th className="px-2 py-3 min-w-[100px]">
                                                 User Type
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('userType')} />
-                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('userType')} />
+
+                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('title')} />
+                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('title')} />
+
                                                 </div>
                                             </th>
                                             <th className="px-2 py-3 min-w-[150px]">
@@ -338,7 +353,7 @@ const AdminList = () => {
                                     <Form.Control
                                         type="text"
                                         name="userType"
-                                        value={addForm.userType}
+                                        value="Admin"
                                         onChange={handleAddChange} />
                                 </Form.Group>
                             </Form>

@@ -118,7 +118,7 @@ const ExtraImageAdd = () => {
                             <h2 className="text-lg font-semibold ml-4" style={{ color: '#000000', fontSize: '24px', fontFamily: 'Montserrat' }}>Extra Image Management</h2>
                         </div>
                         <div className="h-full px-6 max-w-5xl" style={{ paddingTop: '24px' }}>
-                            <div className="bg-white h-[70vh] w-full rounded-xl border border-[#EAE5FF] py-4 px-6 overflow-y-auto">
+                            <div className="bg-white h-[67vh] w-full rounded-xl border border-[#EAE5FF] py-4 px-6 overflow-y-auto scrollbar-none">
                                 <form className="mt-4" onSubmit={handleSubmit}>
                                     <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-1 mt-6">
                                         {/* Select Property */}

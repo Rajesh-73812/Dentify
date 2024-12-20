@@ -93,7 +93,7 @@ const handleSubmit = async (e) => {
 
           {/* Form Container */}
           <div className="h-full px-6 max-w-5xl" style={{paddingTop:'24px'}}> 
-            <div className="bg-white h-[70vh] w-full rounded-xl border border-[#EAE5FF] py-4 px-6 overflow-y-auto" style={{scrollbarWidth:'none'}}>
+            <div className="bg-white h-[67vh] w-full rounded-xl border border-[#EAE5FF] py-4 px-6 overflow-y-auto" style={{scrollbarWidth:'none'}}>
               <form onSubmit={handleSubmit} className="mt-4">
                 <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-1  mt-6">
                   {/* faq question */}
@@ -124,7 +124,7 @@ const handleSubmit = async (e) => {
 
                 {/* Action Buttons */}
                 <div className="flex justify-start mt-6 gap-3">
-                  <button  type="submit" className={`py-2 ${id ? 'bg-green-500 hover:bg-green-600' : 'bg-blue-500 hover:bg-blue-600'} text-white rounded-lg hover:bg-blue-600 w-[150px] h-12 font-[Montserrat] font-bold`} style={{ borderRadius: "8px", }} > {id ? "Update FAQ's" : "Add FAQ's"}</button>
+                  <button  type="submit" className={`py-2 ${id ? 'bg-green-500 hover:bg-green-600' : 'bg-blue-500 hover:bg-blue-600'} text-white rounded-lg w-[150px] h-12 font-[Montserrat] font-bold`} style={{ borderRadius: "8px", }} > {id ? "Update FAQ's" : "Add FAQ's"}</button>
                 </div>
               </form>
             </div>
