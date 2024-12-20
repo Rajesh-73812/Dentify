@@ -96,7 +96,7 @@ const handleImageUploadSuccess = (imageUrl) => {
       <main className="flex-grow">
         <Header />
         <div className="container mx-auto">
-          <div className="flex items-center mt-6  mb-4">
+          <div className="flex items-center mt-6">
             {/* <Link to="/rolesList" className="cursor-pointer ml-6">
               
             </Link> */}
@@ -109,8 +109,8 @@ const handleImageUploadSuccess = (imageUrl) => {
           </div>
 
           {/* Form Container */}
-          <div className="h-full px-6 max-w-5xl" style={{paddingTop:'24px'}}> 
-            <div className="bg-white h-[70vh] w-full rounded-xl border border-[#EAE5FF] py-4 px-6 overflow-y-auto scrollbar-none">
+          <div className="h-full px-6 max-w-5xl" > 
+            <div className="bg-white h-[67vh] w-full rounded-xl border border-[#EAE5FF] py-4 px-6 overflow-y-auto scrollbar-none">
               <form className="mt-4" onSubmit={handleSubmit}>
                 <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-3 mt-6">
                         {/* website Name*/}
@@ -125,7 +125,7 @@ const handleImageUploadSuccess = (imageUrl) => {
                         <div className="flex flex-col">
                             <label  htmlFor="weblogo"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]"><span style={{color:'red'}}>*</span>Website Image</label>
                             <ImageUploader onUploadSuccess={handleImageUploadSuccess}/>
-                            <img width={400} src={formData.weblogo} alt="" />
+                            <img width={100} src={formData.weblogo} alt="" />
                         </div>
 
                         {/* time zone */}

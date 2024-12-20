@@ -13,8 +13,10 @@ import { NotificationContainer, NotificationManager } from 'react-notifications'
 import 'react-notifications/lib/notifications.css';
 import Swal from 'sweetalert2';
 import api from '../utils/api';
-import { GoArrowDown, GoArrowUp } from "react-icons/go";
+
 import { handleSort } from '../utils/sorting';
+import { GoArrowDown, GoArrowUp } from 'react-icons/go';
+
 
 const AdminList = () => {
     const navigate = useNavigate();
@@ -24,6 +26,7 @@ const AdminList = () => {
     const { isLoading, setIsLoading } = useLoading();
     const location = useLocation();
     const [admins, setAdmins] = useState([]);
+    const [sortConfig, setSortConfig] = useState({ key: '', direction: '' });
     const [filteredAdmins, setFilteredAdmins] = useState([]);
     const [showEditModal, setShowEditModal] = useState(false);
     const [showAddModal, setShowAddModal] = useState(false);
@@ -47,7 +50,7 @@ const AdminList = () => {
         try {
             const response = await api.get('/admin/all-admins');
             console.log('API Response:', response.data);
-            const { admins } = response.data; 
+            const { admins } = response.data;
             if (Array.isArray(admins)) {
                 setAdmins(admins);
                 setFilteredAdmins(admins);
@@ -57,6 +60,10 @@ const AdminList = () => {
         } catch (error) {
             console.error('Error fetching admins:', error);
         }
+    };
+
+    const sortData = (key) => {
+        handleSort(filteredAdmins, key, sortConfig, setSortConfig, setFilteredAdmins);
     };
 
     const handleDelete = async (id) => {
@@ -80,8 +87,8 @@ const AdminList = () => {
 
     const handleUpdate = async (adminId) => {
         try {
-            await api.put(`/admin/update/${adminId}`, editForm, 
-                
+            await api.put(`/admin/update/${adminId}`, editForm,
+
             );
             // setAdmins(admins.map(admin => admin.id === adminId ? { ...admin, ...editForm } : admin));
             const updatedAdmins = admins.map(admin => admin.id === adminId ? { ...admin, ...editForm } : admin);
@@ -113,7 +120,7 @@ const AdminList = () => {
             NotificationManager.success("Added successfully!");
         } catch (error) {
             NotificationManager.removeAll();
-    
+
             if (error.response && error.response.status === 400) {
                 Swal.fire({
                     icon: 'warning',
@@ -155,7 +162,7 @@ const AdminList = () => {
 
     const indexOfLastAdmin = currentPage * adminsPerPage;
     const indexOfFirstAdmin = indexOfLastAdmin - adminsPerPage;
-    const currentAdmins = filteredAdmins.slice(indexOfFirstAdmin, indexOfLastAdmin); 
+    const currentAdmins = filteredAdmins.slice(indexOfFirstAdmin, indexOfLastAdmin);
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     // for sorting
@@ -176,32 +183,42 @@ const AdminList = () => {
                                 <table className="min-w-full text-sm text-left text-gray-700">
                                     <thead className="bg-gray-50 text-xs uppercase font-medium text-gray-500">
                                         <tr>
-                                            <th className="px-4 py-3 min-w-[150px]">
+                                            <th className="px-2 py-3 min-w-[100px]">
                                                 Sr. No
                                                 <div className="inline-flex items-center ml-2">
+
                                                     <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('id')} />
                                                     <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('id')} />
+
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[150px]">
+                                            <th className="px-2 py-3 min-w-[100px]">
                                                 Username
                                                 <div className="inline-flex items-center ml-2">
+
                                                     <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('username')} />
                                                     <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('username')} />
+
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[150px]">
+                                            <th className="px-2 py-3 min-w-[100px]">
                                                 Password
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('password')} />
+                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('password')} />
+                                                </div>
                                             </th>
 
-                                            <th className="px-4 py-3 min-w-[150px]">
+                                            <th className="px-2 py-3 min-w-[100px]">
                                                 User Type
                                                 <div className="inline-flex items-center ml-2">
+
                                                     <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('title')} />
                                                     <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('title')} />
+
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[150px]">
+                                            <th className="px-2 py-3 min-w-[150px]">
                                                 Action
                                             </th>
                                         </tr>
@@ -209,12 +226,12 @@ const AdminList = () => {
                                     <tbody className="divide-y divide-gray-200">
                                         {currentAdmins.length > 0 ? (
                                             currentAdmins.map((admin, index) => (
-                                                <tr key={admin.id}>
-                                                    <td className="px-4 py-3">{indexOfFirstAdmin + index + 1}</td>
-                                                    <td className="px-4 py-3">{admin?.username || "N/A"}</td>
-                                                    <td className="px-4 py-3">{admin?.password || "N/A"}</td>
-                                                    <td className="px-4 py-3">{admin?.userType || "N/A"}</td>
-                                                    <td className="px-4 py-3">
+                                                <tr key={admin.id} className='h-[50px]'>
+                                                    <td className="px-2 py-1">{indexOfFirstAdmin + index + 1}</td>
+                                                    <td className="px-2 py-1">{admin?.username || "N/A"}</td>
+                                                    <td className="px-2 py-1">{admin?.password || "N/A"}</td>
+                                                    <td className="px-2 py-1">{admin?.userType || "N/A"}</td>
+                                                    <td className="px-2 py-1">
                                                         <NotificationContainer />
                                                         <button variant="" className="bg-[#2dce89] text-white p-2 rounded-full hover:bg-green-600 transition mr-2" onClick={() => confirmEdit(admin)}>
                                                             <FaPen />

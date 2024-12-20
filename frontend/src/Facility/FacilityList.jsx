@@ -15,6 +15,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faToggleOff, faToggleOn } from "@fortawesome/free-solid-svg-icons";
 
 import api from '../utils/api';
+import { StatusEntity } from '../utils/Status';
 
 
 const FacilityList = () => {
@@ -32,7 +33,7 @@ const FacilityList = () => {
     useEffect(() => {
         async function fetchData() {
             try {
-                const response = await api.get("/facilities/all", );
+                const response = await api.get("/facilities/all",);
                 console.log("API Response:", response.data);
                 setfacility(response.data);
                 setFilterData(response.data);
@@ -93,6 +94,20 @@ const FacilityList = () => {
         navigate('/create-facility', { state: { id: id } })
     }
 
+    const handleToggleChange = async (id, currentStatus, field) => {
+        console.log(`Toggling ${field} for ID: ${id} with current status: ${currentStatus}`);
+        if (!id || currentStatus === undefined) {
+            console.error(`Invalid arguments: ID=${id}, currentStatus=${currentStatus}`);
+            return;
+        }
+
+        try {
+            await StatusEntity("Facility", id, currentStatus, setFilteredfacility, filteredfacility, field);
+        } catch (error) {
+            console.error("Error toggling facility status:", error);
+        }
+    };
+
     return (
         <div>
             {isLoading && <Loader />}
@@ -113,23 +128,31 @@ const FacilityList = () => {
                                             <th className="px-4 py-3 min-w-[100px]">
                                                 Sr. No
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('slno')} />
-                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('slno')} />
+                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('id')} />
+                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('id')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[150px]">
+                                            <th className="px-4 py-3 min-w-[100px]">
                                                 Facility Title
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('title')} />
                                                     <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('title')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[150px]">
+                                            <th className="px-4 py-3 min-w-[100px]">
                                                 Facility Image
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('img')} />
+                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('img')} />
+                                                </div>
                                             </th>
 
                                             <th className="px-4 py-3 min-w-[100px]">
-                                                Facility Status
+                                                Status
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('status')} />
+                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('status')} />
+                                                </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[100px]">
                                                 Action
@@ -140,12 +163,12 @@ const FacilityList = () => {
                                         {currentfacility.length > 0 ? (
                                             currentfacility.map((facility, index) => (
 
-                                                <tr key={facility.id}>
-                                                    <td className="px-4 py-3">{index + 1 + indexOfFirst}</td>
-                                                    <td className="px-4 py-3">{facility?.title || "N/A"}</td>
-                                                    <td className="px-4 py-3">
+                                                <tr key={facility.id} className='h-[70px]'>
+                                                    <td className="px-4 py-1">{index + 1 + indexOfFirst}</td>
+                                                    <td className="px-4 py-1">{facility?.title || "N/A"}</td>
+                                                    <td className="px-4 py-1">
                                                         {facility.img && facility.img.trim() !== '' ? (
-                                                            <img src={facility.img} className="w-16 h-16 object-cover rounded-full" height={50} width={50} loading="lazy" alt="" onError={(e) => {
+                                                            <img src={facility.img} className="w-10 h-10 object-cover rounded-full" height={50} width={50} loading="lazy" alt="" onError={(e) => {
                                                                 if (e.target.src !== 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg') {
                                                                     e.target.src = 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg';
                                                                 }
@@ -155,16 +178,16 @@ const FacilityList = () => {
                                                         )}
                                                     </td>
 
-                                                    <td className="px-4 py-3">
-                                                    {facility.status === 1 ? 
-                                                        < cursor-pointer className='h-7 w-16  cursor-pointer' style={{color:'#0064DC'}} icon={faToggleOn} /> 
-                                                        : 
-                                                        <FontAwesomeIcon className='h-7 w-16 cursor-pointer' style={{color:'#e9ecef'}} icon={faToggleOff} />
-                                                    }
+                                                    <td className="px-4 py-1">
+                                                        <FontAwesomeIcon
+                                                            className="h-7 w-16 cursor-pointer"
+                                                            style={{ color: facility.status === 1 ? "#0064DC" : "#e9ecef" }}
+                                                            icon={facility.status === 1 ? faToggleOn : faToggleOff}
+                                                            onClick={() => handleToggleChange(facility.id, facility.status, "status")}
+                                                        />
                                                     </td>
-                                                    <td className="px-4 py-3">
-                                                        <NotificationContainer />
-                                                        <button className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition mr-2" onClick={() => { updateFacility(facility.id) }}>
+                                                    <td className="px-4 py-1">
+                                                        <NotificationContainer />                                                        <button className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition mr-2" onClick={() => { updateFacility(facility.id) }}>
                                                             <FaPen />
                                                         </button>
                                                         <button className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition" onClick={() => handledelete(facility.id)}>

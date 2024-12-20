@@ -8,11 +8,15 @@ import { DeleteEntity } from '../utils/Delete';
 import { useNavigate } from 'react-router-dom';
 import { handleSort } from '../utils/sorting';
 import RoleHeader from './RoleHeader';
+
 import { StatusEntity } from '../utils/Status';
 import { NotificationContainer } from 'react-notifications';
 import { useLoading } from '../Context/LoadingContext';
 import api from '../utils/api';
 import Swal from 'sweetalert2';
+
+
+
 
 const RoleChange = () => {
     const navigate = useNavigate();
@@ -25,6 +29,7 @@ const RoleChange = () => {
     useEffect(() => {
         fetchrole();
     }, []);
+
 
 
 
@@ -44,16 +49,16 @@ const RoleChange = () => {
         setCurrentPage(1);
     };
 
-  const fetchrole = async () => {
-      try {
-          const response = await api.get("/rollrequest/all");
-          console.log(response.data)
-          setrole(response.data);
-          setFilteredrole(response.data); 
-      } catch (error) {
-          console.error("Error fetching role:", error);
-      }
-  };
+    const fetchrole = async () => {
+        try {
+            const response = await api.get("/rollrequest/all");
+            console.log(response.data)
+            setrole(response.data);
+            setFilteredrole(response.data);
+        } catch (error) {
+            console.error("Error fetching role:", error);
+        }
+    };
 
     // for sorting
     const sortData = (key) => {
@@ -74,6 +79,7 @@ const RoleChange = () => {
             setFilteredrole(updatedrole);
         }
     };
+
 
     const toggleStatus = async (id, currentStatus) => {
         // Calculate the new status
@@ -106,6 +112,7 @@ const RoleChange = () => {
       
     
     
+
     return (
         <div>
             <div className="h-screen flex">
@@ -134,7 +141,7 @@ const RoleChange = () => {
                                                 </div>
                                             </th>
 
-                                            <th className="px-4 py-3 min-w-[100px]">
+                                            <th className="px-4 py-3 min-w-[150px]">
                                                 Email
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className='cursor-pointer' onClick={() => sortData('email')} />
@@ -142,7 +149,7 @@ const RoleChange = () => {
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[120px]">
-                                                 Role
+                                                Role
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className='cursor-pointer' onClick={() => sortData('role')} />
                                                     <GoArrowDown className='cursor-pointer' onClick={() => sortData('role')} />
@@ -155,8 +162,12 @@ const RoleChange = () => {
                                                     <GoArrowDown className='cursor-pointer' onClick={() => sortData('requested_role')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[100px]">
-                                                 Status
+                                            <th className="px-4 py-3 min-w-[150px]">
+                                                Status
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('status')} />
+                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('status')} />
+                                                </div>
                                             </th>
 
                                             <th className="px-4 py-3 min-w-[150px]">Action</th>
@@ -165,6 +176,7 @@ const RoleChange = () => {
                                     <tbody className="divide-y divide-gray-200">
                                         {currentrole.length > 0 ? (
                                             currentrole.map((role, index) => (
+
                                             <tr key={role.id}>
                                                 <td className="px-4 py-2">{index + 1 + indexOfFirst}</td>
                                                 <td className="px-4 py-2">{role.user?.name|| "N/A"}</td>
@@ -194,14 +206,10 @@ const RoleChange = () => {
                                                         <FaTrash />
                                                     </button>
                                                 </td>
+
                                             </tr>
-                                        ))
-                                    ) : (
-                                        <tr>
-                                            <td colSpan={4} className="px-4 py-3 text-center text-gray">No Data available</td>
-                                        </tr>
-                                    )
-                                    }
+                                        )
+                                        }
                                     </tbody>
                                 </table>
                             </div>

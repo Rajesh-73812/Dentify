@@ -120,8 +120,8 @@ const CheckInBook = () => {
                                             <th className="px-4 py-3 min-w-[130px]">
                                                 Sr. No
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('slno')} />
-                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('slno')} />
+                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('id')} />
+                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('id')} />
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[180px]">
@@ -131,15 +131,20 @@ const CheckInBook = () => {
                                                     <GoArrowDown className='cursor-pointer' onClick={() => sortData('prop_title')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[180px]">Property Image </th>
-                                            <th className="px-4 py-3 min-w-[250px]">
+                                            <th className="px-4 py-3 min-w-[200px]">Property Image 
+                                            <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('image')} />
+                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('image')} />
+                                                </div>
+                                            </th>
+                                            <th className="px-4 py-3 min-w-[200px]">
                                                 Property Price
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className='cursor-pointer' onClick={() => sortData('prop_price')} />
                                                     <GoArrowDown className='cursor-pointer' onClick={() => sortData('prop_price')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[250px]">
+                                            <th className="px-4 py-3 min-w-[220px]">
                                                 Property Total Day
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className='cursor-pointer' onClick={() => sortData('total_day')} />
@@ -154,12 +159,12 @@ const CheckInBook = () => {
                                     <tbody className="divide-y divide-gray-200">
                                         {currentcheckIn.length > 0 ? (
                                             currentcheckIn.map((checkIn, index) => (
-                                                <tr key={index + 1}>
+                                                <tr key={index + 1} className='h-[70px]'>
                                                     <td className="px-4 py-1">{index + 1 + indexOfFirst}</td>
                                                     <td className="px-4 py-1">{checkIn?.prop_title || 'N/A'}</td>
                                                     <td className="px-4 py-1">
                                                         {checkIn.prop_img ? (
-                                                            <img src={checkIn.prop_img} className="w-16 h-16 object-cover rounded-full" alt="Coupon"
+                                                            <img src={checkIn.prop_img} className="w-10 h-10 object-cover rounded-full" alt="Coupon"
                                                                 onError={(e) => {
                                                                     e.target.src = 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg';
                                                                 }}

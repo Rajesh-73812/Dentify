@@ -14,6 +14,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faToggleOff, faToggleOn } from "@fortawesome/free-solid-svg-icons";
 
 import api from '../utils/api';
+import { StatusEntity } from '../utils/Status';
 
 
 const FaqList = () => {
@@ -77,6 +78,21 @@ const FaqList = () => {
             setFilteredfaq(updatedFaq);
         }
     };
+
+    const handleToggleChange = async (id, currentStatus, field) => {
+        console.log(`Toggling ${field} for ID: ${id} with current status: ${currentStatus}`);
+        if (!id || currentStatus === undefined) {
+            console.error(`Invalid arguments: ID=${id}, currentStatus=${currentStatus}`);
+            return;
+        }
+
+        try {
+            await StatusEntity("FAQ'S", id, currentStatus, setFilteredfaq, filteredfaq, field);
+        } catch (error) {
+            console.error("Error toggling payment status:", error);
+        }
+    };
+
     return (
         <div>
             <div className="h-screen flex">
@@ -93,18 +109,18 @@ const FaqList = () => {
                                             <th className="px-4 py-3 min-w-[150px]">
                                                 Sr. No
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('slno')} />
-                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('slno')} />
+                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('id')} />
+                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('id')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[250px]">
+                                            <th className="px-4 py-3 min-w-[200px]">
                                                 Faq Question
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className='cursor-pointer' onClick={() => sortData('question')} />
                                                     <GoArrowDown className='cursor-pointer' onClick={() => sortData('question')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[250px]">
+                                            <th className="px-4 py-3 min-w-[200px]">
                                                 Faq Answer
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className='cursor-pointer' onClick={() => sortData('answer')} />
@@ -113,6 +129,10 @@ const FaqList = () => {
                                             </th>
                                             <th className="px-4 py-3 min-w-[150px]">
                                                 Status
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('status')} />
+                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('status')} />
+                                                </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[150px]">
 
@@ -129,19 +149,20 @@ const FaqList = () => {
                                                     <td className="px-4 py-1">{faq?.question || "N/A"}</td>
 
                                                     <td className="px-4 py-1">{faq?.answer || "N/A"}</td>
-                                                    <td className="px-4 py-1">
-                                                    {faq.status === 1 ? 
-                                                        <FontAwesomeIcon className='h-7 w-16  cursor-pointer' style={{color:'#0064DC'}} icon={faToggleOn} /> 
-                                                        : 
-                                                        <FontAwesomeIcon className='h-7 w-16 cursor-pointer' style={{color:'#e9ecef'}} icon={faToggleOff} />
-                                                    }
+                                                    <td>
+                                                        <FontAwesomeIcon
+                                                            className="h-7 w-16 cursor-pointer"
+                                                            style={{ color: faq.status === 1 ? "#0064DC" : "#e9ecef" }}
+                                                            icon={faq.status === 1 ? faToggleOn : faToggleOff}
+                                                            onClick={() => handleToggleChange(faq.id, faq.status, "status")}
+                                                        />
                                                     </td>
                                                     <td className="px-4 py-1">
                                                         <NotificationContainer />
                                                         <button className="bg-[#2dce89] text-white p-2 rounded-full hover:bg-green-600 transition mr-2" onClick={() => { updateFAQ(faq.id) }}>
                                                             <FaPen />
                                                         </button>
-                                                        
+
                                                         <button className="bg-[#f5365c] text-white p-2 rounded-full hover:bg-red-600 transition" onClick={() => { handledelete(faq.id) }}>
                                                             <FaTrash />
                                                         </button>

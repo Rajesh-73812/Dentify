@@ -121,11 +121,11 @@ const UserList = () => {
                                 <table className="min-w-full text-sm text-left text-gray-700">
                                     <thead className="bg-gray-50 text-xs uppercase font-medium text-gray-500">
                                         <tr>
-                                            <th className="px-4 py-3 min-w-[130px]">
+                                            <th className="px-4 py-3 min-w-[120px]">
                                                 Sr. No
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('slno')} />
-                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('slno')} />
+                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('id')} />
+                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('id')} />
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[150px]">
@@ -158,6 +158,10 @@ const UserList = () => {
                                             </th>
                                             <th className="px-4 py-3 min-w-[150px]">
                                                 Status
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('status')} />
+                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('status')} />
+                                                </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[150px]">
                                                 Refer Code
@@ -212,53 +216,55 @@ const UserList = () => {
                                     <tbody className="divide-y divide-gray-200">
                                         {currentuser.length > 0 ? (
                                             currentuser.map((userList, index) => (
-
                                                 <tr key={userList.id}>
                                                     <td className="px-4 py-2">{index + 1 + indexOfFirst}</td>
                                                     <td className="px-4 py-2">{userList?.name || "N/A"}</td>
                                                     <td className="px-4 py-2">{userList?.email || "N/A"}</td>
                                                     <td className="px-4 py-2">{userList?.mobile || "N/A"}</td>
-                                                    <td className="px-4 py-2">{userList?.reg_date.split("T")[0] || "N/A"}</td>
 
-                                                     
 
+                                                    <td className="px-4 py-2">{userList?.reg_date?.split("T")[0] || "N/A"}</td>
 
                                                     <td className="px-4 py-2">
                                                         <FontAwesomeIcon
-                                                            className="h-7 w-16"
+                                                            className="h-7 w-16 cursor-pointer"
                                                             style={{ color: userList.status === 1 ? "#0064DC" : "#e9ecef" }}
                                                             icon={userList.status === 1 ? faToggleOn : faToggleOff}
-                                                            onClick={() => handleToggleChange(userList.id, userList.status, "status")} // Pass 'status' field
+                                                            onClick={() => handleToggleChange(userList.id, userList.status, "status")}
                                                         />
                                                     </td>
                                                     <td className="px-4 py-2">{userList?.refercode || "N/A"}</td>
                                                     <td className="px-4 py-2">{userList?.parentcode || "N/A"}</td>
                                                     <td className="px-4 py-2">{userList?.wallet || "N/A"}</td>
-
                                                     <td className="px-4 py-2">
                                                         <FontAwesomeIcon
-                                                            className="h-7 w-16"
+                                                            className="h-7 w-16 cursor-pointer"
                                                             style={{ color: userList.is_subscribe === 1 ? "#0064DC" : "#e9ecef" }}
                                                             icon={userList.is_subscribe === 1 ? faToggleOn : faToggleOff}
-                                                            onClick={() => handleToggleChange(userList.id, userList.is_subscribe, "is_subscribe")} // Pass 'is_subscribe' field
+                                                            onClick={() => handleToggleChange(userList.id, userList.is_subscribe, "is_subscribe")}
                                                         />
                                                     </td>
+                                                    <NotificationContainer />
                                                     <td className="px-4 py-2">{userList?.pack_id || "N/A"}</td>
                                                     <td className="px-4 py-2">{userList?.start_date || "N/A"}</td>
                                                     <td className="px-4 py-2">{userList?.end_date || "N/A"}</td>
-                                                    <td className="px-4 py-2">
-                                                        <button className="bg-[#2dce89] text-white p-2 rounded-full hover:bg-green-600 transition mr-2">
+                                                    <td className="px-4 py-2 flex space-x-2">
+                                                        <button
+                                                            className="bg-[#2dce89] text-white p-2 rounded-full hover:bg-green-600 transition"
+                                                            aria-label="Edit user"
+                                                        >
                                                             <FaPen />
                                                         </button>
-                                                        <NotificationContainer />
-                                                        <button className="bg-[#f5365c] text-white p-2 rounded-full hover:bg-red-600 transition" onClick={() => { handledelete(userList.id) }}>
+                                                        <button
+                                                            className="bg-[#f5365c] text-white p-2 rounded-full hover:bg-red-600 transition"
+                                                            aria-label="Delete user"
+                                                            onClick={() => handledelete(userList.id)}
+                                                        >
                                                             <FaTrash />
                                                         </button>
                                                     </td>
                                                 </tr>
                                             ))
-
-
                                         ) : (
                                             <tr>
                                                 <td colSpan="10" className="text-center">
@@ -267,10 +273,11 @@ const UserList = () => {
                                             </tr>
                                         )}
                                     </tbody>
+
                                 </table>
                             </div>
                         </div>
-                        {/* for pagination */}
+                        
                         <div className="bottom-0 left-0 w-full bg-[#f7fbff] py-4 flex justify-between items-center">
                             <span className="text-sm font-normal text-gray-500">
                                 Showing <span className="font-semibold text-gray-900">{indexOfFirst + 1}</span> to <span className="font-semibold text-gray-900">{Math.min(indexOfLast, filtereduser.length)}</span> of <span className="font-semibold text-gray-900">{filtereduser.length}</span>

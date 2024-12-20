@@ -9,6 +9,9 @@ import { handleSort } from '../utils/sorting';
 import api from '../utils/api';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
+import { StatusEntity } from '../utils/Status';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faToggleOff, faToggleOn } from '@fortawesome/free-solid-svg-icons';
 
 const CountryList = () => {
     const navigate = useNavigate();
@@ -69,6 +72,20 @@ const CountryList = () => {
         navigate('/add-country', { state: { id: id } })
     }
 
+    const handleToggleChange = async (id, currentStatus, field) => {
+        console.log(`Toggling ${field} for ID: ${id} with current status: ${currentStatus}`);
+        if (!id || currentStatus === undefined) {
+            console.error(`Invalid arguments: ID=${id}, currentStatus=${currentStatus}`);
+            return;
+        }
+
+        try {
+            await StatusEntity("Country", id, currentStatus, setFilteredCountries, filteredCountries, field);
+        } catch (error) {
+            console.error("Error toggling country status:", error);
+        }
+    };
+
     return (
         <div>
             <div className="h-screen flex">
@@ -82,76 +99,95 @@ const CountryList = () => {
                                 <table className="min-w-full text-sm text-left text-gray-700">
                                     <thead className="bg-gray-50 text-xs uppercase font-medium text-gray-500">
                                         <tr>
-                                            <th className="px-4 py-3 min-w-[100px]">
+                                            <th className="px-4 py-3 min-w-[120px]">
                                                 Sr. No
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('slno')} />
-                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('slno')} />
+                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('id')} />
+                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('id')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[150px]">
-                                                Country Title Name
+                                            <th className="px-4 py-3 min-w-[180px]">
+                                                Country Name
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className='cursor-pointer' onClick={() => sortData('title')} />
                                                     <GoArrowDown className='cursor-pointer' onClick={() => sortData('title')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[150px]">Country Image</th>
-                                            <th className="px-4 py-3 min-w-[100px]">
+                                            <th className="px-4 py-3 min-w-[100px]"> Image
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('img')} />
+                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('img')} />
+                                                </div>
+                                            </th>
+                                            <th className="px-4 py-3 min-w-[150px]">
                                                 Total Properties
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className='cursor-pointer' onClick={() => sortData('totalProperties')} />
                                                     <GoArrowDown className='cursor-pointer' onClick={() => sortData('totalProperties')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[100px]">
-                                                Country Status
+                                            <th className="px-4 py-3 min-w-[50px]">
+                                                Status
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('totalProperties')} />
-                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('totalProperties')} />
+                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('status')} />
+                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('status')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[120px]">Action</th>
+                                            <th className="px-4 py-3 min-w-[50px]">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-gray-200">
-
                                         {filteredCountries.length === 0 ? (
                                             <tr>
-                                                <td colSpan="6" className="text-center py-4">
+                                                <td colSpan="6" className="text-center py-2">
                                                     No countries found.
-
                                                 </td>
                                             </tr>
                                         ) : (
                                             currentCountries.map((country, index) => (
-                                                <tr key={country.id}>
-                                                    <td className="px-4 py-3">{index + 1 + indexOfFirst}</td>
-                                                    <td className="px-4 py-3">{country?.title || "N/A"}</td>
-                                                    <td className="px-4 py-3">
+                                                <tr key={country.id} className="h-[70px]"> {/* Adjust the height */}
+                                                    <td className="px-4 py-1 text-sm">{index + 1 + indexOfFirst}</td> {/* Reduce padding */}
+                                                    <td className="px-4 py-1 text-sm">{country?.title || "N/A"}</td>
+                                                    <td className="px-4 py-1 text-sm">
                                                         {country.img && country.img.trim() !== '' ? (
-                                                            <img src={country.img} className="w-16 h-16 object-cover rounded-full" height={50} width={50} loading="lazy" alt="" onError={(e) => {
-                                                                if (e.target.src !== 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg') {
-                                                                    e.target.src = 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg';
-                                                                }
-                                                            }} />
+                                                            <img
+                                                                src={country.img}
+                                                                className="w-10 h-10 object-cover rounded-full"
+                                                                alt=""
+                                                                onError={(e) => {
+                                                                    if (e.target.src !== 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg') {
+                                                                        e.target.src = 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg';
+                                                                    }
+                                                                }}
+                                                                height={50}
+                                                                width={50}
+                                                                loading="lazy"
+                                                            />
                                                         ) : (
-                                                            <img src={'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg'} height={50} width={50} loading="lazy" alt="" />
+                                                            <img
+                                                                src="https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg"
+                                                                height={50}
+                                                                width={50}
+                                                                loading="lazy"
+                                                                alt=""
+                                                            />
                                                         )}
                                                     </td>
-                                                    <td className="px-4 py-3">{country?.totalProperties || 0}</td>
-                                                    <td className="px-4 py-3">
-                                                        <span
-                                                            className={`px-3 py-1 text-sm rounded-full ${country.status === 1 ? 'bg-green-500 text-white' : 'bg-gray-400 text-white'}`}
-                                                        >
-                                                            {country.status === 1 ? "publish" : "unpublish"}
-                                                        </span>
+                                                    <td className="px-4 py-1 text-sm">{country?.totalProperties || 0}</td>
+                                                    <td>
+                                                        <FontAwesomeIcon
+                                                            className="h-7 w-16 cursor-pointer"
+                                                            style={{ color: country.status === 1 ? "#0064DC" : "#e9ecef" }}
+                                                            icon={country.status === 1 ? faToggleOn : faToggleOff}
+                                                            onClick={() => handleToggleChange(country.id, country.status, "status")}
+                                                        />
                                                     </td>
-                                                    <td className="px-4 py-3">
-                                                        <button className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition mr-2" onClick={() => { updateCountry(country.id) }}>
+                                                    <td className="px-4 py-1 text-sm">
+                                                        <NotificationContainer />
+                                                        <button className="bg-green-500 text-white p-1 rounded-full hover:bg-green-600 transition mr-2" onClick={() => { updateCountry(country.id) }}>
                                                             <FaPen />
                                                         </button>
-                                                        <button className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition" onClick={() => { handledelete(country.id) }}>
+                                                        <button className="bg-red-500 text-white p-1 rounded-full hover:bg-red-600 transition" onClick={() => { handledelete(country.id) }}>
                                                             <FaTrash />
                                                         </button>
                                                     </td>
@@ -159,6 +195,7 @@ const CountryList = () => {
                                             ))
                                         )}
                                     </tbody>
+
                                 </table>
                             </div>
                         </div>
