@@ -7,7 +7,7 @@ import ImageUploader from "../common/ImageUploader";
 import Select from 'react-select';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import api from "../utils/api";
-const [selectedOption, setSelectedOption] = useState(null);
+
 
 const PropertiesAdd = () => {
   const [countries, setCountries] = useState([]);
@@ -16,6 +16,7 @@ const PropertiesAdd = () => {
   const navigate = useNavigate();
   const location = useLocation()
   const id = location.state ? location.state.id : null;
+  const [selectedOption, setSelectedOption] = useState(null);
   const [formData, setFormData] = useState({
     id: 0 || null,
     title: '',
@@ -338,8 +339,7 @@ const PropertiesAdd = () => {
                           borderRadius: "8px",
                           border: "1px solid #EAEAFF",
                         }}
-                        onFocus={() => handleFocus("address")}
-                        onBlur={() => handleBlur("address")}
+                       
                         onChange={handleChange}
                         placeholder="Enter Property Address "
                       />

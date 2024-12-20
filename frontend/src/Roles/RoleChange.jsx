@@ -8,20 +8,12 @@ import { DeleteEntity } from '../utils/Delete';
 import { useNavigate } from 'react-router-dom';
 import { handleSort } from '../utils/sorting';
 import RoleHeader from './RoleHeader';
-<<<<<<< HEAD
 import { StatusEntity } from '../utils/Status';
 import { NotificationContainer } from 'react-notifications';
 import { useLoading } from '../Context/LoadingContext';
-
-const RoleChange = () => {
-  const navigate=useNavigate();
-  const [role, setrole] = useState([]);
-  const [filteredrole, setFilteredrole] = useState([]);
-  const [sortConfig, setSortConfig] = useState({ key: '', direction: '' });
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
-  const { isLoading, setIsLoading } = useLoading();
 import api from '../utils/api';
+
+
 
 const RoleChange = () => {
     const navigate = useNavigate();
@@ -34,6 +26,7 @@ const RoleChange = () => {
     useEffect(() => {
         fetchrole();
     }, []);
+
 
 
 
@@ -159,7 +152,7 @@ const RoleChange = () => {
                                                 <td className="px-4 py-2">
                                                     <span
                                                         className={`px-2 py-1 cursor-pointer text-sm rounded-full ${role.status === "pending" ? 'bg-yellow-500 text-white' : 'bg-green-400 text-white'}`}
-                                                        onClick={()=>{toggleStatus(role.id,role.status)}}
+                                                        // onClick={()=>{toggleStatus(role.id,role.status)}}
                                                     >
                                                         {role.status === "pending" ? "Accept" : "Approved"}
                                                     </span>

@@ -225,7 +225,7 @@ const UserList = () => {
                                                         <FontAwesomeIcon className='h-7 w-16 cursor-pointer' style={{color:'#0064DC'}} icon={faToggleOn} /> 
                                                         : 
                                                         <FontAwesomeIcon className='h-7 w-16 cursor-pointer' style={{color:'#e9ecef'}} icon={faToggleOff} />
-                                                    }
+                                                    } */}
 
 
                                                     <td className="px-4 py-2">
@@ -276,7 +276,7 @@ const UserList = () => {
                                 </table>
                             </div>
                         </div>
-                        {/* for pagination */}
+                        
                         <div className="bottom-0 left-0 w-full bg-[#f7fbff] py-4 flex justify-between items-center">
                             <span className="text-sm font-normal text-gray-500">
                                 Showing <span className="font-semibold text-gray-900">{indexOfFirst + 1}</span> to <span className="font-semibold text-gray-900">{Math.min(indexOfLast, filtereduser.length)}</span> of <span className="font-semibold text-gray-900">{filtereduser.length}</span>
