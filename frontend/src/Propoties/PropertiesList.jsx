@@ -12,6 +12,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faToggleOff, faToggleOn } from "@fortawesome/free-solid-svg-icons";
 
 import api from '../utils/api';
+import { StatusEntity } from '../utils/Status';
 
 
 const PropotiesList = () => {
@@ -25,7 +26,7 @@ const PropotiesList = () => {
     useEffect(() => {
         const fetchProperties = async () => {
             try {
-                const response = await api.get('/properties' );
+                const response = await api.get('/properties');
                 console.log(response.data);
                 setProperties(response.data);
                 setFilteredProperties(response.data);
@@ -94,6 +95,21 @@ const PropotiesList = () => {
 
     // Change page
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+    const handleToggleChange = async (id, currentStatus, field) => {
+        console.log(`Toggling ${field} for ID: ${id} with current status: ${currentStatus}`);
+        if (!id || currentStatus === undefined) {
+            console.error(`Invalid arguments: ID=${id}, currentStatus=${currentStatus}`);
+            return;
+        }
+
+        try {
+            await StatusEntity("Property", id, currentStatus, setFilteredProperties, filteredProperties, field);
+        } catch (error) {
+            console.error("Error toggling property status:", error);
+        }
+    };
+
 
     return (
         <div>
@@ -241,8 +257,12 @@ const PropotiesList = () => {
                                                     <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('rating')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[100px]">
+                                            <th className="px-4 py-3 min-w-[150px]">
                                                 Status
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('status')} />
+                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('status')} />
+                                                </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[150px]">
                                                 Action
@@ -250,13 +270,13 @@ const PropotiesList = () => {
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-gray-200">
-                                        {currentProperties.length > 0 ? (
-                                            currentProperties.map((property, index) => (
-                                                <tr key={property.id}>
+                                        {filteredProperties.length > 0 ? (
+                                            filteredProperties.map((property, index) => (
+                                                <tr key={property.id} className='h-[70px]'>
                                                     <td className="px-4 py-3">{index + 1 + indexOfFirstItem}</td>
                                                     <td className="px-4 py-3">
                                                         {property.image && property.image.trim() !== '' ? (
-                                                            <img src={property.image} className="w-16 h-16 object-cover rounded-full" height={50} width={50} loading="lazy" alt="" onError={(e) => {
+                                                            <img src={property.image} className="w-10 h-10 object-cover rounded-full" height={50} width={50} loading="lazy" alt="" onError={(e) => {
                                                                 if (e.target.src !== 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg') {
                                                                     e.target.src = 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg';
                                                                 }
@@ -265,36 +285,45 @@ const PropotiesList = () => {
                                                             <img src={'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg'} height={50} width={50} loading="lazy" alt="" />
                                                         )}
                                                     </td>
-                                                    <td className="px-4 py-3">{property.title || 'N/A'}</td>
-                                                    <td className="px-4 py-3">{property.category?.title || 'N/A'}</td>
-                                                    <td className="px-4 py-3">{property?.description || 'N/A'}</td>
-                                                    <td className="px-4 py-3">{property?.address || 'N/A'}</td>
-                                                    <td className="px-4 py-3">{property?.city || 'N/A'}</td>
-                                                    <td className="px-4 py-3">{property?.listing_date || 'N/A'}</td>
-                                                    <td className="px-4 py-3">{property?.is_sell || 'N/A'}</td>
-                                                    <td className="px-4 py-3 flex flex-col">
+                                                    <td className="px-4 py-2">{property.title || 'N/A'}</td>
+                                                    <td className="px-4 py-2">{property.category?.title || 'N/A'}</td>
+                                                    <td className="px-4 py-2">{property?.description || 'N/A'}</td>
+                                                    <td className="px-4 py-2">{property?.address || 'N/A'}</td>
+                                                    <td className="px-4 py-2">{property?.city || 'N/A'}</td>
+                                                    <td className="px-4 py-2">{property?.listing_date || 'N/A'}</td>
+                                                    {/* <td className="px-4 py-3">{property?.is_sell || 'N/A'}</td> */}
+                                                    <td>
+                                                        <FontAwesomeIcon
+                                                            className="h-7 w-16 cursor-pointer"
+                                                            style={{ color: property.is_sell === 1 ? "#0064DC" : "#e9ecef" }}
+                                                            icon={property.is_sell === 1 ? faToggleOn : faToggleOff}
+                                                            onClick={() => handleToggleChange(property.id, property.is_sell, "is_sell")}
+                                                        />
+                                                    </td>
+                                                    <td className="px-4 py-2 flex flex-col">
                                                         {property.facilities?.map((item) => (
                                                             <span className='bg-lime-100 font-bold p-1 m-1 flex justify-center' key={item.id}>
                                                                 {item.title}
                                                             </span>
                                                         )) || 'N/A'}
                                                     </td>
-                                                    <td className="px-4 py-3">₹{property?.price || 'N/A'}</td>
-                                                    <td className="px-4 py-3">{property?.mobile || 'N/A'}</td>
-                                                    <td className="px-4 py-3">{property.country?.title || 'N/A'}</td>
-                                                    <td className="px-4 py-3">{property?.add_user_id || 'N/A'}</td>
-                                                    <td className="px-4 py-3">{property?.beds || 'N/A'}</td>
-                                                    <td className="px-4 py-3">{property?.bathroom || 'N/A'}</td>
-                                                    <td className="px-4 py-3">{property?.sqrft || 'N/A'}</td>
-                                                    <td className="px-4 py-3">{property?.rate || 'N/A'}</td>
-                                                    <td className="px-4 py-3">
-                                                    {property.status === 1 ? 
-                                                        <FontAwesomeIcon className='h-7 w-16  cursor-pointer' style={{color:'#0064DC'}} icon={faToggleOn} /> 
-                                                        : 
-                                                        <FontAwesomeIcon className='h-7 w-16 cursor-pointer' style={{color:'#e9ecef'}} icon={faToggleOff} />
-                                                    }
+                                                    <td className="px-4 py-2">₹{property?.price || 'N/A'}</td>
+                                                    <td className="px-4 py-2">{property?.mobile || 'N/A'}</td>
+                                                    <td className="px-4 py-2">{property.country?.title || 'N/A'}</td>
+                                                    <td className="px-4 py-2">{property?.add_user_id || 'N/A'}</td>
+                                                    <td className="px-4 py-2">{property?.beds || 'N/A'}</td>
+                                                    <td className="px-4 py-2">{property?.bathroom || 'N/A'}</td>
+                                                    <td className="px-4 py-2">{property?.sqrft || 'N/A'}</td>
+                                                    <td className="px-4 py-2">{property?.rate || 'N/A'}</td>
+                                                    <td>
+                                                        <FontAwesomeIcon
+                                                            className="h-7 w-16 cursor-pointer"
+                                                            style={{ color: property.status === 1 ? "#0064DC" : "#e9ecef" }}
+                                                            icon={property.status === 1 ? faToggleOn : faToggleOff}
+                                                            onClick={() => handleToggleChange(property.id, property.status, "status")}
+                                                        />
                                                     </td>
-                                                    <td className="px-4 py-3">
+                                                    <td className="px-4 py-2">
                                                         <NotificationContainer />
                                                         <button className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition mr-2" onClick={() => propertyUpdate(property.id)}>
                                                             <FaPen />

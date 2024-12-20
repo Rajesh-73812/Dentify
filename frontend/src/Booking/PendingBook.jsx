@@ -26,7 +26,7 @@ const PendingBook = () => {
     useEffect(() => {
         const fetchBookings = async () => {
             try {
-                const response = await api.get(`/bookings/status/${status}`, );
+                const response = await api.get(`/bookings/status/${status}`,);
                 // console.log(response.data)
                 setpending(response.data);
                 setFilteredpending(response.data);
@@ -103,8 +103,8 @@ const PendingBook = () => {
                                         <th className="px-4 py-3 min-w-[130px]">
                                             Sr. No
                                             <div className="inline-flex items-center ml-2">
-                                                <GoArrowUp className='cursor-pointer' onClick={() => sortData('slno')} />
-                                                <GoArrowDown className='cursor-pointer' onClick={() => sortData('slno')} />
+                                                <GoArrowUp className='cursor-pointer' onClick={() => sortData('id')} />
+                                                <GoArrowDown className='cursor-pointer' onClick={() => sortData('id')} />
                                             </div>
                                         </th>
                                         <th className="px-4 py-3 min-w-[180px]">
@@ -136,12 +136,12 @@ const PendingBook = () => {
                                 <tbody className="divide-y divide-gray-200">
                                     {currentpending.length > 0 ? (
                                         currentpending.map((pendingList, index) => (
-                                            <tr key={index + 1}>
-                                                <td className="px-4 py-3">{index + 1 + indexOfFirst}</td>
-                                                <td className="px-4 py-3">{pendingList?.prop_title || 'N/A'}</td>
-                                                <td className="px-4 py-3">
+                                            <tr key={index + 1} className='h-[70px]'>
+                                                <td className="px-4 py-1">{index + 1 + indexOfFirst}</td>
+                                                <td className="px-4 py-1">{pendingList?.prop_title || 'N/A'}</td>
+                                                <td className="px-4 py-1">
                                                     {pendingList.prop_img ? (
-                                                        <img src={pendingList.prop_img} className="w-16 h-16 object-cover rounded-full" alt="Pending"
+                                                        <img src={pendingList.prop_img} className="w-10 h-10 object-cover rounded-full" alt="Pending"
                                                             onError={(e) => {
                                                                 e.target.src = 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg';
                                                             }}
@@ -150,9 +150,9 @@ const PendingBook = () => {
                                                         <img src="https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg" className="w-16 h-16 object-cover rounded-full" alt="Placeholder" />
                                                     )}
                                                 </td>
-                                                <td className="px-4 py-3">{pendingList?.prop_price || 'N/A'}</td>
-                                                <td className="px-4 py-3">{pendingList?.total_day || 'N/A'}</td>
-                                                <td className="px-4 py-3">
+                                                <td className="px-4 py-1">{pendingList?.prop_price || 'N/A'}</td>
+                                                <td className="px-4 py-1">{pendingList?.total_day || 'N/A'}</td>
+                                                <td className="px-4 py-1">
                                                     <NotificationContainer />
                                                     <span className='px-2 py-1 text-sm rounded-full bg-[#2dce89] cursor-pointer text-white mr-2' onClick={() => openModal(pendingList)}>View Details</span>
                                                     <span className='px-2 py-1 text-sm rounded-full bg-cyan-400 cursor-pointer text-white mr-2' onClick={() => { navigateApprove(pendingList.id, 'Confirmed') }}>Confirmed</span>
