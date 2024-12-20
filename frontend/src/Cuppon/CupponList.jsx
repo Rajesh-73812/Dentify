@@ -15,6 +15,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faToggleOff, faToggleOn } from "@fortawesome/free-solid-svg-icons";
 
 import api from '../utils/api';
+import { StatusEntity } from '../utils/Status';
 
 
 const CupponList = () => {
@@ -30,9 +31,9 @@ const CupponList = () => {
     useEffect(() => {
         async function fetchData() {
             try {
-                const response = await api.get("/coupons/all",{
-                    withCredentials: true, 
-                } );
+                const response = await api.get("/coupons/all", {
+                    withCredentials: true,
+                });
                 console.log("API Response:", response.data);
                 setcuppons(response.data);
                 setFilteredcuppons(response.data);
@@ -91,6 +92,13 @@ const CupponList = () => {
         navigate('/add-cuppon', { state: { id: id } })
     }
 
+    const handleToggleChange = async (id, currentStatus) => {
+        try {
+            await StatusEntity("Coupon", id, currentStatus, setFilteredcuppons, filteredcuppons);
+        } catch (error) {
+            console.error(error);
+        }
+    };
     return (
         <div>
             {isLoading && <Loader />}
@@ -189,21 +197,24 @@ const CupponList = () => {
                                                     <td className="px-4 py-3">{cuppon?.min_amt || "N/A"}</td>
                                                     <td className="px-4 py-3">{cuppon?.c_value || "N/A"}</td>
                                                     <td className="px-4 py-3">
-                                                        {cuppon.status === 1 ? 
-                                                            <FontAwesomeIcon className='h-7 w-16  cursor-pointer' style={{color:'#0064DC'}} icon={faToggleOn} /> 
-                                                            : 
-                                                            <FontAwesomeIcon className='h-7 w-16 cursor-pointer' style={{color:'#e9ecef'}} icon={faToggleOff} />
-                                                        }
+
+                                                        <FontAwesomeIcon
+                                                            className="h-7 w-16"
+                                                            style={{ color: cuppon.status === 1 ? "#0064DC" : "#e9ecef" }}
+                                                            icon={cuppon.status === 1 ? faToggleOn : faToggleOff}
+                                                            onClick={() => handleToggleChange(cuppon.id, cuppon.status, "status")} // Pass 'status' field
+                                                        />
+
                                                     </td>
                                                     <td className="px-4 py-3">
 
                                                         <NotificationContainer />
-                                                        <button className="bg-[#2dce89] text-white p-2 rounded-full hover:bg-green-600 transition mr-2" onClick={()=>{updateCuppon(cuppon.id)}}>
+                                                        <button className="bg-[#2dce89] text-white p-2 rounded-full hover:bg-green-600 transition mr-2" onClick={() => { updateCuppon(cuppon.id) }}>
                                                             <FaPen />
                                                         </button>
-                                                        <button className="bg-[#f5365c] text-white p-2 rounded-full hover:bg-red-600 transition" onClick={()=>{handledelete(cuppon.id)}}>
-                                                        <FaTrash />
-                                                    </button>
+                                                        <button className="bg-[#f5365c] text-white p-2 rounded-full hover:bg-red-600 transition" onClick={() => { handledelete(cuppon.id) }}>
+                                                            <FaTrash />
+                                                        </button>
 
                                                     </td>
                                                 </tr>

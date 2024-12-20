@@ -98,20 +98,11 @@ const CategoryList = () => {
     navigate('/add-category', { state: { id: id } })
   };
 
-  const toggleStatus = async (id, currentStatus) => {
+  const handleToggleChange = async (id, currentStatus) => {
     try {
-      const newStatus = currentStatus === 1 ? 0 : 1;
-      const success = await StatusEntity('Category', id, currentStatus, setFilteredCategories, filteredCategories);
-  
-      if (success) {
-        setCategories((prevCategories) =>
-          prevCategories.map((category) =>
-            category.id === id ? { ...category, status: newStatus } : category
-          )
-        );
-      }
+      await StatusEntity("Category", id, currentStatus, setFilteredCategories, filteredCategories);
     } catch (error) {
-      console.error("Error toggling status:", error);
+      console.error(error);
     }
   };
 
@@ -173,22 +164,13 @@ const CategoryList = () => {
                               <img src={'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg'} height={50} width={50} loading="lazy" alt="" />
                             )}
                           </td>
-                          <td className="px-4 py-3">
-                            {category.status === 1 ? (
-                              <FontAwesomeIcon
-                                className="h-7 w-16 cursor-pointer"
-                                style={{ color: '#0064DC' }}
-                                icon={faToggleOn}
-                                onClick={() => toggleStatus(category.id, category.status)} // Call toggleStatus here
-                              />
-                            ) : (
-                              <FontAwesomeIcon
-                                className="h-7 w-16 cursor-pointer"
-                                style={{ color: '#e9ecef' }}
-                                icon={faToggleOff}
-                                onClick={() => toggleStatus(category.id, category.status)} // Call toggleStatus here
-                              />
-                            )}
+                          <td>
+                            <FontAwesomeIcon
+                              className="h-7 w-16"
+                              style={{ color: category.status === 1 ? "#0064DC" : "#e9ecef" }}
+                              icon={category.status === 1 ? faToggleOn : faToggleOff}
+                              onClick={() => handleToggleChange(category.id, category.status, "status")} // Pass 'status' field
+                            />
                           </td>
                           <td className="px-4 py-3">
                             <NotificationContainer />
