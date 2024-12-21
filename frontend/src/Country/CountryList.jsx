@@ -207,7 +207,7 @@ const CountryList = () => {
                                 <li>
                                     <button
                                         onClick={() => paginate(currentPage > 1 ? currentPage - 1 : 1)}
-                                        className={`previous-button ${filteredCountries.length === 0 ? 'cursor-not-allowed' : ''}`}
+                                        className={`previous-button ${filteredCountries.length === 0 ? 'cursor-not-allowed button-disable' : ''}`}
                                         disabled={currentPage === 1 || filteredCountries.length === 0}
                                         title={filteredCountries.length === 0 ? 'No data available' : ''}
                                     >

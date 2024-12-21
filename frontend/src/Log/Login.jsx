@@ -29,20 +29,31 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await api.post(
+      const res = await api.post(
         "/admin/login",
         formData,
       );
-      console.log(response.data)
-      NotificationManager.success("Admin logged in successfully!");
-      
-      setTimeout(() => {
 
-        navigate("/dashboard");
+      console.log(res.data.token)
+      NotificationManager.removeAll();
+      NotificationManager.success("Admin logged in successfully!");
+
+      setTimeout(() => {
+        if (res.data.token != undefined) {
+          //current date
+          let date = new Date();
+          date.setMinutes(date.getMinutes() + 1);
+          document.cookie = `user=${JSON.stringify(
+            res.data.token
+          )}; expires=${date.toUTCString()};path='/'`;
+
+          navigate("/dashboard");
+        }         
       }, 2000);
 
     } catch (err) {
-      NotificationManager.error(err.response?.data?.error || "Something went wrong!");
+      NotificationManager.removeAll()
+      NotificationManager.error(err.res?.data?.error || "Something went wrong!");
     }
   };
 

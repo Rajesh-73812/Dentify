@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Header from '../components/Header';
 import { GoArrowDown, GoArrowUp } from 'react-icons/go';
 import { FaPen,FaTrash } from "react-icons/fa";
-import { searchFunction } from '../Entity/SearchEntity';
+// import { searchFunction } from '../Entity/SearchEntity';
 import GalleryHeader from './GalleryHeader';
 import { useLoading } from '../Context/LoadingContext';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -48,8 +48,7 @@ const GalleryList = () => {
 
     // for searching
     const handleSearch = (event) => {
-        searchFunction(event, gallery, setFilteredgallery);
-        setCurrentPage(1); 
+        
     };
 
     // for sorting

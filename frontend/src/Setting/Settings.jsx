@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Header from '../components/Header'
 import { Link, useNavigate } from 'react-router-dom'
 import SidebarMenu from '../components/SideBar'
@@ -11,12 +11,67 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 import api from '../utils/api'
+import JoditEditor from 'jodit-react';
 
 const Settings = () => {
+  const editor=useRef(null)
+  const [privacycontent,setprivacyContent]=useState('')
+  const [termscontent,settermscontent]=useState('')
   const [formData, setFormData] = useState({id:'',  webname: '',weblogo:'',  timezone: '',  currency: '',  tax: '',  sms_type: '',  auth_key: '',  twilio_number: '',  auth_token: '',  acc_id: '',otp_id:'', otp_auth:'', show_property:'', one_key:'', one_hash:'', rcredit:'', rcredit:'',scredit:'', wlimit:''});
   const location = useLocation();
   const { isLoading, setIsLoading } = useLoading();
   const navigate = useNavigate()
+
+  const config = {
+    height: 300,
+    buttons: [
+      "bold",
+      "italic",
+      "underline",
+      "strikethrough",
+      "|",
+      "font",
+      "fontsize",
+      "paragraph",
+      "align",
+      "|",
+      "table", 
+      "link",
+      "image",
+      "|",
+      "code", 
+      "undo",
+      "redo",
+      "|",
+      "fullsize",
+    ],
+    removeButtons:["about"],
+    showCharsCounter: false,
+    showWordsCounter: false,
+    showXPathInStatusbar: false,
+    toolbarSticky: true, 
+    defaultMode: "1",
+    showXPathInStatusbar: false, 
+    uploader: {
+      insertImageAsBase64URI: true, 
+    },
+    filebrowser: {
+      ajax: {
+        url: "/files", 
+      },
+      uploader: {
+        url: "/upload", 
+      },
+    },
+    table: {
+      allowCellResize: true, 
+      defaultWidth: "100%", 
+      defaultCellWidth: "100px", 
+      defaultCellHeight: "30px", 
+    },
+    allowResizeX: true, 
+    allowResizeY: true, 
+  };  
 
   useEffect(() => {
     const fetchSettings = async () => {
@@ -276,6 +331,21 @@ const handleImageUploadSuccess = (imageUrl) => {
                         onChange={handleChange}
                         placeholder='*****'
                       />
+                  </div>
+                </div>
+
+                <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-2  mt-6">                   
+                  {/* * rich text editor*/}
+                  <div className="flex flex-col">
+                    <JoditEditor  ref={editor}  value={privacycontent} config={config}   onBlur={newContent=>setprivacyContent(newContent)} onChange={newContent=>{}}>
+                      
+                    </JoditEditor>
+                  </div>
+
+                  <div className="flex flex-col">
+                    <JoditEditor  ref={editor} value={termscontent} config={config}   onBlur={newContent=>settermscontent(newContent)} onChange={newContent=>{}}>
+                      
+                    </JoditEditor>
                   </div>
                 </div>
 

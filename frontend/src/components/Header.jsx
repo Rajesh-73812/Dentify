@@ -11,7 +11,6 @@ import api from "../utils/api";
 const Header = () => {
   const [notifications, setNotifications] = useState([]);
   const [notificationCount, setNotificationCount] = useState(0);
-  console.log(notificationCount)
   const [showNotifications, setShowNotifications] = useState(false);
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
@@ -147,7 +146,8 @@ const Header = () => {
     });
   }, []);
 
-
+  const token=document.cookie.split("=")[1];
+  console.log(token,"rajeshhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh")
 
   return (
     <div className="bg-white h-[65px] sm:h-[80px] px-4 py-4 sm:px-6 flex items-center justify-between relative">

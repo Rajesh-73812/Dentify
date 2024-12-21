@@ -10,13 +10,11 @@ import api from "../utils/api";
 
 
 const PropertiesAdd = () => {
-  const [selectedOption, setSelectedOption] = useState(null);
   const [countries, setCountries] = useState([]);
   const [categories, setCategories] = useState([]);
   const [facilities, setFacilities] = useState([]);
   const navigate = useNavigate();
   const location = useLocation()
-  const [selectedOption, setSelectedOption] = useState(null);
   const id = location.state ? location.state.id : null;
   const [selectedOption, setSelectedOption] = useState(null);
   const [formData, setFormData] = useState({

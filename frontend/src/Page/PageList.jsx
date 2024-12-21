@@ -3,7 +3,7 @@ import Header from '../components/Header';
 import SidebarMenu from '../components/SideBar';
 import { GoArrowDown, GoArrowUp } from 'react-icons/go';
 import { FaPen,FaTrash } from "react-icons/fa";
-import { searchFunction } from '../Entity/SearchEntity';
+// import { searchFunction } from '../Entity/SearchEntity';
 import axios from 'axios';
 import PageHeader from './PageHeader';
 import { useNavigate } from 'react-router-dom';
@@ -33,8 +33,7 @@ const PageList = () => {
     }, []);
 
     const handleSearch = (event) => {
-        searchFunction(event, page, setFilteredpage);
-        setCurrentPage(1);
+        
     };
 
     const handleSort = (key) => {

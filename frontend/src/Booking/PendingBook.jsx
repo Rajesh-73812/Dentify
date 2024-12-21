@@ -194,7 +194,7 @@ const PendingBook = () => {
                             <li>
                                 <button
                                     onClick={() => paginate(currentPage < totalPages ? currentPage + 1 : totalPages)}
-                                    className={`next-button ${filteredpending.length === 0 ? 'cursor-not-allowed' : ''}`}
+                                    className={`next-button ${filteredpending.length === 0 ? 'cursor-not-allowed button-disable' : ''}`}
                                     disabled={currentPage === totalPages || filteredpending.length === 0}
                                     title={filteredpending.length === 0 ? 'No data available' : ''}
                                 >

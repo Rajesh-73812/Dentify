@@ -265,7 +265,7 @@ const CupponList = () => {
                                 <li>
                                     <button
                                         onClick={() => paginate(currentPage < totalPages ? currentPage + 1 : totalPages)}
-                                        className={`next-button ${filteredcuppons.length === 0 ? 'cursor-not-allowed' : ''}`}
+                                        className={`next-button ${filteredcuppons.length === 0 ? 'cursor-not-allowed button-disable' : ''}`}
                                         disabled={currentPage === totalPages || filteredcuppons.length === 0}
                                         title={filteredcuppons.length === 0 ? 'No data available' : ''}
                                     >
