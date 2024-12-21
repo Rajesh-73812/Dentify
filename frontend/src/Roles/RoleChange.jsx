@@ -84,34 +84,34 @@ const RoleChange = () => {
     const toggleStatus = async (id, currentStatus) => {
         // Calculate the new status
         const newStatus = currentStatus === 'approved' ? 'pending' : 'approved';
-      
+
         const result = await Swal.fire({
-          title: 'Are You Sure to Change Status',
-          text: `Current status: ${currentStatus}`,
-          icon: 'question',
-          showCancelButton: true,
-          confirmButtonText: 'Accept',
-          cancelButtonText: 'Cancel',
-          reverseButtons: true,
+            title: 'Are You Sure to Change Status',
+            text: `Current status: ${currentStatus}`,
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Accept',
+            cancelButtonText: 'Cancel',
+            reverseButtons: true,
         });
-      
+
         if (result.isConfirmed) {
-          try {
-            const response = await api.patch(`/rollrequest/status/${id}`, {
-              status: newStatus, // Only send status; requested_role is handled by backend
-            });
-      
-            Swal.fire('Success!', response.data.message, 'success');
-            fetchrole(); // Refresh the list to reflect changes
-          } catch (error) {
-            console.error('Error updating role change request:', error);
-            Swal.fire('Error', 'Failed to update role change request.', 'error');
-          }
+            try {
+                const response = await api.patch(`/rollrequest/status/${id}`, {
+                    status: newStatus, // Only send status; requested_role is handled by backend
+                });
+
+                Swal.fire('Success!', response.data.message, 'success');
+                fetchrole(); // Refresh the list to reflect changes
+            } catch (error) {
+                console.error('Error updating role change request:', error);
+                Swal.fire('Error', 'Failed to update role change request.', 'error');
+            }
         }
-      };
-      
-    
-    
+    };
+
+
+
 
     return (
         <div>
@@ -176,41 +176,54 @@ const RoleChange = () => {
                                     <tbody className="divide-y divide-gray-200">
                                         {currentrole.length > 0 ? (
                                             currentrole.map((role, index) => (
-
-                                            <tr key={role.id}>
-                                                <td className="px-4 py-2">{index + 1 + indexOfFirst}</td>
-                                                <td className="px-4 py-2">{role.user?.name|| "N/A"}</td>
-                                                <td className="px-4 py-2">{role.user?.email || "N/A"}</td>
-                                                <td className="px-4 py-2">{role.user?.role|| "N/A"}</td>
-                                                <td className="px-4 py-2">
-                                                    <span
-                                                        className={`px-2 py-1 text-sm rounded-full ${role.requested_role === "guest" ? 'bg-blue-500 text-white' : 'bg-green-400 text-white'}`}
-                                                        
-                                                    >
-                                                        {role.requested_role === "guest" ? "Guest" : "Host"}
-                                                    </span>
+                                                <tr key={role.id}>
+                                                    <td className="px-4 py-2">{index + 1 + indexOfFirst}</td>
+                                                    <td className="px-4 py-2">{role.user?.name || "N/A"}</td>
+                                                    <td className="px-4 py-2">{role.user?.email || "N/A"}</td>
+                                                    <td className="px-4 py-2">{role.user?.role || "N/A"}</td>
+                                                    <td className="px-4 py-2">
+                                                        <span
+                                                            className={`px-2 py-1 text-sm rounded-full ${role.requested_role === "guest"
+                                                                    ? "bg-blue-500 text-white"
+                                                                    : "bg-green-400 text-white"
+                                                                }`}
+                                                        >
+                                                            {role.requested_role === "guest" ? "Guest" : "Host"}
+                                                        </span>
+                                                    </td>
+                                                    <td className="px-4 py-2">
+                                                        <span
+                                                            className={`px-2 py-1 cursor-pointer text-sm rounded-full ${role.requested_role === "host"
+                                                                    ? "bg-red-500 text-white"
+                                                                    : "bg-green-400 text-white"
+                                                                }`}
+                                                            onClick={() => toggleStatus(role.id, role.status)}
+                                                            title={`Click to ${role.requested_role === "host" ? "Decline" : "Accept"}`}
+                                                        >
+                                                            {role.requested_role === "host" ? "Decline" : "Accept"}
+                                                        </span>
+                                                    </td>
+                                                    <td className="px-4 py-2">
+                                                        <NotificationContainer />
+                                                        <button
+                                                            className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition"
+                                                            onClick={() => handledelete(role.id)}
+                                                            title="Delete role"
+                                                        >
+                                                            <FaTrash />
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            ))
+                                        ) : (
+                                            <tr>
+                                                <td className="px-4 py-2 text-center" colSpan={7}>
+                                                    No roles available
                                                 </td>
-
-                                                <td className="px-4 py-2">
-                                                    <span
-                                                        className={`px-2 py-1 cursor-pointer text-sm rounded-full ${role.requested_role === "host" ? 'bg-red-500 text-white' : 'bg-green-400 text-white'}`}
-                                                        onClick={()=>{toggleStatus(role.id,role.status)}}
-                                                    >
-                                                        {role.requested_role === "host" ? "Decline" : "Accept"}
-                                                    </span>
-                                                </td>
-                                                <td className="px-4 py-2">
-                                                    <NotificationContainer />
-                                                    <button className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition " onClick={()=>{handledelete(role.id)}}>
-
-                                                        <FaTrash />
-                                                    </button>
-                                                </td>
-
                                             </tr>
-                                        )
-                                        }
+                                        )}
                                     </tbody>
+
                                 </table>
                             </div>
                         </div>

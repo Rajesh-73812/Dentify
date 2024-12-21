@@ -22,7 +22,6 @@ const AdminList = () => {
     const navigate = useNavigate();
     const [currentPage, setCurrentPage] = useState(1);
     const adminsPerPage = 10;
-    const [sortConfig, setSortConfig] = useState({ key: "", direction: "" });
     const { isLoading, setIsLoading } = useLoading();
     const location = useLocation();
     const [admins, setAdmins] = useState([]);
@@ -60,10 +59,6 @@ const AdminList = () => {
         } catch (error) {
             console.error('Error fetching admins:', error);
         }
-    };
-
-    const sortData = (key) => {
-        handleSort(filteredAdmins, key, sortConfig, setSortConfig, setFilteredAdmins);
     };
 
     const handleDelete = async (id) => {
