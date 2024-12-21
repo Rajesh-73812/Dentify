@@ -2,21 +2,18 @@ import React, { useEffect, useState } from 'react'
 import Header from '../components/Header'
 import { GoArrowDown, GoArrowUp } from 'react-icons/go';
 import { FaPen, FaTrash } from "react-icons/fa";
-import { searchFunction } from '../Entity/SearchEntity';
+// import { searchFunction } from '../Entity/SearchEntity';
 import axios from 'axios';
 import { DeleteEntity } from '../utils/Delete';
 import { useNavigate } from 'react-router-dom';
 import { handleSort } from '../utils/sorting';
 import RoleHeader from './RoleHeader';
-
 import { StatusEntity } from '../utils/Status';
 import { NotificationContainer } from 'react-notifications';
 import { useLoading } from '../Context/LoadingContext';
 import api from '../utils/api';
 import Swal from 'sweetalert2';
-
-
-
+import Loader from '../common/Loader';
 
 const RoleChange = () => {
     const navigate = useNavigate();
@@ -25,13 +22,21 @@ const RoleChange = () => {
     const [sortConfig, setSortConfig] = useState({ key: '', direction: '' });
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
+    const { isLoading, setIsLoading } = useLoading();
 
     useEffect(() => {
         fetchrole();
     }, []);
 
-
-
+    useEffect(() => {
+        setIsLoading(true);
+    
+        const timer = setTimeout(() => {
+          setIsLoading(false);
+        }, 1000); 
+    
+        return () => clearTimeout(timer);
+    }, [ setIsLoading]);
 
     // Search functionality
     const handleSearch = (event) => {
@@ -84,39 +89,38 @@ const RoleChange = () => {
     const toggleStatus = async (id, currentStatus) => {
         // Calculate the new status
         const newStatus = currentStatus === 'approved' ? 'pending' : 'approved';
-      
+
         const result = await Swal.fire({
-          title: 'Are You Sure to Change Status',
-          text: `Current status: ${currentStatus}`,
-          icon: 'question',
-          showCancelButton: true,
-          confirmButtonText: 'Accept',
-          cancelButtonText: 'Cancel',
-          reverseButtons: true,
+            title: 'Are You Sure to Change Status',
+            text: `Current status: ${currentStatus}`,
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Accept',
+            cancelButtonText: 'Cancel',
+            reverseButtons: true,
         });
-      
+
         if (result.isConfirmed) {
-          try {
-            const response = await api.patch(`/rollrequest/status/${id}`, {
-              status: newStatus, // Only send status; requested_role is handled by backend
-            });
-      
-            Swal.fire('Success!', response.data.message, 'success');
-            fetchrole(); // Refresh the list to reflect changes
-          } catch (error) {
-            console.error('Error updating role change request:', error);
-            Swal.fire('Error', 'Failed to update role change request.', 'error');
-          }
+            try {
+                const response = await api.patch(`/rollrequest/status/${id}`, {
+                    status: newStatus, // Only send status; requested_role is handled by backend
+                });
+
+                Swal.fire('Success!', response.data.message, 'success');
+                fetchrole(); // Refresh the list to reflect changes
+            } catch (error) {
+                console.error('Error updating role change request:', error);
+                Swal.fire('Error', 'Failed to update role change request.', 'error');
+            }
         }
-      };
-      
-    
-    
+
+    };
+
 
     return (
         <div>
+            {isLoading && <Loader />}
             <div className="h-screen flex">
-
                 <div className="flex flex-1 flex-col bg-[#f7fbff]">
                     <Header />
                     <RoleHeader onSearch={handleSearch} />
@@ -174,6 +178,7 @@ const RoleChange = () => {
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-gray-200">
+
                                     {currentrole.length > 0 ? (
   currentrole.map((role, index) => (
     <tr key={role.id}>
@@ -236,7 +241,9 @@ const RoleChange = () => {
   </tr>
 )}
 
+
                                     </tbody>
+
                                 </table>
                             </div>
                         </div>
@@ -263,7 +270,7 @@ const RoleChange = () => {
                                 <li>
                                     <button
                                         onClick={() => paginate(currentPage < totalPages ? currentPage + 1 : totalPages)}
-                                        className={`next-button ${filteredrole.length === 0 ? 'cursor-not-allowed' : ''}`}
+                                        className={`next-button ${filteredrole.length === 0 ? 'cursor-not-allowed button-disable' : ''}`}
                                         disabled={currentPage === totalPages || filteredrole.length === 0}
                                         title={filteredrole.length === 0 ? 'No data available' : ''}
                                     >

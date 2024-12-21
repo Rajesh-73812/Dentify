@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import Header from '../components/Header';
 import { GoArrowDown, GoArrowUp } from 'react-icons/go';
 import { FaPen,FaTrash } from "react-icons/fa";
-import { searchFunction } from '../Entity/SearchEntity';
 import EnquiryHeader from './EnquiryHeader';
 import axios from 'axios';
 import { DeleteEntity } from '../utils/Delete';
@@ -26,8 +25,7 @@ const EnquiryList = () => {
     // }
     // for searching
     const handleSearch = (event) => {
-        searchFunction(event, enquiry, setFilteredenquiry);
-        setCurrentPage(1); 
+        
     };
 
     // for sorting

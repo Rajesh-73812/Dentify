@@ -209,7 +209,7 @@ const ApprovedBook = () => {
                                 </li>
                                 <li>
                                     <button onClick={() => paginate(currentPage < totalPages ? currentPage + 1 : totalPages)}
-                                        className={`next-button ${filteredApprove.length === 0 ? 'cursor-not-allowed' : ''}`}
+                                        className={`next-button ${filteredApprove.length === 0 ? 'cursor-not-allowed button-disable' : ''}`}
                                         disabled={currentPage === totalPages || filteredApprove.length === 0}
                                         title={filteredApprove.length === 0 ? 'No data available' : ''}
                                     >

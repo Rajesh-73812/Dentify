@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import Header from '../components/Header';
 import { GoArrowDown, GoArrowUp } from 'react-icons/go';
 import { FaPen, FaTrash } from "react-icons/fa";
-import { searchFunction } from '../Entity/SearchEntity';
+// import { searchFunction } from '../Entity/SearchEntity';
 import axios from 'axios';
 import UseListHeader from './UseListHeader';
 import { handleSort } from '../utils/sorting';
@@ -243,8 +243,8 @@ const UserList = () => {
                                                             icon={userList.is_subscribe === 1 ? faToggleOn : faToggleOff}
                                                             onClick={() => handleToggleChange(userList.id, userList.is_subscribe, "is_subscribe")}
                                                         />
-                                                    </td>
                                                     <NotificationContainer />
+                                                    </td>
                                                     <td className="px-4 py-2">{userList?.pack_id || "N/A"}</td>
                                                     <td className="px-4 py-2">{userList?.start_date || "N/A"}</td>
                                                     <td className="px-4 py-2">{userList?.end_date || "N/A"}</td>
@@ -296,7 +296,7 @@ const UserList = () => {
                                 <li>
                                     <button
                                         onClick={() => paginate(currentPage < totalPages ? currentPage + 1 : totalPages)}
-                                        className={`next-button ${filtereduser.length === 0 ? 'cursor-not-allowed' : ''}`}
+                                        className={`next-button ${filtereduser.length === 0 ? 'cursor-not-allowed button-disable' : ''}`}
                                         disabled={currentPage === totalPages || filtereduser.length === 0}
                                         title={filtereduser.length === 0 ? 'No data available' : ''}
                                     >

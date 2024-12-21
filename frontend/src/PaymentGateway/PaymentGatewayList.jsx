@@ -250,7 +250,7 @@ const PaymentGatewayList = () => {
                                 <li>
                                     <button
                                         onClick={() => paginate(currentPage < totalPages ? currentPage + 1 : totalPages)}
-                                        className={`next-button ${filteredPaymentGateway.length === 0 ? 'cursor-not-allowed' : ''}`}
+                                        className={`next-button ${filteredPaymentGateway.length === 0 ? 'cursor-not-allowed button-disable' : ''}`}
                                         disabled={currentPage === totalPages || filteredPaymentGateway.length === 0}
                                         title={filteredPaymentGateway.length === 0 ? 'No data available' : ''}
                                     >

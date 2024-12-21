@@ -10,13 +10,10 @@ import Loader from '../common/Loader';
 import { handleSort } from '../utils/sorting';
 import { DeleteEntity } from '../utils/Delete';
 import { NotificationContainer } from 'react-notifications';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faToggleOff, faToggleOn } from "@fortawesome/free-solid-svg-icons";
-
 import api from '../utils/api';
 import { StatusEntity } from '../utils/Status';
-
 
 const FacilityList = () => {
     const navigate = useNavigate()
@@ -233,7 +230,7 @@ const FacilityList = () => {
                                 <li>
                                     <button
                                         onClick={() => paginate(currentPage < totalPages ? currentPage + 1 : totalPages)}
-                                        className={`next-button ${filteredfacility.length === 0 ? 'cursor-not-allowed' : ''}`}
+                                        className={`next-button ${filteredfacility.length === 0 ? 'cursor-not-allowed button-disable' : ''}`}
                                         disabled={currentPage === totalPages || filteredfacility.length === 0}
                                         title={filteredfacility.length === 0 ? 'No data available' : ''}
                                     >

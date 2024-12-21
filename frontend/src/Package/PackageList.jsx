@@ -215,7 +215,7 @@ const PackageList = () => {
                                 <li>
                                     <button
                                         onClick={() => paginate(currentPage < totalPages ? currentPage + 1 : totalPages)}
-                                        className={`next-button ${filteredpackages.length === 0 ? 'cursor-not-allowed' : ''}`}
+                                        className={`next-button ${filteredpackages.length === 0 ? 'cursor-not-allowed button-disable' : ''}`}
                                         disabled={currentPage === totalPages || filteredpackages.length === 0}
                                         title={filteredpackages.length === 0 ? 'No data available' : ''}
                                     >

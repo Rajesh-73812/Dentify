@@ -4,18 +4,16 @@ import { GoArrowDown, GoArrowUp } from 'react-icons/go';
 import { FaPen, FaTrash } from "react-icons/fa";
 import axios from 'axios';
 import FaqHeader from './FaqHeader';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { DeleteEntity } from '../utils/Delete';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 import { handleSort } from '../utils/sorting';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faToggleOff, faToggleOn } from "@fortawesome/free-solid-svg-icons";
-
 import api from '../utils/api';
 import { StatusEntity } from '../utils/Status';
-
+import { useLoading } from '../Context/LoadingContext';
 
 const FaqList = () => {
     const navigate = useNavigate();
@@ -24,11 +22,14 @@ const FaqList = () => {
     const [sortConfig, setSortConfig] = useState({ key: '', direction: '' });
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
+    const [searchQuery, setSearchQuery] = useState("");
+    const location = useLocation();
+    const { isLoading, setIsLoading } = useLoading();
 
     useEffect(() => {
         const fetchfaq = async () => {
             try {
-                const response =  api.get("/faqs/all");
+                const response =await  api.get("/faqs/all");
                 console.log(response.data)
                 setfaq(response.data);
                 setFilteredfaq(response.data);
@@ -205,7 +206,7 @@ const FaqList = () => {
                                 <li>
                                     <button
                                         onClick={() => paginate(currentPage < totalPages ? currentPage + 1 : totalPages)}
-                                        className={`next-button ${filteredfaq.length === 0 ? 'cursor-not-allowed' : ''}`}
+                                        className={`next-button ${filteredfaq.length === 0 ? 'cursor-not-allowed button-disable' : ''}`}
                                         disabled={currentPage === totalPages || filteredfaq.length === 0}
                                         title={filteredfaq.length === 0 ? 'No data available' : ''}
                                     >

@@ -13,20 +13,17 @@ import { NotificationContainer, NotificationManager } from 'react-notifications'
 import 'react-notifications/lib/notifications.css';
 import Swal from 'sweetalert2';
 import api from '../utils/api';
-
 import { handleSort } from '../utils/sorting';
 import { GoArrowDown, GoArrowUp } from 'react-icons/go';
-
 
 const AdminList = () => {
     const navigate = useNavigate();
     const [currentPage, setCurrentPage] = useState(1);
     const adminsPerPage = 10;
-    
+
     const { isLoading, setIsLoading } = useLoading();
     const location = useLocation();
     const [admins, setAdmins] = useState([]);
-    const [sortConfig, setSortConfig] = useState({ key: '', direction: '' });
     const [filteredAdmins, setFilteredAdmins] = useState([]);
     const [showEditModal, setShowEditModal] = useState(false);
     const [showAddModal, setShowAddModal] = useState(false);
@@ -62,7 +59,6 @@ const AdminList = () => {
         }
     };
 
-   
 
     const handleDelete = async (id) => {
         const success = await DeleteEntity('Admin', id);
@@ -163,10 +159,6 @@ const AdminList = () => {
     const currentAdmins = filteredAdmins.slice(indexOfFirstAdmin, indexOfLastAdmin);
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-    // for sorting
-    const sortData = (key) => {
-        handleSort(filteredAdmins, key, sortConfig, setSortConfig, setFilteredAdmins);
-    };
 
     return (
         <div>
