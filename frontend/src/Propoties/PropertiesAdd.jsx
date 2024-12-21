@@ -611,6 +611,7 @@ const PropertiesAdd = () => {
                           Property Rules
                         </label>
                         <textarea
+                        contentEditable="true"
                           id="description"
                           name="rules"
                           value={formData.rules}

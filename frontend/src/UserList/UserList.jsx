@@ -249,12 +249,7 @@ const UserList = () => {
                                                     <td className="px-4 py-2">{userList?.start_date || "N/A"}</td>
                                                     <td className="px-4 py-2">{userList?.end_date || "N/A"}</td>
                                                     <td className="px-4 py-2 flex space-x-2">
-                                                        <button
-                                                            className="bg-[#2dce89] text-white p-2 rounded-full hover:bg-green-600 transition"
-                                                            aria-label="Edit user"
-                                                        >
-                                                            <FaPen />
-                                                        </button>
+                                                       
                                                         <button
                                                             className="bg-[#f5365c] text-white p-2 rounded-full hover:bg-red-600 transition"
                                                             aria-label="Delete user"

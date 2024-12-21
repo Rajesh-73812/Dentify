@@ -20,6 +20,7 @@ const AdminList = () => {
     const navigate = useNavigate();
     const [currentPage, setCurrentPage] = useState(1);
     const adminsPerPage = 10;
+
     const { isLoading, setIsLoading } = useLoading();
     const location = useLocation();
     const [admins, setAdmins] = useState([]);
@@ -57,6 +58,7 @@ const AdminList = () => {
             console.error('Error fetching admins:', error);
         }
     };
+
 
     const handleDelete = async (id) => {
         const success = await DeleteEntity('Admin', id);
