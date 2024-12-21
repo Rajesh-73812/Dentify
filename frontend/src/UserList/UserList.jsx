@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import Header from '../components/Header';
 import { GoArrowDown, GoArrowUp } from 'react-icons/go';
 import { FaPen, FaTrash } from "react-icons/fa";
-import { searchFunction } from '../Entity/SearchEntity';
+// import { searchFunction } from '../Entity/SearchEntity';
 import axios from 'axios';
 import UseListHeader from './UseListHeader';
 import { handleSort } from '../utils/sorting';
@@ -301,7 +301,7 @@ const UserList = () => {
                                 <li>
                                     <button
                                         onClick={() => paginate(currentPage < totalPages ? currentPage + 1 : totalPages)}
-                                        className={`next-button ${filtereduser.length === 0 ? 'cursor-not-allowed' : ''}`}
+                                        className={`next-button ${filtereduser.length === 0 ? 'cursor-not-allowed button-disable' : ''}`}
                                         disabled={currentPage === totalPages || filtereduser.length === 0}
                                         title={filtereduser.length === 0 ? 'No data available' : ''}
                                     >

@@ -367,7 +367,7 @@ const PropotiesList = () => {
                                 <li>
                                     <button
                                         onClick={() => paginate(currentPage < totalPages ? currentPage + 1 : totalPages)}
-                                        className={`next-button ${filteredProperties.length === 0 ? 'cursor-not-allowed' : ''}`}
+                                        className={`next-button ${filteredProperties.length === 0 ? 'cursor-not-allowed button-disable' : ''}`}
                                         disabled={currentPage === totalPages || filteredProperties.length === 0}
                                         title={filteredProperties.length === 0 ? 'No data available' : ''}
                                     >

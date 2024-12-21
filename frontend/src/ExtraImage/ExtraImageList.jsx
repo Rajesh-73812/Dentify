@@ -250,7 +250,7 @@ const ExtraImageList = () => {
                                 <li>
                                     <button
                                         onClick={() => paginate(currentPage < totalPages ? currentPage + 1 : totalPages)}
-                                        className={`next-button ${filteredImages.length === 0 ? 'cursor-not-allowed' : ''}`}
+                                        className={`next-button ${filteredImages.length === 0 ? 'cursor-not-allowed button-disable' : ''}`}
                                         disabled={currentPage === totalPages || filteredImages.length === 0}
                                         title={filteredImages.length === 0 ? 'No data available' : ''}
                                     >

@@ -2,21 +2,18 @@ import React, { useEffect, useState } from 'react'
 import Header from '../components/Header'
 import { GoArrowDown, GoArrowUp } from 'react-icons/go';
 import { FaPen, FaTrash } from "react-icons/fa";
-import { searchFunction } from '../Entity/SearchEntity';
+// import { searchFunction } from '../Entity/SearchEntity';
 import axios from 'axios';
 import { DeleteEntity } from '../utils/Delete';
 import { useNavigate } from 'react-router-dom';
 import { handleSort } from '../utils/sorting';
 import RoleHeader from './RoleHeader';
-
 import { StatusEntity } from '../utils/Status';
 import { NotificationContainer } from 'react-notifications';
 import { useLoading } from '../Context/LoadingContext';
 import api from '../utils/api';
 import Swal from 'sweetalert2';
-
-
-
+import Loader from '../common/Loader';
 
 const RoleChange = () => {
     const navigate = useNavigate();
@@ -25,13 +22,21 @@ const RoleChange = () => {
     const [sortConfig, setSortConfig] = useState({ key: '', direction: '' });
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
+    const { isLoading, setIsLoading } = useLoading();
 
     useEffect(() => {
         fetchrole();
     }, []);
 
-
-
+    useEffect(() => {
+        setIsLoading(true);
+    
+        const timer = setTimeout(() => {
+          setIsLoading(false);
+        }, 1000); 
+    
+        return () => clearTimeout(timer);
+    }, [ setIsLoading]);
 
     // Search functionality
     const handleSearch = (event) => {
@@ -109,14 +114,11 @@ const RoleChange = () => {
           }
         }
       };
-      
-    
-    
 
     return (
         <div>
+            {isLoading && <Loader />}
             <div className="h-screen flex">
-
                 <div className="flex flex-1 flex-col bg-[#f7fbff]">
                     <Header />
                     <RoleHeader onSearch={handleSearch} />
@@ -174,42 +176,55 @@ const RoleChange = () => {
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-gray-200">
-                                        {currentrole.length > 0 ? (
-                                            currentrole.map((role, index) => (
+                                    {currentrole.length > 0 ? (
+                                    currentrole.map((role, index) => (
+                                        <tr key={role.id}>
+                                            <td className="px-4 py-2">{index + 1 + indexOfFirst}</td>
+                                            <td className="px-4 py-2">{role.user?.name || "N/A"}</td>
+                                            <td className="px-4 py-2">{role.user?.email || "N/A"}</td>
+                                            <td className="px-4 py-2">{role.user?.role || "N/A"}</td>
+                                            <td className="px-4 py-2">
+                                                <span
+                                                    className={`px-2 py-1 text-sm rounded-full ${
+                                                        role.requested_role === "guest"
+                                                            ? "bg-blue-500 text-white"
+                                                            : "bg-green-400 text-white"
+                                                    }`}
+                                                >
+                                                    {role.requested_role === "guest" ? "Guest" : "Host"}
+                                                </span>
+                                            </td>
+                                            <td className="px-4 py-2">
+                                                <span
+                                                    className={`px-2 py-1 cursor-pointer text-sm rounded-full ${
+                                                        role.requested_role === "host"
+                                                            ? "bg-red-500 text-white"
+                                                            : "bg-green-400 text-white"
+                                                    }`}
+                                                    onClick={() => toggleStatus(role.id, role.status)}
+                                                >
+                                                    {role.requested_role === "host" ? "Decline" : "Accept"}
+                                                </span>
+                                            </td>
+                                            <td className="px-4 py-2">
+                                                <NotificationContainer />
+                                                <button
+                                                    className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition"
+                                                    onClick={() => handledelete(role.id)}
+                                                >
+                                                    <FaTrash />
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    ))
+                                ) : (
+                                    <tr>
+                                        <td colSpan="7" className="text-center py-4">
+                                            No roles found.
+                                        </td>
+                                    </tr>
+                                )}
 
-                                            <tr key={role.id}>
-                                                <td className="px-4 py-2">{index + 1 + indexOfFirst}</td>
-                                                <td className="px-4 py-2">{role.user?.name|| "N/A"}</td>
-                                                <td className="px-4 py-2">{role.user?.email || "N/A"}</td>
-                                                <td className="px-4 py-2">{role.user?.role|| "N/A"}</td>
-                                                <td className="px-4 py-2">
-                                                    <span
-                                                        className={`px-2 py-1 text-sm rounded-full ${role.requested_role === "guest" ? 'bg-blue-500 text-white' : 'bg-green-400 text-white'}`}
-                                                        
-                                                    >
-                                                        {role.requested_role === "guest" ? "Guest" : "Host"}
-                                                    </span>
-                                                </td>
-
-                                                <td className="px-4 py-2">
-                                                    <span
-                                                        className={`px-2 py-1 cursor-pointer text-sm rounded-full ${role.requested_role === "host" ? 'bg-red-500 text-white' : 'bg-green-400 text-white'}`}
-                                                        onClick={()=>{toggleStatus(role.id,role.status)}}
-                                                    >
-                                                        {role.requested_role === "host" ? "Decline" : "Accept"}
-                                                    </span>
-                                                </td>
-                                                <td className="px-4 py-2">
-                                                    <NotificationContainer />
-                                                    <button className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition " onClick={()=>{handledelete(role.id)}}>
-
-                                                        <FaTrash />
-                                                    </button>
-                                                </td>
-
-                                            </tr>
-                                        )
-                                        }
                                     </tbody>
                                 </table>
                             </div>
@@ -237,7 +252,7 @@ const RoleChange = () => {
                                 <li>
                                     <button
                                         onClick={() => paginate(currentPage < totalPages ? currentPage + 1 : totalPages)}
-                                        className={`next-button ${filteredrole.length === 0 ? 'cursor-not-allowed' : ''}`}
+                                        className={`next-button ${filteredrole.length === 0 ? 'cursor-not-allowed button-disable' : ''}`}
                                         disabled={currentPage === totalPages || filteredrole.length === 0}
                                         title={filteredrole.length === 0 ? 'No data available' : ''}
                                     >
