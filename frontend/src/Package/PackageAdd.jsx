@@ -112,7 +112,7 @@ const PackageAdd = () => {
           <Header />
           <div className="container mx-auto">
             <div className="flex items-center mt-6 mb-4">
-            <Link onClick={() => { navigate(-1) }} className="cursor-pointer ml-6">
+              <Link onClick={() => { navigate(-1) }} className="cursor-pointer ml-6">
                 <ArrowBackIosNewIcon />
               </Link>
               <h2

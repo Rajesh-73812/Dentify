@@ -113,6 +113,7 @@ const CupponAdd = () => {
       NotificationManager.error("Error submitting Category:", error);
     }
   }
+
   return (
     <div>
       {isLoading && <Loader />}
@@ -150,11 +151,30 @@ const CupponAdd = () => {
                     </div>
 
                     {/* cuppon expiarydate*/}
-                    <div className="flex flex-col">
+                    {/* <div className="flex flex-col">
                       <label htmlFor="cdate" className="text-sm font-medium text-start text-[12px] font-[Montserrat]">Coupon Expiary Date</label>
-                      <input id="cdate" value={formData.cdate.split(" ")[0].replace(/^(\d{4})-(\d{2})-(\d{2})$/, '$3/$2/$1')} onChange={handleChange} name="cdate" type="date" required className="border rounded-lg p-3 mt-1 w-full h-14" style={{ borderRadius: '8px', border: '1px solid #EAEAFF' }}
+                      <input type="date" id="cdate"
+                        value={formData.cdate.split(" ")[0].replace(/^(\d{4})-(\d{2})-(\d{2})$/, '$3/$2/$1')} onChange={handleChange} name="cdate" required className="border rounded-lg p-3 mt-1 w-full h-14" style={{ borderRadius: '8px', border: '1px solid #EAEAFF' }}
+                      />
+                    </div> */}
+
+                    {/* Coupon expiry date */}
+                    <div className="flex flex-col">
+                      <label htmlFor="cdate" className="text-sm font-medium text-start text-[12px] font-[Montserrat]">
+                        Coupon Expiry Date
+                      </label>
+                      <input
+                        type="date"
+                        id="cdate"
+                        value={formData.cdate ? formData.cdate.split("T")[0] : ""} // Ensure the date is in yyyy-MM-dd format
+                        onChange={handleChange}
+                        name="cdate"
+                        required
+                        className="border rounded-lg p-3 mt-1 w-full h-14"
+                        style={{ borderRadius: "8px", border: "1px solid #EAEAFF" }}
                       />
                     </div>
+
 
                     {/* cuppon code */}
                     <div className="flex flex-col">

@@ -243,8 +243,8 @@ const UserList = () => {
                                                             icon={userList.is_subscribe === 1 ? faToggleOn : faToggleOff}
                                                             onClick={() => handleToggleChange(userList.id, userList.is_subscribe, "is_subscribe")}
                                                         />
-                                                    </td>
                                                     <NotificationContainer />
+                                                    </td>
                                                     <td className="px-4 py-2">{userList?.pack_id || "N/A"}</td>
                                                     <td className="px-4 py-2">{userList?.start_date || "N/A"}</td>
                                                     <td className="px-4 py-2">{userList?.end_date || "N/A"}</td>
