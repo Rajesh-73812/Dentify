@@ -128,6 +128,9 @@ const UserList = () => {
                                                     <GoArrowDown className='cursor-pointer' onClick={() => sortData('id')} />
                                                 </div>
                                             </th>
+                                            <th className="px-4 py-3 min-w-[120px]">
+                                                Image
+                                            </th>
                                             <th className="px-4 py-3 min-w-[150px]">
                                                 Name
                                                 <div className="inline-flex items-center ml-2">
@@ -218,6 +221,17 @@ const UserList = () => {
                                             currentuser.map((userList, index) => (
                                                 <tr key={userList.id}>
                                                     <td className="px-4 py-2">{index + 1 + indexOfFirst}</td>
+                                                    <td className="px-4 py-2">
+                                                    {userList.pro_pic && userList.pro_pic.trim() !== '' ? (
+                                                            <img src={userList.pro_pic} className="w-10 h-10 object-cover rounded-full" height={50} width={50} loading="lazy" alt="" onError={(e) => {
+                                                                if (e.target.src !== 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg') {
+                                                                    e.target.src = 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg';
+                                                                }
+                                                            }} />
+                                                        ) : (
+                                                            <img src={'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg'} height={50} width={50} loading="lazy" alt="" />
+                                                        )}
+                                                    </td>
                                                     <td className="px-4 py-2">{userList?.name || "N/A"}</td>
                                                     <td className="px-4 py-2">{userList?.email || "N/A"}</td>
                                                     <td className="px-4 py-2">{userList?.mobile || "N/A"}</td>

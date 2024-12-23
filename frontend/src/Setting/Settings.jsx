@@ -380,6 +380,7 @@ const Settings = () => {
             </div>
           </div>
           </div>
+
         </main>
         <NotificationContainer />
       </div>

@@ -62,14 +62,14 @@ const Login = () => {
       {/* Left Side */}
       <div
         className="h-full flex flex-col items-center justify-center"
-        style={{ background: 'linear-gradient(141.69deg, #25064C 0%, rgba(32, 40, 59, 0.6) 100%)' }}
+        style={{ background: '#045D78' }}
       >
         <div>
-          <img src="/image/logo frame.svg" alt="" className="w-[337px] h-[291px]" />
+          <img src="/image/Group 2.svg" alt="" className="w-[337px] h-[291px]" />
         </div>
         <div className="text-center gap-5">
           <span className="dentify-logoName" style={{ letterSpacing: '0.1rem' }}>
-            RENTAL
+            SERVOSTAY
           </span>
         </div>
       </div>
@@ -94,6 +94,7 @@ const Login = () => {
                 type="text"
                 id="username"
                 name="username"
+                required
                 value={formData.username}
                 className="w-full px-3 py-2 border border-[#B0B0B0] rounded-md focus:outline-none focus:ring-2 focus:ring-[#045D78] placeholder:font-[poppins] placeholder:text-[14px] placeholder:text-[#25064C]"
                 placeholder="UserName"
@@ -106,6 +107,7 @@ const Login = () => {
                 onChange={handleChange}
                 id="password"
                 name="password"
+                required
                 value={formData.password}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#045D78] placeholder:font-[poppins] placeholder:text-[14px] placeholder:text-[#25064C]"
                 placeholder="Password"

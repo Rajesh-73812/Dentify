@@ -18,7 +18,7 @@ const CompletedBook = () => {
     const [sortConfig, setSortConfig] = useState({ key: '', direction: '' });
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
-    const status = 'Check_in'
+    const status = 'completed'
     useEffect(() => {
         const fetchBookings = async () => {
             try {
@@ -32,6 +32,8 @@ const CompletedBook = () => {
         };
         fetchBookings();
     }, []);
+
+    console.log(completed)
     // console.log(completed)
     // Search functionality
     const handleSearch = (event) => {
