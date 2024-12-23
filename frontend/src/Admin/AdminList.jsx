@@ -28,6 +28,7 @@ const AdminList = () => {
     const [showEditModal, setShowEditModal] = useState(false);
     const [showAddModal, setShowAddModal] = useState(false);
     const [adminToEdit, setAdminToEdit] = useState(null);
+    const [sortConfig, setSortConfig] = useState({ key: '', direction: '' });
     const [editForm, setEditForm] = useState({
         username: '',
         password: '',
@@ -57,6 +58,11 @@ const AdminList = () => {
         } catch (error) {
             console.error('Error fetching admins:', error);
         }
+    };
+
+    // Handle sorting
+    const sortData = (key) => {
+        handleSort(filteredAdmins, key, sortConfig, setSortConfig, setFilteredAdmins)
     };
 
 
