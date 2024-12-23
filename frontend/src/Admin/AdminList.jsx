@@ -69,6 +69,10 @@ const AdminList = () => {
         }
     };
 
+    function sortData(){
+
+    }
+
     const confirmEdit = (admin) => {
         setAdminToEdit(admin);
         setEditForm({ username: admin.username, password: admin.password, userType: admin.userType });
@@ -219,7 +223,7 @@ const AdminList = () => {
                                                 <tr key={admin.id} className='h-[50px]'>
                                                     <td className="px-2 py-1">{indexOfFirstAdmin + index + 1}</td>
                                                     <td className="px-2 py-1">{admin?.username || "N/A"}</td>
-                                                    <td className="px-2 py-1">{admin?.password || "N/A"}</td>
+                                                    <td className="px-2 py-1">{"●●●●●●●" || "N/A"}</td>
                                                     <td className="px-2 py-1">{admin?.userType || "N/A"}</td>
                                                     <td className="px-2 py-1">
                                                         <NotificationContainer />
