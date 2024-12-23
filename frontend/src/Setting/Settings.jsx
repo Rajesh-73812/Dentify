@@ -19,7 +19,6 @@ const Settings = () => {
   const [privacycontent, setprivacyContent] = useState('')
   const [termscontent, settermscontent] = useState('')
   const [formData, setFormData] = useState({ id: '', webname: '', weblogo: '', timezone: '', currency: '', tax: '', sms_type: '', auth_key: '', twilio_number: '', auth_token: '', acc_id: '', otp_id: '', otp_auth: '', show_property: '', one_key: '', one_hash: '', rcredit: '', rcredit: '', scredit: '', wlimit: '', privacy_policy: '', terms_conditions: '' });
-
   const location = useLocation();
   const { isLoading, setIsLoading } = useLoading();
   const navigate = useNavigate()
@@ -43,7 +42,6 @@ const Settings = () => {
       "image",
       "|",
       "code",
-
       "undo",
       "redo",
       "|",
@@ -77,7 +75,6 @@ const Settings = () => {
     allowResizeX: true,
     allowResizeY: true,
   };
-
 
   useEffect(() => {
     const fetchSettings = async () => {
@@ -380,6 +377,7 @@ const Settings = () => {
               </form>
 
             </div>
+          </div>
           </div>
         </main>
         <NotificationContainer />
