@@ -4,7 +4,7 @@ import Header from '../components/Header';
 import axios from 'axios';
 import MultiImageUploader from '../common/MultipleImageUploader';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { NotificationManager } from 'react-notifications';
+import { NotificationContainer, NotificationManager } from 'react-notifications';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import api from '../utils/api';
 
@@ -185,6 +185,7 @@ const ExtraImageAdd = () => {
                         </div>
                     </div>
                 </main>
+                <NotificationContainer />
             </div>
         </div>
     );
