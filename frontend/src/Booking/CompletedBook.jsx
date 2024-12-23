@@ -23,6 +23,7 @@ const CompletedBook = () => {
         const fetchBookings = async () => {
             try {
                 const response = await api.get(`/bookings/status/${status}`,);
+                console.log(response.data)
                 setcompleted(response.data);
                 setFilteredcompleted(response.data);
             } catch (error) {

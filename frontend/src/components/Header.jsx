@@ -2,15 +2,17 @@ import React, { useState, useEffect, useRef } from "react";
 import { NotificationIcon, ProfileIcon } from "./Icons";
 import { FaUser, FaSignOutAlt, FaCog } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import { generateToken, messaging } from "../Notification/firebase";
 import { onMessage } from "firebase/messaging";
 import toast, { Toaster } from "react-hot-toast";
 import api from "../utils/api";
+import { useDispatch, useSelector } from "react-redux";
+import { addNotification, clearNotifications } from "../features/notification/NotificationSlice";
 
 const Header = () => {
-  const [notifications, setNotifications] = useState([]);
-  const [notificationCount, setNotificationCount] = useState(0);
+  const dispatch=useDispatch()
+  const {notifications,notificationCount}=useSelector((state)=>state.notifications);
+  const [n, setNotifications] = useState([]);
   const [showNotifications, setShowNotifications] = useState(false);
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
@@ -44,10 +46,8 @@ const Header = () => {
     try {
       const response = await api.get("/notifications");
       const newNotifications = response.data;
-
-      // Update state with new notifications
       setNotifications(newNotifications);
-      setNotificationCount((prevCount) => prevCount + newNotifications.length);
+      // setNotificationCount((prevCount) => prevCount + newNotifications.length);
 
       // Display the most recent notification using react-hot-toast
       if (newNotifications.length > 0) {
@@ -61,9 +61,9 @@ const Header = () => {
           duration: 10000,
           position: "top-right",
         });
-        console.log(notificationCount)
-        setNotificationCount(newNotifications.length);
-        console.log(notificationCount)
+        // console.log(notificationCount)
+        // setNotificationCount(newNotifications.length);
+        // console.log(notificationCount)
       }
     } catch (error) {
       console.error("Error fetching notifications:", error);
@@ -116,18 +116,19 @@ const Header = () => {
     setShowNotifications(!showNotifications);
     if (!showNotifications) {
       await fetchNotifications();
-      setNotificationCount(0);
+      // setNotificationCount(0);
+      dispatch(clearNotifications())
+      // setNotifications([])
     }
   };
 
   useEffect(() => {
     // Generate FCM token for the device
     generateToken();
-
-    // Listen for foreground notifications
     onMessage(messaging, (payload) => {
       console.log("Foreground notification received:", payload);
       const { title, body } = payload.notification;
+      dispatch(addNotification({title,message:body}))
 
       // Show notification using react-hot-toast
       toast((t) => (
@@ -136,7 +137,7 @@ const Header = () => {
           <p>{body}</p>
         </div>
       ), {
-        duration: 10000,
+        duration: 1000,
         position: "top-right",
       });
       setNotifications((prev) => [
@@ -177,7 +178,7 @@ const Header = () => {
         <NotificationIcon />
       </div>
 
-      {showNotifications && (
+      {/* {showNotifications && (
         <div
           ref={notificationRef}
           className="absolute top-12 right-0 w-[220px] bg-white border border-gray-300 rounded-lg shadow-lg z-10 transition-all duration-300"
@@ -188,7 +189,26 @@ const Header = () => {
             </div>
           )}
         </div>
-      )}
+      )} */}
+
+{notificationCount > 0 && (
+          <span className="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full px-1">
+            {notificationCount}
+          </span>
+        )}
+        {showNotifications && (
+          <div
+            ref={notificationRef}
+            className="absolute top-12 right-0 w-[220px] bg-white border border-gray-300 rounded-lg shadow-lg z-10"
+          >
+            {n.map((notif, index) => (
+              <div key={index} className="p-2 border-b last:border-none">
+                <strong>{notif.title}</strong>
+                <p>{notif.message}</p>
+              </div>
+            ))}
+          </div>
+        )}
     </div>
 
     {/* Profile Icon with Smooth Hover Card */}

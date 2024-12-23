@@ -19,7 +19,6 @@ const Settings = () => {
   const [privacycontent, setprivacyContent] = useState('')
   const [termscontent, settermscontent] = useState('')
   const [formData, setFormData] = useState({ id: '', webname: '', weblogo: '', timezone: '', currency: '', tax: '', sms_type: '', auth_key: '', twilio_number: '', auth_token: '', acc_id: '', otp_id: '', otp_auth: '', show_property: '', one_key: '', one_hash: '', rcredit: '', rcredit: '', scredit: '', wlimit: '', privacy_policy: '', terms_conditions: '' });
-
   const location = useLocation();
   const { isLoading, setIsLoading } = useLoading();
   const navigate = useNavigate()
@@ -43,7 +42,6 @@ const Settings = () => {
       "image",
       "|",
       "code",
-
       "undo",
       "redo",
       "|",
@@ -77,7 +75,6 @@ const Settings = () => {
     allowResizeX: true,
     allowResizeY: true,
   };
-
 
   useEffect(() => {
     const fetchSettings = async () => {
@@ -358,27 +355,28 @@ const Settings = () => {
                   </div>
 
 
-                <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-2  mt-6">                   
-                  {/* * rich text editor*/}
-                  <div className="flex flex-col">
-                    <JoditEditor  ref={editor}  value={privacycontent} config={config}   onBlur={newContent=>setprivacyContent(newContent)} onChange={newContent=>{}}>
-                      
-                    </JoditEditor>
+                  <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-2  mt-6">
+                    {/* * rich text editor*/}
+                    <div className="flex flex-col">
+                      <JoditEditor ref={editor} value={privacycontent} config={config} onBlur={newContent => setprivacyContent(newContent)} onChange={newContent => { }}>
+
+                      </JoditEditor>
+                    </div>
+
+                    <div className="flex flex-col">
+                      <JoditEditor ref={editor} value={termscontent} config={config} onBlur={newContent => settermscontent(newContent)} onChange={newContent => { }}>
+
+                      </JoditEditor>
+                    </div>
                   </div>
 
-                  <div className="flex flex-col">
-                    <JoditEditor  ref={editor} value={termscontent} config={config}   onBlur={newContent=>settermscontent(newContent)} onChange={newContent=>{}}>
-                      
-                    </JoditEditor>
+                  {/* Action Buttons */}
+                  <div className="flex justify-start mt-6 gap-3">
+                    <button type="submit" className=" py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 w-[150px] h-12 font-[Montserrat] font-bold" style={{ borderRadius: "8px", }} >Update Setting </button>
                   </div>
-                </div>
+                </form>
 
-                {/* Action Buttons */}
-                <div className="flex justify-start mt-6 gap-3">
-                  <button  type="submit" className=" py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 w-[150px] h-12 font-[Montserrat] font-bold" style={{ borderRadius: "8px", }} >Update Setting </button>
-                </div>
-              </form>
-
+              </div>
             </div>
           </div>
           </div>

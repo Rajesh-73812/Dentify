@@ -20,7 +20,6 @@ const AdminList = () => {
     const navigate = useNavigate();
     const [currentPage, setCurrentPage] = useState(1);
     const adminsPerPage = 10;
-
     const { isLoading, setIsLoading } = useLoading();
     const location = useLocation();
     const [admins, setAdmins] = useState([]);
@@ -28,6 +27,7 @@ const AdminList = () => {
     const [showEditModal, setShowEditModal] = useState(false);
     const [showAddModal, setShowAddModal] = useState(false);
     const [adminToEdit, setAdminToEdit] = useState(null);
+    const [sortConfig, setSortConfig] = useState({ key: '', direction: '' });
     const [editForm, setEditForm] = useState({
         username: '',
         password: '',
@@ -57,6 +57,11 @@ const AdminList = () => {
         } catch (error) {
             console.error('Error fetching admins:', error);
         }
+    };
+
+    // Handle sorting
+    const sortData = (key) => {
+        handleSort(filteredAdmins, key, sortConfig, setSortConfig, setFilteredAdmins)
     };
 
 
@@ -163,6 +168,10 @@ const AdminList = () => {
     const currentAdmins = filteredAdmins.slice(indexOfFirstAdmin, indexOfLastAdmin);
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
+
+    const sortData=async(key)=>{
+        handleSort(filteredAdmins,key,sortConfig,setSortConfig,setFilteredAdmins)
+    }
 
     return (
         <div>
