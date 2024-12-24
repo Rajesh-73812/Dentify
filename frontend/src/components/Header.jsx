@@ -130,7 +130,6 @@ const Header = () => {
       const { title, body } = payload.notification;
       dispatch(addNotification({title,message:body}))
 
-      // Show notification using react-hot-toast
       toast((t) => (
         <div>
           <strong>{title}</strong>
