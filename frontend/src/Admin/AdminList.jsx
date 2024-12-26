@@ -74,10 +74,6 @@ const AdminList = () => {
         }
     };
 
-    function sortData(){
-
-    }
-
     const confirmEdit = (admin) => {
         setAdminToEdit(admin);
         setEditForm({ username: admin.username, password: admin.password, userType: admin.userType });
@@ -167,11 +163,6 @@ const AdminList = () => {
     const indexOfFirstAdmin = indexOfLastAdmin - adminsPerPage;
     const currentAdmins = filteredAdmins.slice(indexOfFirstAdmin, indexOfLastAdmin);
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
-
-    const sortData=async(key)=>{
-        handleSort(filteredAdmins,key,sortConfig,setSortConfig,setFilteredAdmins)
-    }
 
     return (
         <div>
