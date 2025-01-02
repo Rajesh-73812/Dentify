@@ -25,7 +25,7 @@ import AdminPanelSettingsOutlinedIcon from '@mui/icons-material/AdminPanelSettin
 import ManageAccountsOutlinedIcon from '@mui/icons-material/ManageAccountsOutlined';
 import axios from "axios";
 import Loader from "../common/Loader";
-import  api from "../utils/api"
+import api from "../utils/api"
 
 const SidebarMenu = () => {
   const navigate = useNavigate();
@@ -69,7 +69,7 @@ const SidebarMenu = () => {
     }
   };
 
-  const[formData, setFormData]= useState({weblogo:"",webname:""});
+  const [formData, setFormData] = useState({ weblogo: "", webname: "" });
 
   useEffect(() => {
     const fetchSettings = async () => {
@@ -79,8 +79,8 @@ const SidebarMenu = () => {
         if (response.status === 200) {
           const settingsData = response.data;
           setFormData({
-          weblogo:settingsData.weblogo,
-          webname:settingsData.webname
+            weblogo: settingsData.weblogo,
+            webname: settingsData.webname
           });
         }
       } catch (error) {
@@ -95,7 +95,7 @@ const SidebarMenu = () => {
     <div className="flex">
       {loading && <Loader />}
 
-      
+
       {!isLargeScreen && (
         <button
           className="fixed top-4 left-4 z-50  text-[] p-2 rounded-full lg:hidden"
@@ -106,120 +106,125 @@ const SidebarMenu = () => {
       )}
       {/* Sidebar */}
       <div
-        className={`fixed top-0 left-0 h-full bg-white  transform ${
-          isSidebarOpen ? "translate-x-0" : "-translate-x-full"
-        } transition-transform duration-300 z-40 lg:relative lg:translate-x-0 lg:shadow-none`}
+        className={`fixed top-0 left-0 h-full bg-white  transform ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+          } transition-transform duration-300 z-40 lg:relative lg:translate-x-0 lg:shadow-none`}
       >
-        <Sidebar   width="250px" style={{ overflowY: 'auto', height: '100vh' }}>
-        <div className="h-[80px] bg-white flex justify-center items-center gap-2" >
-          <img src={formData.weblogo} alt="Logo" className="h-[40px] w-[40px]" />
-          <div className="flex flex-col">
-            <span className=" text-2xl  ">{formData.webname}</span>
-            <span className=" text-[10px] ml-2 text-slate-500 font-[italic] italic ">A Home away from Home</span>
+        <Sidebar width="250px" style={{ overflowY: 'auto', height: '100vh' }}>
+          <div className="h-[80px] bg-white flex justify-center items-center gap-2" >
+            <img src={formData.weblogo} alt="Logo" className="h-[40px] w-[40px]" />
+            <div className="flex flex-col">
+              <span className=" text-2xl  ">{formData.webname}</span>
+              <span className=" text-[10px] ml-2 text-slate-500 font-[italic] italic ">A Home away from Home</span>
+            </div>
+
           </div>
 
-        </div>
-
-        <div style={{ overflowY: 'auto', height: 'calc(100vh - 80px)', scrollbarWidth: 'none' }}>
-          <Menu iconShape="circle">
-            {/* dashBoard */}
-            <MenuItem icon={<RiHome6Line />}
-              active={location.pathname === "/dashboard"}
-              onClick={() => {
-                navigate("/dashboard");
-                toggleSidebar1();
-              }}
-              
-              
-            >
-              Dashboard
-            </MenuItem>
-
-            {/* country */}
-            <SubMenu label="Country" active={location.pathname === "/add-country" || location.pathname === "/country-list"} icon={<IoLocationOutline />}>
-              <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
-
-                
+          <div style={{ overflowY: 'auto', height: 'calc(100vh - 80px)', scrollbarWidth: 'none' }}>
+            <Menu iconShape="circle">
+              {/* dashBoard */}
+              <MenuItem icon={<RiHome6Line />}
+                active={location.pathname === "/dashboard"}
                 onClick={() => {
-                  navigate("/add-country");
+                  navigate("/dashboard");
                   toggleSidebar1();
                 }}
 
-              >
-                Add Country
-              </MenuItem>
-              <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
-
-                
-                onClick={() =>{
-                   navigate("/country-list");
-                   toggleSidebar1();}} 
 
               >
-                List Country
+                Dashboard
               </MenuItem>
-            </SubMenu>
 
-            {/* category */}
-            <SubMenu label="Category" active={location.pathname === "/add-category" || location.pathname === "/category-list"} icon={<RxHamburgerMenu />}>
-              <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
+              {/* country */}
+              <SubMenu label="Country" active={location.pathname === "/add-country" || location.pathname === "/country-list"} icon={<IoLocationOutline />}>
+                <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
 
-                
-                onClick={() => {navigate("/add-category");
+
+                  onClick={() => {
+                    navigate("/add-country");
+                    toggleSidebar1();
+                  }}
+
+                >
+                  Add Country
+                </MenuItem>
+                <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
+
+
+                  onClick={() => {
+                    navigate("/country-list");
+                    toggleSidebar1();
+                  }}
+
+                >
+                  List Country
+                </MenuItem>
+              </SubMenu>
+
+              {/* category */}
+              <SubMenu label="Category" active={location.pathname === "/add-category" || location.pathname === "/category-list"} icon={<RxHamburgerMenu />}>
+                <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
+
+
+                  onClick={() => {
+                    navigate("/add-category");
+                    toggleSidebar1();
+                  }}
+
+                >
+                  Add Category
+                </MenuItem>
+                <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
+
+
+                  onClick={() => {
+                    navigate("/category-list");
+                    toggleSidebar1();
+                  }}
+
+                >
+                  List Category
+                </MenuItem>
+              </SubMenu>
+
+              {/* cuppon */}
+              <SubMenu label="Coupon" active={location.pathname === "/add-cuppon" || location.pathname === "/cuppon-list"} icon={<TbSquareRoundedPercentage />}>
+                <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
+
+
+                  onClick={() => {
+                    navigate("/add-cuppon");
+                    toggleSidebar1();
+                  }}
+
+                >
+                  Add Coupon
+                </MenuItem>
+                <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
+
+
+                  onClick={() => {
+                    navigate("/cuppon-list");
+                    toggleSidebar1();
+                  }}
+
+                >
+                  List Coupon
+                </MenuItem>
+              </SubMenu>
+
+              {/* payment gateway */}
+              <MenuItem icon={<CiWallet />}
+                active={location.pathname === "/payment-list"}
+                onClick={() => {
+                  navigate("/payment-list");
                   toggleSidebar1();
                 }}
-
               >
-                Add Category
+                Payment Gateway
               </MenuItem>
-              <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
 
-                
-                onClick={() => {navigate("/category-list");
-                  toggleSidebar1();
-                }}
-
-              >
-                List Category
-              </MenuItem>
-            </SubMenu>
-
-            {/* cuppon */}
-            <SubMenu label="Coupon" active={location.pathname === "/add-cuppon" || location.pathname === "/cuppon-list"} icon={<TbSquareRoundedPercentage />}>
-              <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
-
-               
-                onClick={() => {navigate("/add-cuppon");
-                  toggleSidebar1();
-                }}
-
-              >
-                Add Coupon
-              </MenuItem>
-              <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
-
-                
-                onClick={() => {navigate("/cuppon-list");
-                  toggleSidebar1();
-                }}
-
-              >
-                List Coupon
-              </MenuItem>
-            </SubMenu>
-
-            {/* payment gateway */}
-            <MenuItem icon={<CiWallet />}
-              active={location.pathname === "/payment-list"}
-              onClick={() => {navigate("/payment-list");
-                toggleSidebar1();
-              }}
-            >
-              Payment Gateway
-            </MenuItem>
-
-            {/* enquiry list */}
-            {/* <MenuItem icon={<PiUsersBold />}
+              {/* enquiry list */}
+              {/* <MenuItem icon={<PiUsersBold />}
             active={location.pathname === "/enquiry-list"}
             onClick={() => navigate("/enquiry-list")}
           >
@@ -230,7 +235,7 @@ const SidebarMenu = () => {
 
 
 
-            {/* <MenuItem icon={<FaUser />
+              {/* <MenuItem icon={<FaUser />
 
             active={location.pathname === "/payout-list"}
             onClick={() => navigate("/payout-list")}
@@ -238,82 +243,88 @@ const SidebarMenu = () => {
            Payout List
           </MenuItem> */}
 
-            {/* propoties */}
-            <SubMenu label="Properties" active={location.pathname === "/create-property" || location.pathname === "/property-list"} icon={<GoHome />}>
-              <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
+              {/* propoties */}
+              <SubMenu label="Properties" active={location.pathname === "/create-property" || location.pathname === "/property-list"} icon={<GoHome />}>
+                <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
 
-                
-                onClick={() => {navigate("/create-property");
-                  toggleSidebar1();
-                }}
 
-              >
-                Add  Properties
-              </MenuItem>
-              <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
+                  onClick={() => {
+                    navigate("/create-property");
+                    toggleSidebar1();
+                  }}
 
-                
-                onClick={() => {navigate("/property-list")
-                  toggleSidebar1();
-                }}
+                >
+                  Add  Properties
+                </MenuItem>
+                <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
 
-              >
-                List Properties
-              </MenuItem>
-            </SubMenu>
 
-            {/* Extra Images */}
-            <SubMenu label="Extra Images" active={location.pathname === "/create-extra-image" || location.pathname === "/extra-image-list"} icon={<CiImageOn />}>
-              <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
+                  onClick={() => {
+                    navigate("/property-list")
+                    toggleSidebar1();
+                  }}
 
-                
-                onClick={() => {navigate("/create-extra-image");
-                  toggleSidebar1();
-                }}
+                >
+                  List Properties
+                </MenuItem>
+              </SubMenu>
 
-              >
-                Add Extra Images
-              </MenuItem>
-              <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
+              {/* Extra Images */}
+              <SubMenu label="Extra Images" active={location.pathname === "/create-extra-image" || location.pathname === "/extra-image-list"} icon={<CiImageOn />}>
+                <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
 
-                
-                onClick={() => {navigate("/extra-image-list");
-                  toggleSidebar1();
-                }}
 
-              >
-                List Extra Images
-              </MenuItem>
-            </SubMenu>
+                  onClick={() => {
+                    navigate("/create-extra-image");
+                    toggleSidebar1();
+                  }}
 
-            {/* Facility */}
+                >
+                  Add Extra Images
+                </MenuItem>
+                <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
 
-            <SubMenu label="Facility" active={location.pathname === "/create-facility" || location.pathname === "/facility-list"} icon={<ManageAccountsOutlinedIcon />}>
 
-              <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
+                  onClick={() => {
+                    navigate("/extra-image-list");
+                    toggleSidebar1();
+                  }}
 
-               
-                onClick={() => {navigate("/create-facility");
-                  toggleSidebar1();
-                }}
+                >
+                  List Extra Images
+                </MenuItem>
+              </SubMenu>
 
-              >
-                Add Facility
-              </MenuItem>
-              <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
+              {/* Facility */}
 
-                
-                onClick={() => {navigate("/facility-list");
-                  toggleSidebar1();
-                }}
+              <SubMenu label="Facility" active={location.pathname === "/create-facility" || location.pathname === "/facility-list"} icon={<ManageAccountsOutlinedIcon />}>
 
-              >
-                List Facility
-              </MenuItem>
-            </SubMenu>
+                <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
 
-            {/* Gallery Category */}
-            {/* <SubMenu label="Gallery Category"  icon={<FaRegFolder />}>
+
+                  onClick={() => {
+                    navigate("/create-facility");
+                    toggleSidebar1();
+                  }}
+
+                >
+                  Add Facility
+                </MenuItem>
+                <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
+
+
+                  onClick={() => {
+                    navigate("/facility-list");
+                    toggleSidebar1();
+                  }}
+
+                >
+                  List Facility
+                </MenuItem>
+              </SubMenu>
+
+              {/* Gallery Category */}
+              {/* <SubMenu label="Gallery Category"  icon={<FaRegFolder />}>
           <MenuItem icon={<KeyboardArrowRightOutlinedIcon/>} className="sub-menu-item"
             active={location.pathname === "/create-gallery-category"}
             onClick={() => navigate("/create-gallery-category")}
@@ -328,8 +339,8 @@ const SidebarMenu = () => {
           </MenuItem>
         </SubMenu> */}
 
-            {/* gallery */}
-            {/* <SubMenu label="Gallery "  icon={<CiImageOn />}>
+              {/* gallery */}
+              {/* <SubMenu label="Gallery "  icon={<CiImageOn />}>
           <MenuItem icon={<KeyboardArrowRightOutlinedIcon/>} className="sub-menu-item"
             active={location.pathname === "/create-gallery"}
             onClick={() => navigate("/create-gallery")}
@@ -344,95 +355,102 @@ const SidebarMenu = () => {
           </MenuItem>
         </SubMenu> */}
 
-            {/* package */}
-            <SubMenu label="Package " active={location.pathname === "/create-package" || location.pathname === "/package-list"} icon={<IoLayersOutline />}>
-              <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
+              {/* package */}
+              <SubMenu label="Package " active={location.pathname === "/create-package" || location.pathname === "/package-list"} icon={<IoLayersOutline />}>
+                <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
 
-                
-                onClick={() => {navigate("/create-package");
-                  toggleSidebar1();
-                }}
 
-              >
-                Add Package
-              </MenuItem>
-              <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
+                  onClick={() => {
+                    navigate("/create-package");
+                    toggleSidebar1();
+                  }}
 
-                
-                onClick={() => {navigate("/package-list");
-                  toggleSidebar1();
-                }}
+                >
+                  Add Package
+                </MenuItem>
+                <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
 
-              >
-                List Package
-              </MenuItem>
-            </SubMenu>
 
-            {/* Booking */}
-            <SubMenu label="Booking " active={location.pathname === "/pending-book-list" || location.pathname === "/approved-book-list" || location.pathname === "/check-in-list" || location.pathname === "/completed-list" || location.pathname === "/cancelled-list"} icon={<CgCalendarDates />}>
-              {/* Pending Booking */}
-              <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
+                  onClick={() => {
+                    navigate("/package-list");
+                    toggleSidebar1();
+                  }}
 
-               
-                onClick={() => {navigate("/pending-book-list");
-                  toggleSidebar1();
-                }}
+                >
+                  List Package
+                </MenuItem>
+              </SubMenu>
 
-              >
-                Pending Booking
-              </MenuItem>
+              {/* Booking */}
+              <SubMenu label="Booking " active={location.pathname === "/pending-book-list" || location.pathname === "/approved-book-list" || location.pathname === "/check-in-list" || location.pathname === "/completed-list" || location.pathname === "/cancelled-list"} icon={<CgCalendarDates />}>
+                {/* Pending Booking */}
+                <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
 
-              {/*  Approved Booking */}
-              <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
 
-               
-                onClick={() =>{ navigate("/approved-book-list");
-                  toggleSidebar1();
-                }}
+                  onClick={() => {
+                    navigate("/pending-book-list");
+                    toggleSidebar1();
+                  }}
 
-              >
-                Approved Booking
-              </MenuItem>
+                >
+                  Pending Booking
+                </MenuItem>
 
-              {/* Check In Booking */}
-              <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
+                {/*  Approved Booking */}
+                <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
 
-                
-                onClick={() => {navigate("/check-in-list");
-                  toggleSidebar1();
-                }}
 
-              >
-                Check In Booking
-              </MenuItem>
+                  onClick={() => {
+                    navigate("/approved-book-list");
+                    toggleSidebar1();
+                  }}
 
-              {/* Completed Booking */}
-              <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
+                >
+                  Approved Booking
+                </MenuItem>
 
-                
-                onClick={() => {navigate("/completed-list");
-                  toggleSidebar1();
-                }}
+                {/* Check In Booking */}
+                <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
 
-              >
-                Completed Booking
-              </MenuItem>
 
-              {/* Cancelled Booking */}
-              <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
+                  onClick={() => {
+                    navigate("/check-in-list");
+                    toggleSidebar1();
+                  }}
 
-                
-                onClick={() => {navigate("/cancelled-list");
-                  toggleSidebar1();
-                }}
+                >
+                  Check In Booking
+                </MenuItem>
 
-              >
-                Cancelled Booking
-              </MenuItem>
-            </SubMenu>
+                {/* Completed Booking */}
+                <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
 
-            {/* page */}
-            {/* <SubMenu label="Page "  icon={<BsFileEarmarkPlus />}>
+
+                  onClick={() => {
+                    navigate("/completed-list");
+                    toggleSidebar1();
+                  }}
+
+                >
+                  Completed Booking
+                </MenuItem>
+
+                {/* Cancelled Booking */}
+                <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
+
+
+                  onClick={() => {
+                    navigate("/cancelled-list");
+                    toggleSidebar1();
+                  }}
+
+                >
+                  Cancelled Booking
+                </MenuItem>
+              </SubMenu>
+
+              {/* page */}
+              {/* <SubMenu label="Page "  icon={<BsFileEarmarkPlus />}>
           <MenuItem icon={<KeyboardArrowRightOutlinedIcon/>} className="sub-menu-item"
             active={location.pathname === "/create-page"}
             onClick={() => navigate("/create-page")}
@@ -447,89 +465,96 @@ const SidebarMenu = () => {
           </MenuItem>
         </SubMenu> */}
 
-            {/* faq */}
+              {/* faq */}
 
-            <SubMenu label="FAQ's " active={location.pathname === "/create-faq" || location.pathname === "/faq-list"} icon={<IoCheckboxOutline />}>
+              <SubMenu label="FAQ's " active={location.pathname === "/create-faq" || location.pathname === "/faq-list"} icon={<IoCheckboxOutline />}>
 
-              <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
-                // active={location.pathname === "/create-faq"}
-                onClick={() => {navigate("/create-faq");
+                <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
+                  // active={location.pathname === "/create-faq"}
+                  onClick={() => {
+                    navigate("/create-faq");
+                    toggleSidebar1();
+                  }}
+                >
+                  Add FAQ's
+                </MenuItem>
+                <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
+                  // active={location.pathname === "/faq-list"}
+                  onClick={() => {
+                    navigate("/faq-list");
+                    toggleSidebar1();
+                  }}
+                >
+                  List FAQ's
+                </MenuItem>
+              </SubMenu>
+
+              {/* userlist */}
+              <MenuItem
+                active={location.pathname === "/user-list"} icon={<PiUsersBold />}
+                onClick={() => {
+                  navigate("/user-list");
                   toggleSidebar1();
                 }}
               >
-                Add FAQ's
+                User List
               </MenuItem>
-              <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
-                // active={location.pathname === "/faq-list"}
-                onClick={() => {navigate("/faq-list");
+
+              {/* account */}
+              <MenuItem
+                active={location.pathname === "/profile"} icon={<TiUserOutline />}
+                onClick={() => {
+                  navigate("/profile");
                   toggleSidebar1();
                 }}
               >
-                List FAQ's
+                Account
               </MenuItem>
-            </SubMenu>
 
-            {/* userlist */}
-            <MenuItem
-              active={location.pathname === "/user-list"} icon={<PiUsersBold />}
-              onClick={() => {navigate("/user-list");
-                toggleSidebar1();
-              }}
-            >
-              User List
-            </MenuItem>
+              {/* admin */}
+              <MenuItem
+                active={location.pathname === "/admin"} icon={<AdminPanelSettingsOutlinedIcon />}
+                onClick={() => {
+                  navigate("/admin");
+                  toggleSidebar1();
+                }}
+              >
+                Admin
+              </MenuItem>
 
-            {/* account */}
-            <MenuItem
-              active={location.pathname === "/profile"} icon={<TiUserOutline />}
-              onClick={() => {navigate("/profile");
-                toggleSidebar1();
-              }}
-            >
-              Account
-            </MenuItem>
+              {/* settings */}
+              <MenuItem
+                active={location.pathname === "/settings"} icon={<LuSettings2 />}
+                onClick={() => {
+                  navigate("/settings");
+                  toggleSidebar1();
+                }}
+              >
+                Settings
+              </MenuItem>
 
-            {/* admin */}
-            <MenuItem
-              active={location.pathname === "/admin"} icon={<AdminPanelSettingsOutlinedIcon />}
-              onClick={() => {navigate("/admin");
-                toggleSidebar1();
-              }}
-            >
-              Admin
-            </MenuItem>
+              {/*  role change */}
+              <MenuItem
+                active={location.pathname === "/role"} icon={<LuSettings2 />}
+                onClick={() => {
+                  navigate("/role");
+                  toggleSidebar1();
+                }}
+              >
+                Role Request
+              </MenuItem>
 
-            {/* settings */}
-            <MenuItem
-              active={location.pathname === "/settings"} icon={<LuSettings2 />}
-              onClick={() => {navigate("/settings");
-                toggleSidebar1();
-              }}
-            >
-              Settings
-            </MenuItem>
+              {/* logout */}
+              <MenuItem
+                active={location.pathname === "/"} icon={<CiLogout />}
+                onClick={logout}
+              >
+                Logout
+              </MenuItem>
 
-            {/*  role change */}
-            <MenuItem
-              active={location.pathname === "/role"} icon={<LuSettings2 />}
-              onClick={() => {navigate("/role");
-                toggleSidebar1();
-              }}
-            >
-              Role Request
-            </MenuItem>
-
-            {/* logout */}
-            <MenuItem
-              active={location.pathname === "/"} icon={<CiLogout />}
-              onClick={logout}
-            >
-              Logout
-            </MenuItem>
-
-          </Menu>
-        </div>
-      </Sidebar>
+            </Menu>
+          </div>
+        </Sidebar>
       </div>
 
       {/* Overlay for Small Screens */}

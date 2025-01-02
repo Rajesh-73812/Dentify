@@ -189,6 +189,13 @@ const PropotiesList = () => {
                                                     <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('is_sell')} />
                                                 </div>
                                             </th>
+                                            <th className="px-4 py-3 min-w-[130px]">
+                                                Rules
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('is_sell')} />
+                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('is_sell')} />
+                                                </div>
+                                            </th>
                                             <th className="px-4 py-3 min-w-[150px]">
                                                 Factility
                                                 <div className="inline-flex items-center ml-2">
@@ -196,7 +203,34 @@ const PropotiesList = () => {
                                                     <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('propertyFacility')} />
                                                 </div>
                                             </th>
-
+                                            <th className="px-4 py-3 min-w-[150px]">
+                                                Adults
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('propertyFacility')} />
+                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('propertyFacility')} />
+                                                </div>
+                                            </th>
+                                            <th className="px-4 py-3 min-w-[150px]">
+                                                Children
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('propertyFacility')} />
+                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('propertyFacility')} />
+                                                </div>
+                                            </th>
+                                            <th className="px-4 py-3 min-w-[150px]">
+                                                Infants
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('propertyFacility')} />
+                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('propertyFacility')} />
+                                                </div>
+                                            </th>
+                                            <th className="px-4 py-3 min-w-[150px]">
+                                                Pets
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('propertyFacility')} />
+                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('propertyFacility')} />
+                                                </div>
+                                            </th>
                                             <th className="px-4 py-3 min-w-[230px]">
                                                 Property Price(/Night)
                                                 <div className="inline-flex items-center ml-2">
@@ -288,7 +322,8 @@ const PropotiesList = () => {
                                                     <td className="px-4 py-2">{property?.address || 'N/A'}</td>
                                                     <td className="px-4 py-2">{property?.city || 'N/A'}</td>
                                                     <td className="px-4 py-2">{property?.listing_date || 'N/A'}</td>
-                                                    {/* <td className="px-4 py-3">{property?.is_sell || 'N/A'}</td> */}
+                                                    <td className="px-4 py-3">{property?.is_sell || 'N/A'}</td>
+                                                    <td className="px-4 py-2">{property?.rules || 'N/A'}</td>
                                                     <td>
                                                         <FontAwesomeIcon
                                                             className="h-7 w-16 cursor-pointer"
@@ -304,6 +339,11 @@ const PropotiesList = () => {
                                                             </span>
                                                         )) || 'N/A'}
                                                     </td>
+
+                                                    <td className="px-4 py-2">{property?.adults || 'N/A'}</td>
+                                                    <td className="px-4 py-2">{property?.children || 'N/A'}</td>
+                                                    <td className="px-4 py-2">{property?.infants || 'N/A'}</td>
+                                                    <td className="px-4 py-2">{property?.pets || 'N/A'}</td>
                                                     <td className="px-4 py-2">₹{property?.price || 'N/A'}</td>
                                                     <td className="px-4 py-2">{property?.mobile || 'N/A'}</td>
                                                     <td className="px-4 py-2">{property.country?.title || 'N/A'}</td>

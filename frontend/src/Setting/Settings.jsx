@@ -18,7 +18,7 @@ const Settings = () => {
   const editor = useRef(null)
   const [privacycontent, setprivacyContent] = useState('')
   const [termscontent, settermscontent] = useState('')
-  const [formData, setFormData] = useState({ id: '', webname: '', weblogo: '', timezone: '', currency: '', tax: '', sms_type: '', auth_key: '', twilio_number: '', auth_token: '', acc_id: '', otp_id: '', otp_auth: '', show_property: '', one_key: '', one_hash: '', rcredit: '', rcredit: '', scredit: '', wlimit: '', privacy_policy: '', terms_conditions: '' });
+  const [formData, setFormData] = useState({ id: '', webname: '', weblogo: '', timezone: '', currency: '', tax: '', sms_type: '', auth_key: '', twilio_number: '', auth_token: '', acc_id: '', otp_id: '', otp_auth: '', show_property: '', one_key: '', one_hash: '', rcredit: '', rcredit: '', scredit: '', wlimit: '', privacy_policy: '', terms_conditions: '', admin_tax: '' });
 
   const location = useLocation();
   const { isLoading, setIsLoading } = useLoading();
@@ -129,27 +129,36 @@ const Settings = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData)
+
+    // Update formData with editor content
+    const privacyPolicyText = new DOMParser().parseFromString(privacycontent, 'text/html').body.innerText;
+
+    const termsConditionsText = new DOMParser().parseFromString(termscontent, 'text/html').body.innerText;
+    const updatedData = {
+      ...formData,
+      privacy_policy: privacyPolicyText,
+      terms_conditions: termsConditionsText,
+    };
 
     try {
       const response = await axios.put(
         `http://localhost:5000/settings/update/${formData.id}`,
-        formData,
+        updatedData,
         {
           withCredentials: true,
-
         }
       );
-      // console.log(response.data);
+
       if (response.status === 200) {
         NotificationManager.removeAll();
         NotificationManager.success('Settings updated successfully');
       }
     } catch (error) {
       NotificationManager.removeAll();
-      NotificationManager.error(error);
+      NotificationManager.error(error.response?.data || error.message);
     }
   };
+
 
   return (
     <div>
@@ -199,30 +208,79 @@ const Settings = () => {
                         <option value="asia/kolkata" >Asia/Kolkata</option>
                       </select>
                     </div>
-                    {/* currency*/}
-                    <div className="flex flex-col">
-                      <label htmlFor="currency" className="text-sm font-medium text-start text-[12px] font-[Montserrat]"><span style={{ color: 'red' }}>*</span> Currency</label>
-                      <input id="currency" name="currency" type="text" value={formData.currency} required className="border rounded-lg p-3 mt-1 w-full h-14" style={{ borderRadius: '8px', border: '1px solid #EAEAFF' }}
-                        onChange={handleChange}
-                      />
-                    </div>
+                    <div className="grid gap-4 w-max sm:grid-cols-1 md:grid-cols-4  mt-6">
+                      {/* currency */}
+                      <div className="flex flex-col">
+                        <label htmlFor="currency" className="text-sm font-medium text-start text-[12px] font-[Montserrat]">
+                          <span style={{ color: 'red' }}>*</span> Currency
+                        </label>
+                        <input
+                          id="currency"
+                          name="currency"
+                          type="text"
+                          value={formData.currency}
+                          required
+                          className="border rounded-lg p-3 mt-1 w-full h-14"
+                          style={{ borderRadius: '8px', border: '1px solid #EAEAFF' }}
+                          onChange={handleChange}
+                        />
+                      </div>
 
-                    {/* tax */}
-                    <div className="flex flex-col">
-                      <label htmlFor="tax" className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> <span style={{ color: 'red' }}>*</span>Tax</label>
-                      <input id="tax" name="tax" type="text" required value={formData.tax} className="border rounded-lg p-3 mt-1 w-full h-14" style={{ borderRadius: '8px', border: '1px solid #EAEAFF' }}
-                        onChange={handleChange}
-                        placeholder="e.g 5"
-                      />
-                    </div>
-                    {/* sms type */}
-                    <div className="flex flex-col">
-                      <label htmlFor="sms_type" className="text-sm font-medium text-start text-[12px] font-[Montserrat]" ><span style={{ color: 'red' }}>*</span> Sms Type </label>
-                      <select name="sms_type" id="sms_type" value={formData.sms_type} className="mt-1 block w-full p-4  bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm" onChange={handleChange}>
-                        <option value="" disabled selected>Select sms type</option>
-                        <option value="msg91">Msg91</option>
-                        <option value="twilo">Twilo</option>
-                      </select>
+                      {/* tax */}
+                      <div className="flex flex-col">
+                        <label htmlFor="tax" className="text-sm font-medium text-start text-[12px] font-[Montserrat]">
+                          <span style={{ color: 'red' }}>*</span>Tax
+                        </label>
+                        <input
+                          id="tax"
+                          name="tax"
+                          type="text"
+                          required
+                          value={formData.tax}
+                          className="border rounded-lg p-3 mt-1 w-full h-14"
+                          style={{ borderRadius: '8px', border: '1px solid #EAEAFF' }}
+                          onChange={handleChange}
+                          placeholder="e.g 5"
+                        />
+                      </div>
+
+                      {/* admin tax */}
+                      <div className="flex flex-col">
+                        <label htmlFor="admin_tax" className="text-sm font-medium text-start text-[12px] font-[Montserrat]">
+                          <span style={{ color: 'red' }}>*</span>Admin Tax
+                        </label>
+                        <input
+                          id="admin_tax"
+                          name="admin_tax"
+                          type="text"
+                          required
+                          value={formData.admin_tax}
+                          className="border rounded-lg p-3 mt-1 w-full h-14"
+                          style={{ borderRadius: '8px', border: '1px solid #EAEAFF' }}
+                          onChange={handleChange}
+                          placeholder="e.g 5"
+                        />
+                      </div>
+
+                      {/* sms type */}
+                      <div className="flex flex-col">
+                        <label htmlFor="sms_type" className="text-sm font-medium text-start text-[12px] font-[Montserrat]">
+                          <span style={{ color: 'red' }}>*</span> Sms Type
+                        </label>
+                        <select
+                          name="sms_type"
+                          id="sms_type"
+                          value={formData.sms_type}
+                          className="mt-1 block w-full p-4 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm"
+                          onChange={handleChange}
+                        >
+                          <option value="" disabled selected>
+                            Select sms type
+                          </option>
+                          <option value="msg91">Msg91</option>
+                          <option value="twilo">Twilo</option>
+                        </select>
+                      </div>
                     </div>
                   </div>
                   <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-2  mt-6">
@@ -345,25 +403,18 @@ const Settings = () => {
                   <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-2  mt-6">
                     {/* * rich text editor*/}
                     <div className="flex flex-col">
-                      <JoditEditor ref={editor} value={privacycontent} config={config} onBlur={newContent => setprivacyContent(newContent)} onChange={newContent => { }}>
+                      <label htmlFor="wlimit" className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> <span style={{ color: 'red' }}>*</span> Terms & Conditions</label>
+                      <JoditEditor ref={editor} value={privacycontent} config={config} onBlur={newContent => setprivacyContent(newContent)}>
 
                       </JoditEditor>
                     </div>
 
                     <div className="flex flex-col">
-                      <JoditEditor ref={editor} value={termscontent} config={config} onBlur={newContent => settermscontent(newContent)} onChange={newContent => { }}>
+                      <label htmlFor="wlimit" className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> <span style={{ color: 'red' }}>*</span> Privacy & Policy </label>
+                      <JoditEditor ref={editor} value={termscontent} config={config} onBlur={newContent => settermscontent(newContent)}>
 
                       </JoditEditor>
                     </div>
-                  </div>
-
-
-                <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-2  mt-6">                   
-                  {/* * rich text editor*/}
-                  <div className="flex flex-col">
-                    <JoditEditor  ref={editor}  value={privacycontent} config={config}   onBlur={newContent=>setprivacyContent(newContent)} onChange={newContent=>{}}>
-                      
-                    </JoditEditor>
                   </div>
 
                   <div className="flex flex-col">
@@ -380,7 +431,6 @@ const Settings = () => {
               </form>
 
             </div>
-          </div>
           </div>
 
         </main>

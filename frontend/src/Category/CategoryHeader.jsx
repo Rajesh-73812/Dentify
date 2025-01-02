@@ -21,8 +21,6 @@ const CategoryHeader = ({ onSearch }) => {
                             <input type="search" placeholder="Search" className="outline-none text-sm placeholder-gray-600 px-3 py-2 rounded-l-lg font-[Montserrat] h-9 w-[300px]" style={{ borderRadius: '8px 0 0 8px' }} onChange={onSearch} />
                             <img src="/image/action/search-normal.svg" alt="Search" className="w-9 h-5 text-[#131313]" />
                         </div>
-
-
                     </div>
                 </div>
             </div>
