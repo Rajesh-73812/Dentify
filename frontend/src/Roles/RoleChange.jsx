@@ -85,38 +85,62 @@ const RoleChange = () => {
         }
     };
 
-
     const toggleStatus = async (id, currentStatus) => {
-        // Calculate the new status
-        const newStatus = currentStatus === 'approved' ? 'pending' : 'approved';
-
-        const result = await Swal.fire({
-            title: 'Are You Sure to Change Status',
-            text: `Current status: ${currentStatus}`,
-            icon: 'question',
-            showCancelButton: true,
-            confirmButtonText: 'Accept',
-            cancelButtonText: 'Cancel',
-            reverseButtons: true,
-        });
-
-        if (result.isConfirmed) {
-            try {
-                const response = await api.patch(`/rollrequest/status/${id}`, {
-                    status: newStatus, // Only send status; requested_role is handled by backend
+        try {
+            // Compute the new status
+            const newStatus = currentStatus === 'approved' ? 'pending' : 'approved';
+    
+            // Prevent unnecessary requests if the status has not changed
+            if (currentStatus === newStatus) {
+                await Swal.fire({
+                    title: 'No Change',
+                    text: 'The status remains the same.',
+                    icon: 'info',
+                    confirmButtonText: 'OK',
                 });
-
-                Swal.fire('Success!', response.data.message, 'success');
-                fetchrole(); // Refresh the list to reflect changes
-            } catch (error) {
-                console.error('Error updating role change request:', error);
-                Swal.fire('Error', 'Failed to update role change request.', 'error');
+                return;
             }
+    
+            // Confirm status change
+            const { isConfirmed } = await Swal.fire({
+                title: 'Confirm Status Change',
+                text: `Are you sure you want to change status from ${currentStatus} to ${newStatus}?`,
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, Change',
+                cancelButtonText: 'No, Cancel',
+                reverseButtons: true,
+            });
+    
+            if (!isConfirmed) return; // Exit if the user cancels
+    
+            // Perform the API request
+            const response = await api.patch(`/rollrequest/status/${id}`, { status: newStatus });
+    
+            // Notify the user of success
+            await Swal.fire({
+                title: 'Success',
+                text: response.data.message,
+                icon: 'success',
+                confirmButtonText: 'OK',
+            });
+    
+            // Refresh the role data to reflect changes
+            fetchrole();
+        } catch (error) {
+            // Log error for debugging
+            console.error('Error updating role change request:', error);
+    
+            // Notify the user of failure
+            await Swal.fire({
+                title: 'Error',
+                text: 'Failed to update role change request. Please try again later.',
+                icon: 'error',
+                confirmButtonText: 'OK',
+            });
         }
-
     };
-
-
+    
     return (
         <div>
             {isLoading && <Loader />}
@@ -180,66 +204,66 @@ const RoleChange = () => {
                                     <tbody className="divide-y divide-gray-200">
 
                                     {currentrole.length > 0 ? (
-  currentrole.map((role, index) => (
-    <tr key={role.id}>
-      {/* Index */}
-      <td className="px-4 py-2">{index + 1 + indexOfFirst}</td>
-      
-      {/* User Name */}
-      <td className="px-4 py-2">{role.user?.name || "N/A"}</td>
-      
-      {/* User Email */}
-      <td className="px-4 py-2">{role.user?.email || "N/A"}</td>
-      
-      {/* User Role */}
-      <td className="px-4 py-2">{role.user?.role || "N/A"}</td>
-      
-      {/* Requested Role */}
-      <td className="px-4 py-2">
-        <span
-          className={`px-2 py-1 text-sm rounded-full ${
-            role.requested_role === "guest"
-              ? "bg-blue-500 text-white"
-              : "bg-green-400 text-white"
-          }`}
-        >
-          {role.requested_role === "guest" ? "Guest" : "Host"}
-        </span>
-      </td>
-      
-      {/* Action Button */}
-      <td className="px-4 py-2">
-        <span
-          className={`px-2 py-1 cursor-pointer text-sm rounded-full ${
-            role.requested_role === "host"
-              ? "bg-red-500 text-white"
-              : "bg-green-400 text-white"
-          }`}
-          onClick={() => toggleStatus(role.id, role.status)}
-        >
-          {role.requested_role === "host" ? "Decline" : "Accept"}
-        </span>
-      </td>
-      
-      {/* Delete Button */}
-      <td className="px-4 py-2">
-        <NotificationContainer />
-        <button
-          className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition"
-          onClick={() => handledelete(role.id)}
-        >
-          <FaTrash />
-        </button>
-      </td>
-    </tr>
-  ))
-) : (
-  <tr>
-    <td colSpan="7" className="text-center py-4">
-      No roles found.
-    </td>
-  </tr>
-)}
+                                        currentrole.map((role, index) => (
+                                            <tr key={role.id}>
+                                            {/* Index */}
+                                            <td className="px-4 py-2">{index + 1 + indexOfFirst}</td>
+                                            
+                                            {/* User Name */}
+                                            <td className="px-4 py-2">{role.user?.name || "N/A"}</td>
+                                            
+                                            {/* User Email */}
+                                            <td className="px-4 py-2">{role.user?.email || "N/A"}</td>
+                                            
+                                            {/* User Role */}
+                                            <td className="px-4 py-2">{role.user?.role || "N/A"}</td>
+                                            
+                                            {/* Requested Role */}
+                                            <td className="px-4 py-2">
+                                                <span
+                                                className={`px-2 py-1 text-sm rounded-full ${
+                                                    role.requested_role === "guest"
+                                                    ? "bg-blue-500 text-white"
+                                                    : "bg-green-400 text-white"
+                                                }`}
+                                                >
+                                                {role.requested_role === "guest" ? "Guest" : "Host"}
+                                                </span>
+                                            </td>
+                                            
+                                            {/* Action Button */}
+                                            <td className="px-4 py-2">
+                                                <span
+                                                className={`px-2 py-1 cursor-pointer text-sm rounded-full ${
+                                                    role.requested_role === "host"
+                                                    ? "bg-red-500 text-white"
+                                                    : "bg-green-400 text-white"
+                                                }`}
+                                                onClick={() => toggleStatus(role.id, role.status)}
+                                                >
+                                                {role.requested_role === "host" ? "Decline" : "Accept"}
+                                                </span>
+                                            </td>
+                                            
+                                            {/* Delete Button */}
+                                            <td className="px-4 py-2">
+                                                <NotificationContainer />
+                                                <button
+                                                className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition"
+                                                onClick={() => handledelete(role.id)}
+                                                >
+                                                <FaTrash />
+                                                </button>
+                                            </td>
+                                            </tr>
+                                        ))
+                                        ) : (
+                                        <tr>
+                                            <td colSpan="7" className="text-center py-4">
+                                            No roles found.
+                                            </td>
+                                        </tr>
+                                        )}
 
 
                                     </tbody>

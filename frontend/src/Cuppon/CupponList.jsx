@@ -10,13 +10,10 @@ import { DeleteEntity } from '../utils/Delete';
 import axios from 'axios';
 import { handleSort } from '../utils/sorting';
 import { NotificationContainer } from 'react-notifications';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faToggleOff, faToggleOn } from "@fortawesome/free-solid-svg-icons";
-
 import api from '../utils/api';
 import { StatusEntity } from '../utils/Status';
-
 
 const CupponList = () => {
     const navigate = useNavigate();

@@ -3,7 +3,8 @@ import PictureAsPdfOutlinedIcon from '@mui/icons-material/PictureAsPdfOutlined';
 import CameraAltOutlinedIcon from '@mui/icons-material/CameraAltOutlined';
 import { generateInvoicePdf } from '../utils/pdfUtils';
 
-const OrderPreviewModal = ({ isOpen, closeModal, downloadModalAsImage }) => {
+const OrderPreviewModal = ({ isOpen, closeModal,selectedProperty, downloadModalAsImage }) => {
+    // console.log(selectedProperty)
     if (!isOpen) return null;
 
     const PdfFormat=()=>{

@@ -130,8 +130,7 @@ const ExtraImageList = () => {
                                             <th className="px-4 py-3 min-w-[150px]">
                                                 Image
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData("image")} />
-                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData("image")} />
+                                                    
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[150px]">
@@ -141,14 +140,14 @@ const ExtraImageList = () => {
                                                     <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData("title")} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[100px]">
+                                            <th className="px-4 py-3 min-w-[150px]">
                                                 Status
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData("status")} />
                                                     <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData("status")} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[100px]">
+                                            <th className="px-4 py-3 min-w-[150px]">
                                                 Action
                                             </th>
                                         </tr>
@@ -160,7 +159,7 @@ const ExtraImageList = () => {
                                                     <td className="px-4 py-1">{index + 1 + indexOfFirstImage}</td>
                                                     <td className="px-4 py-1">
                                                         {extraImage.images && extraImage.images.length > 0 ? (
-                                                            <div className="flex space-x-2">
+                                                            <div className="flex flex-wrap space-x-2">
                                                                 {extraImage.images.map((image, index) => (
                                                                     <img
                                                                         key={index}

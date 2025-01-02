@@ -7,7 +7,8 @@ import ImageUploader from "../common/ImageUploader";
 import Select from 'react-select';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import api from "../utils/api";
-
+import 'react-notifications/lib/notifications.css';
+import { NotificationContainer, NotificationManager } from "react-notifications";
 
 const PropertiesAdd = () => {
   const [countries, setCountries] = useState([]);
@@ -38,7 +39,7 @@ const PropertiesAdd = () => {
     listing_date: '',
     add_user_id: 1,
     rules: '',
-    country_id: 0,  // New country field
+    country_id: 0,  
     plimit: 0,
     is_sell: 0
   });
@@ -117,24 +118,29 @@ const PropertiesAdd = () => {
     }));
 
   };
-  console.log(formData, "from formdata");
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-
     console.log(formData, "from formdata");
+    const url = id ? `http://localhost:5000/properties/upsert` : `http://localhost:5000/properties/upsert`;
+    const successMessage = id ? `property Updated Successfully` : `property Added Successfully!`;
     try {
-      await api.post('/properties/upsert',
-        formData,
-      );
-      alert('Property submitted successfully');
-      navigate("/property-list")
-
+      const response = await axios.post(url, formData, { withCredentials: true });
+      if (response.status === 200 || response.status === 201) {
+        NotificationManager.removeAll();
+        NotificationManager.success(successMessage)
+        setTimeout(() => {
+          navigate('/property-list')
+        }, 2000);
+      } else {
+        throw new Error('Unexpected server response')
+      }
     } catch (error) {
-      console.error('Error submitting property:', error);
-      alert('Error submitting property');
+      NotificationManager.removeAll();
+      console.error("Error submitting property:", error);
+      NotificationManager.error("Error submitting property:", error);
     }
-  };
+  }
 
   return (
     <div>
@@ -636,6 +642,7 @@ const PropertiesAdd = () => {
             </div>
           </div>
         </main>
+        <NotificationContainer />
       </div>
     </div>
   );
