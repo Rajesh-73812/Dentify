@@ -12,6 +12,7 @@ import 'react-notifications/lib/notifications.css';
 import { StatusEntity } from '../utils/Status';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faToggleOff, faToggleOn } from '@fortawesome/free-solid-svg-icons';
+import CountryCodes from "../utils/CountryCodes";
 
 const CountryList = () => {
     const navigate = useNavigate();
@@ -113,27 +114,34 @@ const CountryList = () => {
                                                     <GoArrowDown className='cursor-pointer' onClick={() => sortData('title')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[100px]"> Image
+                                            <th className="px-4 py-3 min-w-[150px]">
+                                                Currency
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('currrency')} />
+                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('currrency')} />
+                                                </div>
+                                            </th>
+                                            <th className="px-4 py-3 min-w-[150px]"> Image
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className='cursor-pointer' onClick={() => sortData('img')} />
                                                     <GoArrowDown className='cursor-pointer' onClick={() => sortData('img')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[150px]">
+                                            <th className="px-4 py-3 min-w-[250px]">
                                                 Total Properties
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className='cursor-pointer' onClick={() => sortData('totalProperties')} />
                                                     <GoArrowDown className='cursor-pointer' onClick={() => sortData('totalProperties')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[50px]">
+                                            <th className="px-4 py-3 min-w-[150px]">
                                                 Status
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className='cursor-pointer' onClick={() => sortData('status')} />
                                                     <GoArrowDown className='cursor-pointer' onClick={() => sortData('status')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[50px]">Action</th>
+                                            <th className="px-4 py-3 min-w-[150px]">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-gray-200">
@@ -148,6 +156,9 @@ const CountryList = () => {
                                                 <tr key={country.id} className="h-[70px]"> {/* Adjust the height */}
                                                     <td className="px-4 py-1 text-sm">{index + 1 + indexOfFirst}</td> {/* Reduce padding */}
                                                     <td className="px-4 py-1 text-sm">{country?.title || "N/A"}</td>
+                                                    <td className="px-4 py-1 text-sm">
+                                                        {country?.currency && CountryCodes[country?.currency] ? `${country?.currency}(${CountryCodes[country?.currency]})` : "N/A"}
+                                                    </td>
                                                     <td className="px-4 py-1 text-sm">
                                                         {country.img && country.img.trim() !== '' ? (
                                                             <img
