@@ -8,6 +8,8 @@ import Select from 'react-select';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import api from "../utils/api";
 import { RxCrossCircled } from "react-icons/rx";
+import 'react-notifications/lib/notifications.css';
+import { NotificationContainer, NotificationManager } from "react-notifications";
 
 
 const PropertiesAdd = () => {
@@ -148,7 +150,7 @@ const PropertiesAdd = () => {
     }));
 
   };
-  console.log(formData, "from formdata");
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formDataToSubmit = {
@@ -172,7 +174,7 @@ const PropertiesAdd = () => {
       console.error('Error submitting property:', error.response?.data || error.message);
       alert('Error submitting property');
     }
-  };
+  }
 
   return (
     <div>
@@ -746,6 +748,7 @@ const PropertiesAdd = () => {
             </div>
           </div>
         </main>
+        <NotificationContainer />
       </div>
     </div>
   );
