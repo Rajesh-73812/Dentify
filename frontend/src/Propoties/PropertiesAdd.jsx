@@ -7,6 +7,8 @@ import ImageUploader from "../common/ImageUploader";
 import Select from 'react-select';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import api from "../utils/api";
+import { RxCrossCircled } from "react-icons/rx";
+import { NotificationManager } from "react-notifications";
 
 
 const PropertiesAdd = () => {
@@ -16,44 +18,48 @@ const PropertiesAdd = () => {
   const navigate = useNavigate();
   const location = useLocation()
   const id = location.state ? location.state.id : null;
+
   const [selectedOption, setSelectedOption] = useState(null);
   const [formData, setFormData] = useState({
     id: 0 || null,
     title: '',
     image: '',
-    price: 0,
-    status: 0,
+    price: null,
+    status: null,
     address: '',
     facility: '',
     description: '',
-    beds: 0,
-    bathroom: 0,
-    sqrft: 0,
-    rate: 0,
-    ptype: 0,
+    beds: null,
+    bathroom: null,
+    sqrft: null,
+    rate: null,
+    ptype: null,
     latitude: '',
     longtitude: '',
     mobile: '',
     city: '',
     listing_date: '',
-    // add_user_id: 1,
-    rules: '',
-    country_id: 0, 
-    plimit: 0,
-    is_sell: 0
+    add_user_id: 1,
+    rules: [],
+    country_id: null,  // New country field
+    is_sell: 0,
+    adults: null,
+    children: null,
+    infants: null,
+    pets: null,
   });
 
   useEffect(() => {
     if (id) {
       getProperty();
     }
-  }, []);
+  }, [id]);
 
   const getProperty = async () => {
     try {
-      const response = await api.get(`/properties/${id}`)
+      const response = await axios.get(`http://localhost:5000/properties/${id}`)
       const Property = response.data;
-      console.log(Property, "Property Data");
+      console.log("Property Data: ", Property);
       setFormData({
         id,
         title: Property.title,
@@ -72,18 +78,49 @@ const PropertiesAdd = () => {
         longtitude: Property.longtitude,
         mobile: Property.mobile,
         city: Property.city,
-        listing_date: Property.listing_date,
+        listing_date: new Date(Property.listing_date).toISOString().split("T")[0],
         add_user_id: Property.add_user_id,
-        rules: Property.rules,
+        rules: (() => {
+          try {
+            return JSON.parse(Property.rules);
+          } catch (error) {
+            return Property.rules ? [Property.rules] : [];
+          }
+        })(),
         country_id: Property.country_id,
         plimit: Property.plimit,
         is_sell: Property.is_sell,
-
+        adults: Property.adults,
+        children: Property.children,
+        infants: Property.infants,
+        pets: Property.pets,
       })
     } catch (error) {
       console.error("Error fetching Property:", error);
     }
   }
+
+  const [currentRule, setCurrentRule] = useState('');
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter' && currentRule.trim() !== '') {
+      e.preventDefault();
+      setFormData((prevData) => ({
+        ...prevData,
+        rules: [...prevData.rules, currentRule.trim()],
+      }));
+      setCurrentRule('');
+    }
+  };
+
+  console.log('Rules before submission:', formData.rules);
+
+  const handleRemoveRule = (index) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      rules: prevData.rules.filter((_, i) => i !== index),
+    }));
+  };
 
   useEffect(() => {
     // Fetch countries
@@ -105,10 +142,10 @@ const PropertiesAdd = () => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
-      [name]: value
+      [name]: value,
+      id: prevData.id,
     }));
   };
-
 
   const handleImageUploadSuccess = (imageUrl) => {
     setFormData((prevData) => ({
@@ -120,19 +157,30 @@ const PropertiesAdd = () => {
   console.log(formData, "from formdata");
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-
+    const formDataToSubmit = {
+      ...formData,
+      rules: JSON.stringify(formData.rules),
+    };
+    console.log('FormData to submit:', formDataToSubmit);
     console.log(formData, "from formdata");
-    try {
-      await api.post('/properties/upsert',
-        formData,
-      );
-      alert('Property submitted successfully');
-      navigate("/property-list")
 
+    const successMessage = id ? 'Property Updated Succesfully!' : 'Property Added Successfully!'
+    try {
+      const response = await api.post('/properties/upsert', formDataToSubmit, { withCredentials: true });
+      console.log(response.data);
+
+      if (response.data.status === 200 || response.data.status === 201) {
+
+        navigate("/property-list");
+
+        // NotificationManager.removeAll();
+        // NotificationManager.success(successMessage, 'Success');
+      } else {
+        NotificationManager.error('Error', 'Error');
+      }
     } catch (error) {
-      console.error('Error submitting property:', error);
-      alert('Error submitting property');
+      console.error("Error:", error);
+      NotificationManager.error('Error', 'Error');
     }
   };
 
@@ -156,7 +204,7 @@ const PropertiesAdd = () => {
                   fontFamily: "Montserrat",
                 }}
               >
-                Create Property
+                Property Management
               </h2>
             </div>
 
@@ -212,9 +260,6 @@ const PropertiesAdd = () => {
                         onUploadSuccess={handleImageUploadSuccess}
                       />
                     </div>
-
-
-
                     {/* property price per night */}
                     <div className="flex flex-col">
                       <label
@@ -228,7 +273,7 @@ const PropertiesAdd = () => {
                         id="PropertyPricePerNight"
                         value={formData.price}
                         name="price"
-                        type="text"
+                        type="number"
                         required
                         className="border rounded-lg p-3 mt-1 w-full h-14"
                         style={{
@@ -238,6 +283,66 @@ const PropertiesAdd = () => {
                         onChange={handleChange}
                         placeholder="Enter  Price Per Night"
                       />
+                    </div>
+                  </div>
+
+                  <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-4 mt-6">
+                    {/* adults */}
+                    <div className="flex flex-col">
+                      <label
+                        htmlFor="adults"
+                        className="text-sm font-medium text-start text-[12px] font-[Montserrat]"
+                      >
+                        {" "}
+                        Adults{" "}
+                      </label>
+                      <input
+                        id="adults"
+                        name="adults"
+                        type="number"
+                        required
+                        value={formData.adults}
+                        onChange={handleChange}
+                        className="border rounded-lg p-3 mt-1 w-full h-14"
+                        style={{
+                          borderRadius: "8px",
+                          border: "1px solid #EAEAFF",
+                        }}
+                        placeholder="Enter Adults"
+                      />
+                    </div>
+                    {/* children */}
+                    <div className="flex flex-col">
+                      <label
+                        htmlFor="children"
+                        className="text-sm font-medium text-start text-[12px] font-[Montserrat]"
+                      >
+                        {" "}
+                        Children{" "}
+                      </label>
+                      <input id="children" name="children" type="number" required value={formData.children} onChange={handleChange} className="border rounded-lg p-3 mt-1 w-full h-14" style={{ borderRadius: "8px", border: "1px solid #EAEAFF", }} placeholder="Enter Children" />
+                    </div>
+                    {/* infants */}
+                    <div className="flex flex-col">
+                      <label
+                        htmlFor="infants"
+                        className="text-sm font-medium text-start text-[12px] font-[Montserrat]"
+                      >
+                        {" "}
+                        Infants{" "}
+                      </label>
+                      <input id="infants" name="infants" type="number" required value={formData.infants} onChange={handleChange} className="border rounded-lg p-3 mt-1 w-full h-14" style={{ borderRadius: "8px", border: "1px solid #EAEAFF", }} placeholder="Enter Infants" />
+                    </div>
+                    {/* pets */}
+                    <div className="flex flex-col">
+                      <label
+                        htmlFor="pets"
+                        className="text-sm font-medium text-start text-[12px] font-[Montserrat]"
+                      >
+                        {" "}
+                        Pets{" "}
+                      </label>
+                      <input id="pets" name="pets" type="number" required value={formData.pets} onChange={handleChange} className="border rounded-lg p-3 mt-1 w-full h-14" style={{ borderRadius: "8px", border: "1px solid #EAEAFF", }} placeholder="Enter Pets" />
                     </div>
                   </div>
 
@@ -360,8 +465,6 @@ const PropertiesAdd = () => {
                         value={facilities.filter((facility) =>
                           formData.facility.split(",").includes(facility.id.toString())
                         ).map(facility => ({ value: facility.id, label: facility.title }))}
-
-
                         options={facilities.map((facility) => ({
                           value: facility.id,
                           label: facility.title,
@@ -420,7 +523,7 @@ const PropertiesAdd = () => {
                           Total Bathroom
                         </label>
                         <input
-                          type="text"
+                          type="number"
                           id="bathroom"
                           name="bathroom"
                           value={formData.bathroom}
@@ -436,10 +539,10 @@ const PropertiesAdd = () => {
                           htmlFor="sqrft"
                           className="text-sm font-medium float-left text-[12px] font-[Montserrat]"
                         >
-                          Property SQFT
+                          Property SQRFT
                         </label>
                         <input
-                          type="text"
+                          type="number"
                           id="sqrft"
                           value={formData.sqrft}
                           name="sqrft"
@@ -458,7 +561,7 @@ const PropertiesAdd = () => {
                           Property Rating
                         </label>
                         <input
-                          type="text"
+                          type="number"
                           id="rate"
                           value={formData.rate}
                           name="rate"
@@ -605,23 +708,42 @@ const PropertiesAdd = () => {
                       </div>
                       <div className="md:col-span-1 mb-7">
                         <label
-                          htmlFor="description"
+                          htmlFor="rules"
                           className="text-sm font-medium float-left text-[12px] font-[Montserrat]"
                         >
                           Property Rules
                         </label>
-                        <textarea
-                        contentEditable="true"
-                          id="description"
-                          name="rules"
-                          value={formData.rules}
-                          className="border rounded-lg p-3 mt-1 w-full resize-none h-64 focus:ring-blue-500 focus:border-blue-500"
-                          placeholder="Enter Property Rules"
-                          onChange={handleChange}
-                        ></textarea>
+                        <div
+                          id="rules"
+                          className="border rounded-lg p-3 mt-1 w-full h-64 overflow-auto focus:ring-blue-500 focus:border-blue-500 flex flex-col gap-2"
+                        >
+                          {/* Render existing rules */}
+                          {formData.rules.map((rule, index) => (
+                            <div
+                              key={index}
+                              className="flex justify-between items-center bg-gray-100 p-2 rounded-md"
+                            >
+                              <span className="text-sm font-medium">{rule}</span>
+                              <button
+                                type="button"
+                                className="text-red-500 text-lg"
+                                onClick={() => handleRemoveRule(index)}
+                              >
+                                <RxCrossCircled />
+                              </button>
+                            </div>
+                          ))}
+                          {/* Input area for new rule */}
+                          <input
+                            type="text"
+                            placeholder="Write a rule and press Enter"
+                            value={currentRule}
+                            onChange={(e) => setCurrentRule(e.target.value)} // Update currentRule state
+                            className="focus:outline-none text-sm border-t border-gray-300 pt-2 w-full"
+                            onKeyDown={handleKeyPress}
+                          />
+                        </div>
                       </div>
-
-
                     </div>
                   </div>
 

@@ -74,8 +74,6 @@ const AdminList = () => {
         }
     };
 
-    
-
     const confirmEdit = (admin) => {
         setAdminToEdit(admin);
         setEditForm({ username: admin.username, password: admin.password, userType: admin.userType });
@@ -165,9 +163,6 @@ const AdminList = () => {
     const indexOfFirstAdmin = indexOfLastAdmin - adminsPerPage;
     const currentAdmins = filteredAdmins.slice(indexOfFirstAdmin, indexOfLastAdmin);
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
-
-    
 
     return (
         <div>

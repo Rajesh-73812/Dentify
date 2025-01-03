@@ -29,12 +29,11 @@ const CupponAdd = () => {
       const response = await api.get(`/coupons/${id}`)
       console.log(response.data)
       const cuppon = response.data
-      const formattedDate = cuppon.cdate ? cuppon.cdate.split(" ")[0].split("-").reverse().join("-") : "";
-      console.log(formattedDate)
+      
       setFormData({
         id,
         c_img: cuppon.c_img,
-        cdate: formattedDate,
+        cdate: new Date(cuppon.cdate).toISOString().split("T")[0],
         c_desc: cuppon.c_desc,
         c_title: cuppon.c_title,
         c_value: cuppon.c_value,
@@ -95,7 +94,7 @@ const CupponAdd = () => {
     e.preventDefault();
     console.log(formData, "from formdata");
     const url = id ? `http://localhost:5000/coupons/upsert` : `http://localhost:5000/coupons/upsert`;
-    const successMessage = id ? `Category Updated Successfully` : `Cuppon Added Successfully!`;
+    const successMessage = id ? `Cuppon Updated Successfully` : `Cuppon Added Successfully!`;
     try {
       const response = await axios.post(url, formData, { withCredentials: true });
       if (response.status === 200 || response.status === 201) {
@@ -135,7 +134,7 @@ const CupponAdd = () => {
               <div className="bg-white h-[67vh] w-full rounded-xl border border-[#EAE5FF] py-4 px-6 overflow-y-auto scrollbar-none">
                 <form onSubmit={handleSubmit} className="mt-4">
                   <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-4 mt-6">
-                    {/* cuppon image*/}
+                    {/* cuCouponppon image*/}
                     <div className="flex flex-col">
                       <label htmlFor="cupponimage" className="text-sm font-medium text-start text-[12px] font-[Montserrat]">Coupon Image</label>
                       <ImageUploader onUploadSuccess={handleImageUploadSuccess} />
@@ -176,7 +175,7 @@ const CupponAdd = () => {
                     </div>
 
 
-                    {/* cuppon code */}
+                    {/* Coupon code */}
                     <div className="flex flex-col">
                       <label htmlFor="c_title" className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> Coupon code </label>
                       <input id="c_title" name="c_title" type="text" required className="border rounded-lg p-3 mt-1 w-full h-14" style={{ borderRadius: '8px', border: '1px solid #EAEAFF' }}
@@ -192,14 +191,14 @@ const CupponAdd = () => {
                     </div>
                   </div>
                   <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-4  mt-6">
-                    {/* cuppon title */}
+                    {/* Coupon title */}
                     <div className="flex flex-col">
                       <label htmlFor="ctitle" className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> Coupon Title </label>
                       <input id="ctitle" value={formData.ctitle} onChange={handleChange} name="ctitle" type="text" required className="border rounded-lg p-3 mt-1 w-full h-14" style={{ borderRadius: '8px', border: '1px solid #EAEAFF' }}
                         placeholder="Enter Cuppon title"
                       />
                     </div>
-                    {/* cuppon subtitle */}
+                    {/* coupon subtitle */}
                     <div className="flex flex-col">
                       <label htmlFor="subtitle" className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> Coupon Sub Title </label>
                       <input id="subtitle" value={formData.subtitle} name="subtitle" type="text" required className="border rounded-lg p-3 mt-1 w-full h-14" style={{ borderRadius: '8px', border: '1px solid #EAEAFF' }}
@@ -208,7 +207,7 @@ const CupponAdd = () => {
                       />
                     </div>
 
-                    {/* cuppon Status */}
+                    {/* coupon Status */}
                     <div className="flex flex-col">
                       <label htmlFor="status" className="text-sm font-medium text-start text-[12px] font-[Montserrat]" > Status </label>
                       <select name="status" value={formData.status} onChange={handleChange} id="status" className="mt-1 block w-full p-4  bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm"  >

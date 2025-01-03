@@ -10,13 +10,10 @@ import { DeleteEntity } from '../utils/Delete';
 import axios from 'axios';
 import { handleSort } from '../utils/sorting';
 import { NotificationContainer } from 'react-notifications';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faToggleOff, faToggleOn } from "@fortawesome/free-solid-svg-icons";
-
 import api from '../utils/api';
 import { StatusEntity } from '../utils/Status';
-
 
 const CupponList = () => {
     const navigate = useNavigate();
@@ -202,7 +199,7 @@ const CupponList = () => {
                                                             <img src="https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg" className="w-16 h-16 object-cover rounded-full" alt="Placeholder" />
                                                         )}
                                                     </td>
-                                                    <td className="px-4 py-1">{cuppon?.cdate.split(" ")[0] || "N/A"}</td>
+                                                    <td className="px-4 py-1">{ new Date(cuppon?.cdate).toISOString().split("T")[0] || "N/A"}</td>
                                                     <td className="px-4 py-1">{cuppon?.min_amt || "N/A"}</td>
                                                     <td className="px-4 py-1">{cuppon?.c_value || "N/A"}</td>
                                                     <td className="px-4 py-1">

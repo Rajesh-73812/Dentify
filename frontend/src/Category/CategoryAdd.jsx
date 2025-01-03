@@ -33,7 +33,7 @@ const CategoryAdd = () => {
     try {
       const response = await api.get(`/categories/${id}`)
       const Category = response.data;
-      console.log(response.data)
+      console.log("Category Data: ", response.data)
       setFormData({
         id,
         title: Category.title,
