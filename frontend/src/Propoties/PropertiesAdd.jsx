@@ -36,9 +36,9 @@ const PropertiesAdd = () => {
     mobile: '',
     city: '',
     listing_date: '',
-    add_user_id: 1,
+    // add_user_id: 1,
     rules: '',
-    country_id: 0,  // New country field
+    country_id: 0, 
     plimit: 0,
     is_sell: 0
   });

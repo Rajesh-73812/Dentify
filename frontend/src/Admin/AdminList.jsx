@@ -74,9 +74,7 @@ const AdminList = () => {
         }
     };
 
-    function sortData(){
-
-    }
+    
 
     const confirmEdit = (admin) => {
         setAdminToEdit(admin);
@@ -169,9 +167,7 @@ const AdminList = () => {
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
 
-    const sortData=async(key)=>{
-        handleSort(filteredAdmins,key,sortConfig,setSortConfig,setFilteredAdmins)
-    }
+    
 
     return (
         <div>
