@@ -87,10 +87,10 @@ const RoleChange = () => {
 
     const toggleStatus = async (id, currentStatus) => {
         try {
-            // Compute the new status
+            
             const newStatus = currentStatus === 'approved' ? 'pending' : 'approved';
     
-            // Prevent unnecessary requests if the status has not changed
+           
             if (currentStatus === newStatus) {
                 await Swal.fire({
                     title: 'No Change',
@@ -176,6 +176,17 @@ const RoleChange = () => {
                                                     <GoArrowDown className='cursor-pointer' onClick={() => sortData('email')} />
                                                 </div>
                                             </th>
+                                            <th className="px-4 py-3 min-w-[150px]">
+                                                ID Proof
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('email')} />
+                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('email')} />
+                                                </div>
+                                            </th>
+                                            <th className="px-4 py-3 min-w-[150px]">
+                                                ID Image
+                                                
+                                            </th>
                                             <th className="px-4 py-3 min-w-[120px]">
                                                 Role
                                                 <div className="inline-flex items-center ml-2">
@@ -214,6 +225,18 @@ const RoleChange = () => {
                                             
                                             {/* User Email */}
                                             <td className="px-4 py-2">{role.user?.email || "N/A"}</td>
+                                            <td className="px-4 py-2">{role.id_proof || "N/A"}</td>
+                                            <td className="px-4 py-3">
+                                                        {role.id_proof_img && role.id_proof_img.trim() !== '' ? (
+                                                            <img src={role.id_proof_img} className="w-10 h-10 object-cover rounded-full" height={50} width={50} loading="lazy" alt="" onError={(e) => {
+                                                                if (e.target.src !== 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg') {
+                                                                    e.target.src = 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg';
+                                                                }
+                                                            }} />
+                                                        ) : (
+                                                            <img src={'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg'} height={50} width={50} loading="lazy" alt="" />
+                                                        )}
+                                                    </td>
                                             
                                             {/* User Role */}
                                             <td className="px-4 py-2">{role.user?.role || "N/A"}</td>
@@ -235,13 +258,13 @@ const RoleChange = () => {
                                             <td className="px-4 py-2">
                                                 <span
                                                 className={`px-2 py-1 cursor-pointer text-sm rounded-full ${
-                                                    role.requested_role === "host"
+                                                    role.status !== "pending"
                                                     ? "bg-red-500 text-white"
                                                     : "bg-green-400 text-white"
                                                 }`}
                                                 onClick={() => toggleStatus(role.id, role.status)}
                                                 >
-                                                {role.requested_role === "host" ? "Decline" : "Accept"}
+                                                {role.status === "pending" ? "Accept" : "Decline"}
                                                 </span>
                                             </td>
                                             
