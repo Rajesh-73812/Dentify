@@ -146,6 +146,13 @@ const UserList = () => {
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[150px]">
+                                                Gender
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('email')} />
+                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('email')} />
+                                                </div>
+                                            </th>
+                                            <th className="px-4 py-3 min-w-[150px]">
                                                 Mobile
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className='cursor-pointer' onClick={() => sortData('mobile')} />
@@ -166,51 +173,7 @@ const UserList = () => {
                                                     <GoArrowDown className='cursor-pointer' onClick={() => sortData('status')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[150px]">
-                                                Refer Code
-                                                <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('refercode')} />
-                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('refercode')} />
-                                                </div>
-                                            </th>
-                                            <th className="px-4 py-3 min-w-[180px]">
-                                                Parent Code
-                                                <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('parentcode')} />
-                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('parentcode')} />
-                                                </div>
-                                            </th>
-                                            <th className="px-4 py-3 min-w-[150px]">
-                                                Wallet
-                                                <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('wallet')} />
-                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('wallet')} />
-                                                </div>
-                                            </th>
-                                            <th className="px-4 py-3 min-w-[180px]">
-                                                IsSubscribe
-                                            </th>
-                                            <th className="px-4 py-3 min-w-[180px]">
-                                                Package  Name
-                                                <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('pack_id')} />
-                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('pack_id')} />
-                                                </div>
-                                            </th>
-                                            <th className="px-4 py-3 min-w-[180px]">
-                                                Start Date
-                                                <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('start_date')} />
-                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('start_date')} />
-                                                </div>
-                                            </th>
-                                            <th className="px-4 py-3 min-w-[180px]">
-                                                Expired Date
-                                                <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('end_date')} />
-                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('end_date')} />
-                                                </div>
-                                            </th>
+                                            
                                             <th className="px-4 py-3 min-w-[150px]">
                                                 Action
                                             </th>
@@ -234,6 +197,7 @@ const UserList = () => {
                                                     </td>
                                                     <td className="px-4 py-2">{userList?.name || "N/A"}</td>
                                                     <td className="px-4 py-2">{userList?.email || "N/A"}</td>
+                                                    <td className="px-4 py-2">{userList?.gender || "N/A"}</td>
                                                     <td className="px-4 py-2">{userList?.mobile || "N/A"}</td>
 
 
@@ -247,21 +211,7 @@ const UserList = () => {
                                                             onClick={() => handleToggleChange(userList.id, userList.status, "status")}
                                                         />
                                                     </td>
-                                                    <td className="px-4 py-2">{userList?.refercode || "N/A"}</td>
-                                                    <td className="px-4 py-2">{userList?.parentcode || "N/A"}</td>
-                                                    <td className="px-4 py-2">{userList?.wallet || "N/A"}</td>
-                                                    <td className="px-4 py-2">
-                                                        <FontAwesomeIcon
-                                                            className="h-7 w-16 cursor-pointer"
-                                                            style={{ color: userList.is_subscribe === 1 ? "#0064DC" : "#e9ecef" }}
-                                                            icon={userList.is_subscribe === 1 ? faToggleOn : faToggleOff}
-                                                            onClick={() => handleToggleChange(userList.id, userList.is_subscribe, "is_subscribe")}
-                                                        />
-                                                    <NotificationContainer />
-                                                    </td>
-                                                    <td className="px-4 py-2">{userList?.pack_id || "N/A"}</td>
-                                                    <td className="px-4 py-2">{userList?.start_date || "N/A"}</td>
-                                                    <td className="px-4 py-2">{userList?.end_date || "N/A"}</td>
+                                                    
                                                     <td className="px-4 py-2 flex space-x-2">
                                                        
                                                         <button

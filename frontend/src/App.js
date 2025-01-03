@@ -43,11 +43,10 @@ import NotFound from "./NotFound.jsx";
 import { AuthProvider } from "./Context/AuthContext.js";
 import PrivateRoute from "./Context/PrivateRoute.js";
 import RoleChange from "./Roles/RoleChange.jsx";
-
 import AdminList from "./Admin/AdminList.jsx";
 import ErrorBoundary from "./ErrorBoundary.jsx";
 
-// Layout component for common sidebar
+
 const LayoutWithSidebar = ({ children }) => (
   <div className="h-screen flex">
     <SidebarMenu />

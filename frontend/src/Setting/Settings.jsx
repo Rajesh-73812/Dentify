@@ -19,7 +19,6 @@ const Settings = () => {
   const [privacycontent, setprivacyContent] = useState('')
   const [termscontent, settermscontent] = useState('')
   const [formData, setFormData] = useState({ id: '', webname: '', weblogo: '', timezone: '', currency: '', tax: '', sms_type: '', auth_key: '', twilio_number: '', auth_token: '', acc_id: '', otp_id: '', otp_auth: '', show_property: '', one_key: '', one_hash: '', rcredit: '', rcredit: '', scredit: '', wlimit: '', privacy_policy: '', terms_conditions: '', admin_tax: '' });
-
   const location = useLocation();
   const { isLoading, setIsLoading } = useLoading();
   const navigate = useNavigate()
@@ -416,6 +415,7 @@ const Settings = () => {
                       </JoditEditor>
                     </div>
                   </div>
+
 
                 {/* Action Buttons */}
                 <div className="flex justify-start mt-6 gap-3">
