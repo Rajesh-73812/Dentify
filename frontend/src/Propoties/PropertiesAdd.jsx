@@ -8,8 +8,7 @@ import Select from 'react-select';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import api from "../utils/api";
 import { RxCrossCircled } from "react-icons/rx";
-import 'react-notifications/lib/notifications.css';
-import { NotificationContainer, NotificationManager } from "react-notifications";
+import { NotificationManager } from "react-notifications";
 
 
 const PropertiesAdd = () => {
@@ -19,6 +18,7 @@ const PropertiesAdd = () => {
   const navigate = useNavigate();
   const location = useLocation()
   const id = location.state ? location.state.id : null;
+
   const [selectedOption, setSelectedOption] = useState(null);
   const [formData, setFormData] = useState({
     id: 0 || null,
@@ -53,13 +53,13 @@ const PropertiesAdd = () => {
     if (id) {
       getProperty();
     }
-  }, []);
+  }, [id]);
 
   const getProperty = async () => {
     try {
-      const response = await api.get(`/properties/${id}`)
+      const response = await axios.get(`http://localhost:5000/properties/${id}`)
       const Property = response.data;
-      console.log(Property, "Property Data");
+      console.log("Property Data: ", Property);
       setFormData({
         id,
         title: Property.title,
@@ -78,9 +78,15 @@ const PropertiesAdd = () => {
         longtitude: Property.longtitude,
         mobile: Property.mobile,
         city: Property.city,
-        listing_date: Property.listing_date,
+        listing_date: new Date(Property.listing_date).toISOString().split("T")[0],
         add_user_id: Property.add_user_id,
-        rules: Property.rules ? JSON.parse(Property.rules) : [],
+        rules: (() => {
+          try {
+            return JSON.parse(Property.rules);
+          } catch (error) {
+            return Property.rules ? [Property.rules] : [];
+          }
+        })(),
         country_id: Property.country_id,
         plimit: Property.plimit,
         is_sell: Property.is_sell,
@@ -94,18 +100,16 @@ const PropertiesAdd = () => {
     }
   }
 
+  const [currentRule, setCurrentRule] = useState('');
+
   const handleKeyPress = (e) => {
-    if (e.key === 'Enter' && e.target.value.trim() !== '') {
+    if (e.key === 'Enter' && currentRule.trim() !== '') {
       e.preventDefault();
-      setFormData((prevData) => {
-        const updatedRules = [...prevData.rules, e.target.value.trim()];
-        console.log('Updated Rules:', updatedRules); // Debug log
-        return {
-          ...prevData,
-          rules: updatedRules,
-        };
-      });
-      e.target.value = ''; // Clear input field
+      setFormData((prevData) => ({
+        ...prevData,
+        rules: [...prevData.rules, currentRule.trim()],
+      }));
+      setCurrentRule('');
     }
   };
 
@@ -138,10 +142,10 @@ const PropertiesAdd = () => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
-      [name]: value
+      [name]: value,
+      id: prevData.id,
     }));
   };
-
 
   const handleImageUploadSuccess = (imageUrl) => {
     setFormData((prevData) => ({
@@ -150,31 +154,35 @@ const PropertiesAdd = () => {
     }));
 
   };
-
+  console.log(formData, "from formdata");
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formDataToSubmit = {
       ...formData,
       rules: JSON.stringify(formData.rules),
     };
-    console.log('FormData to submit:', formDataToSubmit); // Debug log
+    console.log('FormData to submit:', formDataToSubmit);
+    console.log(formData, "from formdata");
 
-    // console.log(formData, "from formdata");
+    const successMessage = id ? 'Property Updated Succesfully!' : 'Property Added Successfully!'
     try {
-      const response = await axios.post('http://localhost:5000/properties/upsert', formDataToSubmit, {
-        withCredentials: true,
-      },
-      );
-      console.log('Response:', response.data);
+      const response = await api.post('/properties/upsert', formDataToSubmit, { withCredentials: true });
+      console.log(response.data);
 
-      alert('Property submitted successfully');
-      navigate("/property-list")
+      if (response.data.status === 200 || response.data.status === 201) {
 
+        navigate("/property-list");
+
+        // NotificationManager.removeAll();
+        // NotificationManager.success(successMessage, 'Success');
+      } else {
+        NotificationManager.error('Error', 'Error');
+      }
     } catch (error) {
-      console.error('Error submitting property:', error.response?.data || error.message);
-      alert('Error submitting property');
+      console.error("Error:", error);
+      NotificationManager.error('Error', 'Error');
     }
-  }
+  };
 
   return (
     <div>
@@ -196,7 +204,7 @@ const PropertiesAdd = () => {
                   fontFamily: "Montserrat",
                 }}
               >
-                Create Property
+                Property Management
               </h2>
             </div>
 
@@ -265,7 +273,7 @@ const PropertiesAdd = () => {
                         id="PropertyPricePerNight"
                         value={formData.price}
                         name="price"
-                        type="text"
+                        type="number"
                         required
                         className="border rounded-lg p-3 mt-1 w-full h-14"
                         style={{
@@ -515,7 +523,7 @@ const PropertiesAdd = () => {
                           Total Bathroom
                         </label>
                         <input
-                          type="text"
+                          type="number"
                           id="bathroom"
                           name="bathroom"
                           value={formData.bathroom}
@@ -531,10 +539,10 @@ const PropertiesAdd = () => {
                           htmlFor="sqrft"
                           className="text-sm font-medium float-left text-[12px] font-[Montserrat]"
                         >
-                          Property SQFT
+                          Property SQRFT
                         </label>
                         <input
-                          type="text"
+                          type="number"
                           id="sqrft"
                           value={formData.sqrft}
                           name="sqrft"
@@ -553,7 +561,7 @@ const PropertiesAdd = () => {
                           Property Rating
                         </label>
                         <input
-                          type="text"
+                          type="number"
                           id="rate"
                           value={formData.rate}
                           name="rate"
@@ -729,6 +737,8 @@ const PropertiesAdd = () => {
                           <input
                             type="text"
                             placeholder="Write a rule and press Enter"
+                            value={currentRule}
+                            onChange={(e) => setCurrentRule(e.target.value)} // Update currentRule state
                             className="focus:outline-none text-sm border-t border-gray-300 pt-2 w-full"
                             onKeyDown={handleKeyPress}
                           />
@@ -748,7 +758,6 @@ const PropertiesAdd = () => {
             </div>
           </div>
         </main>
-        <NotificationContainer />
       </div>
     </div>
   );

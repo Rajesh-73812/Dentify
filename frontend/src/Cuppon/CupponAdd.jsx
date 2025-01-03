@@ -29,12 +29,11 @@ const CupponAdd = () => {
       const response = await api.get(`/coupons/${id}`)
       console.log(response.data)
       const cuppon = response.data
-      const formattedDate = cuppon.cdate ? cuppon.cdate.split(" ")[0].split("-").reverse().join("-") : "";
-      console.log(formattedDate)
+      
       setFormData({
         id,
         c_img: cuppon.c_img,
-        cdate: formattedDate,
+        cdate: new Date(cuppon.cdate).toISOString().split("T")[0],
         c_desc: cuppon.c_desc,
         c_title: cuppon.c_title,
         c_value: cuppon.c_value,

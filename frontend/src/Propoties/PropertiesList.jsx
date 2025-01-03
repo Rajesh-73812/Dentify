@@ -24,9 +24,23 @@ const PropotiesList = () => {
         const fetchProperties = async () => {
             try {
                 const response = await api.get('/properties');
+                const fetchedProperties = response.data.map((property) => {
+                    return {
+                        ...property,
+                        rules: (() => {
+                            try {
+                                return JSON.parse(property.rules);
+                            } catch (error) {
+                                return property.rules ? [property.rules] : [];
+                            }
+                        })(),
+                    }
+                })
                 console.log(response.data);
-                setProperties(response.data);
-                setFilteredProperties(response.data);
+                // setProperties(response.data);
+                // setFilteredProperties(response.data);
+                setProperties(fetchedProperties);
+                setFilteredProperties(fetchedProperties);
             } catch (error) {
                 console.error('Error fetching properties:', error.response ? error.response.data : error.message);
             }
@@ -321,9 +335,11 @@ const PropotiesList = () => {
                                                     <td className="px-4 py-2">{property?.description || 'N/A'}</td>
                                                     <td className="px-4 py-2">{property?.address || 'N/A'}</td>
                                                     <td className="px-4 py-2">{property?.city || 'N/A'}</td>
-                                                    <td className="px-4 py-2">{property?.listing_date || 'N/A'}</td>
-                                                    <td className="px-4 py-3">{property?.is_sell || 'N/A'}</td>
-                                                    <td className="px-4 py-2">{property?.rules || 'N/A'}</td>
+                                                    {/* <td className="px-4 py-2">{property?.listing_date || 'N/A'}</td> */}
+                                                    <td className="px-4 py-2">
+                                                        {property?.listing_date ? new Date(property.listing_date).toISOString().split("T")[0] : 'N/A'}
+                                                    </td>
+
                                                     <td>
                                                         <FontAwesomeIcon
                                                             className="h-7 w-16 cursor-pointer"
@@ -332,6 +348,11 @@ const PropotiesList = () => {
                                                             onClick={() => handleToggleChange(property.id, property.is_sell, "is_sell")}
                                                         />
                                                     </td>
+                                                    {/* <td className="px-4 py-2">{property?.rules || 'N/A'}</td> */}
+                                                    <td className="px-4 py-2">
+                                                        {Array.isArray(property.rules) ? property.rules.join(', ') : 'N/A'}
+                                                    </td>
+
                                                     <td className="px-4 py-2 flex flex-col">
                                                         {property.facilities?.map((item) => (
                                                             <span className='bg-lime-100 font-bold p-1 m-1 flex justify-center' key={item.id}>
@@ -339,7 +360,6 @@ const PropotiesList = () => {
                                                             </span>
                                                         )) || 'N/A'}
                                                     </td>
-
                                                     <td className="px-4 py-2">{property?.adults || 'N/A'}</td>
                                                     <td className="px-4 py-2">{property?.children || 'N/A'}</td>
                                                     <td className="px-4 py-2">{property?.infants || 'N/A'}</td>
