@@ -115,7 +115,7 @@ const RoleChange = () => {
             if (!isConfirmed) return; // Exit if the user cancels
     
             // Perform the API request
-            const response = await api.patch(`/rollrequest/status/${id}`, { status: newStatus });
+            const response = await api.put(`/rollrequest/update/${id}`, { status: newStatus });
     
             // Notify the user of success
             await Swal.fire({
@@ -257,14 +257,10 @@ const RoleChange = () => {
                                             {/* Action Button */}
                                             <td className="px-4 py-2">
                                                 <span
-                                                className={`px-2 py-1 cursor-pointer text-sm rounded-full ${
-                                                    role.status !== "pending"
-                                                    ? "bg-red-500 text-white"
-                                                    : "bg-green-400 text-white"
-                                                }`}
+                                                className={`px-2 py-1 cursor-pointer text-sm rounded-full bg-green-400 text-white`}
                                                 onClick={() => toggleStatus(role.id, role.status)}
                                                 >
-                                                {role.status === "pending" ? "Accept" : "Decline"}
+                                                Accept
                                                 </span>
                                             </td>
                                             

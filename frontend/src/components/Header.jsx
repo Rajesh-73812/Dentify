@@ -2,8 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import { NotificationIcon, ProfileIcon } from "./Icons";
 import { FaUser, FaSignOutAlt, FaCog } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import { generateToken, messaging } from "../Notification/firebase";
-import { onMessage } from "firebase/messaging";
+
+
 import toast, { Toaster } from "react-hot-toast";
 import api from "../utils/api";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,7 +11,7 @@ import { addNotification, clearNotifications } from "../features/notification/No
 
 const Header = () => {
   const dispatch=useDispatch()
-  const {notifications,notificationCount}=useSelector((state)=>state.notifications);
+  
   const [n, setNotifications] = useState([]);
   const [showNotifications, setShowNotifications] = useState(false);
   const [isPopupVisible, setIsPopupVisible] = useState(false);
@@ -21,69 +21,12 @@ const Header = () => {
   const navigate = useNavigate();
   const notificationRef = useRef(null);
 
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      if (isHovered) {
-        setShowCard(true);
-      }
-    }, 100);
+  
 
-    return () => clearTimeout(timeoutId);
-  }, [isHovered]);
-
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      if (!isHovered) {
-        setShowCard(false);
-      }
-    }, 100);
-
-    return () => clearTimeout(timeoutId);
-  }, [isHovered]);
+  
 
 
-  const fetchNotifications = async () => {
-    try {
-      const response = await api.get("/notifications");
-      const newNotifications = response.data;
-      setNotifications(newNotifications);
-      // setNotificationCount((prevCount) => prevCount + newNotifications.length);
-
-      // Display the most recent notification using react-hot-toast
-      if (newNotifications.length > 0) {
-        const latestNotification = newNotifications[0];
-        toast((t) => (
-          <div>
-            <strong>{latestNotification.title}</strong>
-            <p>{latestNotification.message}</p>
-          </div>
-        ), {
-          duration: 10000,
-          position: "top-right",
-        });
-        // console.log(notificationCount)
-        // setNotificationCount(newNotifications.length);
-        // console.log(notificationCount)
-      }
-    } catch (error) {
-      console.error("Error fetching notifications:", error);
-    }
-  };
-
-  useEffect(() => {
-    // Add event listener to detect clicks outside
-    const handleClickOutside = (event) => {
-      if (notificationRef.current && !notificationRef.current.contains(event.target)) {
-        setShowNotifications(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+ 
 
 
   const logout = async () => {
@@ -112,42 +55,11 @@ const Header = () => {
   };
 
 
-  const handleNotificationClick = async () => {
-    setShowNotifications(!showNotifications);
-    if (!showNotifications) {
-      await fetchNotifications();
-      // setNotificationCount(0);
-      dispatch(clearNotifications())
-      // setNotifications([])
-    }
-  };
+ 
 
-  useEffect(() => {
-    // Generate FCM token for the device
-    generateToken();
-    onMessage(messaging, (payload) => {
-      console.log("Foreground notification received:", payload);
-      const { title, body } = payload.notification;
-      dispatch(addNotification({title,message:body}))
+ 
 
-      toast((t) => (
-        <div>
-          <strong>{title}</strong>
-          <p>{body}</p>
-        </div>
-      ), {
-        duration: 1000,
-        position: "top-right",
-      });
-      setNotifications((prev) => [
-        { title, message: body },
-        ...prev,
-      ]);
-    });
-  }, []);
-
-  const token=document.cookie.split("=")[1];
-  console.log(token,"rajeshhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh")
+  
 
   return (
     <div className="bg-white h-[65px] sm:h-[80px] px-4 py-4 sm:px-6 flex items-center justify-between relative">
@@ -172,7 +84,7 @@ const Header = () => {
     <div className="relative">
       <div
         className="bg-[#f7fbff] rounded-full w-8 h-8 sm:w-11 sm:h-11 flex items-center justify-center cursor-pointer"
-        onClick={handleNotificationClick}
+        
       >
         <NotificationIcon />
       </div>
@@ -190,24 +102,8 @@ const Header = () => {
         </div>
       )} */}
 
-{notificationCount > 0 && (
-          <span className="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full px-1">
-            {notificationCount}
-          </span>
-        )}
-        {showNotifications && (
-          <div
-            ref={notificationRef}
-            className="absolute top-12 right-0 w-[220px] bg-white border border-gray-300 rounded-lg shadow-lg z-10"
-          >
-            {n.map((notif, index) => (
-              <div key={index} className="p-2 border-b last:border-none">
-                <strong>{notif.title}</strong>
-                <p>{notif.message}</p>
-              </div>
-            ))}
-          </div>
-        )}
+
+        
     </div>
 
     {/* Profile Icon with Smooth Hover Card */}

@@ -356,7 +356,7 @@ const SidebarMenu = () => {
         </SubMenu> */}
 
               {/* package */}
-              <SubMenu label="Package " active={location.pathname === "/create-package" || location.pathname === "/package-list"} icon={<IoLayersOutline />}>
+              {/* <SubMenu label="Package " active={location.pathname === "/create-package" || location.pathname === "/package-list"} icon={<IoLayersOutline />}>
                 <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
 
 
@@ -379,7 +379,7 @@ const SidebarMenu = () => {
                 >
                   List Package
                 </MenuItem>
-              </SubMenu>
+              </SubMenu> */}
 
               {/* Booking */}
               <SubMenu label="Booking " active={location.pathname === "/pending-book-list" || location.pathname === "/approved-book-list" || location.pathname === "/check-in-list" || location.pathname === "/completed-list" || location.pathname === "/cancelled-list"} icon={<CgCalendarDates />}>
