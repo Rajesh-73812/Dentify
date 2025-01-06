@@ -115,7 +115,9 @@ const RoleChange = () => {
             if (!isConfirmed) return; // Exit if the user cancels
     
             // Perform the API request
-            const response = await api.put(`/rollrequest/update/${id}`, { status: currentStatus });
+
+            const response = await api.put(`/rollrequest/update/${id}`, { status: newStatus });
+
     
             // Notify the user of success
             await Swal.fire({

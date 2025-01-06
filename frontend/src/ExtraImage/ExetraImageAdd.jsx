@@ -21,11 +21,18 @@ const ExtraImageAdd = () => {
         img: []
     });
 
+    
+
     useEffect(() => {
+        setIsLoading(true);
         if (id) {
             getExtraImage()
         }
-    }, []);
+        const timer = setTimeout(() => {
+          setIsLoading(false);
+        }, 1000);
+        return () => clearTimeout(timer);
+      }, [id, location, setIsLoading]);
 
     const getExtraImage = async () => {
         try {

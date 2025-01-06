@@ -15,6 +15,7 @@ import { faToggleOff, faToggleOn } from "@fortawesome/free-solid-svg-icons";
 
 import api from "../utils/api";
 import { StatusEntity } from "../utils/Status";
+import { useLoading } from "../Context/LoadingContext";
 
 
 const ExtraImageList = () => {
@@ -23,12 +24,12 @@ const ExtraImageList = () => {
     const [filteredImages, setFilteredImages] = useState([]);
     const [sortConfig, setSortConfig] = useState({ key: "", direction: "" });
     const [currentPage, setCurrentPage] = useState(1);
-    const [isLoading, setIsLoading] = useState(false);
+    const { isLoading, setIsLoading } = useLoading();
     const itemsPerPage = 10;
 
     useEffect(() => {
         const fetchExtraImages = async () => {
-            setIsLoading(true);
+            
             try {
                 const response = await api.get("/extra");
                 console.log(response.data);
@@ -39,12 +40,21 @@ const ExtraImageList = () => {
                     "Error fetching extra images:",
                     error.response ? error.response.data : error.message
                 );
-            } finally {
-                setIsLoading(false);
-            }
+            } 
         };
         fetchExtraImages();
     }, []);
+
+    useEffect(() => {
+        setIsLoading(true);
+        
+        const timer = setTimeout(() => {
+          setIsLoading(false);
+        }, 1000);
+        return () => clearTimeout(timer);
+      }, [ setIsLoading]);
+
+    
 
     // Search functionality
     const handleSearch = (event) => {
