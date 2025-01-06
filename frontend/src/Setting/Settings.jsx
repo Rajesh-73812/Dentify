@@ -12,68 +12,62 @@ import { NotificationContainer, NotificationManager } from 'react-notifications'
 import 'react-notifications/lib/notifications.css';
 import api from '../utils/api'
 import JoditEditor from 'jodit-react';
+import { FaEye, FaEyeSlash } from 'react-icons/fa'; 
+
 
 const Settings = () => {
-
+  const privacyEditorRef = useRef(null);
+  const termsEditorRef = useRef(null);
+  const cancellationEditorRef = useRef(null);
   const editor = useRef(null)
   const [privacycontent, setprivacyContent] = useState('')
   const [termscontent, settermscontent] = useState('')
   const [cancellationContent, setCancellationContent] = useState('')
-  const [formData, setFormData] = useState({ id: '', webname: '', weblogo: '', timezone: '', currency: '', tax: '', sms_type: '', auth_key: '', twilio_number: '', auth_token: '', acc_id: '', otp_id: '', otp_auth: '', show_property: '', one_key: '', one_hash: '', rcredit: '', rcredit: '', scredit: '', wlimit: '', privacy_policy: '', terms_conditions: '', admin_tax: '', cancellation_policy: '', refund_policy: '' });
+  const [formData, setFormData] = useState({ id: '', webname: '', weblogo: '', timezone: '', currency: '', tax: '', sms_type: '',one_key: '',  privacy_policy: '', terms_conditions: '', admin_tax: '', cancellation_policy: '', refund_policy: '' });
   const location = useLocation();
   const { isLoading, setIsLoading } = useLoading();
   const navigate = useNavigate()
+  const [showPassword, setShowPassword] = useState(false);
+  const [showApiKey, setShowApiKey] = useState(false);
+  const [showOneKey, setShowOneKey] = useState(false);
 
+  const togglePasswordVisibility = (data) => {
+    if(data === "api_key"){
+      setShowApiKey(!showApiKey);
+    }else if(data === "one_key"){
+      setShowOneKey(!showOneKey);
+    }
+  };
   const config = {
     height: 300,
     buttons: [
-      "bold",
-      "italic",
-      "underline",
-      "strikethrough",
-      "|",
-      "font",
-      "fontsize",
-      "paragraph",
-      "align",
-      "|",
-
-      "table",
-      "link",
-      "image",
-      "|",
-      "code",
-
-      "undo",
-      "redo",
-      "|",
-      "fullsize",
+      'bold',
+      'italic',
+      'underline',
+      'strikethrough',
+      '|',
+      'font',
+      'fontsize',
+      'paragraph',
+      'align',
+      '|',
+      'table',
+      'link',
+      'image',
+      '|',
+      'code',
+      'undo',
+      'redo',
+      '|',
+      'fullsize',
     ],
-
-    removeButtons: ["about"],
+    removeButtons: ['about'],
     showCharsCounter: false,
     showWordsCounter: false,
-    showXPathInStatusbar: false,
     toolbarSticky: true,
-    defaultMode: "1",
-    showXPathInStatusbar: false,
-    uploader: {
-      insertImageAsBase64URI: true,
-    },
-    filebrowser: {
-      ajax: {
-        url: "/files",
-      },
-      uploader: {
-        url: "/upload",
-      },
-    },
-    table: {
-      allowCellResize: true,
-      defaultWidth: "100%",
-      defaultCellWidth: "100px",
-      defaultCellHeight: "30px",
-    },
+    uploader: { insertImageAsBase64URI: true },
+    filebrowser: { ajax: { url: '/files' }, uploader: { url: '/upload' } },
+    table: { allowCellResize: true, defaultWidth: '100%' },
     allowResizeX: true,
     allowResizeY: true,
   };
@@ -205,12 +199,13 @@ const Settings = () => {
                     {/* time zone */}
                     <div className="flex flex-col">
                       <label htmlFor="timezone" className="text-sm font-medium text-start text-[12px] font-[Montserrat]" ><span style={{ color: 'red' }}>*</span> Select Timezone </label>
-                      <select name="timezone" id="timezone" value={formData.timezone} className="mt-1 block w-full p-4  bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm" onChange={handleChange} >
+                      <select name="timezone" id="timezone" value={formData.timezone} className="mt-1 block w-full   bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm" onChange={handleChange} >
                         <option value="" disabled selected>Select TimeZone</option>
                         <option value="asia/kolkata" >Asia/Kolkata</option>
                       </select>
                     </div>
-                    <div className="grid gap-4 w-max sm:grid-cols-1 md:grid-cols-4  mt-6">
+                    
+                    <div className="grid gap-32  w-max sm:grid-cols-1 md:grid-cols-3  mt-6">
                       {/* currency */}
                       <div className="flex flex-col">
                         <label htmlFor="currency" className="text-sm font-medium text-start text-[12px] font-[Montserrat]">
@@ -263,157 +258,63 @@ const Settings = () => {
                           placeholder="e.g 5"
                         />
                       </div>
+                    </div>
+                    
+                  </div>
+                
 
-                      {/* sms type */}
-                      <div className="flex flex-col">
+                  <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-2  mt-6">
+                    {/* 2 factor api key */}
+                    <div className="flex flex-col">
                         <label htmlFor="sms_type" className="text-sm font-medium text-start text-[12px] font-[Montserrat]">
-                          <span style={{ color: 'red' }}>*</span> Sms Type
+                          <span style={{ color: 'red' }}>*</span> 2 Factor API Key
                         </label>
-                        <select
-                          name="sms_type"
-                          id="sms_type"
-                          value={formData.sms_type}
-                          className="mt-1 block w-full p-4 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm"
+                        <div className="relative">
+                          <input
+                            name="sms_type"
+                            id="sms_type"
+                            type={showApiKey ? 'text' : 'password'}
+                            value={formData.sms_type}
+                            className="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm pr-10"
+                            onChange={handleChange}
+                            placeholder="Select or type SMS type"
+                          />
+                          <button
+                            type="button"
+                            className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5"
+                            onClick={()=>{togglePasswordVisibility("api_key")}}
+                          >
+                            {showPassword ? <FaEyeSlash /> : <FaEye />}
+                          </button>
+                        </div>
+                    </div>
+
+                    <div className="flex flex-col">
+                      <label htmlFor="one_key" className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> <span style={{ color: 'red' }}></span> User App Onesignal App Id</label>
+                      <div className='relative'>
+                        <input id="one_key" name="one_key" type={showOneKey ? 'text' : 'password'} required value={formData.one_key} className="border rounded-lg p-3 mt-1 w-full h-14 pr-10" style={{ borderRadius: '8px', border: '1px solid #EAEAFF' }}
                           onChange={handleChange}
-                        >
-                          <option value="" disabled selected>
-                            Select sms type
-                          </option>
-                          <option value="msg91">Msg91</option>
-                          <option value="twilo">Twilo</option>
-                        </select>
+                          placeholder='**'
+                        />
+                        <button type='button' onClick={()=>{togglePasswordVisibility("one_key")}} className='absolute inset-y-0 right-0 pr-3 flex  items-center text-sm leading-5'>{showPassword ? <FaEyeSlash /> : <FaEye />}</button>
                       </div>
                     </div>
-                  </div>
-                  <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-2  mt-6">
-                    {/* msg91 auth key */}
-                    <div className="flex flex-col">
-                      <label htmlFor="auth_key" className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> <span style={{ color: 'red' }}>*</span>Msg91 Auth Key</label>
-                      <input id="auth_key" name="auth_key" type="text" required value={formData.auth_key} className="border rounded-lg p-3 mt-1 w-full h-14" style={{ borderRadius: '8px', border: '1px solid #EAEAFF' }}
-                        onChange={handleChange}
-                        placeholder="*****"
-                      />
-                    </div>
-                    {/* Msg91Otp Template Id */}
-                    <div className="flex flex-col">
-                      <label htmlFor="Msg91Otp" className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> <span style={{ color: 'red' }}>*</span> Msg91 Otp Template Id </label>
-                      <input id="otp_id" name="otp_id" type="text" required value={formData.otp_id} className="border rounded-lg p-3 mt-1 w-full h-14" style={{ borderRadius: '8px', border: '1px solid #EAEAFF' }}
-                        onChange={handleChange}
-                        placeholder="*****"
-                      />
-                    </div>
-
-                  </div>
-                  <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-3  mt-6">
-                    {/* *Twilio Account SID */}
-                    <div className="flex flex-col">
-                      <label htmlFor="acc_id" className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> <span style={{ color: 'red' }}>*</span>Twilio Account SID</label>
-                      <input id="acc_id" name="acc_id" type="text" required value={formData.acc_id} className="border rounded-lg p-3 mt-1 w-full h-14" style={{ borderRadius: '8px', border: '1px solid #EAEAFF' }}
-                        onChange={handleChange}
-                        placeholder='*****'
-                      />
-                    </div>
-
-                    {/* Twilio Auth Token */}
-                    <div className="flex flex-col">
-                      <label htmlFor="auth_token" className="text-sm font-medium text-start text-[12px] font-[Montserrat]"><span style={{ color: 'red' }}>*</span>Twilio Auth Token</label>
-                      <input id="auth_token" name="auth_token" type="text" required value={formData.auth_token} className="border rounded-lg p-3 mt-1 " style={{ borderRadius: '8px', border: '1px solid #EAEAFF' }}
-                        onChange={handleChange}
-                        placeholder='*****'
-                      />
-                    </div>
-
-                    {/* Twilio Phone Number */}
-                    <div className="flex flex-col">
-                      <label htmlFor="twilio_number" className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> <span style={{ color: 'red' }}>*</span>Twilio Phone Number</label>
-                      <input id="twilio_number" name="twilio_number" type="text" required value={formData.twilio_number} className="border rounded-lg p-3 mt-1 " style={{ borderRadius: '8px', border: '1px solid #EAEAFF' }}
-                        onChange={handleChange}
-                        placeholder='*****'
-                      />
-                    </div>
-                  </div>
-
-                  <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-2  mt-6">
-                    {/** Otp Auth In Signup ? */}
-                    <div className="flex flex-col">
-                      <label htmlFor="otp_auth" className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> <span style={{ color: 'red' }}>*</span> Show Add Property Button ? </label>
-                      <input id="otp_auth" name="otp_auth" type="text" required value={formData.otp_auth} className="border rounded-lg p-3 mt-1 w-full h-14" style={{ borderRadius: '8px', border: '1px solid #EAEAFF' }}
-                        onChange={handleChange}
-                        placeholder='*****'
-                      />
-                    </div>
-
-                    {/** Show Add PropertyButton ? */}
-                    <div className="flex flex-col">
-                      <label htmlFor="show_property" className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> <span style={{ color: 'red' }}>*</span> Show Add Property Button ? </label>
-                      <input id="show_property" name="show_property" type="text" value={formData.show_property} required className="border rounded-lg p-3 mt-1 w-full h-14" style={{ borderRadius: '8px', border: '1px solid #EAEAFF' }}
-                        onChange={handleChange}
-                        placeholder='*****'
-                      />
-                    </div>
-                  </div>
-
-                  <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-2  mt-6">
-                    {/** User App OnesignalAppId*/}
-                    <div className="flex flex-col">
-                      <label htmlFor="one_key" className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> <span style={{ color: 'red' }}>*</span> User App Onesignal App Id</label>
-                      <input id="one_key" name="one_key" type="text" required value={formData.one_key} className="border rounded-lg p-3 mt-1 w-full h-14" style={{ borderRadius: '8px', border: '1px solid #EAEAFF' }}
-                        onChange={handleChange}
-                        placeholder='*****'
-                      />
-                    </div>
-
-                    {/** User App Onesignal RestApiKey */}
-                    <div className="flex flex-col">
-                      <label htmlFor="one_hash" className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> <span style={{ color: 'red' }}>*</span> User App Onesignal Rest Api Key </label>
-                      <input id="one_hash" name="one_hash" type="text" required value={formData.one_hash} className="border rounded-lg p-3 mt-1 w-full h-14" style={{ borderRadius: '8px', border: '1px solid #EAEAFF' }}
-                        onChange={handleChange}
-                        placeholder='*****'
-                      />
-                    </div>
-                  </div>
-
-                  <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-3  mt-6">
-                    {/* * SignUpCredit*/}
-                    <div className="flex flex-col">
-                      <label htmlFor="scredit" className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> <span style={{ color: 'red' }}>*</span> Sign Up Credit</label>
-                      <input id="scredit" name="scredit" type="text" required value={formData.scredit} className="border rounded-lg p-3 mt-1 " style={{ borderRadius: '8px', border: '1px solid #EAEAFF' }}
-                        onChange={handleChange}
-                        placeholder='*****'
-                      />
-                    </div>
-
-                    {/* * ReferCredit*/}
-                    <div className="flex flex-col">
-                      <label htmlFor="rcredit" className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> <span style={{ color: 'red' }}>*</span> Refer Credit</label>
-                      <input id="rcredit" name="rcredit" type="text" required value={formData.rcredit} className="border rounded-lg p-3 mt-1 " style={{ borderRadius: '8px', border: '1px solid #EAEAFF' }}
-                        onChange={handleChange}
-                        placeholder='*****'
-                      />
-                    </div>
-
-                    {/* *  Payout Withdraw Limit*/}
-                    <div className="flex flex-col">
-                      <label htmlFor="wlimit" className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> <span style={{ color: 'red' }}>*</span> Payout Withdraw Limit </label>
-                      <input id="wlimit" name="wlimit" type="text" required value={formData.wlimit} className="border rounded-lg p-3 mt-1 " style={{ borderRadius: '8px', border: '1px solid #EAEAFF' }}
-                        onChange={handleChange}
-                        placeholder='*****'
-                      />
-                    </div>
+                  
                   </div>
 
                   <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-2  mt-6">
                     {/* * rich text editor*/}
                     <div className="flex flex-col">
                       <label htmlFor="wlimit" className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> <span style={{ color: 'red' }}>*</span> Terms & Conditions</label>
-                      <JoditEditor ref={editor} value={privacycontent} config={config} onBlur={newContent => setprivacyContent(newContent)}>
+                      {/* <JoditEditor ref={editor} value={privacycontent} config={config} onBlur={newContent => setprivacyContent(newContent)}> */}
+                      <JoditEditor ref={privacyEditorRef} value={privacycontent} config={config} onBlur={newContent => setprivacyContent(newContent)}>
 
                       </JoditEditor>
                     </div>
 
                     <div className="flex flex-col">
                       <label htmlFor="wlimit" className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> <span style={{ color: 'red' }}>*</span> Privacy & Policy </label>
-                      <JoditEditor ref={editor} value={termscontent} config={config} onBlur={newContent => settermscontent(newContent)}>
+                      <JoditEditor ref={termsEditorRef} value={termscontent} config={config} onBlur={newContent => settermscontent(newContent)}>
 
                       </JoditEditor>
                     </div>
@@ -422,7 +323,7 @@ const Settings = () => {
                   <div clasName="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-2  mt-6">
                     <div className='flex flex-col'>
                       <label htmlFor="cancellation_policy" className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> <span style={{ color: 'red' }}>*</span> Cancellation Policy</label>
-                      <JoditEditor ref={editor} value={cancellationContent} config={config} onBlur={newContent => setCancellationContent(newContent)}>
+                      <JoditEditor ref={cancellationEditorRef} value={cancellationContent} config={config} onBlur={newContent => setCancellationContent(newContent)}>
 
                       </JoditEditor>
                     </div>

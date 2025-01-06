@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { json, Link, useLocation, useNavigate } from "react-router-dom";
 import SidebarMenu from "../components/SideBar";
 import axios from "axios";
 import ImageUploader from "../common/ImageUploader";
@@ -8,7 +8,8 @@ import Select from 'react-select';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import api from "../utils/api";
 import { RxCrossCircled } from "react-icons/rx";
-import { NotificationManager } from "react-notifications";
+import { NotificationContainer, NotificationManager } from "react-notifications";
+import 'react-notifications/lib/notifications.css';
 
 
 const PropertiesAdd = () => {
@@ -20,6 +21,7 @@ const PropertiesAdd = () => {
   const id = location.state ? location.state.id : null;
   const [error, setError] = useState("");
   const [selectedOption, setSelectedOption] = useState(null);
+  const [currentRule, setCurrentRule] = useState('');
   const [formData, setFormData] = useState({
     id: 0 || null,
     title: '',
@@ -49,7 +51,7 @@ const PropertiesAdd = () => {
     infants: null,
     pets: null,
   });
-
+// console.log(formData)
   useEffect(() => {
     if (id) {
       getProperty();
@@ -60,7 +62,7 @@ const PropertiesAdd = () => {
     try {
       const response = await axios.get(`http://localhost:5000/properties/${id}`)
       const Property = response.data;
-      console.log("Property Data: ", Property);
+      // console.log("Property Data: ", Property);
       const rate = Math.min(Math.max(Property.rate, 0), 5);
       setFormData({
         id,
@@ -91,7 +93,7 @@ const PropertiesAdd = () => {
           }
         })(),
         country_id: Property.country_id,
-        plimit: Property.plimit,
+        
         is_sell: Property.is_sell,
         adults: Property.adults,
         children: Property.children,
@@ -103,7 +105,6 @@ const PropertiesAdd = () => {
     }
   }
 
-  const [currentRule, setCurrentRule] = useState('');
 
   const handleKeyPress = (e) => {
     if (e.key === 'Enter' && currentRule.trim() !== '') {
@@ -116,7 +117,7 @@ const PropertiesAdd = () => {
     }
   };
 
-  console.log('Rules before submission:', formData.rules);
+  // console.log('Rules before submission:', formData.rules);
 
   const handleRemoveRule = (index) => {
     setFormData((prevData) => ({
@@ -157,40 +158,56 @@ const PropertiesAdd = () => {
     }));
 
   };
-  console.log(formData, "from formdata");
+  // console.log(formData, "from formdata");
   const handleSubmit = async (e) => {
     e.preventDefault();
+  
+    // Check for required fields like image
     if (!formData.image) {
+      NotificationManager.removeAll();
       NotificationManager.error('Please upload an image', 'Error');
-      setError("Please upload an image");
+      setError('Please upload an image');
       return;
     }
+  
+    // Prepare the data to submit
     const formDataToSubmit = {
       ...formData,
       rules: JSON.stringify(formData.rules),
     };
-    console.log('FormData to submit:', formDataToSubmit);
-    console.log(formData, "from formdata");
-
-    const successMessage = id ? 'Property Updated Succesfully!' : 'Property Added Successfully!'
+  
+    const successMessage = id ? 'Property Updated Successfully!' : 'Property Added Successfully!';
+  
     try {
       const response = await api.post('/properties/upsert', formDataToSubmit, { withCredentials: true });
-      console.log(response.data);
-
-      if (response.data.status === 200 || response.data.status === 201) {
-
-        navigate("/property-list");
-
-        // NotificationManager.removeAll();
-        // NotificationManager.success(successMessage, 'Success');
+      console.log(response)
+      // Check for success response
+      if (response?.status === 200 || response?.status === 201) {
+        NotificationManager.removeAll();
+        NotificationManager.success(successMessage);
+  
+        // Delay navigation slightly to ensure the toast is shown
+        setTimeout(() => {
+          navigate('/property-list');
+        }, 2000);
       } else {
-        NotificationManager.error('Error', 'Error');
+        // Handle unexpected response
+        NotificationManager.removeAll();
+        NotificationManager.error(response?.data?.message || 'An unexpected error occurred', 'Error');
       }
     } catch (error) {
-      console.error("Error:", error);
-      NotificationManager.error('Error', 'Error');
+      console.error('Error:', error);
+  
+      // Handle different error scenarios
+      NotificationManager.removeAll();
+      if (error?.response?.data?.message) {
+        NotificationManager.error(error.response.data.message, 'Error');
+      } else {
+        NotificationManager.error('An error occurred. Please try again later.', 'Error');
+      }
     }
   };
+  
 
   return (
     <div>
@@ -368,7 +385,7 @@ const PropertiesAdd = () => {
                     </div>
                   </div>
 
-                  <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-3  mt-6">
+                  <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-2  mt-6">
                     {/*property country*/}
                     <div className="flex flex-col">
                       <label
@@ -421,29 +438,7 @@ const PropertiesAdd = () => {
                       </select>
                     </div>
 
-                    {/* Property Total Person Allowed? */}
-                    <div className="flex flex-col">
-                      <label
-                        htmlFor="PropertyTotalPersonAllowed"
-                        className="text-sm font-medium text-start text-[12px] font-[Montserrat]"
-                      >
-                        Property Total Person Allowed?
-                      </label>
-                      <input
-                        id="PropertyTotalPersonAllowed?"
-                        name="plimit"
-                        type="number"
-                        required
-                        value={formData.plimit}
-                        onChange={handleChange}
-                        className="border rounded-lg p-3 mt-1 w-full h-14"
-                        style={{
-                          borderRadius: "8px",
-                          border: "1px solid #EAEAFF",
-                        }}
-                        placeholder="Enter Person Limit "
-                      />
-                    </div>
+                    
                   </div>
 
                   <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-2  mt-6">
@@ -693,7 +688,7 @@ const PropertiesAdd = () => {
                           Mobile Number
                         </label>
                         <input
-                          type="text"
+                          type="number"
                           id="mobile"
                           name="mobile"
                           value={formData.mobile}
@@ -809,6 +804,7 @@ const PropertiesAdd = () => {
             </div>
           </div>
         </main>
+        <NotificationContainer />
       </div>
     </div>
   );
