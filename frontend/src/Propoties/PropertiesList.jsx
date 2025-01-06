@@ -113,7 +113,6 @@ const PropotiesList = () => {
             console.error(`Invalid arguments: ID=${id}, currentStatus=${currentStatus}`);
             return;
         }
-
         try {
             await StatusEntity("Property", id, currentStatus, setFilteredProperties, filteredProperties, field);
         } catch (error) {
@@ -121,6 +120,18 @@ const PropotiesList = () => {
         }
     };
 
+    const handlePanoramaToggle = async (id, currentStatus, field) => {
+        console.log(`Toggling ${field} for ID: ${id} with current status: ${currentStatus}`);
+        if (!id || currentStatus === undefined) {
+            console.error(`Invalid arguments: ID=${id}, currentStatus=${currentStatus}`);
+            return;
+        }
+        try {
+            await StatusEntity("PropertyPanorama", id, currentStatus, setFilteredProperties, filteredProperties, field);
+        } catch (error) {
+            console.error("Error toggling panorama status:", error);
+        }
+    };
 
     return (
         <div>
@@ -149,6 +160,13 @@ const PropotiesList = () => {
                                             </th>
                                             <th className="px-4 py-3 min-w-[190px]">
                                                 Property Image
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('image')} />
+                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('image')} />
+                                                </div>
+                                            </th>
+                                            <th className="px-4 py-3 min-w-[190px]">
+                                                Is Panorama
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('image')} />
                                                     <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('image')} />
@@ -329,6 +347,14 @@ const PropotiesList = () => {
                                                         ) : (
                                                             <img src={'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg'} height={50} width={50} loading="lazy" alt="" />
                                                         )}
+                                                    </td>
+                                                    <td>
+                                                        <FontAwesomeIcon
+                                                            className="h-7 w-16 cursor-pointer"
+                                                            style={{ color: property.is_panorama === 1 ? "#0064DC" : "#e9ecef" }}
+                                                            icon={property.is_panorama === 1 ? faToggleOn : faToggleOff}
+                                                            onClick={() => handlePanoramaToggle(property.id, property.is_panorama, "is_panorama")}
+                                                        />
                                                     </td>
                                                     <td className="px-4 py-2">{property.title || 'N/A'}</td>
                                                     <td className="px-4 py-2">{property.category?.title || 'N/A'}</td>
