@@ -4,7 +4,7 @@ import CountryHeader from './CountryHeader';
 import { GoArrowDown, GoArrowUp } from 'react-icons/go';
 import { FaPen, FaTrash } from "react-icons/fa";
 import { DeleteEntity } from '../utils/Delete';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { handleSort } from '../utils/sorting';
 import api from '../utils/api';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
@@ -13,6 +13,8 @@ import { StatusEntity } from '../utils/Status';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faToggleOff, faToggleOn } from '@fortawesome/free-solid-svg-icons';
 import CountryCodes from "../utils/CountryCodes";
+import Loader from '../common/Loader';
+import { useLoading } from '../Context/LoadingContext';
 
 const CountryList = () => {
     const navigate = useNavigate();
@@ -21,10 +23,20 @@ const CountryList = () => {
     const [sortConfig, setSortConfig] = useState({ key: '', direction: '' });
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
+    const location = useLocation()
+    const { isLoading, setIsLoading } = useLoading();
 
     useEffect(() => {
         fetchCountries();
     }, []);
+
+    useEffect(() => {
+        setIsLoading(true);
+        const timer = setTimeout(() => {
+          setIsLoading(false);
+        }, 1000);
+        return () => clearTimeout(timer);
+      }, [ location, setIsLoading]);
 
     const fetchCountries = async () => {
         try {
@@ -89,6 +101,7 @@ const CountryList = () => {
 
     return (
         <div>
+            {isLoading && <Loader />}
             <div className="h-screen flex">
 
                 <div className="flex flex-1 flex-col bg-[#f7fbff]">

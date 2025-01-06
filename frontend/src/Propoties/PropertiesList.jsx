@@ -11,6 +11,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faToggleOff, faToggleOn } from "@fortawesome/free-solid-svg-icons";
 import api from '../utils/api';
 import { StatusEntity } from '../utils/Status';
+import Loader from '../common/Loader';
+import { useLoading } from '../Context/LoadingContext';
 
 const PropotiesList = () => {
     const [properties, setProperties] = useState([]);
@@ -98,6 +100,17 @@ const PropotiesList = () => {
         }
     }
 
+    const { isLoading, setIsLoading } = useLoading();
+
+    useEffect(() => {
+        setIsLoading(true);
+        
+        const timer = setTimeout(() => {
+          setIsLoading(false);
+        }, 1000);
+        return () => clearTimeout(timer);
+      }, [ setIsLoading]);
+
     // Pagination calculations
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -135,6 +148,7 @@ const PropotiesList = () => {
 
     return (
         <div>
+            {isLoading && <Loader />}
             <div className="h-screen flex">
                 {/* Sidebar */}
 

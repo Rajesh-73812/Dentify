@@ -153,10 +153,10 @@ const ApprovedBook = () => {
                                     <tbody className="divide-y divide-gray-200">
                                         {currentApprove.length > 0 ? (
                                             currentApprove.map((approve, index) => (
-                                                <tr key={index + 1} className='h-[70px]'>
-                                                    <td className="px-4 py-1">{index + 1 + indexOfFirst}</td>
-                                                    <td className="px-4 py-1">{approve?.prop_title || 'N/A'}</td>
-                                                    <td className="px-4 py-1">
+                                                <tr key={index + 1} className=''>
+                                                    <td className="text-center py-1">{index + 1 + indexOfFirst}</td>
+                                                    <td className="text-center py-1">{approve?.prop_title || 'N/A'}</td>
+                                                    <td className="px-4 flex justify-center py-1">
                                                         {approve.prop_img ? (
                                                             <img src={approve.prop_img} className="w-10 h-10 object-cover rounded-full" alt="Coupon"
                                                                 onError={(e) => {
@@ -168,13 +168,13 @@ const ApprovedBook = () => {
                                                         )}
 
                                                     </td>
-                                                    <td className="px-4 py-1">{approve?.prop_price || 'N/A'}</td>
-                                                    <td className="px-4 py-1">{approve?.total_day || 'N/A'}</td>
-                                                    <td className="px-4 py-1 d-flex">
+                                                    <td className="text-center py-1">{approve?.prop_price || 'N/A'}</td>
+                                                    <td className="text-center py-1">{approve?.total_day || 'N/A'}</td>
+                                                    <td className="px-4 py-1 ">
                                                         <NotificationContainer />
-                                                        <span className='px-2 py-1 text-sm rounded-full bg-[#2dce89] cursor-pointer text-white mr-2' onClick={() => openModal(approve)}>View Details</span>
-                                                        <span className=' px-2 py-1  text-sm rounded-full bg-cyan-400 cursor-pointer text-white mr-2' onClick={() => { navigateApprove(approve.id, 'Check_in') }}>Check In</span>
-                                                        <span className='px-2 py-1 text-sm rounded-full bg-[#f5365c] cursor-pointer text-white mr-2' onClick={openModal2}>Cancelled</span>
+                                                        <span className='px-2 py-1 font-medium text-[12px] rounded-full bg-[#2dce89] cursor-pointer text-white mr-2' onClick={() => openModal(approve)}>View Details</span>
+                                                        <span className=' px-2 py-1  font-medium text-[12px] rounded-full bg-cyan-400 cursor-pointer text-white mr-2' onClick={() => { navigateApprove(approve.id, 'Check_in') }}>Check In</span>
+                                                        <span className='px-2 py-1 font-medium text-[12px] rounded-full bg-[#f5365c] cursor-pointer text-white mr-2' onClick={openModal2}>Cancelled</span>
                                                     </td>
                                                 </tr>
                                             ))

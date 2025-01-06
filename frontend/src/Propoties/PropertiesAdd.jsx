@@ -9,6 +9,8 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import api from "../utils/api";
 import { RxCrossCircled } from "react-icons/rx";
 import { NotificationManager } from "react-notifications";
+import Loader from "../common/Loader";
+import { useLoading } from "../Context/LoadingContext";
 
 
 const PropertiesAdd = () => {
@@ -42,7 +44,7 @@ const PropertiesAdd = () => {
     listing_date: '',
     add_user_id: 1,
     rules: [],
-    country_id: null,  // New country field
+    country_id: null,  
     is_sell: 0,
     adults: null,
     children: null,
@@ -150,6 +152,19 @@ const PropertiesAdd = () => {
     }));
   };
 
+  const { isLoading, setIsLoading } = useLoading();
+
+  
+
+  useEffect(() => {
+    setIsLoading(true);
+    
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, [ location, setIsLoading]);
+
   const handleImageUploadSuccess = (imageUrl) => {
     setFormData((prevData) => ({
       ...prevData,
@@ -194,6 +209,7 @@ const PropertiesAdd = () => {
 
   return (
     <div>
+      {isLoading && <Loader />}
       <div className="flex bg-[#f7fbff]">
         {/* Sidebar */}
 
