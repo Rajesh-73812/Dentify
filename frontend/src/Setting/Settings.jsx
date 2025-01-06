@@ -18,7 +18,8 @@ const Settings = () => {
   const editor = useRef(null)
   const [privacycontent, setprivacyContent] = useState('')
   const [termscontent, settermscontent] = useState('')
-  const [formData, setFormData] = useState({ id: '', webname: '', weblogo: '', timezone: '', currency: '', tax: '', sms_type: '', auth_key: '', twilio_number: '', auth_token: '', acc_id: '', otp_id: '', otp_auth: '', show_property: '', one_key: '', one_hash: '', rcredit: '', rcredit: '', scredit: '', wlimit: '', privacy_policy: '', terms_conditions: '', admin_tax: '' });
+  const [cancellationContent, setCancellationContent] = useState('')
+  const [formData, setFormData] = useState({ id: '', webname: '', weblogo: '', timezone: '', currency: '', tax: '', sms_type: '', auth_key: '', twilio_number: '', auth_token: '', acc_id: '', otp_id: '', otp_auth: '', show_property: '', one_key: '', one_hash: '', rcredit: '', rcredit: '', scredit: '', wlimit: '', privacy_policy: '', terms_conditions: '', admin_tax: '', cancellation_policy: '', refund_policy: '' });
   const location = useLocation();
   const { isLoading, setIsLoading } = useLoading();
   const navigate = useNavigate()
@@ -91,6 +92,7 @@ const Settings = () => {
           });
           setprivacyContent(settingsData.privacy_policy);
           settermscontent(settingsData.terms_conditions);
+          setCancellationContent(settingsData.cancellation_policy);
         }
       } catch (error) {
         console.error("Error fetching settings:", error.response?.data || error.message);
@@ -131,12 +133,13 @@ const Settings = () => {
 
     // Update formData with editor content
     const privacyPolicyText = new DOMParser().parseFromString(privacycontent, 'text/html').body.innerText;
-
     const termsConditionsText = new DOMParser().parseFromString(termscontent, 'text/html').body.innerText;
+    const cancellationPolicyText = new DOMParser().parseFromString(cancellationContent, 'text/html').body.innerText;
     const updatedData = {
       ...formData,
       privacy_policy: privacyPolicyText,
       terms_conditions: termsConditionsText,
+      cancellation_policy: cancellationPolicyText,
     };
 
     try {
@@ -416,15 +419,22 @@ const Settings = () => {
                     </div>
                   </div>
 
+                  <div clasName="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-2  mt-6">
+                    <div className='flex flex-col'>
+                      <label htmlFor="cancellation_policy" className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> <span style={{ color: 'red' }}>*</span> Cancellation Policy</label>
+                      <JoditEditor ref={editor} value={cancellationContent} config={config} onBlur={newContent => setCancellationContent(newContent)}>
 
-                {/* Action Buttons */}
-                <div className="flex justify-start mt-6 gap-3">
-                  <button  type="submit" className=" py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 w-[150px] h-12 font-[Montserrat] font-bold" style={{ borderRadius: "8px", }} >Update Setting </button>
-                </div>
-              </form>
+                      </JoditEditor>
+                    </div>
+                  </div>
+                  {/* Action Buttons */}
+                  <div className="flex justify-start mt-6 gap-3">
+                    <button type="submit" className=" py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 w-[150px] h-12 font-[Montserrat] font-bold" style={{ borderRadius: "8px", }} >Update Setting </button>
+                  </div>
+                </form>
+              </div>
             </div>
           </div>
-        </div>
 
         </main>
         <NotificationContainer />

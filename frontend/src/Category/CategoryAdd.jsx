@@ -17,6 +17,7 @@ const CategoryAdd = () => {
   const id = location.state ? location.state.id : null;
   console.log(id, "form id")
   const { isLoading, setIsLoading } = useLoading();
+  const [error, setError] = useState("");
   const [formData, setFormData] = useState({
     id: id || null,
     title: '',
@@ -74,6 +75,12 @@ const CategoryAdd = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!formData.img) {
+      setError("Image is required.");
+      return;
+    }
+
     // console.log("Form submitted:", formData);
     const url = `http://localhost:5000/categories/upsert`;
     const successMessage = id ? 'Category Updated Succesfully!' : 'Category Added Successfully!'
@@ -138,6 +145,7 @@ const CategoryAdd = () => {
                           />
                         </div>
                       )}
+                      {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
                     </div>
                   </div>
 

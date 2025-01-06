@@ -18,12 +18,13 @@ const PropertiesAdd = () => {
   const navigate = useNavigate();
   const location = useLocation()
   const id = location.state ? location.state.id : null;
-
+  const [error, setError] = useState("");
   const [selectedOption, setSelectedOption] = useState(null);
   const [formData, setFormData] = useState({
     id: 0 || null,
     title: '',
     image: '',
+    is_panorama: null,
     price: null,
     status: null,
     address: '',
@@ -60,10 +61,12 @@ const PropertiesAdd = () => {
       const response = await axios.get(`http://localhost:5000/properties/${id}`)
       const Property = response.data;
       console.log("Property Data: ", Property);
+      const rate = Math.min(Math.max(Property.rate, 0), 5);
       setFormData({
         id,
         title: Property.title,
         image: Property.image,
+        is_panorama: Property.is_panorama,
         price: Property.price,
         status: Property.status,
         address: Property.address,
@@ -157,6 +160,11 @@ const PropertiesAdd = () => {
   console.log(formData, "from formdata");
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!formData.image) {
+      NotificationManager.error('Please upload an image', 'Error');
+      setError("Please upload an image");
+      return;
+    }
     const formDataToSubmit = {
       ...formData,
       rules: JSON.stringify(formData.rules),
@@ -222,7 +230,7 @@ const PropertiesAdd = () => {
                 }}
               >
                 <form className="mt-4" onSubmit={handleSubmit}>
-                  <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-3 mt-6">
+                  <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-4 mt-6">
                     {/* property title */}
                     <div className="flex flex-col">
                       <label
@@ -259,7 +267,21 @@ const PropertiesAdd = () => {
                       <ImageUploader
                         onUploadSuccess={handleImageUploadSuccess}
                       />
+                      {error && (<p className="text-red-500 text-sm mt-2">{error}</p>)}
                     </div>
+
+                    {/* property panorama */}
+                    <div className="flex flex-col">
+                      <label htmlFor="is_panorama" className="text-sm font-medium text-start text-[12px] font-[Montserrat]">
+                        Is Panorama
+                      </label>
+                      <select name="is_panorama" value={formData.is_panorama} onChange={handleChange} id="is_panorama" className="mt-1 block w-full   bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm"  >
+                        <option value="" disabled selected>Select Panorama</option>
+                        <option value={1}>Yes</option>
+                        <option value={0}>No</option>
+                      </select>
+                    </div>
+
                     {/* property price per night */}
                     <div className="flex flex-col">
                       <label
@@ -553,7 +575,7 @@ const PropertiesAdd = () => {
                       </div>
 
                       {/* Property Rating */}
-                      <div>
+                      {/* <div>
                         <label
                           htmlFor="rate"
                           className="text-sm font-medium float-left text-[12px] font-[Montserrat]"
@@ -569,6 +591,35 @@ const PropertiesAdd = () => {
                           placeholder="Enter Property Rating"
                           onChange={handleChange}
                         />
+                      </div> */}
+
+                      <div>
+                        <label
+                          htmlFor="rate"
+                          className="text-sm font-medium float-left text-[12px] font-[Montserrat]"
+                        >
+                          Property Rating
+                        </label>
+                        <input
+                          type="number"
+                          id="rate"
+                          value={formData.rate || ""} // Ensure the field is not null
+                          name="rate"
+                          className="border rounded-lg p-3 mt-1 w-full focus:ring-blue-500 focus:border-blue-500"
+                          placeholder="Enter Property Rating"
+                          onChange={(e) => {
+                            const value = Math.min(Number(e.target.value), 5); // Limit to 5
+                            setFormData((prevData) => ({
+                              ...prevData,
+                              rate: value,
+                            }));
+                          }}
+                        />
+                        {formData.rate > 5 && (
+                          <span className="text-red-500 text-xs">
+                            Rating cannot be more than 5.
+                          </span>
+                        )}
                       </div>
 
                       {/* Property Type */}
