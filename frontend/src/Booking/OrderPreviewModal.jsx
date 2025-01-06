@@ -4,7 +4,7 @@ import CameraAltOutlinedIcon from '@mui/icons-material/CameraAltOutlined';
 import { generateInvoicePdf } from '../utils/pdfUtils';
 
 const OrderPreviewModal = ({ isOpen, closeModal,selectedProperty, downloadModalAsImage }) => {
-    // console.log(selectedProperty)
+    console.log(selectedProperty)
     if (!isOpen) return null;
 
     const PdfFormat=()=>{
@@ -15,7 +15,7 @@ const OrderPreviewModal = ({ isOpen, closeModal,selectedProperty, downloadModalA
             <div className="fixed inset-0 bg-gray-500/75 transition-opacity" aria-hidden="true" ></div>
             <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
                 <div className="flex min-h-full items-center justify-center p-4 text-center sm:items-center sm:p-0">
-                    <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-4xl">
+                    <div className="relative transform transition-transform duration-300 ease-in-out overflow-hidden rounded-lg bg-white text-left shadow-xl  sm:my-8 sm:w-full sm:max-w-2xl">
                         <div className="bg-white px-6 py-4">
                             <h3 className="text-lg font-semibold text-gray-900" id="modal-title">Order Preview</h3>
                             <button
@@ -30,9 +30,9 @@ const OrderPreviewModal = ({ isOpen, closeModal,selectedProperty, downloadModalA
                             {/* Order Details */}
                             <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-4 ">
                                 <div className="text-sm font-medium text-gray-700">Order No:</div>
-                                <div>#5</div>
+                                <div>#{selectedProperty.id}</div>
                                 <div className="text-sm font-medium text-gray-700">Order date:</div>
-                                <div>25-11-2024</div>
+                                <div>{selectedProperty.book_date}</div>
                                 <div className="text-sm font-medium text-gray-700">Mobile Number:</div>
                                 <div>+916305836115</div>
                                 <div className="text-sm font-medium text-gray-700">Customer Name:</div>
@@ -54,19 +54,19 @@ const OrderPreviewModal = ({ isOpen, closeModal,selectedProperty, downloadModalA
                                     <tbody>
                                         <tr className="border-b">
                                             <td className="px-4 py-2 font-medium text-gray-700">Subtotal</td>
-                                            <td className="px-4 py-2 text-right">30,000 ₹</td>
+                                            <td className="px-4 py-2 text-right">{selectedProperty.subtotal} ₹</td>
                                         </tr>
                                         <tr className="border-b">
                                             <td className="px-4 py-2 font-medium text-gray-700">Total Day</td>
-                                            <td className="px-4 py-2 text-right">3 Days</td>
+                                            <td className="px-4 py-2 text-right">{selectedProperty.total_day} Days</td>
                                         </tr>
                                         <tr className="border-b">
                                             <td className="px-4 py-2 font-medium text-gray-700">Tax</td>
-                                            <td className="px-4 py-2 text-right">1,500 ₹</td>
+                                            <td className="px-4 py-2 text-right">{selectedProperty.tax} ₹</td>
                                         </tr>
                                         <tr>
                                             <td className="px-4 py-2 font-medium text-gray-700">Net Amount (Paid)</td>
-                                            <td className="px-4 py-2 text-right">0 ₹</td>
+                                            <td className="px-4 py-2 text-right">{selectedProperty.total} ₹</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -84,19 +84,25 @@ const OrderPreviewModal = ({ isOpen, closeModal,selectedProperty, downloadModalA
                                         </tr>
                                         <tr className="border-b">
                                             <td className="px-4 py-2 font-medium text-gray-700">Property Title?</td>
-                                            <td className="px-4 py-2 text-right">3 Days</td>
+                                            <td className="px-4 py-2 text-right">{selectedProperty.prop_title}</td>
                                         </tr>
                                         <tr className="border-b">
                                             <td className="px-4 py-2 font-medium text-gray-700">Property Image?</td>
-                                            <td className="px-4 py-2 text-right">1,500 ₹</td>
+                                            <td className="px-4 py-2 text-right">
+                                                {selectedProperty.prop_img ? (
+                                                <img src={selectedProperty.prop_img} alt="Property Image" />
+                                                ) : (
+                                                <img src="default-image.jpg" alt="Default Property Image" />
+                                                )}
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td className="px-4 py-2 font-medium text-gray-700">Property Check In Date?</td>
-                                            <td className="px-4 py-2 text-right">0 ₹</td>
+                                            <td className="px-4 py-2 text-right">{selectedProperty.check_in}</td>
                                         </tr>
                                         <tr>
                                             <td className="px-4 py-2 font-medium text-gray-700">Property Check Out Date?</td>
-                                            <td className="px-4 py-2 text-right">0 ₹</td>
+                                            <td className="px-4 py-2 text-right">{selectedProperty.check_out}</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -120,11 +126,11 @@ const OrderPreviewModal = ({ isOpen, closeModal,selectedProperty, downloadModalA
                                     </div>
                                     <div className="flex flex-col">
                                         <span className="text-sm font-medium text-start text-[12px] font-[Montserrat]">Transaction Id:</span>
-                                        <span>#AD9DEND070</span>
+                                        <span>{selectedProperty.transaction_id}</span>
                                     </div>
                                     <div className="flex flex-col">
                                         <span className="text-sm font-medium text-start text-[12px] font-[Montserrat]">Booking Status:</span>
-                                        <span>Booked</span>
+                                        <span>{selectedProperty.book_status}</span>
                                     </div>
                                 </div>
                             </div>

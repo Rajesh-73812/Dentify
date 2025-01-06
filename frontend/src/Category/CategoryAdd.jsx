@@ -101,7 +101,7 @@ const CategoryAdd = () => {
       console.error("Error submitting Category:", error);
       NotificationManager.error("Error submitting Category:", error);
     }
-  };
+  }; 
   return (
     <div>
       {isLoading && <Loader />}
