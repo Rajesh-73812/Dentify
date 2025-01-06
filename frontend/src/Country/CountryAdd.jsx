@@ -10,6 +10,7 @@ import ImageUploader from "../common/ImageUploader";
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 import api from "../utils/api";
+import CountryCodes from "../utils/CountryCodes";
 
 const CountryAdd = () => {
   const navigate = useNavigate();
@@ -21,6 +22,7 @@ const CountryAdd = () => {
     title: "",
     img: "",
     status: 0,
+    currency: "",
   });
 
   useEffect(() => {
@@ -43,6 +45,7 @@ const CountryAdd = () => {
         title: country.title,
         img: country.img,
         status: country.status,
+        currency: country.currency,
       });
     } catch (error) {
       console.error("Error fetching country data:", error);
@@ -64,13 +67,13 @@ const CountryAdd = () => {
       img: imageUrl,
     }));
   };
-  
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const apiEndpoint = id  ? `http://localhost:5000/countries/upsert`  : `http://localhost:5000/countries/upsert`;
+      const apiEndpoint = id ? `http://localhost:5000/countries/upsert` : `http://localhost:5000/countries/upsert`;
 
       const method = id ? "post" : "post";
 
@@ -79,14 +82,14 @@ const CountryAdd = () => {
       });
 
       const successMessage = id ? "Country updated successfully!" : "Country added successfully!";
-      if(response.status === 200 || response.status === 201){
+      if (response.status === 200 || response.status === 201) {
         NotificationManager.removeAll();
         NotificationManager.success(successMessage);
         setTimeout(() => {
           navigate("/country-list");
         }, 2000);
       }
-      
+
     } catch (error) {
       NotificationManager.removeAll();
       console.error("Error submitting country data:", error);
@@ -107,7 +110,7 @@ const CountryAdd = () => {
             </Link> */}
               <h2 className="text-lg font-semibold ml-4 " style={{ color: '#000000', fontSize: '24px', fontFamily: 'Montserrat' }}>Country Management</h2>
             </div>
-            <div className="h-full px-6 max-w-5xl"  style={{ paddingTop: "24px" }} >
+            <div className="h-full px-6 max-w-5xl" style={{ paddingTop: "24px" }} >
               <div className="bg-white h-[67vh] w-full rounded-xl border border-[#EAE5FF] py-4 px-6 overflow-y-auto" style={{ scrollbarWidth: 'none' }}>
                 <form onSubmit={handleSubmit} className="mt-4">
                   <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-1 mt-6">
@@ -127,6 +130,34 @@ const CountryAdd = () => {
                         placeholder="Enter Country name"
                       />
                     </div>
+                    <div className="flex flex-col">
+                      <label
+                        htmlFor="currency"
+                        className="text-sm font-medium text-start text-[12px] font-[Montserrat]"
+                      >
+                        Currency
+                      </label>
+                      <select
+                        name="currency"
+                        id="currency"
+                        value={formData.currency}
+                        onChange={handleChange}
+                        required
+                        style={{
+                          borderRadius: "8px",
+                          border: "1px solid #EAEAFF",
+                        }}
+                      >
+                        <option value="" disabled>Select Currency</option>
+                        {Object.keys(CountryCodes).map((currencyCode) => (
+                          <option key={currencyCode} value={currencyCode}>
+                            {currencyCode} ({CountryCodes[currencyCode]})
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+
+
                   </div>
 
                   <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-1 mt-6">
@@ -138,15 +169,15 @@ const CountryAdd = () => {
                       >
                         Country Image
                       </label>
-                      <ImageUploader onUploadSuccess={handleImageUploadSuccess}/>
+                      <ImageUploader onUploadSuccess={handleImageUploadSuccess} />
                       {formData.img && (
-                      <div className="mt-4">
-                        <img
-                          src={formData.img}
-                          alt="Uploaded Preview"
-                          className="w-32 h-32 object-cover rounded"
-                        />
-                      </div>
+                        <div className="mt-4">
+                          <img
+                            src={formData.img}
+                            alt="Uploaded Preview"
+                            className="w-32 h-32 object-cover rounded"
+                          />
+                        </div>
                       )}
                     </div>
                   </div>

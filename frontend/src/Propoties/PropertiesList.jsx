@@ -24,9 +24,23 @@ const PropotiesList = () => {
         const fetchProperties = async () => {
             try {
                 const response = await api.get('/properties');
+                const fetchedProperties = response.data.map((property) => {
+                    return {
+                        ...property,
+                        rules: (() => {
+                            try {
+                                return JSON.parse(property.rules);
+                            } catch (error) {
+                                return property.rules ? [property.rules] : [];
+                            }
+                        })(),
+                    }
+                })
                 console.log(response.data);
-                setProperties(response.data);
-                setFilteredProperties(response.data);
+                // setProperties(response.data);
+                // setFilteredProperties(response.data);
+                setProperties(fetchedProperties);
+                setFilteredProperties(fetchedProperties);
             } catch (error) {
                 console.error('Error fetching properties:', error.response ? error.response.data : error.message);
             }
@@ -99,7 +113,6 @@ const PropotiesList = () => {
             console.error(`Invalid arguments: ID=${id}, currentStatus=${currentStatus}`);
             return;
         }
-
         try {
             await StatusEntity("Property", id, currentStatus, setFilteredProperties, filteredProperties, field);
         } catch (error) {
@@ -107,6 +120,18 @@ const PropotiesList = () => {
         }
     };
 
+    const handlePanoramaToggle = async (id, currentStatus, field) => {
+        console.log(`Toggling ${field} for ID: ${id} with current status: ${currentStatus}`);
+        if (!id || currentStatus === undefined) {
+            console.error(`Invalid arguments: ID=${id}, currentStatus=${currentStatus}`);
+            return;
+        }
+        try {
+            await StatusEntity("PropertyPanorama", id, currentStatus, setFilteredProperties, filteredProperties, field);
+        } catch (error) {
+            console.error("Error toggling panorama status:", error);
+        }
+    };
 
     return (
         <div>
@@ -135,6 +160,13 @@ const PropotiesList = () => {
                                             </th>
                                             <th className="px-4 py-3 min-w-[190px]">
                                                 Property Image
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('image')} />
+                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('image')} />
+                                                </div>
+                                            </th>
+                                            <th className="px-4 py-3 min-w-[190px]">
+                                                Is Panorama
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('image')} />
                                                     <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('image')} />
@@ -189,6 +221,13 @@ const PropotiesList = () => {
                                                     <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('is_sell')} />
                                                 </div>
                                             </th>
+                                            <th className="px-4 py-3 min-w-[130px]">
+                                                Rules
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('is_sell')} />
+                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('is_sell')} />
+                                                </div>
+                                            </th>
                                             <th className="px-4 py-3 min-w-[150px]">
                                                 Factility
                                                 <div className="inline-flex items-center ml-2">
@@ -196,7 +235,34 @@ const PropotiesList = () => {
                                                     <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('propertyFacility')} />
                                                 </div>
                                             </th>
-
+                                            <th className="px-4 py-3 min-w-[150px]">
+                                                Adults
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('propertyFacility')} />
+                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('propertyFacility')} />
+                                                </div>
+                                            </th>
+                                            <th className="px-4 py-3 min-w-[150px]">
+                                                Children
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('propertyFacility')} />
+                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('propertyFacility')} />
+                                                </div>
+                                            </th>
+                                            <th className="px-4 py-3 min-w-[150px]">
+                                                Infants
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('propertyFacility')} />
+                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('propertyFacility')} />
+                                                </div>
+                                            </th>
+                                            <th className="px-4 py-3 min-w-[150px]">
+                                                Pets
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('propertyFacility')} />
+                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('propertyFacility')} />
+                                                </div>
+                                            </th>
                                             <th className="px-4 py-3 min-w-[230px]">
                                                 Property Price(/Night)
                                                 <div className="inline-flex items-center ml-2">
@@ -282,13 +348,24 @@ const PropotiesList = () => {
                                                             <img src={'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg'} height={50} width={50} loading="lazy" alt="" />
                                                         )}
                                                     </td>
+                                                    <td>
+                                                        <FontAwesomeIcon
+                                                            className="h-7 w-16 cursor-pointer"
+                                                            style={{ color: property.is_panorama === 1 ? "#0064DC" : "#e9ecef" }}
+                                                            icon={property.is_panorama === 1 ? faToggleOn : faToggleOff}
+                                                            onClick={() => handlePanoramaToggle(property.id, property.is_panorama, "is_panorama")}
+                                                        />
+                                                    </td>
                                                     <td className="px-4 py-2">{property.title || 'N/A'}</td>
                                                     <td className="px-4 py-2">{property.category?.title || 'N/A'}</td>
                                                     <td className="px-4 py-2">{property?.description || 'N/A'}</td>
                                                     <td className="px-4 py-2">{property?.address || 'N/A'}</td>
                                                     <td className="px-4 py-2">{property?.city || 'N/A'}</td>
-                                                    <td className="px-4 py-2">{property?.listing_date || 'N/A'}</td>
-                                                    {/* <td className="px-4 py-3">{property?.is_sell || 'N/A'}</td> */}
+                                                    {/* <td className="px-4 py-2">{property?.listing_date || 'N/A'}</td> */}
+                                                    <td className="px-4 py-2">
+                                                        {property?.listing_date ? new Date(property.listing_date).toISOString().split("T")[0] : 'N/A'}
+                                                    </td>
+
                                                     <td>
                                                         <FontAwesomeIcon
                                                             className="h-7 w-16 cursor-pointer"
@@ -297,6 +374,11 @@ const PropotiesList = () => {
                                                             onClick={() => handleToggleChange(property.id, property.is_sell, "is_sell")}
                                                         />
                                                     </td>
+                                                    {/* <td className="px-4 py-2">{property?.rules || 'N/A'}</td> */}
+                                                    <td className="px-4 py-2">
+                                                        {Array.isArray(property.rules) ? property.rules.join(', ') : 'N/A'}
+                                                    </td>
+
                                                     <td className="px-4 py-2 flex flex-col">
                                                         {property.facilities?.map((item) => (
                                                             <span className='bg-lime-100 font-bold p-1 m-1 flex justify-center' key={item.id}>
@@ -304,6 +386,10 @@ const PropotiesList = () => {
                                                             </span>
                                                         )) || 'N/A'}
                                                     </td>
+                                                    <td className="px-4 py-2">{property?.adults || 'N/A'}</td>
+                                                    <td className="px-4 py-2">{property?.children || 'N/A'}</td>
+                                                    <td className="px-4 py-2">{property?.infants || 'N/A'}</td>
+                                                    <td className="px-4 py-2">{property?.pets || 'N/A'}</td>
                                                     <td className="px-4 py-2">₹{property?.price || 'N/A'}</td>
                                                     <td className="px-4 py-2">{property?.mobile || 'N/A'}</td>
                                                     <td className="px-4 py-2">{property.country?.title || 'N/A'}</td>
