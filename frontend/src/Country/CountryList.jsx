@@ -170,7 +170,9 @@ const CountryList = () => {
                                                     <td className="px-4 py-1 text-sm">{index + 1 + indexOfFirst}</td> {/* Reduce padding */}
                                                     <td className="px-4 py-1 text-sm">{country?.title || "N/A"}</td>
                                                     <td className="px-4 py-1 text-sm">
-                                                        {country?.currency && CountryCodes[country?.currency] ? `${country?.currency}(${CountryCodes[country?.currency]})` : "N/A"}
+                                                        {country?.currency && Object.keys(CountryCodes).find(key => CountryCodes[key] === country.currency)
+                                                            ? `${Object.keys(CountryCodes).find(key => CountryCodes[key] === country.currency)} (${country.currency})`
+                                                            : "N/A"}
                                                     </td>
                                                     <td className="px-4 py-1 text-sm">
                                                         {country.img && country.img.trim() !== '' ? (

@@ -31,7 +31,7 @@ const PropertiesAdd = () => {
     id: 0 || null,
     title: '',
     image: '',
-    is_panorama: null,
+    is_panorama: 0,
     price: null,
     status: null,
     address: '',

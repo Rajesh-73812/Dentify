@@ -54,12 +54,29 @@ const CountryAdd = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    let newValue = value;
+
+    if (name === "currency") {
+      newValue = CountryCodes[value];
+    }
+
     setFormData((prevData) => ({
       ...prevData,
-      [name]: value,
+      [name]: newValue,
       id: prevData.id
     }));
   };
+
+
+  // const handleChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setFormData((prevData) => ({
+  //     ...prevData,
+  //     [name]: value,
+  //     id: prevData.id
+  //   }));
+  // };
+
 
   const handleImageUploadSuccess = (imageUrl) => {
     setFormData((prevData) => ({
@@ -67,7 +84,6 @@ const CountryAdd = () => {
       img: imageUrl,
     }));
   };
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -105,9 +121,6 @@ const CountryAdd = () => {
           <Header />
           <div className="container mx-auto">
             <div className="flex items-center mt-6  mb-4">
-              {/* <Link to="/rolesList" className="cursor-pointer ml-6">
-              
-            </Link> */}
               <h2 className="text-lg font-semibold ml-4 " style={{ color: '#000000', fontSize: '24px', fontFamily: 'Montserrat' }}>Country Management</h2>
             </div>
             <div className="h-full px-6 max-w-5xl" style={{ paddingTop: "24px" }} >
@@ -140,7 +153,7 @@ const CountryAdd = () => {
                       <select
                         name="currency"
                         id="currency"
-                        value={formData.currency}
+                        value={Object.keys(CountryCodes).find(key => CountryCodes[key] === formData.currency) || ""}
                         onChange={handleChange}
                         required
                         style={{
@@ -155,9 +168,8 @@ const CountryAdd = () => {
                           </option>
                         ))}
                       </select>
+
                     </div>
-
-
                   </div>
 
                   <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-1 mt-6">
@@ -186,14 +198,14 @@ const CountryAdd = () => {
                     {/* Country Status */}
                     <div className="flex flex-col">
                       <label
-                        htmlFor="country_status"
+                        htmlFor="status"
                         className="text-sm font-medium text-start text-[12px] font-[Montserrat]"
                       >
                         Status
                       </label>
                       <select
                         name="status"
-                        id="country_status"
+                        id="status"
                         value={formData.status}
                         onChange={handleChange}
                         className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm"

@@ -66,11 +66,16 @@ const CategoryAdd = () => {
   };
 
   const handleImageUploadSuccess = (imageUrl) => {
+    const extension = imageUrl.split(".").pop().toLowerCase();
+    if (extension !== "svg") {
+      setError("Only SVG files are allowed");
+      return;
+    }
+    setError("");
     setFormData((prevData) => ({
       ...prevData,
       img: imageUrl,
     }));
-
   };
 
   const handleSubmit = async (e) => {
