@@ -157,7 +157,7 @@ const CompletedBook = () => {
                                                     <td className="text-center py-1">{completedList?.prop_price || 'N/A'}</td>
                                                     <td className="text-center py-1">{completedList?.total_day || 'N/A'}</td>
                                                     <td className="py-1">
-                                                        <span className='px-2 py-1 font-medium text-[12px] rounded-full bg-green-400 cursor-pointer text-white mr-2' onClick={() => openModal(completedList)}>View Details</span>
+                                                        <span className='px-2 py-1 font-medium text-[12px] rounded-full bg-green-400 cursor-pointer text-white mr-2' onClick={() => openModal(completedList,completedList.id)}>View Details</span>
                                                     </td>
                                                 </tr>
                                             ))
@@ -202,7 +202,7 @@ const CompletedBook = () => {
                                 </li>
                             </ul>
                         </div>
-                        <OrderPreviewModal isOpen={isModalOpen} closeModal={closeModal} />
+                        <OrderPreviewModal isOpen={isModalOpen} closeModal={closeModal} selectedProperty={selectedProperty} />
                         {isModalOpen2 && (
                             <div className="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
                                 <div className="fixed inset-0 bg-gray-500/75 transition-opacity" aria-hidden="true"></div>
