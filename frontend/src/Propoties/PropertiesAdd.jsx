@@ -55,6 +55,7 @@ const PropertiesAdd = () => {
     children: null,
     infants: null,
     pets: null,
+    setting_id:1,
   });
 // console.log(formData)
   useEffect(() => {
@@ -104,6 +105,7 @@ const PropertiesAdd = () => {
         children: Property.children,
         infants: Property.infants,
         pets: Property.pets,
+        setting_id:1,
       })
     } catch (error) {
       console.error("Error fetching Property:", error);
