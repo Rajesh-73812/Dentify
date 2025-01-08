@@ -168,7 +168,7 @@ const PageList = () => {
                                     <span>Page {currentPage} of {totalPages}</span>
                                 </li>
                                 <li>
-                                    <button onClick={() => paginate(currentPage + 1)} disabled={currentPage === totalPages}>
+                                    <button style={{background:'#045D78'}} onClick={() => paginate(currentPage + 1)} disabled={currentPage === totalPages}>
                                         Next
                                     </button>
                                 </li>

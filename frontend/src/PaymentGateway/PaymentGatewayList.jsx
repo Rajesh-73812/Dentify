@@ -182,7 +182,7 @@ const PaymentGatewayList = () => {
                                                     <td>
                                                         <FontAwesomeIcon
                                                             className="h-7 w-16 cursor-pointer"
-                                                            style={{ color: paymentGateway.status === 1 ? "#0064DC" : "#e9ecef" }}
+                                                            style={{ color: paymentGateway.status === 1 ? "#045D78" : "#e9ecef" }}
                                                             icon={paymentGateway.status === 1 ? faToggleOn : faToggleOff}
                                                             onClick={() => handleToggleChange(paymentGateway.id, paymentGateway.status, "status")}
                                                         />
@@ -190,7 +190,7 @@ const PaymentGatewayList = () => {
                                                     <td className="px-4 py-2">
                                                         <FontAwesomeIcon
                                                             className="h-7 w-16 cursor-pointer"
-                                                            style={{ color: paymentGateway.p_show === 1 ? "#0064DC" : "#e9ecef" }}
+                                                            style={{ color: paymentGateway.p_show === 1 ? "#045D78" : "#e9ecef" }}
                                                             icon={paymentGateway.p_show === 1 ? faToggleOn : faToggleOff}
                                                             onClick={() => handleToggleChange(paymentGateway.id, paymentGateway.p_show, "p_show")}
                                                         />
@@ -198,7 +198,7 @@ const PaymentGatewayList = () => {
                                                     <td className="px-4 py-2">
                                                         <FontAwesomeIcon
                                                             className="h-7 w-16 cursor-pointer"
-                                                            style={{ color: paymentGateway.s_show === 1 ? "#0064DC" : "#e9ecef" }}
+                                                            style={{ color: paymentGateway.s_show === 1 ? "#045D78" : "#e9ecef" }}
                                                             icon={paymentGateway.s_show === 1 ? faToggleOn : faToggleOff}
                                                             onClick={() => handleToggleChange(paymentGateway.id, paymentGateway.s_show, "s_show")}
                                                         />
@@ -245,7 +245,7 @@ const PaymentGatewayList = () => {
                                     </span>
                                 </li>
                                 <li>
-                                    <button
+                                    <button style={{background:'#045D78'}}
                                         onClick={() => paginate(currentPage < totalPages ? currentPage + 1 : totalPages)}
                                         className={`next-button ${filteredPaymentGateway.length === 0 ? 'cursor-not-allowed button-disable' : ''}`}
                                         disabled={currentPage === totalPages || filteredPaymentGateway.length === 0}

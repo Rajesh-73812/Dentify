@@ -368,7 +368,7 @@ const PropotiesList = () => {
                                                     <td>
                                                         <FontAwesomeIcon
                                                             className="h-7 w-16 cursor-pointer"
-                                                            style={{ color: property.is_panorama === 1 ? "#0064DC" : "#e9ecef" }}
+                                                            style={{ color: property.is_panorama === 1 ? "#045D78" : "#e9ecef" }}
                                                             icon={property.is_panorama === 1 ? faToggleOn : faToggleOff}
                                                             onClick={() => handlePanoramaToggle(property.id, property.is_panorama, "is_panorama")}
                                                         />
@@ -386,7 +386,7 @@ const PropotiesList = () => {
                                                     <td>
                                                         <FontAwesomeIcon
                                                             className="h-7 w-16 cursor-pointer"
-                                                            style={{ color: property.is_sell === 1 ? "#0064DC" : "#e9ecef" }}
+                                                            style={{ color: property.is_sell === 1 ? "#045D78" : "#e9ecef" }}
                                                             icon={property.is_sell === 1 ? faToggleOn : faToggleOff}
                                                             onClick={() => handleToggleChange(property.id, property.is_sell, "is_sell")}
                                                         />
@@ -418,7 +418,7 @@ const PropotiesList = () => {
                                                     <td>
                                                         <FontAwesomeIcon
                                                             className="h-7 w-16 cursor-pointer"
-                                                            style={{ color: property.status === 1 ? "#0064DC" : "#e9ecef" }}
+                                                            style={{ color: property.status === 1 ? "#045D78" : "#e9ecef" }}
                                                             icon={property.status === 1 ? faToggleOn : faToggleOff}
                                                             onClick={() => handleToggleChange(property.id, property.status, "status")}
                                                         />
@@ -468,7 +468,7 @@ const PropotiesList = () => {
                                     </span>
                                 </li>
                                 <li>
-                                    <button
+                                    <button style={{background:'#045D78'}}
                                         onClick={() => paginate(currentPage < totalPages ? currentPage + 1 : totalPages)}
                                         className={`next-button ${filteredProperties.length === 0 ? 'cursor-not-allowed button-disable' : ''}`}
                                         disabled={currentPage === totalPages || filteredProperties.length === 0}

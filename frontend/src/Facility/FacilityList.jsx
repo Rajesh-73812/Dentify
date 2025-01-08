@@ -174,7 +174,7 @@ const FacilityList = () => {
                                                     <td className="px-4 py-1">
                                                         <FontAwesomeIcon
                                                             className="h-7 w-16 cursor-pointer"
-                                                            style={{ color: facility.status === 1 ? "#0064DC" : "#e9ecef" }}
+                                                            style={{ color: facility.status === 1 ? "#045D78" : "#e9ecef" }}
                                                             icon={facility.status === 1 ? faToggleOn : faToggleOff}
                                                             onClick={() => handleToggleChange(facility.id, facility.status, "status")}
                                                         />
@@ -224,7 +224,7 @@ const FacilityList = () => {
                                     </span>
                                 </li>
                                 <li>
-                                    <button
+                                    <button style={{background:'#045D78'}}
                                         onClick={() => paginate(currentPage < totalPages ? currentPage + 1 : totalPages)}
                                         className={`next-button ${filteredfacility.length === 0 ? 'cursor-not-allowed button-disable' : ''}`}
                                         disabled={currentPage === totalPages || filteredfacility.length === 0}

@@ -5,7 +5,7 @@ import axios from 'axios';
 import MultiImageUploader from '../common/MultipleImageUploader';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import ArrowBackIosNewIcon  from '@mui/icons-material/ArrowBackIosNew';
 import api from '../utils/api';
 
 const ExtraImageAdd = () => {
@@ -120,7 +120,7 @@ const ExtraImageAdd = () => {
                     <div className="container mx-auto">
                         <div className="flex items-center mt-6 mb-4">
                             <Link onClick={() => { navigate(-1) }} className="cursor-pointer ml-6">
-                                <ArrowBackIosNewIcon /> 
+                                <ArrowBackIosNewIcon style={{color:'#045D78'}} /> 
                             </Link>
                             <h2 className="text-lg font-semibold ml-4" style={{ color: '#000000', fontSize: '24px', fontFamily: 'Montserrat' }}>Extra Image Management</h2>
                         </div>
@@ -184,7 +184,7 @@ const ExtraImageAdd = () => {
                                         </div>
                                     </div>
                                     {/* Action Buttons */}
-                                    <button type="submit" className={`py-2 mt-6 float-start ${id ? 'bg-green-500 hover:bg-green-600' : 'bg-blue-500 hover:bg-blue-600'} text-white rounded-lg w-[150px] h-12 font-[Montserrat] font-bold`} style={{ borderRadius: '8px' }}   >
+                                    <button type="submit" className={`py-2 mt-6 float-start bg-[#045D78] text-white rounded-lg w-[150px] h-12 font-[Montserrat] font-bold`} style={{ borderRadius: '8px' }}   >
                                         {id ? 'Update  Image' : 'Add  Image'}
                                     </button>
                                 </form>

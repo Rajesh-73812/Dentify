@@ -215,7 +215,7 @@ const GalleryCategoryAdd = () => {
 
                   {/* Action Buttons */}
                 <div className="flex justify-start mt-6 gap-3">
-                  <button type="submit"   className={`py-2 ${id ? 'bg-green-500 hover:bg-green-600' : 'bg-blue-500 hover:bg-blue-600'} text-white rounded-lg w-[250px] h-12 font-[Montserrat] font-bold`}  style={{ borderRadius: '8px' }}   >
+                  <button type="submit"   className={`py-2 bg-[#045D78] text-white rounded-lg w-[250px] h-12 font-[Montserrat] font-bold`}  style={{ borderRadius: '8px' }}   >
                     {id ? 'Update Gallery Category' : 'Add Gallery Category'}
                   </button>
                 </div>  

@@ -10,8 +10,8 @@ export const generateInvoicePdf = (data, backgroundImage) => {
   doc.setFontSize(12);
   doc.text("Generated on: " + new Date().toLocaleDateString(), 14, 28);
 
-  doc.addImage(backgroundImage, "JPEG", 160, 10, 30, 30); 
-  
+  doc.addImage(backgroundImage, "JPEG", 160, 10, 30, 30);
+
   doc.setFontSize(10);
   doc.text("Billed to:", 14, 40);
   doc.text(data.customerName, 14, 45);
@@ -31,26 +31,27 @@ export const generateInvoicePdf = (data, backgroundImage) => {
     startY: 65,
     head: [["Description", "Amount"]],
     body: [
-      ["Subtotal", `${data.subtotal.toString().replace(/\s/g, "")} ₹`],  
-      ["Total Day", `${data.totalDays}`],  
-      ["Tax", `${data.tax.toString().replace(/\s/g, "")} ₹`],           
-      ["Net Amount (Paid)", `${data.netAmount.toString().replace(/\s/g, "")} ₹`], 
+      ["Subtotal", `${data.subtotal.toString().replace(/\s/g, "")}.00`],
+      ["Total Day", `${data.totalDays}`],
+      ["Tax", `${data.tax.toString().replace(/\s/g, "")}`],
+      ["Net Amount (Paid)", `${data.netAmount.toString().replace(/\s/g, "")}.00`],
     ],
     theme: "grid",
     headStyles: { fillColor: [0, 0, 0] },
     margin: { left: 14, right: 14 },
     columnStyles: {
-      1: { halign: "right" }, 
+      1: { halign: "right" },
     },
     didDrawCell: (data) => {
       if (data.column.index === 1 && typeof data.cell.raw === "string") {
         data.cell.raw = data.cell.raw.replace(/\s/g, ""); // Remove spaces
       }
       console.log(data.row.index, data.cell.raw);
-    }
+    },
   });
 
   doc.line(10, 60, 200, 60);
+
   // Payment & Property Details Table
   autoTable(doc, {
     startY: doc.previousAutoTable.finalY + 10,
@@ -59,8 +60,8 @@ export const generateInvoicePdf = (data, backgroundImage) => {
       ["Payment Gateway", data.paymentGateway],
       ["Property Title", data.propertyTitle],
       ["Property Image", "N/A"],
-      ["Property Check-In Date", data.checkInDate],
-      ["Property Check-Out Date", data.checkOutDate],
+      ["Property Check-In Date", data.checkInDate.split('-').reverse().join('-')],
+      ["Property Check-Out Date", data.checkOutDate.split('-').reverse().join('-')]
     ],
     theme: "grid",
     headStyles: { fillColor: [0, 0, 0] },

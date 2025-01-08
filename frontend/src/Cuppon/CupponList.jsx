@@ -202,7 +202,7 @@ const CupponList = () => {
 
                                                         <FontAwesomeIcon
                                                             className="h-7 w-16"
-                                                            style={{ color: cuppon.status === 1 ? "#0064DC" : "#e9ecef" }}
+                                                            style={{ color: cuppon.status === 1 ? "#045D78" : "#e9ecef" }}
                                                             icon={cuppon.status === 1 ? faToggleOn : faToggleOff}
                                                             onClick={() => handleToggleChange(cuppon.id, cuppon.status, "status")} // Pass 'status' field
                                                         />
@@ -256,7 +256,7 @@ const CupponList = () => {
                                     </span>
                                 </li>
                                 <li>
-                                    <button
+                                    <button style={{background:'#045D78'}}
                                         onClick={() => paginate(currentPage < totalPages ? currentPage + 1 : totalPages)}
                                         className={`next-button ${filteredcouppons.length === 0 ? 'cursor-not-allowed button-disable' : ''}`}
                                         disabled={currentPage === totalPages || filteredcouppons.length === 0}

@@ -1,5 +1,5 @@
 import React from 'react';
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import ArrowBackIosNewIcon  from '@mui/icons-material/ArrowBackIosNew';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 
@@ -11,7 +11,7 @@ const AdminHeader = ({ onSearch, setShowAddModal }) => {
                 <div className="flex items-center justify-between h-9" style={{ height: "36px" }}>
                     <div className="flex items-center mt-6 mb-4">
                         <Link onClick={() => { navigate(-1) }} className="cursor-pointer ml-6">
-                            <ArrowBackIosNewIcon />
+                            <ArrowBackIosNewIcon style={{color:'#045D78'}} />
                         </Link>
                         <h2 className="text-lg font-semibold ml-4" style={{ color: '#000000', fontSize: '24px', fontFamily: 'Montserrat' }}>Admin List Management System</h2>
                     </div>

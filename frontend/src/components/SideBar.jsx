@@ -156,7 +156,7 @@ const SidebarMenu = () => {
                   }}
 
                 >
-                  List Country
+                  List Countries
                 </MenuItem>
               </SubMenu>
 
@@ -182,7 +182,7 @@ const SidebarMenu = () => {
                   }}
 
                 >
-                  List Category
+                  List Categories
                 </MenuItem>
               </SubMenu>
 
@@ -208,7 +208,7 @@ const SidebarMenu = () => {
                   }}
 
                 >
-                  List Coupon
+                  List Coupons
                 </MenuItem>
               </SubMenu>
 
@@ -222,26 +222,6 @@ const SidebarMenu = () => {
               >
                 Payment Gateway
               </MenuItem>
-
-              {/* enquiry list */}
-              {/* <MenuItem icon={<PiUsersBold />}
-            active={location.pathname === "/enquiry-list"}
-            onClick={() => navigate("/enquiry-list")}
-          >
-           Enquiry List
-          </MenuItem> */}
-
-
-
-
-
-              {/* <MenuItem icon={<FaUser />
-
-            active={location.pathname === "/payout-list"}
-            onClick={() => navigate("/payout-list")}
-          >
-           Payout List
-          </MenuItem> */}
 
               {/* propoties */}
               <SubMenu label="Properties" active={location.pathname === "/create-property" || location.pathname === "/property-list"} icon={<GoHome />}>
@@ -322,64 +302,6 @@ const SidebarMenu = () => {
                   List Facilities
                 </MenuItem>
               </SubMenu>
-
-              {/* Gallery Category */}
-              {/* <SubMenu label="Gallery Category"  icon={<FaRegFolder />}>
-          <MenuItem icon={<KeyboardArrowRightOutlinedIcon/>} className="sub-menu-item"
-            active={location.pathname === "/create-gallery-category"}
-            onClick={() => navigate("/create-gallery-category")}
-          >
-            Add Gall Category 
-          </MenuItem>
-          <MenuItem icon={<KeyboardArrowRightOutlinedIcon/>} className="sub-menu-item"
-            active={location.pathname === "/gallery-category-list"}
-            onClick={() => navigate("/gallery-category-list")}
-          >
-            List Gall Category
-          </MenuItem>
-        </SubMenu> */}
-
-              {/* gallery */}
-              {/* <SubMenu label="Gallery "  icon={<CiImageOn />}>
-          <MenuItem icon={<KeyboardArrowRightOutlinedIcon/>} className="sub-menu-item"
-            active={location.pathname === "/create-gallery"}
-            onClick={() => navigate("/create-gallery")}
-          >
-            Add Gallery
-          </MenuItem>
-          <MenuItem icon={<KeyboardArrowRightOutlinedIcon/>} className="sub-menu-item"
-            active={location.pathname === "/gallery-list"}
-            onClick={() => navigate("/gallery-list")}
-          >
-            List Gallery
-          </MenuItem>
-        </SubMenu> */}
-
-              {/* package */}
-              {/* <SubMenu label="Package " active={location.pathname === "/create-package" || location.pathname === "/package-list"} icon={<IoLayersOutline />}>
-                <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
-
-
-                  onClick={() => {
-                    navigate("/create-package");
-                    toggleSidebar1();
-                  }}
-
-                >
-                  Add Package
-                </MenuItem>
-                <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
-
-
-                  onClick={() => {
-                    navigate("/package-list");
-                    toggleSidebar1();
-                  }}
-
-                >
-                  List Package
-                </MenuItem>
-              </SubMenu> */}
 
               {/* Booking */}
               <SubMenu label="Booking " active={location.pathname === "/pending-book-list" || location.pathname === "/approved-book-list" || location.pathname === "/check-in-list" || location.pathname === "/completed-list" || location.pathname === "/cancelled-list"} icon={<CgCalendarDates />}>

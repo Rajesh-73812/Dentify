@@ -202,7 +202,7 @@ const GalleryAdd = () => {
 
                 {/* Action Buttons */}
                 <div className="flex justify-start mt-6 gap-3">
-                  <button  type="submit" className=" py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 w-[150px] h-12 font-[Montserrat] font-bold" style={{ borderRadius: "8px", }} > Add Gallery </button>
+                  <button  type="submit" className=" py-2 bg-[#045D78] text-white rounded-lg w-[150px] h-12 font-[Montserrat] font-bold" style={{ borderRadius: "8px", }} > Add Gallery </button>
                 </div>
               </form>
 

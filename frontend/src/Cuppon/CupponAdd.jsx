@@ -8,7 +8,7 @@ import { useLocation } from 'react-router-dom';
 import Loader from '../common/Loader';
 import { NotificationManager, NotificationContainer } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import ArrowBackIosNewIcon  from '@mui/icons-material/ArrowBackIosNew';
 import api from '../utils/api';
 
 const CupponAdd = () => {
@@ -126,7 +126,7 @@ const CupponAdd = () => {
           <div className="container mx-auto">
             <div className="flex items-center mt-6  mb-4">
               <Link onClick={() => { navigate(-1) }} className="cursor-pointer ml-6">
-                <ArrowBackIosNewIcon />
+                <ArrowBackIosNewIcon style={{color:'#045D78'}} />
               </Link>
               <h2 className="text-lg font-semibold ml-4 " style={{ color: '#000000', fontSize: '24px', fontFamily: 'Montserrat' }}>Coupon Management</h2>
             </div>
@@ -243,7 +243,7 @@ const CupponAdd = () => {
 
                   {/* Action Buttons */}
                   <div className="flex justify-start mt-6 gap-3">
-                    <button type="submit" className={` py-2 ${id ? 'bg-green-500 hover:bg-green-600' : 'bg-blue-500 hover:bg-blue-600'} text-white rounded-lg  w-[150px] h-12 font-[Montserrat] font-bold`} style={{ borderRadius: "8px", }} > {id ? 'Update Coupon' : 'Add Coupon'} </button>
+                    <button type="submit" className={` py-2 bg-[#045D78] text-white rounded-lg  w-[150px] h-12 font-[Montserrat] font-bold`} style={{ borderRadius: "8px", }} > {id ? 'Update Coupon' : 'Add Coupon'} </button>
                   </div>
                 </form>
               </div>
