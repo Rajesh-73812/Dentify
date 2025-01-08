@@ -72,7 +72,7 @@ const FaqList = () => {
 
     // for delete
     const handledelete = async (id) => {
-        const success = await DeleteEntity("Faq", id);
+        const success = await DeleteEntity("FAQ", id);
         if (success) {
             const updatedFaq = faq.filter((faq) => faq.id !== id);
             setfaq(updatedFaq);

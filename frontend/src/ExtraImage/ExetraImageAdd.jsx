@@ -145,7 +145,7 @@ const ExtraImageAdd = () => {
                                         <div className="flex flex-col">
                                             <label htmlFor="img" className="text-sm font-medium text-start text-[12px] font-[Montserrat]">Property Image</label>
                                             <MultiImageUploader onUploadSuccess={handleImageUploadSuccess} />
-                                            {formData.img && (
+                                            {formData.img && (  
                                                 <div className="mt-4 flex gap-3">
                                                     {
                                                         formData.img.map((item) => (
@@ -185,7 +185,7 @@ const ExtraImageAdd = () => {
                                     </div>
                                     {/* Action Buttons */}
                                     <button type="submit" className={`py-2 mt-6 float-start ${id ? 'bg-green-500 hover:bg-green-600' : 'bg-blue-500 hover:bg-blue-600'} text-white rounded-lg w-[150px] h-12 font-[Montserrat] font-bold`} style={{ borderRadius: '8px' }}   >
-                                        {id ? 'Update Extra Image' : 'Add Extra Image'}
+                                        {id ? 'Update  Image' : 'Add  Image'}
                                     </button>
                                 </form>
                             </div>

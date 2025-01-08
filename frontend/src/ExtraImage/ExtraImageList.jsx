@@ -130,7 +130,7 @@ const ExtraImageList = () => {
                                 <table className="min-w-full text-sm text-left text-gray-700">
                                     <thead className="bg-gray-50 text-xs uppercase font-medium text-gray-500">
                                         <tr>
-                                            <th className="px-4 py-3 min-w-[100px]">
+                                            <th className="px-4 py-3 min-w-[130px]">
                                                 Sr. No
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData("id")} />
@@ -139,9 +139,6 @@ const ExtraImageList = () => {
                                             </th>
                                             <th className="px-4 py-3 min-w-[150px]">
                                                 Image
-                                                <div className="inline-flex items-center ml-2">
-                                                    
-                                                </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[150px]">
                                                 Property Title

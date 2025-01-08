@@ -28,15 +28,15 @@ const OrderPreviewModal = ({ isOpen, closeModal,selectedProperty, downloadModalA
           }
       
           const data = await response.json();
-          setBookingId(data);
+          setBookingId(data.data);
         } catch (error) {
           console.error("Error fetching booking data:", error.message);
         }
       };
     
       if (!isOpen || !bookingId) return null;
-    if (!isOpen) return null;
-
+      if (!isOpen) return null;
+      console.log(bookingId)
     const PdfFormat = () => {
         const dynamicData = {
           bookingId: bookingId.id,
@@ -92,9 +92,6 @@ const OrderPreviewModal = ({ isOpen, closeModal,selectedProperty, downloadModalA
                             </div>
                             {/* Buttons */}
                             <div className="flex justify-end gap-2 mt-4">
-                                <button className="flex items-center justify-center w-10 h-10 bg-blue-500 rounded-md text-white" onClick={downloadModalAsImage}>
-                                    <CameraAltOutlinedIcon />
-                                </button>
                                 <button className="flex items-center justify-center w-10 h-10 bg-blue-500 rounded-md text-white" onClick={PdfFormat}>
                                     <PictureAsPdfOutlinedIcon />
                                 </button>
@@ -140,14 +137,28 @@ const OrderPreviewModal = ({ isOpen, closeModal,selectedProperty, downloadModalA
                                         <tr className="border-b">
                                             <td className="px-4 py-2 font-medium text-gray-700">Property Image?</td>
                                             <td className="px-4 py-2 text-right">
-                                                <a href={bookingId.properties.image} target='_blank' rel='noopner noreferrer'>
-                                                    {bookingId.properties.image ? (
-                                                    <img src={bookingId.properties.image} alt="Property Image" height={90} width={90} className='float-right' onError={(e) => {
+                                                <a href={bookingId.properties.image || 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg'} target='_blank' rel='noopener noreferrer'>
+                                                {bookingId.properties.image ? (
+                                                    <img
+                                                        src={bookingId.properties.image}
+                                                        alt="Property Image"
+                                                        height={90}
+                                                        width={90}
+                                                        className="float-right object-cover rounded"
+                                                        onError={(e) => {
                                                         e.target.src = 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg';
-                                                    }}
-                                                     />
+                                                        }}
+                                                    />
                                                     ) : (
-                                                        <img src="https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg" className="w-16 h-16 object-cover rounded-full" alt="Placeholder" />                                                    )}
+                                                    <img
+                                                        src="https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg"
+                                                        alt="Placeholder Image"
+                                                        height={90}
+                                                        width={90}
+                                                        className="float-right object-cover rounded"
+                                                    />
+                                                    )}
+
                                                 </a>
                                             </td>
                                         </tr>
