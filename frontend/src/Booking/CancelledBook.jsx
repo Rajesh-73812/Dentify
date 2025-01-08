@@ -10,7 +10,6 @@ import api from '../utils/api';
 
 const CancelledBook = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [isModalOpen2, setIsModalOpen2] = useState(false);
     const [selectedProperty, setSelectedProperty] = useState(null);
     const [cancelled, setcancelled] = useState([]);
     const [filteredcancelled, setFilteredcancelled] = useState([]);
@@ -68,15 +67,6 @@ const CancelledBook = () => {
 
     const closeModal = () => {
         setIsModalOpen(false);
-        setSelectedProperty(null);
-    };
-
-    const openModal2 = () => {
-        setIsModalOpen2(true);
-    };
-
-    const closeModal2 = () => {
-        setIsModalOpen2(false);
         setSelectedProperty(null);
     };
 
@@ -151,7 +141,7 @@ const CancelledBook = () => {
                                                     <td className="text-center py-1">{cancellList?.prop_price || 'N/A'}</td>
                                                     <td className="text-center py-1">{cancellList?.total_day || 'N/A'}</td>
                                                     <td className="text-center py-1">
-                                                        <span className='px-2 py-1 font-medium text-[12px] rounded-full bg-[#2dce89] cursor-pointer text-white mr-2' onClick={() => openModal(cancellList)}>View Details</span>
+                                                        <span className='px-2 py-1 font-medium text-[12px] rounded-full bg-[#2dce89] cursor-pointer text-white mr-2' onClick={() => openModal(cancellList,cancellList.id)}>View Details</span>
                                                     </td>
                                                 </tr>
                                             ))
@@ -196,60 +186,7 @@ const CancelledBook = () => {
                                 </li>
                             </ul>
                         </div>
-                        <OrderPreviewModal isOpen={isModalOpen} closeModal={closeModal} />
-                        {isModalOpen2 && (
-                            <div className="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-                                <div className="fixed inset-0 bg-gray-500/75 transition-opacity" aria-hidden="true"></div>
-                                <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
-                                    <div className="flex min-h-full items-center justify-center p-4 text-center sm:items-center sm:p-0">
-                                        <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-2xl">
-                                            <div className="bg-white px-6 py-4">
-                                                <h2 className="text-lg font-semibold text-gray-900" id="modal-title">Why Cancel?</h2>
-                                                <button
-                                                    type="button"
-                                                    onClick={closeModal2}
-                                                    className="absolute top-4 right-4 text-red-500 hover:text-red-700"
-                                                    aria-label="Close"
-                                                    title='Close'
-                                                >
-                                                    &times;
-                                                </button>
-                                                <form onSubmit={(e) => { e.preventDefault(); }}>
-                                                    <div className="mb-4">
-                                                        <label htmlFor="reason" className="block text-sm font-medium text-gray-700">Enter Reason:</label>
-                                                        <input
-                                                            type="text"
-                                                            id="reason"
-                                                            name="reason"
-                                                            placeholder="Type your reason here"
-                                                            className="mt-3 block w-full rounded-md  shadow-sm "
-
-                                                        />
-                                                    </div>
-                                                    <div className="flex ">
-                                                        <button
-                                                            type="submit"
-                                                            className=" rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500"
-                                                        >
-                                                            Submit
-                                                        </button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                            <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                                                <button
-                                                    type="button"
-                                                    onClick={closeModal2}
-                                                    className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
-                                                >
-                                                    Close
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        )}
+                        <OrderPreviewModal isOpen={isModalOpen} closeModal={closeModal} selectedProperty={selectedProperty} />
                     </div>
                 </div>
             </div>
