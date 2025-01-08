@@ -112,13 +112,18 @@ const PropotiesList = () => {
       }, [ setIsLoading]);
 
     // Pagination calculations
-    const indexOfLastItem = currentPage * itemsPerPage;
-    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const indexOfLastItem = currentPage * itemsPerPage; 
+    console.log(indexOfLastItem)
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage; 
+    console.log(indexOfFirstItem)
     const currentProperties = filteredProperties.slice(indexOfFirstItem, indexOfLastItem);
+    console.log(currentProperties)
     const totalPages = Math.ceil(filteredProperties.length / itemsPerPage);
+    console.log(totalPages)
 
     // Change page
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
+    console.log(paginate)
 
     const handleToggleChange = async (id, currentStatus, field) => {
         console.log(`Toggling ${field} for ID: ${id} with current status: ${currentStatus}`);
@@ -347,8 +352,8 @@ const PropotiesList = () => {
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-gray-200">
-                                        {filteredProperties.length > 0 ? (
-                                            filteredProperties.map((property, index) => (
+                                        {currentProperties.length > 0 ? (
+                                            currentProperties.map((property, index) => (
                                                 <tr key={property.id} className='h-[70px]'>
                                                     <td className="px-4 py-3">{index + 1 + indexOfFirstItem}</td>
                                                     <td className="px-4 py-3">

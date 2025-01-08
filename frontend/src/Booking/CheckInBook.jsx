@@ -177,7 +177,7 @@ const CheckInBook = () => {
                                                     <td className="text-center py-1">{checkIn?.total_day || 'N/A'}</td>
                                                     <td className="text-center py-1">
                                                         <NotificationContainer />
-                                                        <span className='px-2 py-1 font-medium text-[12px] rounded-full bg-green-400 cursor-pointer text-white mr-2' onClick={() => openModal(checkIn)}>View Details</span>
+                                                        <span className='px-2 py-1 font-medium text-[12px] rounded-full bg-green-400 cursor-pointer text-white mr-2' onClick={() => openModal(checkIn,checkIn.id)}>View Details</span>
                                                         <span className=' px-2 py-1 font-medium text-[12px] rounded-full bg-cyan-400 cursor-pointer text-white mr-2' onClick={() => { navigateApprove(checkIn.id, 'Completed') }}>Check Out</span>
                                                     </td>
                                                 </tr>
@@ -222,7 +222,7 @@ const CheckInBook = () => {
                                 </li>
                             </ul>
                         </div>
-                        <OrderPreviewModal isOpen={isModalOpen} closeModal={closeModal} />
+                        <OrderPreviewModal isOpen={isModalOpen} closeModal={closeModal} selectedProperty={selectedProperty} />
                         {isModalOpen2 && (
                             <div className="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
                                 <div className="fixed inset-0 bg-gray-500/75 transition-opacity" aria-hidden="true"></div>
