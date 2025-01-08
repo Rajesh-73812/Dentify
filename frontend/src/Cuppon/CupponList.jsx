@@ -17,8 +17,8 @@ import { StatusEntity } from '../utils/Status';
 
 const CupponList = () => {
     const navigate = useNavigate();
-    const [cuppons, setcuppons] = useState([]);
-    const [filteredcuppons, setFilteredcuppons] = useState([]);
+    const [couppons, setcouppons] = useState([]);
+    const [filteredcouppons, setFilteredcouppons] = useState([]);
     const [sortConfig, setSortConfig] = useState({ key: '', direction: '' });
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
@@ -32,8 +32,8 @@ const CupponList = () => {
                     withCredentials: true,
                 });
                 console.log("API Response:", response.data);
-                setcuppons(response.data);
-                setFilteredcuppons(response.data);
+                setcouppons(response.data);
+                setFilteredcouppons(response.data);
             } catch (error) {
                 console.error("API Error:", error);
             }
@@ -53,34 +53,34 @@ const CupponList = () => {
 
     const handleSearch = (event) => {
         const query = event.target.value.toLowerCase();
-        const filteredData = cuppons.filter(coppon =>
+        const filteredData = couppons.filter(coppon =>
             Object.values(coppon).some(value =>
                 String(value).toLocaleLowerCase().includes(query)
             )
         )
-        setFilteredcuppons(filteredData)
+        setFilteredcouppons(filteredData)
         setCurrentPage(1)
     }
 
     // Handle sorting
     const sortData = (key) => {
-        handleSort(filteredcuppons, key, sortConfig, setSortConfig, setFilteredcuppons)
+        handleSort(filteredcouppons, key, sortConfig, setSortConfig, setFilteredcouppons)
     };
 
     // Pagination logic
     const indexOfLast = currentPage * itemsPerPage;
     const indexOfFirst = indexOfLast - itemsPerPage;
-    const currentcuppons = filteredcuppons.slice(indexOfFirst, indexOfLast);
-    const totalPages = Math.ceil(filteredcuppons.length / itemsPerPage);
+    const currentcouppons = filteredcouppons.slice(indexOfFirst, indexOfLast);
+    const totalPages = Math.ceil(filteredcouppons.length / itemsPerPage);
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     // for dalete
     const handledelete = async (id) => {
         const success = await DeleteEntity('Coupon', id)
         if (success) {
-            const updatedCuppon = cuppons.filter((cuppons) => cuppons.id !== id);
-            setcuppons(updatedCuppon);
-            setFilteredcuppons(updatedCuppon)
+            const updatedCuppon = couppons.filter((couppons) => couppons.id !== id);
+            setcouppons(updatedCuppon);
+            setFilteredcouppons(updatedCuppon)
         }
     }
 
@@ -91,7 +91,7 @@ const CupponList = () => {
 
     const handleToggleChange = async (id, currentStatus, field) => {
         try {
-            await StatusEntity("Coupon", id, currentStatus, setFilteredcuppons, filteredcuppons, field);
+            await StatusEntity("Coupon", id, currentStatus, setFilteredcouppons, filteredcouppons, field);
         } catch (error) {
             console.error(error);
         }
@@ -143,10 +143,6 @@ const CupponList = () => {
                                             </th>
                                             <th className="px-4 py-3 min-w-[120px]">
                                                 image
-                                                <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('c_img')} />
-                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('c_img')} />
-                                                </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[160px]">
                                                 expiredDate
@@ -183,8 +179,8 @@ const CupponList = () => {
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-gray-200">
-                                        {currentcuppons.length > 0 ? (
-                                            currentcuppons.map((cuppon, index) => (
+                                        {currentcouppons.length > 0 ? (
+                                            currentcouppons.map((cuppon, index) => (
                                                 <tr key={cuppon.id} className='h-[70px]'>
                                                     <td className="px-4 py-1">{index + 1 + indexOfFirst}</td>
                                                     <td className="px-4 py-1">{cuppon?.ctitle || "N/A"}</td>
@@ -241,30 +237,30 @@ const CupponList = () => {
                         {/* Pagination */}
                         <div className="bottom-0 left-0 w-full bg-[#f7fbff] py-4 flex justify-between items-center">
                             <span className="text-sm font-normal text-gray-500">
-                                Showing <span className="font-semibold text-gray-900">{indexOfFirst + 1}</span> to <span className="font-semibold text-gray-900">{Math.min(indexOfLast, filteredcuppons.length)}</span> of <span className="font-semibold text-gray-900">{filteredcuppons.length}</span>
+                                Showing <span className="font-semibold text-gray-900">{indexOfFirst + 1}</span> to <span className="font-semibold text-gray-900">{Math.min(indexOfLast, filteredcouppons.length)}</span> of <span className="font-semibold text-gray-900">{filteredcouppons.length}</span>
                             </span>
                             <ul className="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">
                                 <li>
                                     <button
                                         onClick={() => paginate(currentPage > 1 ? currentPage - 1 : 1)}
-                                        className={`previous-button ${filteredcuppons.length === 0 ? 'cursor-not-allowed' : ''}`}
-                                        disabled={currentPage === 1 || filteredcuppons.length === 0}
-                                        title={filteredcuppons.length === 0 ? 'No data available' : ''}
+                                        className={`previous-button ${filteredcouppons.length === 0 ? 'cursor-not-allowed' : ''}`}
+                                        disabled={currentPage === 1 || filteredcouppons.length === 0}
+                                        title={filteredcouppons.length === 0 ? 'No data available' : ''}
                                     >
                                         <img src="/image/action/Left Arrow.svg" alt="Left" /> Previous
                                     </button>
                                 </li>
                                 <li>
                                     <span className="current-page">
-                                        Page {filteredcuppons.length > 0 ? currentPage : 0} of {filteredcuppons.length > 0 ? totalPages : 0}
+                                        Page {filteredcouppons.length > 0 ? currentPage : 0} of {filteredcouppons.length > 0 ? totalPages : 0}
                                     </span>
                                 </li>
                                 <li>
                                     <button
                                         onClick={() => paginate(currentPage < totalPages ? currentPage + 1 : totalPages)}
-                                        className={`next-button ${filteredcuppons.length === 0 ? 'cursor-not-allowed button-disable' : ''}`}
-                                        disabled={currentPage === totalPages || filteredcuppons.length === 0}
-                                        title={filteredcuppons.length === 0 ? 'No data available' : ''}
+                                        className={`next-button ${filteredcouppons.length === 0 ? 'cursor-not-allowed button-disable' : ''}`}
+                                        disabled={currentPage === totalPages || filteredcouppons.length === 0}
+                                        title={filteredcouppons.length === 0 ? 'No data available' : ''}
                                     >
                                         Next <img src="/image/action/Right Arrow (1).svg" alt="Right" />
                                     </button>

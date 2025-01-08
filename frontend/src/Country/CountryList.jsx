@@ -135,10 +135,6 @@ const CountryList = () => {
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[150px]"> Image
-                                                <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className='cursor-pointer' onClick={() => sortData('img')} />
-                                                    <GoArrowDown className='cursor-pointer' onClick={() => sortData('img')} />
-                                                </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[250px]">
                                                 Total Properties

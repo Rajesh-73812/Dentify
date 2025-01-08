@@ -94,7 +94,7 @@ const CupponAdd = () => {
     e.preventDefault();
     console.log(formData, "from formdata");
     const url = id ? `http://localhost:5000/coupons/upsert` : `http://localhost:5000/coupons/upsert`;
-    const successMessage = id ? `Cuppon Updated Successfully` : `Cuppon Added Successfully!`;
+    const successMessage = id ? `Couppon Updated Successfully` : `Couppon Added Successfully!`;
     try {
       const response = await axios.post(url, formData, { withCredentials: true });
       if (response.status === 200 || response.status === 201) {
@@ -134,7 +134,7 @@ const CupponAdd = () => {
               <div className="bg-white h-[67vh] w-full rounded-xl border border-[#EAE5FF] py-4 px-6 overflow-y-auto scrollbar-none">
                 <form onSubmit={handleSubmit} className="mt-4">
                   <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-4 mt-6">
-                    {/* cuCouponppon image*/}
+                    {/* couppon image*/}
                     <div className="flex flex-col">
                       <label htmlFor="cupponimage" className="text-sm font-medium text-start text-[12px] font-[Montserrat]">Coupon Image</label>
                       <ImageUploader onUploadSuccess={handleImageUploadSuccess} />
@@ -149,14 +149,6 @@ const CupponAdd = () => {
                       )}
                     </div>
 
-                    {/* cuppon expiarydate*/}
-                    {/* <div className="flex flex-col">
-                      <label htmlFor="cdate" className="text-sm font-medium text-start text-[12px] font-[Montserrat]">Coupon Expiary Date</label>
-                      <input type="date" id="cdate"
-                        value={formData.cdate.split(" ")[0].replace(/^(\d{4})-(\d{2})-(\d{2})$/, '$3/$2/$1')} onChange={handleChange} name="cdate" required className="border rounded-lg p-3 mt-1 w-full h-14" style={{ borderRadius: '8px', border: '1px solid #EAEAFF' }}
-                      />
-                    </div> */}
-
                     {/* Coupon expiry date */}
                     <div className="flex flex-col">
                       <label htmlFor="cdate" className="text-sm font-medium text-start text-[12px] font-[Montserrat]">
@@ -165,7 +157,7 @@ const CupponAdd = () => {
                       <input
                         type="date"
                         id="cdate"
-                        value={formData.cdate ? formData.cdate.split("T")[0] : ""} // Ensure the date is in yyyy-MM-dd format
+                        value={formData.cdate ? formData.cdate.split("T")[0] : ""} 
                         onChange={handleChange}
                         name="cdate"
                         required
@@ -210,7 +202,7 @@ const CupponAdd = () => {
                     {/* coupon Status */}
                     <div className="flex flex-col">
                       <label htmlFor="status" className="text-sm font-medium text-start text-[12px] font-[Montserrat]" > Status </label>
-                      <select name="status" value={formData.status} onChange={handleChange} id="status" className="mt-1 block w-full p-4  bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm"  >
+                      <select name="status" value={formData.status} onChange={handleChange} id="status" className="mt-1 block w-full p-2  bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm"  >
                         <option value="" disabled selected>Select Status</option>
                         <option value={1}>Publish</option>
                         <option value={0}>Unpublish</option>

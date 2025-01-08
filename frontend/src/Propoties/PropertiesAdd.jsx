@@ -223,7 +223,7 @@ const PropertiesAdd = () => {
       if (error?.response?.data?.message) {
         NotificationManager.error(error.response.data.message, 'Error');
       } else {
-        NotificationManager.error('An error occurred. Please try again later.', 'Error');
+        NotificationManager.error('Please fill all the fields.', 'Error');
       }
     }
   };
@@ -492,7 +492,7 @@ const PropertiesAdd = () => {
                     <div className="flex flex-col">
                       <label
                         htmlFor="facility"
-                        className="text-sm font-medium text-start text-[12px] font-[Montserrat]"
+                        className="text-sm font-medium text-start  text-[12px] font-[Montserrat]"
                       >
                         Select Property Facility
                       </label>
@@ -507,30 +507,43 @@ const PropertiesAdd = () => {
                           value: facility.id,
                           label: facility.title,
                         }))}
-
-                        // Update formData when selection changes
                         onChange={(selectedOptions) => {
                           const selectedIds = selectedOptions.map((option) => option.value);
                           setFormData((prevData) => ({
                             ...prevData,
-                            facility: selectedIds.join(","), // Store selected IDs as comma-separated string
+                            facility: selectedIds.join(","), 
                           }));
                         }}
-
-                        className="mt-1 block w-full text-sm  border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                        className="block w-full text-sm border-color border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#045D78] focus:border-[#045D78]"
                         classNamePrefix="select"
                         placeholder="Select Facilities"
-                        styles={{ maxHeight: "40px" }}
+                        styles={{
+                          control: (provided) => ({
+                            ...provided,
+                            minHeight: "40px", 
+                          }),
+                          placeholder: (provided) => ({
+                            ...provided,
+                            position: "absolute",
+                            top: "50%", 
+                            transform: "translateY(-50%)", 
+                            width: "100%",
+                            textAlign: "center", 
+                          }),
+                          valueContainer: (provided) => ({
+                            ...provided,
+                            height: "40px", 
+                            padding: "0 8px", 
+                          }),
+                          border:"1px solid #045D78"
+                        }}
                       />
                     </div>
-
-
 
                   </div>
 
                   <div className="grid gap-6 w-full sm:grid-cols-1 md:grid-cols-3 mt-6">
                     {/* Property description */}
-
 
                     <div className="md:col-span-3 grid gap-6 sm:grid-cols-2 md:grid-cols-4">
                       {/* Total Beds */}
@@ -590,25 +603,6 @@ const PropertiesAdd = () => {
                         />
                       </div>
 
-                      {/* Property Rating */}
-                      {/* <div>
-                        <label
-                          htmlFor="rate"
-                          className="text-sm font-medium float-left text-[12px] font-[Montserrat]"
-                        >
-                          Property Rating
-                        </label>
-                        <input
-                          type="number"
-                          id="rate"
-                          value={formData.rate}
-                          name="rate"
-                          className="border rounded-lg p-3 mt-1 w-full focus:ring-blue-500 focus:border-blue-500"
-                          placeholder="Enter Property Rating"
-                          onChange={handleChange}
-                        />
-                      </div> */}
-
                       <div>
                         <label
                           htmlFor="rate"
@@ -619,12 +613,12 @@ const PropertiesAdd = () => {
                         <input
                           type="number"
                           id="rate"
-                          value={formData.rate || ""} // Ensure the field is not null
+                          value={formData.rate || ""} 
                           name="rate"
                           className="border rounded-lg p-3 mt-1 w-full focus:ring-blue-500 focus:border-blue-500"
                           placeholder="Enter Property Rating"
                           onChange={(e) => {
-                            const value = Math.min(Number(e.target.value), 5); // Limit to 5
+                            const value = Math.min(Number(e.target.value), 5); 
                             setFormData((prevData) => ({
                               ...prevData,
                               rate: value,

@@ -62,7 +62,7 @@ const DashboardCard = () => {
     const cards = [
         {
             card_logoIcon: <IoLocationOutline className="text-[#045D78]" />,
-            card_title: "Total Country",
+            card_title: "Total Countries",
             card_desc: "Number of countries",
             card_data_value: dataCounts.countryCount,
         },
