@@ -297,7 +297,7 @@ const SidebarMenu = () => {
 
               {/* Facility */}
 
-              <SubMenu label="Facility" active={location.pathname === "/create-facility" || location.pathname === "/facility-list"} icon={<ManageAccountsOutlinedIcon />}>
+              <SubMenu label="Facilities" active={location.pathname === "/create-facility" || location.pathname === "/facility-list"} icon={<ManageAccountsOutlinedIcon />}>
 
                 <MenuItem icon={<KeyboardArrowRightOutlinedIcon />} className="sub-menu-item"
 
@@ -319,7 +319,7 @@ const SidebarMenu = () => {
                   }}
 
                 >
-                  List Facility
+                  List Facilities
                 </MenuItem>
               </SubMenu>
 

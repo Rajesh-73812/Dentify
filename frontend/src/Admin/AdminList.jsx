@@ -36,7 +36,7 @@ const AdminList = () => {
     const [addForm, setAddForm] = useState({
         username: '',
         password: '',
-        userType: ''
+        userType: 'admin'
     });
 
     useEffect(() => {
@@ -107,9 +107,11 @@ const AdminList = () => {
         setAddForm({ ...addForm, [e.target.name]: e.target.value });
     };
 
+
     const handleAdd = async () => {
+        console.log("Form Data: ", addForm)
         try {
-            const response = await api.post('/admin/register', addForm);
+            const response = await api.post('/admin/register', addForm, { withCredentials: true });
             console.log(response.status)
             const updatedAdmins = [...admins, response.data.admin];
             setAdmins(updatedAdmins);
@@ -347,7 +349,7 @@ const AdminList = () => {
                                     <Form.Control
                                         type="text"
                                         name="userType"
-                                        value="Admin"
+                                        value={addForm.userType}
                                         onChange={handleAddChange} />
                                 </Form.Group>
                             </Form>
