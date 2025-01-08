@@ -138,10 +138,7 @@ const PaymentGatewayList = () => {
                                                 </div>
                                             </th>
 
-                                            <th className="px-4 py-1 min-w-[250px]">  PaymentGateway Image  <div className="inline-flex items-center ml-2">
-                                                <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('id')} />
-                                                <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('id')} />
-                                            </div>
+                                            <th className="px-4 py-1 min-w-[250px]">  PaymentGateway Image  
                                             </th>
                                             <th className="px-4 py-1 min-w-[200px]">  Show On Wallet
                                                 <div className="inline-flex items-center ml-2">

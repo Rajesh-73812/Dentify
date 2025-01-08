@@ -14,13 +14,34 @@ const FaqHeader =  ({ onSearch }) => {
                     </Link>
                     <h2 className="text-lg font-semibold ml-4 header" >FAQ's Management</h2>
                 </div>
-                <div className=' flex items-center gap-3'>
-                    <div className="hidden sm:flex  items-center border border-input rounded-lg bg-white shadow-sm top-[104px] h-9 opacity-100 " style={{border: '1px solid #EAE5FF', boxShadow: '0px 0px 1px 1px #00000033' }}>
-                        <input type="search" placeholder="Search" className="outline-none text-sm placeholder-gray-600 px-3 py-2 rounded-l-lg font-[Montserrat] h-9 w-[300px]" style={{ borderRadius: '8px 0 0 8px' }} onChange={onSearch} />
-                        <img src="/image/action/search-normal.svg" alt="Search" className="w-9 h-5 text-[#131313]"  />
+                <div className="flex items-center gap-3">
+                    <div
+                        className="hidden sm:flex items-center border rounded-lg bg-white shadow-sm h-10"
+                        style={{
+                        border: '1px solid #EAE5FF',
+                        boxShadow: '0px 1px 4px rgba(0, 0, 0, 0.1)',
+                        }}
+                    >
+                        <input
+                        type="search"
+                        placeholder="Search"
+                        className="outline-none text-sm placeholder-gray-500 px-4 w-72 h-full rounded-l-lg font-sans"
+                        style={{ borderRadius: '8px 0 0 8px' }}
+                        onChange={onSearch}
+                        />
+                        <div
+                        className="flex items-center justify-center w-12 h-full bg-purple-100 rounded-r-lg"
+                        style={{ backgroundColor: '#F6F1FF' }}
+                        >
+                        <img
+                            src="/image/action/search-normal.svg"
+                            alt="Search"
+                            className="w-5 h-5"
+                        />
+                        </div>
                     </div>
-                    
                 </div>
+
             </div>
         </div>
     </div>

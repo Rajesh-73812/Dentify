@@ -95,7 +95,7 @@ export const DeleteEntity = async (entity, id) => {
           });
           break;
 
-        case "Faq":
+        case "FAQ":
           await axios.delete(`${BASE_URL}/faqs/delete/${id}`, {
             withCredentials: true,
           });
@@ -142,7 +142,7 @@ export const DeleteEntity = async (entity, id) => {
       return true;
     } else {
       NotificationManager.removeAll();
-      NotificationManager.info(`${entity} deletion was canceled.`);
+      NotificationManager.info(`${entity} deletion was cancelled.`);
       return false;
     }
   } catch (error) {

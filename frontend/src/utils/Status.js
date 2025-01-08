@@ -22,7 +22,7 @@ export const StatusEntity = async (
       case "Property":
         url = `${BASE_URL}/properties/toggle-status`;
         break;
-      case "PropertyPanorama":
+      case "Panorama":
         url = `${BASE_URL}/properties/toggle-panorama`;
         break;
       case "ExtraImage":
@@ -60,11 +60,15 @@ export const StatusEntity = async (
     );
 
     // Send the request to toggle the status
-    const response = await axios.patch(url, {
-      id,
-      field,
-      value: newStatus,
-    });
+    const response = await axios.patch(
+      url,
+      {
+        id,
+        field,
+        value: newStatus,
+      },
+      { withCredentials: true }
+    );
 
     // Update the local state if successful
     const updatedData = data.map((item) =>
@@ -72,8 +76,16 @@ export const StatusEntity = async (
     );
     console.log("Updated Data:", updatedData);
     setData(updatedData);
+
+    let successMessage;
+    if (entityType === "Panorama" && field === "is_panorama") {
+      successMessage = `Property Panorama updated successfully!`;
+    } else {
+      successMessage = `${entityType} ${field} updated successfully!`;
+    }
+
     NotificationManager.removeAll();
-    NotificationManager.success(`${entityType} ${field} updated successfully!`);
+    NotificationManager.success(successMessage);
   } catch (error) {
     console.error("Error updating status:", error);
     NotificationManager.removeAll();

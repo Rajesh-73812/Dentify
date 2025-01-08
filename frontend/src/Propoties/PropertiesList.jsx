@@ -133,6 +133,7 @@ const PropotiesList = () => {
         }
         try {
             await StatusEntity("Property", id, currentStatus, setFilteredProperties, filteredProperties, field);
+            
         } catch (error) {
             console.error("Error toggling property status:", error);
         }
@@ -145,7 +146,8 @@ const PropotiesList = () => {
             return;
         }
         try {
-            await StatusEntity("PropertyPanorama", id, currentStatus, setFilteredProperties, filteredProperties, field);
+            await StatusEntity("Panorama", id, currentStatus, setFilteredProperties, filteredProperties, field);
+
         } catch (error) {
             console.error("Error toggling panorama status:", error);
         }
@@ -179,10 +181,6 @@ const PropotiesList = () => {
                                             </th>
                                             <th className="px-4 py-3 min-w-[190px]">
                                                 Property Image
-                                                <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('image')} />
-                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => handleSort('image')} />
-                                                </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[190px]">
                                                 Is Panorama
