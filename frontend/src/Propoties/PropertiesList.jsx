@@ -133,6 +133,7 @@ const PropotiesList = () => {
         }
         try {
             await StatusEntity("Property", id, currentStatus, setFilteredProperties, filteredProperties, field);
+            
         } catch (error) {
             console.error("Error toggling property status:", error);
         }
@@ -145,7 +146,8 @@ const PropotiesList = () => {
             return;
         }
         try {
-            await StatusEntity("PropertyPanorama", id, currentStatus, setFilteredProperties, filteredProperties, field);
+            await StatusEntity("Panorama", id, currentStatus, setFilteredProperties, filteredProperties, field);
+
         } catch (error) {
             console.error("Error toggling panorama status:", error);
         }

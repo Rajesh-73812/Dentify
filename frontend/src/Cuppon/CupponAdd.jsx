@@ -29,7 +29,7 @@ const CupponAdd = () => {
       const response = await api.get(`/coupons/${id}`)
       console.log(response.data)
       const cuppon = response.data
-      
+
       setFormData({
         id,
         c_img: cuppon.c_img,
@@ -94,7 +94,9 @@ const CupponAdd = () => {
     e.preventDefault();
     console.log(formData, "from formdata");
     const url = id ? `http://localhost:5000/coupons/upsert` : `http://localhost:5000/coupons/upsert`;
-    const successMessage = id ? `Couppon Updated Successfully` : `Couppon Added Successfully!`;
+
+    const successMessage = id ? `Coupon Updated Successfully` : `Coupon Added Successfully!`;
+
     try {
       const response = await axios.post(url, formData, { withCredentials: true });
       if (response.status === 200 || response.status === 201) {
@@ -202,7 +204,9 @@ const CupponAdd = () => {
                     {/* coupon Status */}
                     <div className="flex flex-col">
                       <label htmlFor="status" className="text-sm font-medium text-start text-[12px] font-[Montserrat]" > Status </label>
-                      <select name="status" value={formData.status} onChange={handleChange} id="status" className="mt-1 block w-full p-2  bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm"  >
+
+                      <select name="status" value={formData.status} onChange={handleChange} id="status" className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm"  >
+
                         <option value="" disabled selected>Select Status</option>
                         <option value={1}>Publish</option>
                         <option value={0}>Unpublish</option>
