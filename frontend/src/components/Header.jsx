@@ -2,16 +2,13 @@ import React, { useState, useEffect, useRef } from "react";
 import { NotificationIcon, ProfileIcon } from "./Icons";
 import { FaUser, FaSignOutAlt, FaCog } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-
-
 import toast, { Toaster } from "react-hot-toast";
 import api from "../utils/api";
-import { useDispatch, useSelector } from "react-redux";
-import { addNotification, clearNotifications } from "../features/notification/NotificationSlice";
+
 
 const Header = () => {
-  const dispatch=useDispatch()
   
+
   const [n, setNotifications] = useState([]);
   const [showNotifications, setShowNotifications] = useState(false);
   const [isPopupVisible, setIsPopupVisible] = useState(false);
@@ -19,14 +16,28 @@ const Header = () => {
   const [showCard, setShowCard] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const notificationRef = useRef(null);
-
-  
-
-  
 
 
- 
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      if (isHovered) {
+        setShowCard(true);
+      }
+    }, 100);
+
+    return () => clearTimeout(timeoutId);
+  }, [isHovered]);
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      if (!isHovered) {
+        setShowCard(false);
+      }
+    }, 100);
+
+    return () => clearTimeout(timeoutId);
+  }, [isHovered]);
+
 
 
   const logout = async () => {
@@ -54,13 +65,6 @@ const Header = () => {
     }
   };
 
-
- 
-
- 
-
-  
-
   return (
     <div className="bg-white h-[65px] sm:h-[80px] px-4 py-4 sm:px-6 flex items-center justify-between relative">
   
@@ -74,9 +78,6 @@ const Header = () => {
   {/* Title Section */}
   <div className="flex items-center gap-2.5">
     <span className="text-lg sm:text-2xl font-bold">Dashboard</span>
-  </div>
-  <div>
-    <Toaster position="top-right" />
   </div>
   {/* Icons Section */}
   <div className="flex items-center gap-2">
@@ -103,7 +104,6 @@ const Header = () => {
       )} */}
 
 
-        
     </div>
 
     {/* Profile Icon with Smooth Hover Card */}
