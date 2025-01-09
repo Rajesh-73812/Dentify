@@ -810,7 +810,7 @@ const PropertiesAdd = () => {
 
                   {/* Action Buttons */}
                   <div className="flex justify-start mt-6 gap-3">
-                    <button type="submit" className={`py-2 mt-6 float-start bg-[#045D78] text-white rounded-lg w-[150px] h-12 font-[Montserrat] font-bold`} style={{ borderRadius: '8px' }}   >
+                    <button type="submit" className={`py-2 mt-6 float-start bg-[#045D78] text-white rounded-lg w-[150px] h-10 font-poppins font-medium ${id ? 'w-[140px]' : 'w-[120px]'}`} style={{ borderRadius: '8px' }}   >
                       {id ? 'Update Property' : 'Add  Property'}
                     </button>
                   </div>

@@ -177,14 +177,14 @@ const AdminList = () => {
                         <div className="bg-white w-full rounded-xl border border-[#EAE5FF] py-4 px-3 overflow-x-auto scrollbar-none">
                             <div className="relative sm:rounded-lg">
                                 <table className="min-w-full text-sm text-left text-gray-700">
-                                    <thead className="bg-gray-50 text-xs uppercase font-medium text-gray-500">
+                                    <thead className="bg-[#045D78] bg-opacity-75 text-xs uppercase font-medium text-white">
                                         <tr>
                                             <th className="px-2 py-3 min-w-[100px]">
                                                 Sr. No
                                                 <div className="inline-flex items-center ml-2">
 
-                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('id')} />
-                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('id')} />
+                                                    <GoArrowUp className="text-white hover:text-gray-700 cursor-pointer" onClick={() => sortData('id')} />
+                                                    <GoArrowDown className="text-white hover:text-gray-700 cursor-pointer" onClick={() => sortData('id')} />
 
                                                 </div>
                                             </th>
@@ -192,8 +192,8 @@ const AdminList = () => {
                                                 Username
                                                 <div className="inline-flex items-center ml-2">
 
-                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('username')} />
-                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('username')} />
+                                                    <GoArrowUp className="text-white hover:text-gray-700 cursor-pointer" onClick={() => sortData('username')} />
+                                                    <GoArrowDown className="text-white hover:text-gray-700 cursor-pointer" onClick={() => sortData('username')} />
 
                                                 </div>
                                             </th>
@@ -209,8 +209,8 @@ const AdminList = () => {
                                                 User Type
                                                 <div className="inline-flex items-center ml-2">
 
-                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('title')} />
-                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData('title')} />
+                                                    <GoArrowUp className="text-white hover:text-gray-700 cursor-pointer" onClick={() => sortData('title')} />
+                                                    <GoArrowDown className="text-white hover:text-gray-700 cursor-pointer" onClick={() => sortData('title')} />
 
                                                 </div>
                                             </th>

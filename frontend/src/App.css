@@ -135,13 +135,13 @@ select {
   font-size: 12px !important; 
   padding: 2px 4px !important; 
   border-radius: 4px !important; 
-  border: 1px solid #EAEAFF; 
+  border: 1px solid #ccc; 
   outline: none; 
 }
 
 
 select option:disabled {
-  color: #EAEAFF;
+  color: #999;
   font-style: italic; 
 }
 

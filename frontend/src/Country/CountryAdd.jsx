@@ -148,22 +148,19 @@ const CountryAdd = () => {
                       />
                     </div>
                     <div className="flex flex-col">
-                      <label
+                      <label 
                         htmlFor="currency"
                         className="text-sm font-medium mt-[2px] text-start text-[12px] font-[Montserrat]"
                       >
                         Currency
                       </label>
-                      <select
+                      <select 
                         name="currency"
                         id="currency"
                         value={Object.keys(CountryCodes).find(key => CountryCodes[key] === formData.currency) || ""}
                         onChange={handleChange}
                         required
-                        style={{
-                          borderRadius: "8px",
-                          border: "1px solid #EAEAFF",
-                        }}
+                        className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:ring- focus:border-blue-500 outline-none  text-sm" 
                       >
                         <option value="" disabled>Select Currency</option>
                         {Object.keys(CountryCodes).map((currencyCode) => (

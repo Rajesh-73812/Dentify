@@ -127,7 +127,7 @@ const ExtraImageAdd = () => {
                         <div className="h-full px-6 max-w-5xl" style={{ paddingTop: '24px' }}>
                             <div className="bg-white h-[67vh] w-full rounded-xl border border-[#EAE5FF] py-4 px-6 overflow-y-auto scrollbar-none">
                                 <form className="mt-4" onSubmit={handleSubmit}>
-                                    <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-1 mt-6">
+                                    <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-2 mt-6">
                                         {/* Select Property */}
                                         <div className="flex flex-col">
                                             <label htmlFor="pid" className="text-sm font-medium text-start text-[12px] font-[Montserrat]">Select Property</label>
@@ -139,8 +139,6 @@ const ExtraImageAdd = () => {
                                             </select>
 
                                         </div>
-                                    </div>
-                                    <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-1 mt-6">
                                         {/* Property Image */}
                                         <div className="flex flex-col">
                                             <label htmlFor="img" className="text-sm font-medium text-start text-[12px] font-[Montserrat]">Property Image</label>
@@ -163,8 +161,8 @@ const ExtraImageAdd = () => {
                                             )}
                                         </div>
                                     </div>
-                                    <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-1 mt-6">
-                                        {/* Yes/No image*/}
+                                    <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-2 mt-6">
+                                        {/* Yes/No */}
                                         <div className="flex flex-col">
                                             <label htmlFor="image2" className="text-sm font-medium text-start text-[12px] font-[Montserrat]" > Status </label>
                                             <select name="image2" id="image2" className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm"  >
@@ -184,7 +182,7 @@ const ExtraImageAdd = () => {
                                         </div>
                                     </div>
                                     {/* Action Buttons */}
-                                    <button type="submit" className={`py-2 mt-6 float-start bg-[#045D78] text-white rounded-lg w-[150px] h-12 font-[Montserrat] font-bold`} style={{ borderRadius: '8px' }}   >
+                                    <button type="submit" className={`py-2 mt-6 float-start bg-[#045D78] text-white rounded-lg  h-10 font-poppins font-medium ${id ? 'w-[140px]' : 'w-[120px]'}`} style={{ borderRadius: '8px' }}   >
                                         {id ? 'Update  Image' : 'Add  Image'}
                                     </button>
                                 </form>
