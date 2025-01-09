@@ -15,12 +15,28 @@ const ExtraImageHeader =  ({ onSearch }) => {
                     </Link>
                     <h2 className="text-lg font-semibold ml-4 header" >Extra Image List</h2>
                 </div>
-                <div className=' flex items-center gap-3'>
-                    <div className="hidden sm:flex  items-center border border-input rounded-lg bg-white shadow-sm top-[104px] h-9 opacity-100 " style={{border: '1px solid #EAE5FF', boxShadow: '0px 0px 1px 1px #00000033' }}>
-                        <input type="search" placeholder="Search" className="outline-none text-sm placeholder-gray-600 px-3 py-2 rounded-l-lg font-[Montserrat] h-9 w-[300px]" style={{ borderRadius: '8px 0 0 8px' }} onChange={onSearch} />
-                        <img src="/image/action/search-normal.svg" alt="Search" className="w-9 h-5 text-[#131313]"  />
+                <div className="flex items-center gap-3">
+                    <div className="hidden sm:flex items-center relative">
+                        {/* Search Icon */}
+                        <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
+                        <img
+                            src="/image/action/search-normal.svg"
+                            alt="Search"
+                            className="w-5 h-5"
+                        />
+                        </div>
+
+                        {/* Search Input */}
+                        <input
+                        type="search"
+                        placeholder="Search"
+                        className="outline-none text-sm placeholder-gray-500 pl-10 pr-4 w-72 h-10 rounded-lg font-sans border border-[#EAE5FF] shadow-sm"
+                        style={{
+                            boxShadow: '0px 1px 4px rgba(0, 0, 0, 0.1)',
+                        }}
+                        onChange={onSearch}
+                        />
                     </div>
-                    
                 </div>
             </div>
         </div>

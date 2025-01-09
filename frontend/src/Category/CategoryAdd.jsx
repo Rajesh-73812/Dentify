@@ -126,7 +126,7 @@ const CategoryAdd = () => {
             <div className="h-full px-6 max-w-5xl " style={{ paddingTop: '24px' }}>
               <div className="bg-white h-[67vh] w-full rounded-xl border border-[#EAE5FF] py-4 px-6 overflow-y-auto scrollbar-none">
                 <form onSubmit={handleSubmit} className="mt-4">
-                  <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-1  mt-6">
+                  <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-2  mt-6">
                     {/* category name */}
                     <div className="flex flex-col">
                       <label htmlFor="category_name" className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> Category name </label>
@@ -135,8 +135,7 @@ const CategoryAdd = () => {
                         placeholder="Enter Category Title"
                       />
                     </div>
-                  </div>
-                  <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-1 mt-6">
+
                     {/* category image*/}
                     <div className="flex flex-col">
                       <label htmlFor="category_image" className="text-sm font-medium text-start text-[12px] font-[Montserrat]">Category Image</label>
@@ -154,7 +153,7 @@ const CategoryAdd = () => {
                     </div>
                   </div>
 
-                  <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-1 mt-6">
+                  <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-2 mt-6">
                     {/* category Status */}
                     <div className="flex flex-col">
                       <label htmlFor="category_status" className="text-sm font-medium text-start text-[12px] font-[Montserrat]" > Status </label>
@@ -167,7 +166,7 @@ const CategoryAdd = () => {
                   </div>
 
                   {/* Action Buttons */}
-                  <button type="submit" className={`py-2 mt-6 float-start bg-[#045D78] text-white rounded-lg w-[150px] h-12 font-[Montserrat] font-bold`} style={{ borderRadius: '8px' }}   >
+                  <button type="submit" className={`py-2 mt-6 float-start bg-[#045D78] text-white rounded-lg h-10 font-poppins font-medium ${id ? 'w-[140px]' : 'w-[120px]'}`} style={{ borderRadius: '8px' }}   >
                     {id ? 'Update Category' : 'Add  Category'}
                   </button>
                 </form>

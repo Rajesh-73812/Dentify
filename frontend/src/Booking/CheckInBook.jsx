@@ -104,7 +104,7 @@ const CheckInBook = () => {
                         <div className="bg-white w-full rounded-xl border border-[#EAE5FF] py-4 px-3 overflow-x-auto scrollbar-none">
                             <div className="relative sm:rounded-lg">
                                 <table className="min-w-full text-sm text-left text-gray-700">
-                                    <thead className="bg-gray-50 text-xs uppercase font-medium text-gray-500">
+                                    <thead className="bg-[#045D78] bg-opacity-75 text-xs uppercase font-medium text-white">
                                         <tr>
                                             <th className="px-4 py-3 min-w-[130px]">
                                                 Sr. No

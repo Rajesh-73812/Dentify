@@ -128,13 +128,13 @@ const ExtraImageList = () => {
                             <div className="relative sm:rounded-lg">
                             
                                 <table className="min-w-full text-sm text-left text-gray-700">
-                                    <thead className="bg-gray-50 text-xs uppercase font-medium text-gray-500">
+                                    <thead className="bg-[#045D78] bg-opacity-75 text-xs uppercase font-medium text-white">
                                         <tr>
                                             <th className="px-4 py-3 min-w-[130px]">
                                                 Sr. No
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData("id")} />
-                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData("id")} />
+                                                    <GoArrowUp className="text-white hover:text-gray-700 cursor-pointer" onClick={() => sortData("id")} />
+                                                    <GoArrowDown className="text-white hover:text-gray-700 cursor-pointer" onClick={() => sortData("id")} />
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[150px]">
@@ -143,15 +143,15 @@ const ExtraImageList = () => {
                                             <th className="px-4 py-3 min-w-[150px]">
                                                 Property Title
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData("title")} />
-                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData("title")} />
+                                                    <GoArrowUp className="text-white hover:text-gray-700 cursor-pointer" onClick={() => sortData("title")} />
+                                                    <GoArrowDown className="text-white hover:text-gray-700 cursor-pointer" onClick={() => sortData("title")} />
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[150px]">
                                                 Status
                                                 <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData("status")} />
-                                                    <GoArrowDown className="text-gray-500 hover:text-gray-700 cursor-pointer" onClick={() => sortData("status")} />
+                                                    <GoArrowUp className="text-white hover:text-gray-700 cursor-pointer" onClick={() => sortData("status")} />
+                                                    <GoArrowDown className="text-white hover:text-gray-700 cursor-pointer" onClick={() => sortData("status")} />
                                                 </div>
                                             </th>
                                             <th className="px-4 py-3 min-w-[150px]">

@@ -15,30 +15,26 @@ const PropotiesHeader =  ({ onSearch }) => {
                     <h2 className="text-lg font-semibold ml-4 header" >Property List</h2>
                 </div>
                 <div className="flex items-center gap-3">
-                    <div
-                        className="hidden sm:flex items-center border rounded-lg bg-white shadow-sm h-10"
-                        style={{
-                        border: '1px solid #EAE5FF',
-                        boxShadow: '0px 1px 4px rgba(0, 0, 0, 0.1)',
-                        }}
-                    >
-                        <input
-                        type="search"
-                        placeholder="Search"
-                        className="outline-none text-sm placeholder-gray-500 px-4 w-72 h-full rounded-l-lg font-sans"
-                        style={{ borderRadius: '8px 0 0 8px' }}
-                        onChange={onSearch}
-                        />
-                        <div
-                        className="flex items-center justify-center w-12 h-full bg-purple-100 rounded-r-lg"
-                        style={{ backgroundColor: '#F6F1FF' }}
-                        >
+                    <div className="hidden sm:flex items-center relative">
+                        {/* Search Icon */}
+                        <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
                         <img
                             src="/image/action/search-normal.svg"
                             alt="Search"
                             className="w-5 h-5"
                         />
                         </div>
+
+                        {/* Search Input */}
+                        <input
+                        type="search"
+                        placeholder="Search"
+                        className="outline-none text-sm placeholder-gray-500 pl-10 pr-4 w-72 h-10 rounded-lg font-sans border border-[#EAE5FF] shadow-sm"
+                        style={{
+                            boxShadow: '0px 1px 4px rgba(0, 0, 0, 0.1)',
+                        }}
+                        onChange={onSearch}
+                        />
                     </div>
                 </div>
 
