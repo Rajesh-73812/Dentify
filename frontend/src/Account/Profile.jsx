@@ -9,7 +9,7 @@ import { useLocation } from 'react-router-dom';
 import Loader from '../common/Loader'
 import { NotificationManager,NotificationContainer } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import ArrowBackIosNewIcon  from '@mui/icons-material/ArrowBackIosNew';
 
 
 const Profile = () => {
@@ -92,7 +92,7 @@ const Profile = () => {
           <div className="flex items-center mt-6  mb-4">
             <div className="flex items-center mt-6  mb-4">
               <Link onClick={()=>{navigate(-1)}}  className="cursor-pointer ml-6">
-                <ArrowBackIosNewIcon />
+                <ArrowBackIosNewIcon style={{color:'#045D78'}} />
               </Link>
               <h2 className="text-lg font-semibold ml-4 header">Account Management</h2>
             </div>

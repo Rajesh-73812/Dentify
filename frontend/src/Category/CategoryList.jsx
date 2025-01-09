@@ -184,7 +184,7 @@ const CategoryList = () => {
                           <td>
                             <FontAwesomeIcon
                               className="h-7 w-16 cursor-pointer"
-                              style={{ color: category.status === 1 ? "#0064DC" : "#e9ecef" }}
+                              style={{ color: category.status === 1 ? "#045D78" : "#e9ecef" }}
                               icon={category.status === 1 ? faToggleOn : faToggleOff}
                               onClick={() => handleToggleChange(category.id, category.status, "status")} // Pass 'status' field
                             />
@@ -243,7 +243,7 @@ const CategoryList = () => {
                   </span>
                 </li>
                 <li>
-                  <button
+                  <button style={{background:'#045D78'}}
                     onClick={() => paginate(currentPage < totalPages ? currentPage + 1 : totalPages)}
                     className={`next-button ${filteredCategories.length === 0 ? 'cursor-not-allowed button-disable' : ''}`}
                     disabled={currentPage === totalPages || filteredCategories.length === 0}

@@ -199,7 +199,7 @@ const CountryList = () => {
                                                     <td>
                                                         <FontAwesomeIcon
                                                             className="h-7 w-16 cursor-pointer"
-                                                            style={{ color: country.status === 1 ? "#0064DC" : "#e9ecef" }}
+                                                            style={{ color: country.status === 1 ? "#045D78" : "#e9ecef" }}
                                                             icon={country.status === 1 ? faToggleOn : faToggleOff}
                                                             onClick={() => handleToggleChange(country.id, country.status, "status")}
                                                         />
@@ -242,11 +242,11 @@ const CountryList = () => {
                                     </span>
                                 </li>
                                 <li>
-                                    <button
+                                    <button style={{background:'#045D78'}}
                                         onClick={() => paginate(currentPage < totalPages ? currentPage + 1 : totalPages)}
                                         className={`next-button ${filteredCountries.length === 0 ? 'cursor-not-allowed' : ''}`}
                                         disabled={currentPage === totalPages || filteredCountries.length === 0}
-                                        title={filteredCountries.length === 0 ? 'No data available' : ''}
+                                        title={filteredCountries.length === 0 ? 'No data available' : '' }
                                     >
                                         Next <img src="/image/action/Right Arrow (1).svg" alt="Right" />
                                     </button>

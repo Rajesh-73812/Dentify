@@ -3,6 +3,7 @@ import { NotificationManager } from "react-notifications";
 import Swal from "sweetalert2";
 
 export const DeleteEntity = async (entity, id) => {
+  // alert(entity)
   const BASE_URL = `http://localhost:5000`;
   try {
     const result = await Swal.fire({

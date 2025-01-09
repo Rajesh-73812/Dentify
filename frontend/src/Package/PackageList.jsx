@@ -162,7 +162,7 @@ const PackageList = () => {
                                                     <td>
                                                         <FontAwesomeIcon
                                                             className="h-7 w-16 cursor-pointer"
-                                                            style={{ color: Package.status === 1 ? "#0064DC" : "#e9ecef" }}
+                                                            style={{ color: Package.status === 1 ? "#045D78" : "#e9ecef" }}
                                                             icon={Package.status === 1 ? faToggleOn : faToggleOff}
                                                             onClick={() => handleToggleChange(Package.id, Package.status, "status")}
                                                         />
@@ -213,7 +213,7 @@ const PackageList = () => {
                                     </span>
                                 </li>
                                 <li>
-                                    <button
+                                    <button style={{background:'#045D78'}}
                                         onClick={() => paginate(currentPage < totalPages ? currentPage + 1 : totalPages)}
                                         className={`next-button ${filteredpackages.length === 0 ? 'cursor-not-allowed button-disable' : ''}`}
                                         disabled={currentPage === totalPages || filteredpackages.length === 0}

@@ -269,7 +269,7 @@ const AdminList = () => {
                                     </span>
                                 </li>
                                 <li>
-                                    <button onClick={() => paginate(currentPage < Math.ceil(admins.length / adminsPerPage) ? currentPage + 1 : Math.ceil(admins.length / adminsPerPage))} className="next-button" disabled={currentPage === Math.ceil(admins.length / adminsPerPage)}>
+                                    <button style={{background:'#045D78'}} onClick={() => paginate(currentPage < Math.ceil(admins.length / adminsPerPage) ? currentPage + 1 : Math.ceil(admins.length / adminsPerPage))} className="next-button" disabled={currentPage === Math.ceil(admins.length / adminsPerPage)}>
                                         Next <img src="/image/action/Right Arrow (1).svg" alt="Right" />
                                     </button>
                                 </li>

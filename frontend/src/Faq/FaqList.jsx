@@ -153,7 +153,7 @@ const FaqList = () => {
                                                     <td>
                                                         <FontAwesomeIcon
                                                             className="h-7 w-16 cursor-pointer"
-                                                            style={{ color: faq.status === 1 ? "#0064DC" : "#e9ecef" }}
+                                                            style={{ color: faq.status === 1 ? "#045D78" : "#e9ecef" }}
                                                             icon={faq.status === 1 ? faToggleOn : faToggleOff}
                                                             onClick={() => handleToggleChange(faq.id, faq.status, "status")}
                                                         />
@@ -163,7 +163,7 @@ const FaqList = () => {
                                                         <button className="bg-[#2dce89] text-white p-2 rounded-full hover:bg-green-600 transition mr-2" onClick={() => { updateFAQ(faq.id) }}>
                                                             <FaPen />
                                                         </button>
-
+                                                        <NotificationContainer />
                                                         <button className="bg-[#f5365c] text-white p-2 rounded-full hover:bg-red-600 transition" onClick={() => { handledelete(faq.id) }}>
                                                             <FaTrash />
                                                         </button>
@@ -204,7 +204,7 @@ const FaqList = () => {
                                     </span>
                                 </li>
                                 <li>
-                                    <button
+                                    <button style={{background:'#045D78'}}
                                         onClick={() => paginate(currentPage < totalPages ? currentPage + 1 : totalPages)}
                                         className={`next-button ${filteredfaq.length === 0 ? 'cursor-not-allowed button-disable' : ''}`}
                                         disabled={currentPage === totalPages || filteredfaq.length === 0}

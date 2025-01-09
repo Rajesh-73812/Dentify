@@ -5,7 +5,7 @@ import SidebarMenu from "../components/SideBar";
 import axios from "axios";
 import ImageUploader from "../common/ImageUploader";
 import Select from 'react-select';
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import ArrowBackIosNewIcon  from '@mui/icons-material/ArrowBackIosNew';
 import api from "../utils/api";
 import { RxCrossCircled } from "react-icons/rx";
 
@@ -240,7 +240,7 @@ const PropertiesAdd = () => {
           <div className="container mx-auto">
             <div className="flex items-center mt-6  mb-4">
               <Link onClick={() => { navigate(-1) }} className="cursor-pointer ml-6">
-                <ArrowBackIosNewIcon />
+                <ArrowBackIosNewIcon style={{color:'#045D78'}} />
               </Link>
               <h2
                 className="text-lg font-semibold ml-4 "
@@ -810,7 +810,7 @@ const PropertiesAdd = () => {
 
                   {/* Action Buttons */}
                   <div className="flex justify-start mt-6 gap-3">
-                    <button type="submit" className={`py-2 mt-6 float-start ${id ? 'bg-green-500 hover:bg-green-600' : 'bg-blue-500 hover:bg-blue-600'} text-white rounded-lg w-[150px] h-12 font-[Montserrat] font-bold`} style={{ borderRadius: '8px' }}   >
+                    <button type="submit" className={`py-2 mt-6 float-start bg-[#045D78] text-white rounded-lg w-[150px] h-12 font-[Montserrat] font-bold`} style={{ borderRadius: '8px' }}   >
                       {id ? 'Update Property' : 'Add  Property'}
                     </button>
                   </div>
