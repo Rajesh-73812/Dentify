@@ -181,7 +181,7 @@ const CupponAdd = () => {
                     {/*btn*/}
                     <div className="flex flex-col">
                       {/* <label  htmlFor="cupponCode"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> cuppon Generate</label> */}
-                      <button className='btn border rounded-lg ml-4 mt-8 w-full h-14' style={{ background: '#61eb34', height: '40px', width: '70px' }} onClick={(e) => { e.preventDefault(); makeEightDigitRand(); }}><img src="/image/cuppon/update_8303700.png" alt="refresh" height={20} width={20} className='ml-6' /></button>
+                      <button className='btn border rounded-lg ml-4 mt-[25px] w-full h-14' style={{ background: '#61eb34', height: '40px', width: '65px' }} onClick={(e) => { e.preventDefault(); makeEightDigitRand(); }}><img src="/image/cuppon/update_8303700.png" alt="refresh" height={20} width={20} className='ml-3' /></button>
                     </div>
                   </div>
                   <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-4  mt-6">
@@ -205,10 +205,10 @@ const CupponAdd = () => {
                     <div className="flex flex-col">
                       <label htmlFor="status" className="text-sm font-medium text-start text-[12px] font-[Montserrat]" > Status </label>
 
-                      <select name="status" value={formData.status} onChange={handleChange} id="status" className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm"  >
+                      <select name="status" value={formData.status} onChange={handleChange} id="status" className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-[#045D78] focus:bg-[#045D78] focus:border-[#045D78]  outline-none text-sm" >
 
                         <option value="" disabled selected>Select Status</option>
-                        <option value={1}>Publish</option>
+                        <option  value={1}>Publish</option>
                         <option value={0}>Unpublish</option>
                       </select>
                     </div>
@@ -243,7 +243,7 @@ const CupponAdd = () => {
 
                   {/* Action Buttons */}
                   <div className="flex justify-start mt-6 gap-3">
-                    <button type="submit" className={` py-2 bg-[#045D78] text-white rounded-lg  w-[150px] h-12 font-[Montserrat] font-bold`} style={{ borderRadius: "8px", }} > {id ? 'Update Coupon' : 'Add Coupon'} </button>
+                    <button type="submit" className={` py-2 bg-[#045D78] text-white rounded-lg  w-[110px] h-10 font-poppins font-medium`} style={{ borderRadius: "8px", }} > {id ? 'Update Coupon' : 'Add Coupon'} </button>
                   </div>
                 </form>
               </div>

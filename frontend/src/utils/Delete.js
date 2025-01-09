@@ -11,8 +11,8 @@ export const DeleteEntity = async (entity, id) => {
       text: "This action cannot be undone.",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
+      confirmButtonColor: "#045D78",
+      cancelButtonColor: "#f5365c",
       confirmButtonText: "Yes, delete it!",
     });
 

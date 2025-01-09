@@ -130,7 +130,7 @@ const FacilityAdd = () => {
               <div className="bg-white h-[67vh] w-full rounded-xl border border-[#EAE5FF] py-4 px-6 overflow-y-auto scrollbar-none" >
                 {/* <p className='text-left font-bold font-[Montserrat]' >Create Service</p> */}
                 <form onSubmit={handleSubmit} className="mt-4">
-                  <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-1  mt-6">
+                  <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-2  mt-6">
                     {/* facility name */}
                     <div className="flex flex-col">
                       <label htmlFor="title" className="text-sm font-medium text-start text-[12px] font-[Montserrat]">Facility Name</label>
@@ -139,8 +139,6 @@ const FacilityAdd = () => {
                       />
                     </div>
 
-                  </div>
-                  <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-1 mt-6">
                     {/* facility image*/}
                     <div className="flex flex-col">
                       <label htmlFor="img" className="text-sm font-medium text-start text-[12px] font-[Montserrat]">Facility Image</label>
@@ -156,6 +154,7 @@ const FacilityAdd = () => {
                       )}
                       {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
                     </div>
+
                   </div>
 
                   <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-1 mt-6">
@@ -172,7 +171,7 @@ const FacilityAdd = () => {
 
                   {/* Action Buttons */}
                   <div className="flex justify-start mt-6 gap-3">
-                    <button type="submit" className={`py-2 bg-[#045D78] text-white rounded-lg  w-[150px] h-12 font-[Montserrat] font-bold`} style={{ borderRadius: "8px", }} > {id ? 'Update Facility' : 'Add Facility'} </button>
+                    <button type="submit" className={`py-2 bg-[#045D78] text-white rounded-lg  w-[150px] h-10 font-poppins font-medium ${id ? 'w-[140px]' : 'w-[120px]'}`} style={{ borderRadius: "8px", }} > {id ? 'Update Facility' : 'Add Facility'} </button>
                   </div>
                 </form>
 

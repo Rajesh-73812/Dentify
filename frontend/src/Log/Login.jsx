@@ -65,7 +65,7 @@ const Login = () => {
         style={{ background: '#045D78' }}
       >
         <div>
-          <img src="/image/Group 2.svg" alt="" className="w-[337px] h-[291px]" />
+          <img src="/image/Group 2.svg" alt="" className="w-[250px] h-[220px]" />
         </div>
         <div className="text-center gap-5">
           <span className="dentify-logoName" style={{ letterSpacing: '0.1rem' }}>
@@ -77,12 +77,12 @@ const Login = () => {
       {/* Right Side */}
       <div className="flex items-center justify-center bg-white p-6">
         <div
-          className="w-full max-w-md bg-white rounded-xl p-8"
+          className="w-full max-w-md bg-white rounded-xl p-8 border border-gray-300"
           style={{
-            boxShadow: `0px 2px 5px 0px #0000001A, 0px 10px 10px 0px #00000017, 0px 22px 13px 0px #0000000D, 0px 39px 15px 0px #00000003, 0px 60px 17px 0px #00000000`,
-          }}
+            boxShadow: `0px 0px 5px 0px #0000001A, 0px 0px 10px 0px #00000017, 0px 0px 13px 0px #0000000D, 0px 0px 15px 0px #00000003, 0px 0px 17px 0px #00000000`,
+          }}                  
         >
-          <h2 className="auth-head">Welcome Back</h2>
+          <h2 className="auth-head">Welcome </h2>
           <p className="text-[#045D78] float-left mb-[38px] ml-[5px] mt-[10px] leading-[26px]">
             Please Login to your Account
           </p>
@@ -124,14 +124,14 @@ const Login = () => {
               </span>
             </div>
 
-            <div className="flex items-center justify-between">
+            {/* <div className="flex items-center justify-between">
               <div className="flex items-center"></div>
               <div>
                 <a href="/forgotpassword" className="text-sm text-[#131313] font-[poppins] fg">
                   Forgot password?
                 </a>
               </div>
-            </div>
+            </div> */}
 
             <div>
               <button

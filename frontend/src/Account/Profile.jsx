@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import Header from '../components/Header'
-
+import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import { Link, useNavigate } from 'react-router-dom'
-
 import axios from 'axios'
 import { useLoading } from '../Context/LoadingContext';
 import { useLocation } from 'react-router-dom';
@@ -16,6 +16,8 @@ const Profile = () => {
   const navigate = useNavigate()
   const location = useLocation();
   const { isLoading, setIsLoading } = useLoading();
+  const [passwordVisible,setPasswordVisible]=useState(false)
+  const [passwordType,setPasswordType]=useState('password');
   const [formData, setFormData] = useState({
     id:0,
     username:'',
@@ -32,6 +34,11 @@ const Profile = () => {
 
     return () => clearTimeout(timer);
   }, [location, setIsLoading]);
+
+  const handlePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
+    setPasswordType(passwordVisible ? 'password' :'text');
+  }
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -103,7 +110,7 @@ const Profile = () => {
             <div className="bg-white w-full rounded-xl border border-[#EAE5FF] py-4 px-6">
               <form className="mt-4" onSubmit={handleSubmit}>
                 <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-1  mt-6">
-                  {/* country name */}
+                  {/*  name */}
                   <div className="flex flex-col">
                       <label  htmlFor="username"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> Profile name </label>
                       <input id="username" name="username" type="text" value={formData.username} required className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}}
@@ -113,19 +120,27 @@ const Profile = () => {
                     </div>
                 </div>
                 <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-1  mt-6">
-                  {/* country name */}
-                  <div className="flex flex-col">
+                  {/* password */}
+                  <div className="flex flex-col relative">
                       <label  htmlFor="Password"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> Password </label>
-                      <input id="Password" name="password" value={formData.password} type="password" required className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}}
+                      <input id="Password" name="password" value={formData.password} type={passwordType} required className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}}
                         onChange={handleChange}
                         placeholder="********************************"
                       />
+                      <span className='mt-[30px]  cursor-pointer absolute right-4 visibilityIcon' onClick={handlePasswordVisibility}>
+                        {passwordVisible ? (
+                          <VisibilityOutlinedIcon fontSize='30px' />
+                        ) : (
+                          <VisibilityOffOutlinedIcon fontSize='30px' />
+                        )
+                        }
+                      </span>
                     </div>
                 </div>
 
                 {/* Action Buttons */}
                 <div className="flex justify-start mt-6 gap-3">
-                  <button  type="submit" className=" py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 w-[130px] h-12 font-[Montserrat] font-bold" style={{ borderRadius: "8px", }} >Update Profile </button>
+                  <button  type="submit" className=" py-2 bg-[#045D78] text-white rounded-lg  w-[130px] h-12 font-[Montserrat] font-bold" style={{ borderRadius: "8px", }} >Update Profile </button>
                 </div>
               </form>
             </div>

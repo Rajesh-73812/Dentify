@@ -95,21 +95,21 @@ const handleSubmit = async (e) => {
           <div className="h-full px-6 max-w-5xl" style={{paddingTop:'24px'}}> 
             <div className="bg-white h-[67vh] w-full rounded-xl border border-[#EAE5FF] py-4 px-6 overflow-y-auto" style={{scrollbarWidth:'none'}}>
               <form onSubmit={handleSubmit} className="mt-4">
-                <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-1  mt-6">
+                <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-2  mt-6">
                   {/* faq question */}
                   <div className="flex flex-col">
                       <label  htmlFor="question"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> FAQ's Question </label>
                       <input id="question" value={formData.question} onChange={handleChange} name="question" type="text" required className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}} placeholder="Enter question "  />
                   </div>
-                </div>
 
-                <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-1  mt-6">
                   {/* faq answer */}
                   <div className="flex flex-col">
                       <label  htmlFor="answer"  className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> FAQ's Answer </label>
                       <input id="answer" value={formData.answer} onChange={handleChange} name="answer" type="text" required className="border rounded-lg p-3 mt-1 w-full h-14" style={{  borderRadius: '8px',border: '1px solid #EAEAFF'}}  placeholder="Enter Anwer " />
-                    </div>
+                  </div>
+
                 </div>
+
                 <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-1 mt-6">
                   {/* page Status */}
                   <div className="flex flex-col">
@@ -124,7 +124,7 @@ const handleSubmit = async (e) => {
 
                 {/* Action Buttons */}
                 <div className="flex justify-start mt-6 gap-3">
-                  <button  type="submit" className={`py-2 bg-[#045D78] text-white rounded-lg w-[150px] h-12 font-[Montserrat] font-bold`} style={{ borderRadius: "8px", }} > {id ? "Update FAQ's" : "Add FAQ's"}</button>
+                  <button  type="submit" className={`py-2 bg-[#045D78] text-white rounded-lg  h-10 font-poppins font-medium ${id ? 'w-[140px]' : 'w-[100px]'}`} style={{ borderRadius: "8px", }} > {id ? "Update FAQ's" : "Add FAQ's"}</button>
                 </div>
               </form>
             </div>
