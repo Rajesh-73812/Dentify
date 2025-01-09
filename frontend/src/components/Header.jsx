@@ -6,7 +6,6 @@ import toast, { Toaster } from "react-hot-toast";
 import api from "../utils/api";
 
 const Header = () => {
-  const [isHovered, setIsHovered] = useState(false);
   const [showCard, setShowCard] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -49,7 +48,7 @@ const Header = () => {
         <Toaster position="top-right" />
       </div>
       {/* Icons Section */}
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-4">
         {/* Notification Icon */}
         <div className="relative">
           <div className="bg-[#f7fbff] rounded-full w-8 h-8 sm:w-11 sm:h-11 flex items-center justify-center cursor-pointer">
@@ -60,46 +59,39 @@ const Header = () => {
         {/* Profile Icon with Smooth Hover Card */}
         <div
           className="relative"
-          onMouseEnter={() => {
-            setIsHovered(true);
-            setShowCard(true); // Show card on hover
-          }}
-          onMouseLeave={() => {
-            // Delay hiding the card with a slight timeout (industry standard)
-            setTimeout(() => setShowCard(false), 300); // 300ms delay
-          }}
+          onMouseEnter={() => setShowCard(true)}
+          onMouseLeave={() => setShowCard(false)}
         >
-          <div className="bg-[#f7fbff] rounded-full w-8 h-8 sm:w-11 sm:h-11 flex items-center justify-center cursor-pointer">
+          <div className="bg-[#f7fbff] rounded-full w-8 h-8 sm:w-11 sm:h-11 flex items-center justify-center cursor-pointer transition-transform transform hover:scale-110">
             <ProfileIcon />
           </div>
 
           {showCard && (
             <div
-              className="absolute top-12 right-0 w-[220px] bg-white border border-gray-300 rounded-lg shadow-lg z-10 transition-opacity duration-300 opacity-100"
-              style={{ opacity: showCard ? 1 : 0 }} // Smooth fade effect on hover
+              className="absolute top-14 right-0 w-[240px] bg-white border border-gray-200 rounded-lg shadow-xl z-10 transition-all duration-300 transform scale-100"
             >
-              <ul className="py-2 divide-y divide-gray-200">
+              <ul className="py-3 divide-y divide-gray-200">
                 <li
-                  className="px-4 py-3 flex items-center gap-3 hover:bg-gray-100 cursor-pointer"
+                  className="px-4 py-3 flex items-center gap-3 hover:bg-gray-100 cursor-pointer transition-all duration-200"
                   onClick={() => {
                     navigation("profile");
                   }}
                 >
-                  <FaUser className="text-gray-500" /> <span>Account</span>
+                  <FaUser className="text-blue-500" /> <span>Account</span>
                 </li>
                 <li
-                  className="px-4 py-3 flex items-center gap-3 hover:bg-gray-100 cursor-pointer"
+                  className="px-4 py-3 flex items-center gap-3 hover:bg-gray-100 cursor-pointer transition-all duration-200"
                   onClick={logout}
                 >
-                  <FaSignOutAlt className="text-gray-500" /> <span>Logout</span>
+                  <FaSignOutAlt className="text-red-500" /> <span>Logout</span>
                 </li>
                 <li
-                  className="px-4 py-3 flex items-center gap-3 hover:bg-gray-100 cursor-pointer"
+                  className="px-4 py-3 flex items-center gap-3 hover:bg-gray-100 cursor-pointer transition-all duration-200"
                   onClick={() => {
                     navigation("settings");
                   }}
                 >
-                  <FaCog className="text-gray-500" /> <span>Settings</span>
+                  <FaCog className="text-green-500" /> <span>Settings</span>
                 </li>
               </ul>
             </div>
