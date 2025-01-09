@@ -204,7 +204,7 @@ const UserList = () => {
                                                     <td className="px-4 py-2">
                                                         <FontAwesomeIcon
                                                             className="h-7 w-16 cursor-pointer"
-                                                            style={{ color: userList.status === 1 ? "#0064DC" : "#e9ecef" }}
+                                                            style={{ color: userList.status === 1 ? "#045D78" : "#e9ecef" }}
                                                             icon={userList.status === 1 ? faToggleOn : faToggleOff}
                                                             onClick={() => handleToggleChange(userList.id, userList.status, "status")}
                                                         />
@@ -256,7 +256,7 @@ const UserList = () => {
                                     </span>
                                 </li>
                                 <li>
-                                    <button
+                                    <button style={{background:'#045D78'}}
                                         onClick={() => paginate(currentPage < totalPages ? currentPage + 1 : totalPages)}
                                         className={`next-button ${filtereduser.length === 0 ? 'cursor-not-allowed button-disable' : ''}`}
                                         disabled={currentPage === totalPages || filtereduser.length === 0}

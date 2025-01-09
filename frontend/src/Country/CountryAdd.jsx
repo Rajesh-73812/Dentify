@@ -11,6 +11,7 @@ import { NotificationContainer, NotificationManager } from 'react-notifications'
 import 'react-notifications/lib/notifications.css';
 import api from "../utils/api";
 import CountryCodes from "../utils/CountryCodes";
+import ArrowBackIosNewIcon  from '@mui/icons-material/ArrowBackIosNew';
 
 const CountryAdd = () => {
   const navigate = useNavigate();
@@ -121,6 +122,9 @@ const CountryAdd = () => {
           <Header />
           <div className="container mx-auto">
             <div className="flex items-center mt-6  mb-4">
+                <Link onClick={() => { navigate(-1) }} className="cursor-pointer ml-6">
+                  <ArrowBackIosNewIcon style={{color:'#045D78'}}  />
+                </Link>
               <h2 className="text-lg font-semibold ml-4 " style={{ color: '#000000', fontSize: '24px', fontFamily: 'Montserrat' }}>Country Management</h2>
             </div>
             <div className="h-full px-6 max-w-5xl" style={{ paddingTop: "24px" }} >
@@ -219,7 +223,7 @@ const CountryAdd = () => {
                   <div className="flex justify-start mt-6 gap-3">
                     <button
                       type="submit"
-                      className={`py-2 ${id ? 'bg-green-500 hover:bg-green-600' : 'bg-blue-500 hover:bg-blue-600'}  text-white rounded-lg  w-[150px] h-12 font-[Montserrat] font-bold`}
+                      className={`py-2 bg-[#045D78]  text-white rounded-lg  w-[150px] h-12 font-[Montserrat] font-bold`}
                       style={{ borderRadius: "8px" }}
                     >
                       {id ? "Update Country" : "Add Country"}

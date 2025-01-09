@@ -108,7 +108,7 @@ const PageAdd = () => {
         <div className="container mx-auto">
           <div className="flex items-center mt-6  mb-4">
           <Link onClick={() => { navigate(-1) }} className="cursor-pointer ml-6">
-                <ArrowBackIosNewIcon />
+                <ArrowBackIosNewIcon style={{color:'#045D78'}} />
               </Link>
             <h2 className="text-lg font-semibold ml-4 header" >Page Management</h2>
           </div>
@@ -152,7 +152,7 @@ const PageAdd = () => {
 
                 {/* Action Buttons */}
                 <div className="flex justify-start mt-12 gap-3">
-                  <button  type="submit" className=" py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 w-[150px] h-12 font-[Montserrat] font-bold" style={{ borderRadius: "8px", }} > Add Page </button>
+                  <button  type="submit" className=" py-2 bg-[#045D78] text-white rounded-lg w-[150px] h-12 font-[Montserrat] font-bold" style={{ borderRadius: "8px", }} > Add Page </button>
                   <ToastContainer />
                 </div>
               </form>

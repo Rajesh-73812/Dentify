@@ -7,7 +7,7 @@ import ImageUploader from '../common/ImageUploader';
 import { useLoading } from '../Context/LoadingContext';
 import { useLocation } from 'react-router-dom';
 import Loader from '../common/Loader';
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import ArrowBackIosNewIcon  from '@mui/icons-material/ArrowBackIosNew';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 import api from '../utils/api'
@@ -170,7 +170,7 @@ const Settings = () => {
             </Link> */}
               <div className="flex items-center mt-6  mb-4">
                 <Link onClick={() => { navigate(-1) }} className="cursor-pointer ml-6">
-                  <ArrowBackIosNewIcon />
+                  <ArrowBackIosNewIcon style={{color:'#045D78'}} />
                 </Link>
                 <h2 className="text-lg font-semibold ml-4 header" >Settings Management</h2>
               </div>
@@ -330,7 +330,7 @@ const Settings = () => {
                   </div>
                   {/* Action Buttons */}
                   <div className="flex justify-start mt-6 gap-3">
-                    <button type="submit" className=" py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 w-[150px] h-12 font-[Montserrat] font-bold" style={{ borderRadius: "8px", }} >Update Setting </button>
+                    <button type="submit" className=" py-2  text-white rounded-lg bg-[#045D78] w-[150px] h-12 font-[Montserrat] font-bold" style={{ borderRadius: "8px", }} >Update Setting </button>
                   </div>
                 </form>
               </div>

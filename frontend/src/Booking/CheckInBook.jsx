@@ -201,7 +201,7 @@ const CheckInBook = () => {
                                     </span>
                                 </li>
                                 <li>
-                                    <button onClick={() => paginate(currentPage < totalPages ? currentPage + 1 : totalPages)}
+                                    <button style={{background:'#045D78'}} onClick={() => paginate(currentPage < totalPages ? currentPage + 1 : totalPages)}
                                         className={`next-button ${filteredcheckIn.length === 0 ? 'cursor-not-allowed button-disable' : ''}`}
                                         disabled={currentPage === totalPages || filteredcheckIn.length === 0}
                                         title={filteredcheckIn.length === 0 ? 'No data available' : ''}
