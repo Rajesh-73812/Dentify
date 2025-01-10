@@ -165,9 +165,9 @@ const ApprovedBook = () => {
                                                     <td className="text-center py-1">{approve?.total_day || 'N/A'}</td>
                                                     <td className="px-4 py-1 ">
                                                         <NotificationContainer />
-                                                        <span className='px-2 py-1 font-medium text-[12px] rounded-full bg-[#2dce89] cursor-pointer text-white mr-2' onClick={() => openModal(approve,approve.id)}>View Details</span>
-                                                        <span className=' px-2 py-1  font-medium text-[12px] rounded-full bg-cyan-400 cursor-pointer text-white mr-2' onClick={() => { navigateApprove(approve.id, 'Check_in') }}>Check In</span>
-                                                        <span className='px-2 py-1 font-medium text-[12px] rounded-full bg-[#f5365c] cursor-pointer text-white mr-2' onClick={() => { navigateApprove(approve.id, 'Cancelled') }}>Cancelled</span>
+                                                        <span className='px-4 py-1 font-medium text-[12px] rounded-full bg-[#d3ffec] cursor-pointer text-[#2dce89] mr-2' onClick={() => openModal(approve,approve.id)}>View </span>
+                                                        <span className=' px-4 py-1  font-medium text-[12px] rounded-full bg-cyan-100 cursor-pointer text-cyan-400 mr-2' onClick={() => { navigateApprove(approve.id, 'Check_in') }}>Check In</span>
+                                                        <span className='px-4 py-1 font-medium text-[12px] rounded-full bg-[#f1c1cb] cursor-pointer text-[#f5365c] mr-2' onClick={() => { navigateApprove(approve.id, 'Cancelled') }}>Cancel</span>
                                                     </td>
                                                 </tr>
                                             ))

@@ -276,3 +276,8 @@ color: #045D78 !important;
   border-color: #045D78 !important;
   box-shadow: 1px 1px 1px #045D78;
 }
+
+select option:hover{
+  background-color: #045D78 !important;
+  color: #fff;
+}

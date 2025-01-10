@@ -141,7 +141,7 @@ const CancelledBook = () => {
                                                     <td className="text-center py-1">{cancellList?.prop_price || 'N/A'}</td>
                                                     <td className="text-center py-1">{cancellList?.total_day || 'N/A'}</td>
                                                     <td className="text-center py-1">
-                                                        <span className='px-2 py-1 font-medium text-[12px] rounded-full bg-[#2dce89] cursor-pointer text-white mr-2' onClick={() => openModal(cancellList,cancellList.id)}>View Details</span>
+                                                        <span className='px-2 py-1 font-medium text-[12px] rounded-full bg-[#d3ffec] cursor-pointer text-[#2dce89] mr-2' onClick={() => openModal(cancellList,cancellList.id)}>View</span>
                                                     </td>
                                                 </tr>
                                             ))

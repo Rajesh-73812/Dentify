@@ -166,8 +166,8 @@ const CheckInBook = () => {
                                                     <td className="text-center py-1">{checkIn?.total_day || 'N/A'}</td>
                                                     <td className="text-center py-1">
                                                         <NotificationContainer />
-                                                        <span className='px-2 py-1 font-medium text-[12px] rounded-full bg-green-400 cursor-pointer text-white mr-2' onClick={() => openModal(checkIn,checkIn.id)}>View Details</span>
-                                                        <span className=' px-2 py-1 font-medium text-[12px] rounded-full bg-cyan-400 cursor-pointer text-white mr-2' onClick={() => { navigateApprove(checkIn.id, 'Completed') }}>Check Out</span>
+                                                        <span className='px-4 py-1 font-medium text-[12px] rounded-full bg-green-400 cursor-pointer text-white mr-2' onClick={() => openModal(checkIn,checkIn.id)}>View</span>
+                                                        <span className=' px-4 py-1 font-medium text-[12px] rounded-full bg-cyan-100 cursor-pointer text-cyan-400 mr-2' onClick={() => { navigateApprove(checkIn.id, 'Completed') }}>Check Out</span>
                                                     </td>
                                                 </tr>
                                             ))
