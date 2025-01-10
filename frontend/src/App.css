@@ -278,6 +278,7 @@ color: #045D78 !important;
 }
 
 
+
 .scrollbar-thin {
   scrollbar-width: thin;
   /* scrollbar-color: rgba(4, 93, 120, 0.6) #f0f0f0;  */
@@ -295,4 +296,5 @@ color: #045D78 !important;
 
 .scrollbar-thin::-webkit-scrollbar-track {
   background-color: #f0f0f0;
+
 }

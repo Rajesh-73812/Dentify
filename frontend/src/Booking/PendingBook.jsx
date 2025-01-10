@@ -150,9 +150,9 @@ const PendingBook = () => {
                                                 <td className="text-center py-1 ">
                                                     <NotificationContainer />
 
-                                                    <span className='px-2 py-1 font-medium text-[12px] rounded-full bg-[#2dce89] cursor-pointer text-white mr-2' onClick={() => openModal(pendingList,pendingList.id)}>View Details</span>
-                                                    <span className='px-2 py-1 font-medium text-[12px] rounded-full bg-cyan-400 cursor-pointer text-white mr-2' onClick={() => { navigateApprove(pendingList.id, 'Confirmed') }}>Confirmed</span>
-                                                    <span className='px-2 py-1 font-medium text-[12px] rounded-full bg-[#f5365c] cursor-pointer text-white mr-2' onClick={() => { navigateApprove(pendingList.id, 'Cancelled') }}>Cancelled</span>
+                                                    <span className='px-4 py-1 font-medium text-[12px] rounded-full bg-[#d3ffec] cursor-pointer text-[#2dce89] mr-2' onClick={() => openModal(pendingList,pendingList.id)}>View </span>
+                                                    <span className='px-4 py-1 font-medium text-[12px] rounded-full bg-cyan-100 cursor-pointer text-cyan-400 mr-2' onClick={() => { navigateApprove(pendingList.id, 'Confirmed') }}>Confirm</span>
+                                                    <span className='px-4 py-1 font-medium text-[12px] rounded-full bg-[#f1c1cb] cursor-pointer text-[#f5365c] mr-2' onClick={() => { navigateApprove(pendingList.id, 'Cancelled') }}>Cancel</span>
 
                                                 </td>
                                             </tr>

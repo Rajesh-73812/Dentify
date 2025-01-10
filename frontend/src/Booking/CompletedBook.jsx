@@ -146,7 +146,7 @@ const CompletedBook = () => {
                                                     <td className="text-center py-1">{completedList?.prop_price || 'N/A'}</td>
                                                     <td className="text-center py-1">{completedList?.total_day || 'N/A'}</td>
                                                     <td className="py-1">
-                                                        <span className='px-2 py-1 font-medium text-[12px] rounded-full bg-green-400 cursor-pointer text-white mr-2' onClick={() => openModal(completedList,completedList.id)}>View Details</span>
+                                                        <span className='px-2 py-1 font-medium text-[12px] rounded-full bg-green-400 cursor-pointer text-white mr-2' onClick={() => openModal(completedList,completedList.id)}>View</span>
                                                     </td>
                                                 </tr>
                                             ))
