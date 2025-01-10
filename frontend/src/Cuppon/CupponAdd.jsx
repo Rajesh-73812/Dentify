@@ -175,7 +175,7 @@ const CupponAdd = () => {
                       <input id="c_title" name="c_title" type="text" required className="border rounded-lg p-3 mt-1 w-full h-14" style={{ borderRadius: '8px', border: '1px solid #EAEAFF' }}
                         value={formData.c_title}
                         onChange={handleChange}
-                        placeholder="Enter Cuppon code"
+                        placeholder="Enter Coupon code"
                       />
                     </div>
                     {/*btn*/}
@@ -189,7 +189,7 @@ const CupponAdd = () => {
                     <div className="flex flex-col">
                       <label htmlFor="ctitle" className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> Coupon Title </label>
                       <input id="ctitle" value={formData.ctitle} onChange={handleChange} name="ctitle" type="text" required className="border rounded-lg p-3 mt-1 w-full h-14" style={{ borderRadius: '8px', border: '1px solid #EAEAFF' }}
-                        placeholder="Enter Cuppon title"
+                        placeholder="Enter Coupon title"
                       />
                     </div>
                     {/* coupon subtitle */}
@@ -197,7 +197,7 @@ const CupponAdd = () => {
                       <label htmlFor="subtitle" className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> Coupon Sub Title </label>
                       <input id="subtitle" value={formData.subtitle} name="subtitle" type="text" required className="border rounded-lg p-3 mt-1 w-full h-14" style={{ borderRadius: '8px', border: '1px solid #EAEAFF' }}
                         onChange={handleChange}
-                        placeholder="Enter Cuppon subtitle"
+                        placeholder="Enter Coupon subtitle"
                       />
                     </div>
 
@@ -213,7 +213,7 @@ const CupponAdd = () => {
                       </select>
                     </div>
 
-                    {/* cuppon min order amount */}
+                    {/* Couppon min order amount */}
                     <div className="flex flex-col">
                       <label htmlFor="min_amt" className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> Coupon Min Order Amount </label>
                       <input id="min_amt" name="min_amt" value={formData.min_amt} type="text" required className="border rounded-lg p-3 mt-1 w-full h-14" style={{ borderRadius: '8px', border: '1px solid #EAEAFF' }}
@@ -223,7 +223,7 @@ const CupponAdd = () => {
                     </div>
                   </div>
                   <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-2  mt-6">
-                    {/* cuppon value */}
+                    {/* Couppon value */}
                     <div className="flex flex-col">
                       <label htmlFor="c_value" className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> Coupon Value </label>
                       <input id="c_value" name="c_value" value={formData.c_value} type="text" required className="border rounded-lg p-3 mt-1 " style={{ borderRadius: '8px', border: '1px solid #EAEAFF' }}

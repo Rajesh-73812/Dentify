@@ -140,7 +140,7 @@ const Profile = () => {
 
                 {/* Action Buttons */}
                 <div className="flex justify-start mt-6 gap-3">
-                  <button  type="submit" className=" py-2 bg-[#045D78] text-white rounded-lg  w-[130px] h-12 font-[Montserrat] font-bold" style={{ borderRadius: "8px", }} >Update Profile </button>
+                  <button  type="submit" className=" py-2 bg-[#045D78] text-white rounded-lg  w-[120px] h-10 font-[Poppins] font-medium" style={{ borderRadius: "8px", }} >Update Profile </button>
                 </div>
               </form>
             </div>
