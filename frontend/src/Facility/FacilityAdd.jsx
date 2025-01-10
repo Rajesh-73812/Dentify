@@ -157,7 +157,7 @@ const FacilityAdd = () => {
 
                   </div>
 
-                  <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-1 mt-6">
+                  <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-2 mt-6">
                     {/* facility image Status */}
                     <div className="flex flex-col">
                       <label htmlFor="status" className="text-sm font-medium text-start text-[12px] font-[Montserrat]" >Facility Status </label>

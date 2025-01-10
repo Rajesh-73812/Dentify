@@ -23,7 +23,7 @@ const Settings = () => {
   const [privacycontent, setprivacyContent] = useState('')
   const [termscontent, settermscontent] = useState('')
   const [cancellationContent, setCancellationContent] = useState('')
-  const [formData, setFormData] = useState({ id: '', webname: '', weblogo: '', timezone: '', currency: '', tax: '', sms_type: '',one_key: '',  privacy_policy: '', terms_conditions: '', admin_tax: '', cancellation_policy: '', refund_policy: '' });
+  const [formData, setFormData] = useState({ id: '', webname: '', weblogo: '', timezone: 'Asia/Kolkata', currency: '', tax: '', sms_type: '',one_key: '',  privacy_policy: '', terms_conditions: '', admin_tax: '', cancellation_policy: '', refund_policy: '' });
   const location = useLocation();
   const { isLoading, setIsLoading } = useLoading();
   const navigate = useNavigate()
@@ -61,17 +61,28 @@ const Settings = () => {
       '|',
       'fullsize',
     ],
-    removeButtons: ['about'],
+    extraButtons: [], 
+    removeButtons: ['about', 'video', 'audio','undo','redo',],
     showCharsCounter: false,
     showWordsCounter: false,
     toolbarSticky: true,
-    uploader: { insertImageAsBase64URI: true },
-    filebrowser: { ajax: { url: '/files' }, uploader: { url: '/upload' } },
-    table: { allowCellResize: true, defaultWidth: '100%' },
+    uploader: {
+      insertImageAsBase64URI: true,
+    },
+    filebrowser: {
+      ajax: { url: '/files' },
+      uploader: { url: '/upload' },
+    },
+    table: {
+      allowCellResize: true,
+      defaultWidth: '100%',
+    },
     allowResizeX: true,
     allowResizeY: true,
+    showPoweredByJodit: false, 
+    disablePlugins: ['poweredByJodit'], 
   };
-
+  
 
   useEffect(() => {
     const fetchSettings = async () => {
@@ -195,15 +206,6 @@ const Settings = () => {
                       <ImageUploader onUploadSuccess={handleImageUploadSuccess} />
                       <img width={100} src={formData.weblogo} alt="" />
                     </div>
-
-                    {/* time zone */}
-                    <div className="flex flex-col">
-                      <label htmlFor="timezone" className="text-sm font-medium text-start text-[12px] font-[Montserrat]" ><span style={{ color: 'red' }}>*</span> Select Timezone </label>
-                      <select name="timezone" id="timezone" value={formData.timezone} className="mt-1 block w-full   bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm" onChange={handleChange} >
-                        <option value="" disabled selected>Select TimeZone</option>
-                        <option value="asia/kolkata" >Asia/Kolkata</option>
-                      </select>
-                    </div>
                     
                     <div className="grid gap-32  w-max sm:grid-cols-1 md:grid-cols-3  mt-6">
                       {/* currency */}
@@ -322,7 +324,7 @@ const Settings = () => {
 
                   <div clasName="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-2  mt-6">
                     <div className='flex flex-col'>
-                      <label htmlFor="cancellation_policy" className="text-sm font-medium text-start text-[12px] font-[Montserrat]"> <span style={{ color: 'red' }}>*</span> Cancellation Policy</label>
+                      <label htmlFor="cancellation_policy" className="text-sm font-medium text-start text-[12px] font-[Montserrat] mt-8"> <span style={{ color: 'red' }}>*</span> Cancellation Policy</label>
                       <JoditEditor ref={cancellationEditorRef} value={cancellationContent} config={config} onBlur={newContent => setCancellationContent(newContent)}>
 
                       </JoditEditor>
@@ -330,7 +332,7 @@ const Settings = () => {
                   </div>
                   {/* Action Buttons */}
                   <div className="flex justify-start mt-6 gap-3">
-                    <button type="submit" className=" py-2  text-white rounded-lg bg-[#045D78] w-[150px] h-12 font-[Montserrat] font-bold" style={{ borderRadius: "8px", }} >Update Setting </button>
+                    <button type="submit" className=" py-2  text-white rounded-lg bg-[#045D78] w-[140px] h-10 font-[Poppins] font-medium" style={{ borderRadius: "8px", }} >Update Setting's </button>
                   </div>
                 </form>
               </div>
