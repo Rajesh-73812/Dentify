@@ -128,7 +128,7 @@ const CountryAdd = () => {
               <h2 className="text-lg font-semibold ml-4 " style={{ color: '#000000', fontSize: '24px', fontFamily: 'Montserrat' }}>Country Management</h2>
             </div>
             <div className="h-full px-6 max-w-5xl" style={{ paddingTop: "24px" }} >
-              <div className="bg-white h-[67vh] w-full rounded-xl border border-[#EAE5FF] py-4 px-6 overflow-y-auto" style={{ scrollbarWidth: 'none' }}>
+              <div className="bg-white h-[57vh] w-full rounded-xl border border-[#EAE5FF] py-4 px-6 overflow-y-auto" style={{ scrollbarWidth: 'none' }}>
                 <form onSubmit={handleSubmit} className="mt-4">
                   <div className="grid gap-4 w-full sm:grid-cols-1 md:grid-cols-2 mt-6">
                     {/* Country Name */}
@@ -206,14 +206,14 @@ const CountryAdd = () => {
                         id="status"
                         value={formData.status}
                         onChange={handleChange}
-                        className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm"
+                        className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#045D78] focus:border-[#045D78] text-sm custom-select"
                       >
+                        <option value="" disabled >Select Status</option>
                         <option value={1}>Publish</option>
                         <option value={0}>Unpublish</option>
                       </select>
                     </div>
                   </div>
-
 
                   <div className="flex justify-start mt-6 gap-3">
                     <button

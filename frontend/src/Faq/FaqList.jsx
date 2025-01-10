@@ -102,9 +102,9 @@ const FaqList = () => {
                     <Header />
                     <FaqHeader onSearch={handleSearch} />
                     <div className="py-6 px-6 h-full w-[1000px] overflow-scroll scrollbar-none">
-                        <div className="bg-white w-full rounded-xl border border-[#EAE5FF] py-4 px-3 overflow-x-auto scrollbar-none">
+                        <div className={`bg-white w-full rounded-xl border border-[#EAE5FF] py-4 px-3 overflow-y-auto scrollbar-thin  ${filteredfaq.length > 0 ? 'h-[500px]' : ''}`}>
                             <div className="relative sm:rounded-lg">
-                                <table className="min-w-full text-sm text-left text-gray-700">
+                                <table className="min-w-full text-sm text-left text-gray-700 h-[80%] scrollbar-thin overflow-x-auto">
                                     <thead className="bg-[#045D78] bg-opacity-75 text-xs uppercase font-medium text-white">
                                         <tr>
                                             <th className="px-4 py-3 min-w-[150px]">
@@ -183,7 +183,7 @@ const FaqList = () => {
                             </div>
                         </div>
                         {/* for pagination */}
-                        <div className="bottom-0 left-0 w-full bg-[#f7fbff] py-4 flex justify-between items-center">
+                        <div className="bottom-0 left-0 w-full bg-[#f7fbff] py-2 flex justify-between items-center">
                             <span className="text-sm font-normal text-gray-500">
                                 Showing <span className="font-semibold text-gray-900">{indexOfFirstFaq + 1}</span> to <span className="font-semibold text-gray-900">{Math.min(indexOfLastFaq, filteredfaq.length)}</span> of <span className="font-semibold text-gray-900">{filteredfaq.length}</span>
                             </span>
