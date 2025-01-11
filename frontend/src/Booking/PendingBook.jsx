@@ -91,7 +91,7 @@ const PendingBook = () => {
                 <PendingBookHeader onSearch={handleSearch} />
                 <div className="px-6 h-full w-[1000px] overflow-scroll scrollbar-none">
                     <div className={`bg-white w-full rounded-xl border border-[#EAE5FF] py-4 px-3 overflow-x-auto table-container scrollbar-thin ${filteredpending.length > 0 ? 'h-[500px]' : ''}`}>
-                        <div className="relative sm:rounded-lg overflow-y-auto overflow-x-auto max-h-[400px]  scrollbar-none table-scroll ">
+                        <div className="relative sm:rounded-lg  overflow-y-auto max-h-[400px]  scrollbar-thin table-scroll ">
                             <table className="min-w-full text-sm text-left text-gray-700 ">
                             <thead className="bg-[#045D78] bg-opacity-75 text-xs uppercase font-medium text-white">
                                     <tr>
