@@ -32,7 +32,7 @@ export const generateInvoicePdf = (data, backgroundImage) => {
     head: [["Description", "Amount"]],
     body: [
       ["Subtotal", `${data.subtotal.toString().replace(/\s/g, "")}.00`],
-      ["Total Day", `${data.totalDays}`],
+      ["Total Day's", `${data.totalDays}`],
       ["Tax", `${data.tax.toString().replace(/\s/g, "")}`],
       ["Net Amount (Paid)", `${data.netAmount.toString().replace(/\s/g, "")}.00`],
     ],

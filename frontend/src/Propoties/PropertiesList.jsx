@@ -282,7 +282,7 @@ const PropotiesList = () => {
                                                 </div>
                                             </th>
                                             <th className=" py-2 min-w-[150px]">
-                                                Price(/Night)
+                                                Price/Night
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className="text-white hover:text-gray-700 cursor-pointer" onClick={() => handleSort('propertyPrice')} />
                                                     <GoArrowDown className="text-white hover:text-gray-700 cursor-pointer" onClick={() => handleSort('propertyPrice')} />
@@ -297,17 +297,10 @@ const PropotiesList = () => {
                                                 </div>
                                             </th>
                                             <th className=" py-2 min-w-[110px]">
-                                                Conutry
+                                                Country
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className="text-white hover:text-gray-700 cursor-pointer" onClick={() => handleSort('country_id')} />
                                                     <GoArrowDown className="text-white hover:text-gray-700 cursor-pointer" onClick={() => handleSort('country_id')} />
-                                                </div>
-                                            </th>
-                                            <th className=" py-2 min-w-[130px]">
-                                                Add_User_Id
-                                                <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className="text-white hover:text-gray-700 cursor-pointer" onClick={() => handleSort('user_id')} />
-                                                    <GoArrowDown className="text-white hover:text-gray-700 cursor-pointer" onClick={() => handleSort('user_id')} />
                                                 </div>
                                             </th>
                                             <th className=" py-2 min-w-[130px]">
@@ -412,7 +405,6 @@ const PropotiesList = () => {
                                                     <td className=" ">₹{property?.price || 'N/A'}</td>
                                                     <td className=" ">{property?.mobile || 'N/A'}</td>
                                                     <td className=" ">{property.country?.title || 'N/A'}</td>
-                                                    <td className=" ">{property?.add_user_id || 'N/A'}</td>
                                                     <td className=" ">{property?.beds || 'N/A'}</td>
                                                     <td className=" ">{property?.bathroom || 'N/A'}</td>
                                                     <td className=" ">{property?.sqrft || 'N/A'}</td>

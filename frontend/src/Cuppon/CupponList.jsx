@@ -111,7 +111,7 @@ const CupponList = () => {
                         <div className={` bg-white w-full rounded-xl border border-[#EAE5FF] py-4 px-3 overflow-x-auto  scrollbar-thin ${filteredcouppons.length > 0 ? 'h-[500px]' : ''}`}>
                             <div className="relative sm:rounded-lg h-[80%] scrollbar-thin overflow-y-auto">
                                 <table className="min-w-full text-sm text-left text-gray-700">
-                                    <thead className="bg-[#045D78] bg-opacity-75 text-xs uppercase font-medium text-white">
+                                    <thead className="bg-[#045D78] bg-opacity-75 text-xs uppercase font-medium text-white" style={{lineHeight:"6px"}}>
                                         <tr>
                                             <th className="px-4 py-2 min-w-[120px]">
                                                 Sr. No
