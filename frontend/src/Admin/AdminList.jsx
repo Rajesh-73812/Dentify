@@ -173,13 +173,13 @@ const AdminList = () => {
                 <div className="flex flex-1 flex-col bg-[#f7fbff]">
                     <Header />
                     <AdminHeader setShowAddModal={setShowAddModal} onSearch={handleSearch} />
-                    <div className="py-6 px-6 h-full w-[1000px] overflow-scroll scrollbar-none">
+                    <div className="px-6 h-full w-[1000px] overflow-scroll scrollbar-none">
                         <div className="bg-white w-full rounded-xl border border-[#EAE5FF] py-4 px-3  h-full overflow-y-auto scrollbar-thin  table-container">
                             <div className="relative sm:rounded-lg">
                                 <table className="min-w-full text-sm text-left text-gray-700 ">
                                     <thead className="bg-[#045D78] bg-opacity-75 text-xs uppercase font-medium text-white">
                                         <tr>
-                                            <th className="px-2 py-3 min-w-[100px]">
+                                            <th className="px-2 py-2 min-w-[100px]">
                                                 Sr. No
                                                 <div className="inline-flex items-center ml-2">
 
@@ -188,7 +188,7 @@ const AdminList = () => {
 
                                                 </div>
                                             </th>
-                                            <th className="px-2 py-3 min-w-[100px]">
+                                            <th className="px-2 py-2 min-w-[100px]">
                                                 Username
                                                 <div className="inline-flex items-center ml-2">
 
@@ -197,7 +197,7 @@ const AdminList = () => {
 
                                                 </div>
                                             </th>
-                                            <th className="px-2 py-3 min-w-[100px]">
+                                            <th className="px-2 py-2 min-w-[100px]">
                                                 Password
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className='cursor-pointer' onClick={() => sortData('password')} />
@@ -205,7 +205,7 @@ const AdminList = () => {
                                                 </div>
                                             </th>
 
-                                            <th className="px-2 py-3 min-w-[100px]">
+                                            <th className="px-2 py-2 min-w-[100px]">
                                                 User Type
                                                 <div className="inline-flex items-center ml-2">
 
@@ -214,7 +214,7 @@ const AdminList = () => {
 
                                                 </div>
                                             </th>
-                                            <th className="px-2 py-3 min-w-[150px]">
+                                            <th className="px-2 py-2 min-w-[150px]">
                                                 Action
                                             </th>
                                         </tr>

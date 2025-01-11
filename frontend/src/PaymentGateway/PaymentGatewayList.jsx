@@ -110,27 +110,27 @@ const PaymentGatewayList = () => {
                     {/* Searching, sorting, and main content area */}
                     <PaymentGatewayHeader onSearch={handleSearch} />
                     {/* Card */}
-                    <div className="py-6 px-6 h-full w-[1000px] overflow-scroll scrollbar-none">
+                    <div className="px-6 h-full w-[1000px] overflow-scroll scrollbar-none">
                         <div className={` bg-white w-full rounded-xl border border-[#EAE5FF] py-4 px-3 overflow-x-auto scrollbar-thin  ${filteredPaymentGateway.length > 0 ? 'h-[500px]' : ''}`}>
                             <div className="relative sm:rounded-lg h-[80%] scrollbar-thin overflow-y-auto">
                                 <table className="min-w-full text-sm text-left text-gray-700">
                                     <thead className="bg-[#045D78] bg-opacity-75 text-xs uppercase font-medium text-white">
                                         <tr>
-                                            <th className="px-4 py-3 min-w-[120px]">
+                                            <th className="px-4 py-2 min-w-[120px]">
                                                 Sr. No
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className="text-white hover:text-gray-700 cursor-pointer" onClick={() => sortData('id')} />
                                                     <GoArrowDown className="text-white hover:text-gray-700 cursor-pointer" onClick={() => sortData('id')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[250px]">
+                                            <th className="px-4 py-2 min-w-[250px]">
                                                 PaymentGateway Name
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className="text-white hover:text-gray-700 cursor-pointer" onClick={() => sortData('title')} />
                                                     <GoArrowDown className="text-white hover:text-gray-700 cursor-pointer" onClick={() => sortData('title')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[250px]">
+                                            <th className="px-4 py-2 min-w-[250px]">
                                                 PaymentGateway SubTitle
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className="text-white hover:text-gray-700 cursor-pointer" onClick={() => sortData('subtitle')} />
@@ -216,7 +216,7 @@ const PaymentGatewayList = () => {
                                             ))
                                         ) : (
                                             <tr>
-                                                <td colSpan={6} className="px-4 py-3 text-center">No data available</td>
+                                                <td colSpan={6} className="px-4 py-2 text-center">No data available</td>
                                             </tr>
                                         )}
                                     </tbody>
