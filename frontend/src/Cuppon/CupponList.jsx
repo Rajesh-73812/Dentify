@@ -107,72 +107,72 @@ const CupponList = () => {
                     <Header />
                     <CupponHeader onSearch={handleSearch} />
                     {/* Main Content */}
-                    <div className="py-6 px-6 h-full w-[1000px] overflow-scroll scrollbar-none">
+                    <div className="px-6 h-full w-[1000px] overflow-scroll scrollbar-none">
                         <div className={` bg-white w-full rounded-xl border border-[#EAE5FF] py-4 px-3 overflow-x-auto  scrollbar-thin ${filteredcouppons.length > 0 ? 'h-[500px]' : ''}`}>
                             <div className="relative sm:rounded-lg h-[80%] scrollbar-thin overflow-y-auto">
                                 <table className="min-w-full text-sm text-left text-gray-700">
                                     <thead className="bg-[#045D78] bg-opacity-75 text-xs uppercase font-medium text-white">
                                         <tr>
-                                            <th className="px-4 py-3 min-w-[120px]">
+                                            <th className="px-4 py-2 min-w-[120px]">
                                                 Sr. No
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className='cursor-pointer' onClick={() => sortData('id')} />
                                                     <GoArrowDown className='cursor-pointer' onClick={() => sortData('id')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[120px]">
+                                            <th className="px-4 py-2 min-w-[120px]">
                                                 title
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className='cursor-pointer' onClick={() => sortData('ctitle')} />
                                                     <GoArrowDown className='cursor-pointer' onClick={() => sortData('ctitle')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[150px]">
+                                            <th className="px-4 py-2 min-w-[150px]">
                                                 subtitle
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className='cursor-pointer' onClick={() => sortData('subtitle')} />
                                                     <GoArrowDown className='cursor-pointer' onClick={() => sortData('subtitle')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[100px]">
+                                            <th className="px-4 py-2 min-w-[100px]">
                                                 code
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className='cursor-pointer' onClick={() => sortData('c_title')} />
                                                     <GoArrowDown className='cursor-pointer' onClick={() => sortData('c_title')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[120px]">
+                                            <th className="px-4 py-2 min-w-[120px]">
                                                 image
                                             </th>
-                                            <th className="px-4 py-3 min-w-[160px]">
+                                            <th className="px-4 py-2 min-w-[160px]">
                                                 expiredDate
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className='cursor-pointer' onClick={() => sortData('cdate')} />
                                                     <GoArrowDown className='cursor-pointer' onClick={() => sortData('cdate')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[180px]">
+                                            <th className="px-4 py-2 min-w-[180px]">
                                                 minAmount
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className='cursor-pointer' onClick={() => sortData('min_amt')} />
                                                     <GoArrowDown className='cursor-pointer' onClick={() => sortData('min_amt')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[150px]">
+                                            <th className="px-4 py-2 min-w-[150px]">
                                                 discount
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className='cursor-pointer' onClick={() => sortData('c_value')} />
                                                     <GoArrowDown className='cursor-pointer' onClick={() => sortData('c_value')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[140px]">
+                                            <th className="px-4 py-2 min-w-[140px]">
                                                 Status
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className='cursor-pointer' onClick={() => sortData('status')} />
                                                     <GoArrowDown className='cursor-pointer' onClick={() => sortData('status')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[120px]">
+                                            <th className="px-4 py-2 min-w-[120px]">
                                                 Action
                                             </th>
 

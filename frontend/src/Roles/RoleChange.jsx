@@ -150,20 +150,20 @@ const RoleChange = () => {
                 <div className="flex flex-1 flex-col bg-[#f7fbff]">
                     <Header />
                     <RoleHeader onSearch={handleSearch} />
-                    <div className="py-6 px-6 h-full w-[1000px] overflow-scroll scrollbar-none">
+                    <div className="px-6 h-full w-[1000px] overflow-scroll scrollbar-none">
                         <div className="bg-white w-full rounded-xl border border-[#EAE5FF] py-4 px-3 overflow-x-auto scrollbar-none">
                             <div className="relative sm:rounded-lg">
                                 <table className="min-w-full text-sm text-left text-gray-700">
                                     <thead className="bg-[#045D78] bg-opacity-75 text-xs uppercase font-medium text-white">
                                         <tr>
-                                            <th className="px-4 py-3 min-w-[120px]">
+                                            <th className="px-4 py-2 min-w-[120px]">
                                                 Sr. No
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className='cursor-pointer' onClick={() => sortData('id')} />
                                                     <GoArrowDown className='cursor-pointer' onClick={() => sortData('id')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[120px]">
+                                            <th className="px-4 py-2 min-w-[120px]">
                                                 Name
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className='cursor-pointer' onClick={() => sortData('user.name')} />
@@ -171,39 +171,39 @@ const RoleChange = () => {
                                                 </div>
                                             </th>
 
-                                            <th className="px-4 py-3 min-w-[150px]">
+                                            <th className="px-4 py-2 min-w-[150px]">
                                                 Email
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className='cursor-pointer' onClick={() => sortData('email')} />
                                                     <GoArrowDown className='cursor-pointer' onClick={() => sortData('email')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[150px]">
+                                            <th className="px-4 py-2 min-w-[150px]">
                                                 ID Proof
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className='cursor-pointer' onClick={() => sortData('email')} />
                                                     <GoArrowDown className='cursor-pointer' onClick={() => sortData('email')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[150px]">
+                                            <th className="px-4 py-2 min-w-[150px]">
                                                 ID Image
                                                 
                                             </th>
-                                            <th className="px-4 py-3 min-w-[120px]">
+                                            <th className="px-4 py-2 min-w-[120px]">
                                                 Role
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className='cursor-pointer' onClick={() => sortData('role')} />
                                                     <GoArrowDown className='cursor-pointer' onClick={() => sortData('role')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[180px]">
+                                            <th className="px-4 py-2 min-w-[180px]">
                                                 Request Role
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className='cursor-pointer' onClick={() => sortData('requested_role')} />
                                                     <GoArrowDown className='cursor-pointer' onClick={() => sortData('requested_role')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[150px]">
+                                            <th className="px-4 py-2 min-w-[150px]">
                                                 Status
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className='cursor-pointer' onClick={() => sortData('status')} />
@@ -211,7 +211,7 @@ const RoleChange = () => {
                                                 </div>
                                             </th>
 
-                                            <th className="px-4 py-3 min-w-[150px]">Action</th>
+                                            <th className="px-4 py-2 min-w-[150px]">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-gray-200">
@@ -228,7 +228,7 @@ const RoleChange = () => {
                                             {/* User Email */}
                                             <td className="px-4 py-2">{role.user?.email || "N/A"}</td>
                                             <td className="px-4 py-2">{role.id_proof || "N/A"}</td>
-                                            <td className="px-4 py-3">
+                                            <td className="px-4 py-2">
                                                         {role.id_proof_img && role.id_proof_img.trim() !== '' ? (
                                                             <img src={role.id_proof_img} className="w-10 h-10 object-cover rounded-full" height={50} width={50} loading="lazy" alt="" onError={(e) => {
                                                                 if (e.target.src !== 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg') {

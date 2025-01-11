@@ -99,41 +99,41 @@ const CheckInBook = () => {
                 <div className="flex flex-1 flex-col bg-[#f7fbff]">
                     <Header />
                     <PendingBookHeader onSearch={handleSearch} />
-                    <div className="py-6 px-6 h-full w-[1000px] overflow-scroll scrollbar-none">
+                    <div className="px-6 h-full w-[1000px] overflow-scroll scrollbar-none">
 
                         <div className={`bg-white w-full rounded-xl border border-[#EAE5FF] py-4 px-3 overflow-x-auto ${filteredcheckIn.length > 0 ? 'h-[500px]' : ''}`}>
                             <div className="relative sm:rounded-lg scrollbar-thin overflow-y-auto">
                                 <table className="min-w-full text-sm text-left text-gray-700">
                                     <thead className="bg-[#045D78] bg-opacity-75 text-xs uppercase font-medium text-white">
                                         <tr>
-                                            <th className="px-4 py-3 min-w-[130px]">
+                                            <th className="px-4 py-2 min-w-[130px]">
                                                 Sr. No
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className='cursor-pointer' onClick={() => sortData('id')} />
                                                     <GoArrowDown className='cursor-pointer' onClick={() => sortData('id')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[180px]">
+                                            <th className="px-4 py-2 min-w-[180px]">
                                                 Property Title
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className='cursor-pointer' onClick={() => sortData('prop_title')} />
                                                     <GoArrowDown className='cursor-pointer' onClick={() => sortData('prop_title')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[200px]">Property Image 
+                                            <th className="px-4 py-2 min-w-[200px]">Property Image 
                                             <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className='cursor-pointer' onClick={() => sortData('image')} />
                                                     <GoArrowDown className='cursor-pointer' onClick={() => sortData('image')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[200px]">
+                                            <th className="px-4 py-2 min-w-[200px]">
                                                 Property Price
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className='cursor-pointer' onClick={() => sortData('prop_price')} />
                                                     <GoArrowDown className='cursor-pointer' onClick={() => sortData('prop_price')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[220px]">
+                                            <th className="px-4 py-2 min-w-[220px]">
                                                 Property Total Day
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className='cursor-pointer' onClick={() => sortData('total_day')} />
@@ -141,7 +141,7 @@ const CheckInBook = () => {
                                                 </div>
                                             </th>
 
-                                            <th className="px-4 py-3 min-w-[250px]">Action</th>
+                                            <th className="px-4 py-2 min-w-[250px]">Action</th>
 
                                         </tr>
                                     </thead>
