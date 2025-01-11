@@ -196,17 +196,18 @@ const OrderPreviewModal = ({ isOpen, closeModal,selectedProperty, downloadModalA
                                     </div>
                                     <div className="flex flex-col">
                                         <span className="text-sm font-medium text-start text-[12px] font-[Montserrat]">Booking Status:</span>
-                                        <span 
-                                            className={`font-semibold text-white ${
-                                                bookingId.book_status === 'Cancelled' ? 'bg-red-500' :
-                                                bookingId.book_status === 'Completed' ? 'bg-green-500' :
-                                                bookingId.book_status === 'Booked' ? 'bg-yellow-500' :
-                                                bookingId.book_status === 'Confirmed' ? 'bg-blue-500' :
+                                        <span
+                                            className={`font-semibold  ${
+                                                bookingId.book_status === 'Cancelled' ? 'text-red-500' :
+                                                bookingId.book_status === 'Completed' ? 'text-green-500' :
+                                                bookingId.book_status === 'Booked' ? 'text-yellow-500' :
+                                                bookingId.book_status === 'Confirmed' ? 'text-blue-500' :
+                                                bookingId.book_status === 'Check_in' ? 'text-purple-500' :
                                                 ''
                                             }`}
-                                            >
+                                        >
                                             {bookingId?.book_status || 'N/A'}
-                                        </span>
+                                        </span> 
                                     </div>
                                 </div>
                             </div>

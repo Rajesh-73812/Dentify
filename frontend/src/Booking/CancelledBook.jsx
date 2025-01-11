@@ -104,14 +104,14 @@ const CancelledBook = () => {
                                                 </div>
                                             </th>
                                             <th className="px-4 py-2 min-w-[180px]">
-                                                Property Price
+                                            Booking Price
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className='cursor-pointer' onClick={() => sortData('prop_price')} />
                                                     <GoArrowDown className='cursor-pointer' onClick={() => sortData('prop_price')} />
                                                 </div>
                                             </th>
                                             <th className="px-4 py-2 min-w-[250px]">
-                                                Property Total Day
+                                                Total Booking Days
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className='cursor-pointer' onClick={() => sortData('total_day')} />
                                                     <GoArrowDown className='cursor-pointer' onClick={() => sortData('total_day')} />
