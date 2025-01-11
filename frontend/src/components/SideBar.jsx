@@ -110,14 +110,13 @@ const SidebarMenu = () => {
           } transition-transform duration-300 z-40 lg:relative lg:translate-x-0 lg:shadow-none`}
       >
         <Sidebar width="250px" style={{ overflowY: 'auto', height: '100vh' }}>
-          <div className="h-[80px] bg-white flex justify-center items-center gap-2" >
-            <img src={formData.weblogo} alt="Logo" className="h-[40px] w-[40px]" />
-            <div className="flex flex-col">
-              <span className=" text-2xl  ">{formData.webname}</span>
-              <span className=" text-[10px] ml-2 text-slate-500 font-[italic] italic ">A Home away from Home</span>
-            </div>
-
+        <div className="h-[80px] bg-white flex justify-center items-center gap-2" style={{ border: "none" }}>
+          <img src={formData.weblogo} alt="Logo" className="h-[40px] w-[40px]" />
+          <div className="flex flex-col">
+            <span className="text-2xl">{formData.webname}</span>
+            <span className="text-[10px] ml-2 text-slate-500 italic">A Home away from Home</span>
           </div>
+        </div>
 
           <div style={{ overflowY: 'auto', height: 'calc(100vh - 80px)', scrollbarWidth: 'none' }}>
             <Menu iconShape="circle">
