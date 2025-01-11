@@ -166,185 +166,186 @@ const PropotiesList = () => {
                     {/* Searching, sorting, and main content area */}
                     <PropotiesHeader onSearch={handleSearch} />
                     {/* Card */}
-                    <div className="py-6 px-6 h-full w-[1000px] overflow-scroll scrollbar-none">
+                    <div className=" px-6 h-full w-[1000px] overflow-scroll scrollbar-none">
                         <div className={`bg-white w-full rounded-xl border border-[#EAE5FF] py-4 px-3 overflow-x-auto scrollbar-thin  table-container ${filteredProperties.length > 0 ? 'h-[500px]' : ''}`} >
                             <div className="relative sm:rounded-lg h-[80%] scrollbar-thin overflow-y-auto  table-scroll">
                                 <table className="min-w-full text-sm text-left text-gray-700">
                                     <thead className="bg-[#045D78] bg-opacity-75 text-xs uppercase font-medium text-white">
                                         <tr>
-                                            <th className="px-2 py-3 min-w-[120px]">
+                                            <th className="px-2 py-2 min-w-[100px]">
                                                 Sr. No
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className="text-white hover:text-gray-700 cursor-pointer" onClick={() => handleSort('slno')} />
                                                     <GoArrowDown className="text-white hover:text-gray-700 cursor-pointer" onClick={() => handleSort('slno')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[190px]">
+                                            <th className=" py-2 min-w-[140px]">
                                                 Property Image
                                             </th>
-                                            <th className="px-4 py-3 min-w-[190px]">
-                                                Is Panorama
-                                                <div className="inline-flex items-center ml-2">
-                                                    <GoArrowUp className="text-white hover:text-gray-700 cursor-pointer" onClick={() => handleSort('image')} />
-                                                    <GoArrowDown className="text-white hover:text-gray-700 cursor-pointer" onClick={() => handleSort('image')} />
-                                                </div>
-                                            </th>
-                                            <th className="px-4 py-3 min-w-[190px]">
+                                            
+                                            <th className=" py-2 min-w-[150px]">
                                                 property Tittle
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className="text-white hover:text-gray-700 cursor-pointer" onClick={() => handleSort('propertyTittle')} />
                                                     <GoArrowDown className="text-white hover:text-gray-700 cursor-pointer" onClick={() => handleSort('propertyTittle')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[190px]">
+                                            <th className=" py-2 min-w-[150px]">
+                                                Is Panorama
+                                                <div className="inline-flex items-center ml-2">
+                                                    <GoArrowUp className="text-white hover:text-gray-700 cursor-pointer" onClick={() => handleSort('image')} />
+                                                    <GoArrowDown className="text-white hover:text-gray-700 cursor-pointer" onClick={() => handleSort('image')} />
+                                                </div>
+                                            </th>
+                                            <th className=" py-2 min-w-[150px]">
                                                 property Type
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className="text-white hover:text-gray-700 cursor-pointer" onClick={() => handleSort('propertyType')} />
                                                     <GoArrowDown className="text-white hover:text-gray-700 cursor-pointer" onClick={() => handleSort('propertyType')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[200px]">
+                                            <th className=" py-2 min-w-[180px]">
                                                 Description
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className="text-white hover:text-gray-700 cursor-pointer" onClick={() => handleSort('propertyDescription')} />
                                                     <GoArrowDown className="text-white hover:text-gray-700 cursor-pointer" onClick={() => handleSort('propertyDescription')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[200px]">
+                                            <th className=" py-2 min-w-[160px]">
                                                 Address
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className="text-white hover:text-gray-700 cursor-pointer" onClick={() => handleSort('propertyAddress')} />
                                                     <GoArrowDown className="text-white hover:text-gray-700 cursor-pointer" onClick={() => handleSort('propertyAddress')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[150px]">
+                                            <th className=" py-2 min-w-[100px]">
                                                 City
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className="text-white hover:text-gray-700 cursor-pointer" onClick={() => handleSort('city')} />
                                                     <GoArrowDown className="text-white hover:text-gray-700 cursor-pointer" onClick={() => handleSort('city')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[180px]">
+                                            <th className=" py-2 min-w-[130px]">
                                                 Listing Date
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className="text-white hover:text-gray-700 cursor-pointer" onClick={() => handleSort('listing_date')} />
                                                     <GoArrowDown className="text-white hover:text-gray-700 cursor-pointer" onClick={() => handleSort('listing_date')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[130px]">
+                                            <th className=" py-2 min-w-[100px]">
                                                 Is_Sell
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className="text-white hover:text-gray-700 cursor-pointer" onClick={() => handleSort('is_sell')} />
                                                     <GoArrowDown className="text-white hover:text-gray-700 cursor-pointer" onClick={() => handleSort('is_sell')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[130px]">
+                                            <th className=" py-2 min-w-[130px]">
                                                 Rules
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className="text-white hover:text-gray-700 cursor-pointer" onClick={() => handleSort('is_sell')} />
                                                     <GoArrowDown className="text-white hover:text-gray-700 cursor-pointer" onClick={() => handleSort('is_sell')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[150px]">
+                                            <th className=" py-2 min-w-[150px]">
                                                 Factility
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className="text-white hover:text-gray-700 cursor-pointer" onClick={() => handleSort('propertyFacility')} />
                                                     <GoArrowDown className="text-white hover:text-gray-700 cursor-pointer" onClick={() => handleSort('propertyFacility')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[150px]">
+                                            <th className=" py-2 min-w-[110px]">
                                                 Adults
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className="text-white hover:text-gray-700 cursor-pointer" onClick={() => handleSort('propertyFacility')} />
                                                     <GoArrowDown className="text-white hover:text-gray-700 cursor-pointer" onClick={() => handleSort('propertyFacility')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[150px]">
+                                            <th className=" py-2 min-w-[110px]">
                                                 Children
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className="text-white hover:text-gray-700 cursor-pointer" onClick={() => handleSort('propertyFacility')} />
                                                     <GoArrowDown className="text-white hover:text-gray-700 cursor-pointer" onClick={() => handleSort('propertyFacility')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[150px]">
+                                            <th className=" py-2 min-w-[110px]">
                                                 Infants
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className="text-white hover:text-gray-700 cursor-pointer" onClick={() => handleSort('propertyFacility')} />
                                                     <GoArrowDown className="text-white hover:text-gray-700 cursor-pointer" onClick={() => handleSort('propertyFacility')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[150px]">
+                                            <th className=" py-2 min-w-[110px]">
                                                 Pets
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className="text-white hover:text-gray-700 cursor-pointer" onClick={() => handleSort('propertyFacility')} />
                                                     <GoArrowDown className="text-white hover:text-gray-700 cursor-pointer" onClick={() => handleSort('propertyFacility')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[230px]">
-                                                Property Price(/Night)
+                                            <th className=" py-2 min-w-[150px]">
+                                                Price(/Night)
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className="text-white hover:text-gray-700 cursor-pointer" onClick={() => handleSort('propertyPrice')} />
                                                     <GoArrowDown className="text-white hover:text-gray-700 cursor-pointer" onClick={() => handleSort('propertyPrice')} />
                                                 </div>
                                             </th>
 
-                                            <th className="px-4 py-3 min-w-[130px]">
+                                            <th className=" py-2 min-w-[110px]">
                                                 Mobile
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className="text-white hover:text-gray-700 cursor-pointer" onClick={() => handleSort('mobile')} />
                                                     <GoArrowDown className="text-white hover:text-gray-700 cursor-pointer" onClick={() => handleSort('mobile')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[150px]">
+                                            <th className=" py-2 min-w-[110px]">
                                                 Conutry
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className="text-white hover:text-gray-700 cursor-pointer" onClick={() => handleSort('country_id')} />
                                                     <GoArrowDown className="text-white hover:text-gray-700 cursor-pointer" onClick={() => handleSort('country_id')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[180px]">
+                                            <th className=" py-2 min-w-[130px]">
                                                 Add_User_Id
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className="text-white hover:text-gray-700 cursor-pointer" onClick={() => handleSort('user_id')} />
                                                     <GoArrowDown className="text-white hover:text-gray-700 cursor-pointer" onClick={() => handleSort('user_id')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[150px]">
+                                            <th className=" py-2 min-w-[130px]">
                                                 Total Beds
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className="text-white hover:text-gray-700 cursor-pointer" onClick={() => handleSort('totalBeds')} />
                                                     <GoArrowDown className="text-white hover:text-gray-700 cursor-pointer" onClick={() => handleSort('totalBeds')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[200px]">
+                                            <th className=" py-2 min-w-[170px]">
                                                 Total BathRooms
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className="text-white hover:text-gray-700 cursor-pointer" onClick={() => handleSort('totalBathrooms')} />
                                                     <GoArrowDown className="text-white hover:text-gray-700 cursor-pointer" onClick={() => handleSort('totalBathrooms')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[180px]">
+                                            <th className=" py-2 min-w-[130px]">
                                                 total SQFT.
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className="text-white hover:text-gray-700 cursor-pointer" onClick={() => handleSort('totalSQFT')} />
                                                     <GoArrowDown className="text-white hover:text-gray-700 cursor-pointer" onClick={() => handleSort('totalSQFT')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[150px]">
+                                            <th className=" py-2 min-w-[120px]">
                                                 Rating
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className="text-white hover:text-gray-700 cursor-pointer" onClick={() => handleSort('rating')} />
                                                     <GoArrowDown className="text-white hover:text-gray-700 cursor-pointer" onClick={() => handleSort('rating')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[150px]">
+                                            <th className=" py-2 min-w-[120px]">
                                                 Status
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className="text-white hover:text-gray-700 cursor-pointer" onClick={() => handleSort('status')} />
                                                     <GoArrowDown className="text-white hover:text-gray-700 cursor-pointer" onClick={() => handleSort('status')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[150px]">
+                                            <th className=" py-2 min-w-[120px]">
                                                 Action
                                             </th>
                                         </tr>
@@ -353,8 +354,8 @@ const PropotiesList = () => {
                                         {currentProperties.length > 0 ? (
                                             currentProperties.map((property, index) => (
                                                 <tr key={property.id} className='h-[70px]'>
-                                                    <td className="px-4 py-3">{index + 1 + indexOfFirstItem}</td>
-                                                    <td className="px-4 py-3">
+                                                    <td className="text-center ">{index + 1 + indexOfFirstItem}</td>
+                                                    <td className="text-center ">
                                                         {property.image && property.image.trim() !== '' ? (
                                                             <img src={property.image} className="w-10 h-10 object-cover rounded-full" height={50} width={50} loading="lazy" alt="" onError={(e) => {
                                                                 if (e.target.src !== 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg') {
@@ -365,6 +366,7 @@ const PropotiesList = () => {
                                                             <img src={'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg'} height={50} width={50} loading="lazy" alt="" />
                                                         )}
                                                     </td>
+                                                    <td className=" ">{property.title || 'N/A'}</td>
                                                     <td>
                                                         <FontAwesomeIcon
                                                             className="h-7 w-16 cursor-pointer"
@@ -373,13 +375,13 @@ const PropotiesList = () => {
                                                             onClick={() => handlePanoramaToggle(property.id, property.is_panorama, "is_panorama")}
                                                         />
                                                     </td>
-                                                    <td className="px-4 py-2">{property.title || 'N/A'}</td>
-                                                    <td className="px-4 py-2">{property.category?.title || 'N/A'}</td>
-                                                    <td className="px-4 py-2">{property?.description || 'N/A'}</td>
-                                                    <td className="px-4 py-2">{property?.address || 'N/A'}</td>
-                                                    <td className="px-4 py-2">{property?.city || 'N/A'}</td>
-                                                    {/* <td className="px-4 py-2">{property?.listing_date || 'N/A'}</td> */}
-                                                    <td className="px-4 py-2">
+                                                    
+                                                    <td className=" ">{property.category?.title || 'N/A'}</td>
+                                                    <td className=" ">{property?.description || 'N/A'}</td>
+                                                    <td className=" ">{property?.address || 'N/A'}</td>
+                                                    <td className=" ">{property?.city || 'N/A'}</td>
+                                                    {/* <td className=" ">{property?.listing_date || 'N/A'}</td> */}
+                                                    <td className=" ">
                                                         {property?.listing_date ? new Date(property.listing_date).toISOString().split("T")[0] : 'N/A'}
                                                     </td>
 
@@ -391,30 +393,30 @@ const PropotiesList = () => {
                                                             onClick={() => handleToggleChange(property.id, property.is_sell, "is_sell")}
                                                         />
                                                     </td>
-                                                    {/* <td className="px-4 py-2">{property?.rules || 'N/A'}</td> */}
-                                                    <td className="px-4 py-2">
+                                                    {/* <td className=" ">{property?.rules || 'N/A'}</td> */}
+                                                    <td className=" ">
                                                         {Array.isArray(property.rules) ? property.rules.join(', ') : 'N/A'}
                                                     </td>
 
-                                                    <td className="px-4 py-2 flex flex-col">
+                                                    <td className="  ">
                                                         {property.facilities?.map((item) => (
-                                                            <span className='p-1 m-1 flex justify-center' key={item.id}>
+                                                            <span className='' key={item.id}>
                                                                 {item.title}
                                                             </span>
                                                         )) || 'N/A'}
                                                     </td>
-                                                    <td className="px-4 py-2">{property?.adults || 'N/A'}</td>
-                                                    <td className="px-4 py-2">{property?.children || 'N/A'}</td>
-                                                    <td className="px-4 py-2">{property?.infants || 'N/A'}</td>
-                                                    <td className="px-4 py-2">{property?.pets || 'N/A'}</td>
-                                                    <td className="px-4 py-2">₹{property?.price || 'N/A'}</td>
-                                                    <td className="px-4 py-2">{property?.mobile || 'N/A'}</td>
-                                                    <td className="px-4 py-2">{property.country?.title || 'N/A'}</td>
-                                                    <td className="px-4 py-2">{property?.add_user_id || 'N/A'}</td>
-                                                    <td className="px-4 py-2">{property?.beds || 'N/A'}</td>
-                                                    <td className="px-4 py-2">{property?.bathroom || 'N/A'}</td>
-                                                    <td className="px-4 py-2">{property?.sqrft || 'N/A'}</td>
-                                                    <td className="px-4 py-2">{property?.rate || 'N/A'}</td>
+                                                    <td className=" ">{property?.adults || 'N/A'}</td>
+                                                    <td className=" ">{property?.children || 'N/A'}</td>
+                                                    <td className=" ">{property?.infants || 'N/A'}</td>
+                                                    <td className=" ">{property?.pets || 'N/A'}</td>
+                                                    <td className=" ">₹{property?.price || 'N/A'}</td>
+                                                    <td className=" ">{property?.mobile || 'N/A'}</td>
+                                                    <td className=" ">{property.country?.title || 'N/A'}</td>
+                                                    <td className=" ">{property?.add_user_id || 'N/A'}</td>
+                                                    <td className=" ">{property?.beds || 'N/A'}</td>
+                                                    <td className=" ">{property?.bathroom || 'N/A'}</td>
+                                                    <td className=" ">{property?.sqrft || 'N/A'}</td>
+                                                    <td className=" ">{property?.rate || 'N/A'}</td>
                                                     <td>
                                                         <FontAwesomeIcon
                                                             className="h-7 w-16 cursor-pointer"
@@ -423,7 +425,7 @@ const PropotiesList = () => {
                                                             onClick={() => handleToggleChange(property.id, property.status, "status")}
                                                         />
                                                     </td>
-                                                    <td className="px-4 py-2">
+                                                    <td className=" py-2">
                                                         <NotificationContainer />
                                                         <button className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition mr-2" onClick={() => propertyUpdate(property.id)}>
                                                             <FaPen />

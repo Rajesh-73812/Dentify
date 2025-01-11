@@ -113,37 +113,37 @@ const CategoryList = () => {
           {/* Searching, sorting, and main content area */}
           <CategoryHeader onSearch={handleSearch} />
           {/* Card */}
-          <div className="py-6 px-6 h-full w-[1000px] overflow-scroll scrollbar-none">
+          <div className="px-6 h-full w-[1000px] overflow-scroll scrollbar-none">
             <div className={`bg-white  w-full rounded-xl border border-[#EAE5FF] py-4 px-3 overflow-x-auto scrollbar-thin  ${currentCategories.length > 0 ? 'h-[500px]' : ''}`}>
               <div className="relative sm:rounded-lg ">
                 <table className="min-w-full text-sm text-left text-gray-700">
                   <thead className="bg-[#045D78] bg-opacity-75 text-xs uppercase font-medium text-white">
                     <tr>
-                      <th className="px-4 py-3 min-w-[50px]">
+                      <th className="px-4 py-2 min-w-[50px]">
                         Sr. No
                         <div className="inline-flex items-center ml-2">
                           <GoArrowUp className="text-white hover:text-gray-700 cursor-pointer" onClick={() => sortData('id')} />
                           <GoArrowDown className="text-white hover:text-gray-700 cursor-pointer" onClick={() => sortData('id')} />
                         </div>
                       </th>
-                      <th className="px-4 py-3 min-w-[50px]">
+                      <th className="px-4 py-2 min-w-[50px]">
                         Category Title
                         <div className="inline-flex items-center ml-2">
                           <GoArrowUp className="text-white hover:text-gray-700 cursor-pointer" onClick={() => sortData('title')} />
                           <GoArrowDown className="text-white hover:text-gray-700 cursor-pointer" onClick={() => sortData('title')} />
                         </div>
                       </th>
-                      <th className="px-4 py-3 min-w-[50px]">
+                      <th className="px-4 py-2 min-w-[50px]">
                         Category Image
                       </th>
-                      <th className="px-4 py-3 min-w-[50px]">
+                      <th className="px-4 py-2 min-w-[50px]">
                         Status
                         <div className="inline-flex items-center ml-2">
                           <GoArrowUp className="text-white hover:text-gray-700 cursor-pointer" onClick={() => sortData('status')} />
                           <GoArrowDown className="text-white hover:text-gray-700 cursor-pointer" onClick={() => sortData('status')} />
                         </div>
                       </th>
-                      <th className="px-4 py-3 min-w-[50px]">Action</th>
+                      <th className="px-4 py-2 min-w-[50px]">Action</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200">

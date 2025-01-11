@@ -113,58 +113,58 @@ const UserList = () => {
                 <div className="flex flex-1 flex-col bg-[#f7fbff]">
                     <Header />
                     <UseListHeader onSearch={handleSearch} />
-                    <div className="py-6 px-6 h-full w-[1000px] overflow-scroll scrollbar-none">
+                    <div className="px-6 h-full w-[1000px] overflow-scroll scrollbar-none">
                         <div className={`bg-white w-full rounded-xl border border-[#EAE5FF] py-4 px-3 overflow-y-auto scrollbar-thin ${filtereduser.length  > 0 ? 'h-[500px]' : ''}`}>
                             <div className="relative sm:rounded-lg h-[80%] scrollbar-thin overflow-y-auto">
                                 <table className="min-w-full text-sm text-left text-gray-700">
                                     <thead className="bg-[#045D78] bg-opacity-75 text-xs uppercase font-medium text-white">
                                         <tr>
-                                            <th className="px-4 py-3 min-w-[120px]">
+                                            <th className="px-4 py-2 min-w-[120px]">
                                                 Sr. No
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className='cursor-pointer' onClick={() => sortData('id')} />
                                                     <GoArrowDown className='cursor-pointer' onClick={() => sortData('id')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[120px]">
+                                            <th className="px-4 py-2 min-w-[120px]">
                                                 Image
                                             </th>
-                                            <th className="px-4 py-3 min-w-[150px]">
+                                            <th className="px-4 py-2 min-w-[150px]">
                                                 Name
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className='cursor-pointer' onClick={() => sortData('name')} />
                                                     <GoArrowDown className='cursor-pointer' onClick={() => sortData('name')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[150px]">
+                                            <th className="px-4 py-2 min-w-[150px]">
                                                 Email
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className='cursor-pointer' onClick={() => sortData('email')} />
                                                     <GoArrowDown className='cursor-pointer' onClick={() => sortData('email')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[150px]">
+                                            <th className="px-4 py-2 min-w-[150px]">
                                                 Gender
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className='cursor-pointer' onClick={() => sortData('email')} />
                                                     <GoArrowDown className='cursor-pointer' onClick={() => sortData('email')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[150px]">
+                                            <th className="px-4 py-2 min-w-[150px]">
                                                 Mobile
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className='cursor-pointer' onClick={() => sortData('mobile')} />
                                                     <GoArrowDown className='cursor-pointer' onClick={() => sortData('mobile')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[150px]">
+                                            <th className="px-4 py-2 min-w-[150px]">
                                                 Join Date
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className='cursor-pointer' onClick={() => sortData('start_date')} />
                                                     <GoArrowDown className='cursor-pointer' onClick={() => sortData('start_date')} />
                                                 </div>
                                             </th>
-                                            <th className="px-4 py-3 min-w-[150px]">
+                                            <th className="px-4 py-2 min-w-[150px]">
                                                 Status
                                                 <div className="inline-flex items-center ml-2">
                                                     <GoArrowUp className='cursor-pointer' onClick={() => sortData('status')} />
@@ -172,7 +172,7 @@ const UserList = () => {
                                                 </div>
                                             </th>
 
-                                            <th className="px-4 py-3 min-w-[150px]">
+                                            <th className="px-4 py-2 min-w-[150px]">
                                                 Action
                                             </th>
                                         </tr>
