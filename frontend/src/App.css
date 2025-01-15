@@ -302,3 +302,11 @@ color: #045D78 !important;
 .css-1wvake5{
   border: none !important;
 }
+
+.mySelect option{
+  background-color: #fff;
+}
+
+.mySelect option:hover {
+  background-color: #ccc; 
+}

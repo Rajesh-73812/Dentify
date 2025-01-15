@@ -12,7 +12,7 @@ import 'react-notifications/lib/notifications.css';
 import api from "../utils/api";
 import CountryCodes from "../utils/CountryCodes";
 import ArrowBackIosNewIcon  from '@mui/icons-material/ArrowBackIosNew';
-
+import CustomDropdown from './CustomDropdown'
 const CountryAdd = () => {
   const navigate = useNavigate();
   const location = useLocation()
@@ -160,11 +160,11 @@ const CountryAdd = () => {
                         value={Object.keys(CountryCodes).find(key => CountryCodes[key] === formData.currency) || ""}
                         onChange={handleChange}
                         required
-                        className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:ring- focus:border-blue-500 outline-none  text-sm" 
+                        className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:ring- focus:border-[#045D78] outline-none  text-sm mySelect" 
                       >
                         <option value="" disabled>Select Currency</option>
                         {Object.keys(CountryCodes).map((currencyCode) => (
-                          <option key={currencyCode} value={currencyCode}>
+                          <option key={currencyCode} value={currencyCode} >
                             {currencyCode} ({CountryCodes[currencyCode]})
                           </option>
                         ))}
